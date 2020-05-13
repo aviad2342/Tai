@@ -1,0 +1,21 @@
+.profile-image {
+    width: 80%;
+    height: auto;
+    margin-top: 15%;
+    border-radius: 50%;
+    bottom: calc(-1*(80px + 4px)); // -42px;
+    border: 3px solid rgb(62, 63, 70);
+    background-color: #fff;
+  }
+
+  ion-card {
+    --background: url("../../../assets/background/backgColor.jpg") no-repeat top, #fff;
+    background-size: 100% 250px;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+ion-card-title {
+    font-size: xx-large;
+}

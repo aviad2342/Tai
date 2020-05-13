@@ -6,7 +6,7 @@ export class User {
       public password: string,
       public phone: string,
       public email: string,
-      public Date: Date,
+      public date: Date,
       public country: string,
       public city: string,
       public street: string,

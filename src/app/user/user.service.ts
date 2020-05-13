@@ -10,6 +10,7 @@ import { User } from './user.model';
 })
 export class UserService {
 
+  // tslint:disable-next-line: variable-name
   private _users = new BehaviorSubject<User[]>([]);
 
   get users() {
@@ -22,6 +23,13 @@ export class UserService {
     return this.http.get<User[]>('http://localhost:3000/api/user/users')
     .pipe(tap(resDta => {
       this._users.next(resDta);
+    }));
+  }
+
+  getuser(id: string) {
+    return this.http.get<User>(`http://localhost:3000/api/user/users/${id}`)
+    .pipe(tap(resDta => {
+      return resDta;
     }));
   }
 
