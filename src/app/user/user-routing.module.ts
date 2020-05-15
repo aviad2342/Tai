@@ -9,6 +9,10 @@ const routes: Routes = [
     component: UserPage
   },
   {
+    path: 'new',
+    loadChildren: () => import('./new-user/new-user.module').then( m => m.NewUserPageModule)
+  },
+  {
     path: ':id',
     loadChildren: () => import('./user-detail/user-detail.module').then( m => m.UserDetailPageModule)
   }

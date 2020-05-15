@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>הוספת משתמש</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/user">
+        <ion-icon name="close"></ion-icon>
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating"> אימייל <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="email"
+                ngModel
+                name="email"
+                required
+                email
+                #emailCtrl="ngModel"
+              ></ion-input>
+              <ion-icon name="at" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-item
+              *ngIf="!emailCtrl.valid && emailCtrl.touched"
+              lines="none"
+            >
+              <ion-label color="danger">
+                כתובת המייל אינה תקינה!
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">סיסמה<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="password"
+                ngModel
+                name="password"
+                required
+                minlength="6"
+                #passwordCtrl="ngModel"
+              ></ion-input>
+              <ion-icon name="eye-off-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-item
+              *ngIf="!passwordCtrl.valid && passwordCtrl.touched"
+              lines="none"
+            >
+              <ion-label color="danger">
+                Should at least be 6 characters long.
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-button
+            type="submit"
+            color="primary"
+            expand="block"
+            [disabled]="!f.valid"
+          >
+          הוסף
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+
