@@ -32,6 +32,7 @@ function base64toBlob(base64Data, contentType) {
 export class NewUserPage implements OnInit {
 
   @ViewChild('f', { static: true }) form: NgForm;
+  // startDate: string  = new Date('2015-12-02').toISOString();
 
   constructor(
     private modalController: ModalController,
@@ -39,6 +40,7 @@ export class NewUserPage implements OnInit {
     ) { }
 
   ngOnInit() {
+    // new Intl.DateTimeFormat('he-IL').format(this.startDate);
   }
 
   onImagePicked(imageData: string | File) {
