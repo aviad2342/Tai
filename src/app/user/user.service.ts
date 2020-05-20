@@ -26,11 +26,38 @@ export class UserService {
     }));
   }
 
-  getuser(id: string) {
+  getUser(id: string) {
     return this.http.get<User>(`http://localhost:3000/api/user/users/${id}`)
     .pipe(tap(resDta => {
       return resDta;
     }));
+  }
+
+  uploadImage(image: File, fileName: string) {
+    const uploadData = new FormData();
+    uploadData.append('image', image, fileName);
+    return this.http.post<{ imageUrl: string}>(
+      'http://localhost:3000/api/image/upload',
+      uploadData
+    );
+  }
+
+  addUser(user: User) {
+    return this.http.post<{id: string}>('http://localhost:3000/api/user/users',
+    {
+      ...user
+    }).
+    pipe(
+      switchMap(resData => {
+        user.id = resData.id;
+        return this.users;
+      }),
+      take(1),
+      tap(users => {
+        this._users.next(users.concat(user));
+      }));
+
+
   }
 
 }

@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { UserService } from '../user.service';
 import { NgForm } from '@angular/forms';
+import { switchMap } from 'rxjs/operators';
+import { User } from '../user.model';
+import { Router } from '@angular/router';
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';
@@ -35,7 +38,7 @@ export class NewUserPage implements OnInit {
   // startDate: string  = new Date('2015-12-02').toISOString();
 
   constructor(
-    private modalController: ModalController,
+    private router: Router,
     private userService: UserService
     ) { }
 
@@ -62,13 +65,34 @@ export class NewUserPage implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (!form.valid) {
+    if (!form.valid || !form.value.image) {
       return;
     }
-    const email = form.value.email;
-    const password = form.value.password;
-
-    form.reset();
+    this.userService.uploadImage(form.value.image, form.value.email)
+    .pipe(
+      switchMap(uploadRes => {
+        const userToAdd = new User(
+          null,
+          form.value.firstName,
+          form.value.lastName,
+          form.value.email,
+          form.value.phone,
+          form.value.password,
+          new Date(form.value.dateOfBirth),
+          form.value.country,
+          form.value.city,
+          form.value.street,
+          form.value.houseNumber,
+          form.value.apartment,
+          form.value.entry,
+          uploadRes.imageUrl
+        );
+        return this.userService.addUser(userToAdd);
+      })
+    ).subscribe(() => {
+      form.reset();
+      this.router.navigate(['/tabs/user']);
+    });
   }
 
 

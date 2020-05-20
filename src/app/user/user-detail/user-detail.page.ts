@@ -31,7 +31,7 @@ export class UserDetailPage implements OnInit, OnDestroy {
         this.navController.navigateBack('/tabs/user');
         return;
       }
-      this.userService.getuser(paramMap.get('id')).subscribe(user => {
+      this.userService.getUser(paramMap.get('id')).subscribe(user => {
             this.user = user;
           },
           error => {

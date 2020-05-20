@@ -14,7 +14,11 @@ export class UserItemComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.user.profilePicture === 'someText') {
+      this.user.profilePicture = this.image;
+    }
+  }
 
   getUserFullName() {
     return this.user.firstName + ' ' + this.user.lastName;
