@@ -56,8 +56,20 @@ export class UserService {
       tap(users => {
         this._users.next(users.concat(user));
       }));
+  }
 
-
+  updateUser(user: User) {
+    return this.http.put(`http://localhost:3000/api/user/users/${user.id}`,
+    {
+      ...user
+    }).
+    pipe(
+      switchMap(resData => {
+        return this.getUsers();
+      }),
+      tap(users => {
+        this._users.next(users);
+      }));
   }
 
 }

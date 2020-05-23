@@ -12,7 +12,7 @@ export class ImagePickerComponent implements OnInit {
   @ViewChild('filePicker') filePickerRef: ElementRef<HTMLInputElement>;
   @Output() imagePick = new EventEmitter<string | File>();
   @Input() showPreview = false;
-  selectedImage: string;
+  @Input() selectedImage: string;
   usePicker = false;
 
   constructor(private platform: Platform) { }
