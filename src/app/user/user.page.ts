@@ -36,6 +36,12 @@ export class UserPage implements OnInit, OnDestroy {
     console.log('Editing item', id);
   }
 
+  onDelete(id: string, slidingItem: IonItemSliding) {
+    slidingItem.close();
+    this.userService.deleteUser(id).subscribe(() => {
+    });
+  }
+
   ngOnDestroy() {
     if (this.starsSub) {
       this.starsSub.unsubscribe();

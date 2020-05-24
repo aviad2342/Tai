@@ -59,9 +59,24 @@ export class UserService {
   }
 
   updateUser(user: User) {
+    const userObj = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phone: user.phone,
+      password: user.password,
+      date: user.date,
+      country: user.country,
+      city: user.city,
+      street: user.street,
+      houseNumber: user.houseNumber,
+      apartment: user.apartment,
+      entry: user.entry,
+      profilePicture: user.profilePicture
+      };
     return this.http.put(`http://localhost:3000/api/user/users/${user.id}`,
     {
-      ...user
+      ...userObj
     }).
     pipe(
       switchMap(resData => {
@@ -69,6 +84,17 @@ export class UserService {
       }),
       tap(users => {
         this._users.next(users);
+      }));
+  }
+
+  deleteUser(id: string) {
+    return this.http.delete(`http://localhost:3000/api/user/users/${id}`).
+    pipe(
+      switchMap(resData => {
+        return this.getUsers();
+      }),
+      tap(users => {
+        this._users.next(users.filter(u => u.id !== id));
       }));
   }
 

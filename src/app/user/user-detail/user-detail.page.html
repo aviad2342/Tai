@@ -12,7 +12,7 @@
     <ion-row>
       <ion-col size="12" size-sm="4" offset-sm="4" class="main-col">
   <ion-card class="ion-text-center">
-    <img [src]="image" class="profile-image"/>
+    <img [src]="this.user?.profilePicture" class="profile-image"/>
     <ion-card-header>
       <ion-card-title size="larg">{{ getUserFullName() }}</ion-card-title>
     </ion-card-header>

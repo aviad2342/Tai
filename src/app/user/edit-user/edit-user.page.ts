@@ -114,10 +114,10 @@ export class EditUserPage implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm) {
     console.log(this.updateImage);
-    if (!form.valid || !form.value.image) {
+    if (!form.valid) {
       return;
     }
-    if (this.updateImage) {
+    if (form.value.image) {
       this.userService.uploadImage(form.value.image, form.value.email)
     .pipe(
       switchMap(uploadRes => {
