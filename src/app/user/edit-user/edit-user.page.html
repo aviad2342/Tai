@@ -16,7 +16,7 @@
         <ion-col size="12" size-sm="4" offset-sm="4">
           <app-image-picker 
           [selectedImage] = "this.user?.profilePicture"
-          [showPreview]="f.value.image" 
+          [showPreview]="true" 
           (imagePick)="onImagePicked($event)" 
           class="ion-padding"></app-image-picker>
         </ion-col>

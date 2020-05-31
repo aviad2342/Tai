@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 import { UserService } from '../user.service';
 import { NgForm } from '@angular/forms';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { User } from '../user.model';
 import { Router } from '@angular/router';
+
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';
@@ -36,14 +38,37 @@ export class NewUserPage implements OnInit {
 
   @ViewChild('f', { static: true }) form: NgForm;
   // startDate: string  = new Date('2015-12-02').toISOString();
+  autocompleteItems: string[];
+  autocomplete = { input: '' };
+  countries: string[] = [];
+  selectCountry: string;
+  hideList = false;
 
   constructor(
     private router: Router,
+    private http: HttpClient,
     private userService: UserService
     ) { }
 
   ngOnInit() {
     // new Intl.DateTimeFormat('he-IL').format(this.startDate);
+  }
+  updateSearchResults() {
+    this.hideList = false;
+    this.getCountriesAutocomplete(this.autocomplete.input);
+  }
+
+  getCountriesAutocomplete(country: string) {
+    return this.userService.getCountries(country).subscribe(countries => {
+      this.countries = countries;
+      console.log(countries);
+    });
+  }
+
+  selectCountryResult(country) {
+    this.selectCountry = country;
+    this.autocomplete.input = this.selectCountry;
+    this.hideList = true;
   }
 
   onImagePicked(imageData: string | File) {
