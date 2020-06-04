@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { switchMap, map } from 'rxjs/operators';
 import { User } from '../user.model';
 import { Router } from '@angular/router';
+import { Address } from 'src/app/shared/address.model';
 
 
 function base64toBlob(base64Data, contentType) {
@@ -39,10 +40,11 @@ export class NewUserPage implements OnInit {
   @ViewChild('f', { static: true }) form: NgForm;
   // startDate: string  = new Date('2015-12-02').toISOString();
   autocompleteItems: string[];
-  autocomplete = { input: '' };
+  autocomplete = '';
   countries: string[] = [];
   selectCountry: string;
   hideList = false;
+  address: Address;
 
   constructor(
     private router: Router,
@@ -53,21 +55,30 @@ export class NewUserPage implements OnInit {
   ngOnInit() {
     // new Intl.DateTimeFormat('he-IL').format(this.startDate);
   }
-  updateSearchResults() {
+  async updateSearchResults(evt) {
+    const searchTerm = evt.srcElement.value;
+    console.log(searchTerm);
+    if (!searchTerm) {
+      this.hideList = true;
+      return;
+    }
     this.hideList = false;
-    this.getCountriesAutocomplete(this.autocomplete.input);
+    this.getCountriesAutoComplete(searchTerm);
   }
 
-  getCountriesAutocomplete(country: string) {
-    return this.userService.getCountries(country).subscribe(countries => {
+
+  getCountriesAutoComplete(country: string) {
+    if (country.length > 0) {
+    return this.userService.getCities(country).subscribe(countries => {
       this.countries = countries;
       console.log(countries);
     });
   }
+  }
 
   selectCountryResult(country) {
     this.selectCountry = country;
-    this.autocomplete.input = this.selectCountry;
+    this.autocomplete = this.selectCountry;
     this.hideList = true;
   }
 
@@ -87,6 +98,10 @@ export class NewUserPage implements OnInit {
       imageFile = imageData;
     }
     this.form.value.image = imageFile;
+  }
+
+  onAddressPicked(address: Address) {
+    this.address = address;
   }
 
   onSubmit(form: NgForm) {

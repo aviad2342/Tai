@@ -1,0 +1,16 @@
+<ion-item>
+  <ion-searchbar value="this.countriesAutocomplete" name="country" #countryPicker (ionInput)="updateSearchCountriesResults($event)" placeholder="בחר מדינה"></ion-searchbar>
+  <ion-list [hidden]="countries.length == 0 || this.hideCountriesList">
+    <ion-item *ngFor="let country of countries" tappable (click)="selectCountryResult(country)">
+      {{ country }}
+    </ion-item>
+  </ion-list>
+</ion-item>
+<ion-item>
+  <ion-searchbar value="this.citiesAutocomplete" name="country" #cityPicker (ionInput)="updateSearchCitiesResults($event)" placeholder="בחר מדינה"></ion-searchbar>
+  <ion-list [hidden]="cities.length == 0 || this.hideCitiesList">
+    <ion-item *ngFor="let city of cities" tappable (click)="selectCitiesResult(city)">
+      {{ city }}
+    </ion-item>
+  </ion-list>
+</ion-item>

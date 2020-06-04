@@ -46,6 +46,21 @@ export class UserService {
     );
   }
 
+   getCities(country: string) {
+    return this.http.get<any>(
+      // tslint:disable-next-line: max-line-length
+      `http://localhost:3000/api/address/cities/${country}`)
+      .pipe(
+      map(predictions => {
+        const countries: string[] = [];
+        predictions.forEach(element => {
+          countries.push(element.name);
+        });
+        return countries;
+      })
+    );
+  }
+
   getAddress() {
     return this.http.get<any>(
       // tslint:disable-next-line: max-line-length

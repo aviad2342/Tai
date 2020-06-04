@@ -22,7 +22,7 @@
           <ion-list>
             <ion-item>
               <ion-label position="floating"> שם <ion-text color="danger">*</ion-text></ion-label>
-              <ion-searchbar [(ngModel)]="autocomplete.input" name="countr" (ionInput)="updateSearchResults()" placeholder="Search for a place"></ion-searchbar>
+              <ion-searchbar [(ngModel)]="this.autocomplete" name="countr" (ionInput)="updateSearchResults($event)" placeholder="Search for a place"></ion-searchbar>
               <ion-list [hidden]="countries.length == 0 || this.hideList">
                 <ion-item *ngFor="let country of countries" tappable (click)="selectCountryResult(country)">
                   {{ country}}
@@ -251,6 +251,9 @@
               <ion-label color="danger">
                 Should at least be 6 characters long.
               </ion-label>
+            </ion-item>
+            <ion-item>
+              <app-address-picker (addressPicked)="onAddressPicked($event)"></app-address-picker>
             </ion-item>
           </ion-list>
         </ion-col>
