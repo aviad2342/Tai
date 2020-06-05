@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AddressService } from '../../address.service';
 import { Address } from '../../address.model';
+import { IonicSelectableComponent } from 'ionic-selectable';
 
 @Component({
   selector: 'app-address-picker',
@@ -15,61 +16,70 @@ export class AddressPickerComponent implements OnInit {
   countriesAutocomplete = '';
   citiesAutocomplete = '';
 
-  countries: string[] = [];
-  cities: string[] = [];
+  countries: string[];
+  countriesList: string[];
+
+  cities: string[];
+  citiesList: string[];
 
   selectCountry: string;
   selectCity: string;
 
-  hideCitiesList = false;
-  hideCountriesList = false;
+  showCitiesList = false;
+  showStreetsList = false;
 
   constructor(private addressService: AddressService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.addressService.getCountries().subscribe(countries => {
+     this.countriesList = this.countries = countries;
+    });
 
-  async updateSearchCountriesResults(evt) {
-    const countrySearchTerm = evt.srcElement.value;
-    console.log(countrySearchTerm);
-    if (!countrySearchTerm) {
-      this.hideCountriesList = true;
-      return;
-    }
-    this.hideCountriesList = false;
-    this.getCountriesAutoComplete(countrySearchTerm);
+    this.addressService.getCities().subscribe(cities => {
+      this.citiesList = this.cities = cities;
+     });
   }
 
-  updateSearchCitiesResults(evt) {
-    const citySearchTerm = evt.srcElement.value;
-    console.log(citySearchTerm);
-    if (!citySearchTerm) {
-      this.hideCountriesList = true;
-      return;
-    }
-    this.hideCountriesList = false;
-    this.getCountriesAutoComplete(citySearchTerm);
+  portChange(event: {
+    component: IonicSelectableComponent,
+    value: any
+  }) {
+    console.log('port:', event.value);
+  }
+
+  async updateSearchCountriesResults(evt) {
+    const countrySearchTerm = evt.text;
+    this.countriesList = this.countries.filter(countries => countries.startsWith(countrySearchTerm));
+  }
+
+  async updateSearchCitiesResults(evt) {
+    const citySearchTerm = evt.text;
+    this.citiesList = this.cities.filter(cities => cities.startsWith(citySearchTerm));
   }
 
 
   getCountriesAutoComplete(country: string) {
     if (country.length > 0) {
-    return this.addressService.getCities(country).subscribe(countries => {
+    return this.addressService.getCountriesPrediction(country).subscribe(countries => {
       this.countries = countries;
       console.log(countries);
     });
   }
   }
 
-  selectCountryResult(country) {
-    this.selectCountry = country;
-    this.countriesAutocomplete = this.selectCountry;
-    this.hideCountriesList = true;
+  selectCountryResult(event: {
+    component: IonicSelectableComponent,
+    value: any
+  }) {
+    this.selectCountry = event.value;
+    this.showCitiesList = true;
   }
 
-  selectCitiesResult(city) {
-    this.selectCountry = city;
-    this.countriesAutocomplete = this.selectCountry;
-    this.hideCountriesList = true;
+  selectCitiesResult(event: {
+    component: IonicSelectableComponent,
+    value: any
+  }) {
+    this.selectCity = event.value;
   }
 
 }

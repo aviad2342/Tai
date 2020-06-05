@@ -252,10 +252,13 @@
                 Should at least be 6 characters long.
               </ion-label>
             </ion-item>
-            <ion-item>
-              <app-address-picker (addressPicked)="onAddressPicked($event)"></app-address-picker>
-            </ion-item>
+    
           </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" size-sm="4" offset-sm="4">
+          <app-address-picker (addressPicked)="onAddressPicked($event)"></app-address-picker>
         </ion-col>
       </ion-row>
       <ion-row>
