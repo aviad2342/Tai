@@ -6,8 +6,10 @@
       <ion-item>
         <ion-label>בחר מדינה</ion-label>
         <ionic-selectable
+          #selectableCountriesComponent
           [items]="countriesList"
           [canSearch]="true"
+          (onOpen)="this.selectableStreetComponent.clear(); this.selectableCitiesComponent.clear()"
           (onSearch)="updateSearchCountriesResults($event)"
           (onChange)="selectCountryResult($event)">
         </ionic-selectable>
@@ -19,7 +21,9 @@
       <ion-item>
         <ion-label>בחר עיר</ion-label>
         <ionic-selectable
-          [isEnabled]="showCitiesList"
+          #selectableCitiesComponent
+          (onOpen)="this.selectableStreetComponent.clear()"
+          [isEnabled]="this.selectableCountriesComponent.hasValue() && !this.selectableCountriesComponent.isOpened"
           [items]="citiesList"
           [canSearch]="true"
           (onSearch)="updateSearchCitiesResults($event)"
@@ -32,8 +36,14 @@
     <ion-col >
       <ion-item>
         <ion-label>בחר רחוב</ion-label>
-        <ionic-selectable>
-
+        <ionic-selectable
+          #selectableStreetComponent
+          [isEnabled]="this.selectableCitiesComponent.hasValue() && !this.selectableCitiesComponent.isOpened"
+          [items]="streetsList"
+          [canSearch]="true"
+          [canClear]="true"
+          (onSearch)="updateSearchStreetsResults($event)"
+          (onChange)="selectStreetResult($event)">
         </ionic-selectable>
       </ion-item>
     </ion-col>

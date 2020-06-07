@@ -1,7 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { AddressService } from '../../address.service';
 import { Address } from '../../address.model';
 import { IonicSelectableComponent } from 'ionic-selectable';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-address-picker',
@@ -22,8 +23,12 @@ export class AddressPickerComponent implements OnInit {
   cities: string[];
   citiesList: string[];
 
+  streets: string[];
+  streetsList: string[];
+
   selectCountry: string;
   selectCity: string;
+  selectstreet: string;
 
   showCitiesList = false;
   showStreetsList = false;
@@ -54,7 +59,25 @@ export class AddressPickerComponent implements OnInit {
 
   async updateSearchCitiesResults(evt) {
     const citySearchTerm = evt.text;
-    this.citiesList = this.cities.filter(cities => cities.startsWith(citySearchTerm));
+    if (!this.cities) {
+      return;
+    }
+    if (citySearchTerm.length > 0) {
+      return this.addressService.getCitiesPrediction(citySearchTerm).subscribe(cities => {
+        this.citiesList = cities;
+      });
+    } else {
+      this.citiesList = this.cities;
+    }
+    // this.citiesList = this.cities.filter(cities => cities.startsWith(citySearchTerm));
+  }
+
+  async updateSearchStreetsResults(evt) {
+    const StreetSearchTerm = evt.text;
+    if (!this.streets) {
+      return;
+    }
+    this.streetsList = this.streets.filter(cities => cities.startsWith(StreetSearchTerm));
   }
 
 
@@ -75,11 +98,30 @@ export class AddressPickerComponent implements OnInit {
     this.showCitiesList = true;
   }
 
-  selectCitiesResult(event: {
+  reSetStreetList() {
+    this.selectstreet = '';
+    this.showStreetsList = false;
+  }
+
+  async selectCitiesResult(event: {
     component: IonicSelectableComponent,
     value: any
   }) {
+    if (!event.value) {
+      return;
+    }
     this.selectCity = event.value;
+    this.showStreetsList = true;
+    this.addressService.getCityStreets(this.selectCity).subscribe(streets => {
+      this.streetsList = this.streets = streets;
+    });
+  }
+
+  selectStreetResult(event: {
+    component: IonicSelectableComponent,
+    value: any
+  }) {
+    this.selectstreet = event.value;
   }
 
 }

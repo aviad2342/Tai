@@ -68,4 +68,18 @@ export class AddressService {
       })
     );
   }
+
+  getCityStreets(city: string) {
+    console.log(city);
+    return this.http.get<any>(
+      // tslint:disable-next-line: max-line-length
+      `http://localhost:3000/api/address/streets/${city}`)
+      .pipe(
+      map(cityStreets => {
+        console.log(cityStreets);
+        const streets: string[] = cityStreets[0].streets;
+        return streets;
+      })
+    );
+  }
 }
