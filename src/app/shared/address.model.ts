@@ -7,6 +7,15 @@ export class Address {
     public apartment: string;
     public entry: string;
 
-      constructor() {}
+    constructor() {}
+
+    setAddress(country: string, city: string, street: string, houseNumber: string, apartment: string, entry: string) {
+      this.country = country;
+      this.city = city;
+      this.street = street;
+      this.houseNumber = houseNumber;
+      this.apartment = apartment;
+      this.entry = entry;
+    }
 
 }

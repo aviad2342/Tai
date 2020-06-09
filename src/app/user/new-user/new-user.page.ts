@@ -119,12 +119,12 @@ export class NewUserPage implements OnInit {
           form.value.phone,
           form.value.password,
           new Date(form.value.dateOfBirth),
-          form.value.country,
-          form.value.city,
-          form.value.street,
-          form.value.houseNumber,
-          form.value.apartment,
-          form.value.entry,
+          this.address.country,
+          this.address.city,
+          this.address.street,
+          this.address.houseNumber,
+          this.address.apartment,
+          this.address.entry,
           uploadRes.imageUrl
         );
         return this.userService.addUser(userToAdd);

@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Input, ViewChild } from '@angular/core';
 import { AddressService } from '../../address.service';
 import { Address } from '../../address.model';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { Subscription } from 'rxjs';
+import { User } from 'src/app/user/user.model';
 
 @Component({
   selector: 'app-address-picker',
@@ -11,8 +12,21 @@ import { Subscription } from 'rxjs';
 })
 export class AddressPickerComponent implements OnInit {
 
+  @ViewChild('selectableCountriesComponent') countriesPickerRef: IonicSelectableComponent;
+  @ViewChild('selectableCitiesComponent') citiesPickerRef: IonicSelectableComponent;
+  @ViewChild('selectableStreetComponent') StreetPickerRef: IonicSelectableComponent;
   @Output() addressPicked = new EventEmitter<Address>();
+  @Input() isEdit = false;
+  @Input() userAddress = new Address();
+  selectedAddress: Address = new Address();
   autocompleteItems: string[];
+
+  country: string;
+  city: string;
+  street: string;
+  houseNumber = 3;
+  apartment: string;
+  entry: string;
 
   countriesAutocomplete = '';
   citiesAutocomplete = '';
@@ -36,13 +50,28 @@ export class AddressPickerComponent implements OnInit {
   constructor(private addressService: AddressService) { }
 
   ngOnInit() {
+
+    if (this.isEdit) {
+     // this.houseNumber = this.userAddress.houseNumber;
+      this.apartment = this.userAddress.apartment;
+      this.entry = this.userAddress.entry;
+      console.log(this.userAddress);
+    }
+
     this.addressService.getCountries().subscribe(countries => {
-     this.countriesList = this.countries = countries;
-    });
+      this.countriesList = this.countries = countries;
+      if (this.isEdit) {
+        this.country = this.userAddress.country;
+      }
+     });
 
     this.addressService.getCities().subscribe(cities => {
-      this.citiesList = this.cities = cities;
-     });
+       this.citiesList = this.cities = cities;
+       if (this.isEdit) {
+        this.city = this.userAddress.city;
+      }
+      });
+
   }
 
   portChange(event: {
@@ -59,17 +88,7 @@ export class AddressPickerComponent implements OnInit {
 
   async updateSearchCitiesResults(evt) {
     const citySearchTerm = evt.text;
-    if (!this.cities) {
-      return;
-    }
-    if (citySearchTerm.length > 0) {
-      return this.addressService.getCitiesPrediction(citySearchTerm).subscribe(cities => {
-        this.citiesList = cities;
-      });
-    } else {
-      this.citiesList = this.cities;
-    }
-    // this.citiesList = this.cities.filter(cities => cities.startsWith(citySearchTerm));
+    this.citiesList = this.cities.filter(cities => cities.startsWith(citySearchTerm));
   }
 
   async updateSearchStreetsResults(evt) {
@@ -94,7 +113,7 @@ export class AddressPickerComponent implements OnInit {
     component: IonicSelectableComponent,
     value: any
   }) {
-    this.selectCountry = event.value;
+    this.selectedAddress.country = this.selectCountry = event.value;
     this.showCitiesList = true;
   }
 
@@ -110,10 +129,13 @@ export class AddressPickerComponent implements OnInit {
     if (!event.value) {
       return;
     }
-    this.selectCity = event.value;
+    this.selectedAddress.city = this.selectCity = event.value;
     this.showStreetsList = true;
     this.addressService.getCityStreets(this.selectCity).subscribe(streets => {
       this.streetsList = this.streets = streets;
+      if (this.isEdit) {
+        this.street = this.userAddress.street;
+      }
     });
   }
 
@@ -121,7 +143,14 @@ export class AddressPickerComponent implements OnInit {
     component: IonicSelectableComponent,
     value: any
   }) {
-    this.selectstreet = event.value;
+    this.selectedAddress.street = this.selectstreet = event.value;
+  }
+
+  onHouseNumberChosen(event: any) {
+    if (event.target.value) {
+    this.selectedAddress.houseNumber = event.target.value;
+    this.addressPicked.emit(this.selectedAddress);
+    }
   }
 
 }

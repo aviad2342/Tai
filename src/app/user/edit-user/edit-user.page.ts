@@ -7,6 +7,7 @@ import { switchMap } from 'rxjs/operators';
 import { UserService } from '../user.service';
 import { User } from '../user.model';
 import { Subscription } from 'rxjs';
+import { Address } from '../../shared/address.model';
 
 
 
@@ -42,6 +43,7 @@ export class EditUserPage implements OnInit, OnDestroy {
   id: string;
   @ViewChild('f', { static: true }) form: NgForm;
   private userSubscription: Subscription;
+  address: Address = new Address();
   updateImage = false;
 
   constructor(
@@ -61,6 +63,12 @@ export class EditUserPage implements OnInit, OnDestroy {
       this.userSubscription = this.userService.getUser(paramMap.get('id')).
       subscribe(user => {
         this.user = user;
+        this.address.setAddress(this.user.country,
+          this.user.city,
+          this.user.street,
+          this.user.houseNumber,
+          this.user.apartment,
+          this.user.entry);
         const userObj = {
           firstName: this.user.firstName,
           lastName: this.user.lastName,
@@ -110,6 +118,10 @@ export class EditUserPage implements OnInit, OnDestroy {
       imageFile = imageData;
     }
     this.form.value.image = imageFile;
+  }
+
+  onAddressPicked(address: Address) {
+    this.address = address;
   }
 
   onSubmit(form: NgForm) {

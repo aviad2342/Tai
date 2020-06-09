@@ -8,6 +8,7 @@
         <ionic-selectable
           #selectableCountriesComponent
           [items]="countriesList"
+          [(ngModel)]="country" 
           [canSearch]="true"
           (onOpen)="this.selectableStreetComponent.clear(); this.selectableCitiesComponent.clear()"
           (onSearch)="updateSearchCountriesResults($event)"
@@ -25,6 +26,7 @@
           (onOpen)="this.selectableStreetComponent.clear()"
           [isEnabled]="this.selectableCountriesComponent.hasValue() && !this.selectableCountriesComponent.isOpened"
           [items]="citiesList"
+          [(ngModel)]="city" 
           [canSearch]="true"
           (onSearch)="updateSearchCitiesResults($event)"
           (onChange)="selectCitiesResult($event)">
@@ -40,6 +42,7 @@
           #selectableStreetComponent
           [isEnabled]="this.selectableCitiesComponent.hasValue() && !this.selectableCitiesComponent.isOpened"
           [items]="streetsList"
+          [(ngModel)]="street" 
           [canSearch]="true"
           [canClear]="true"
           (onSearch)="updateSearchStreetsResults($event)"
@@ -47,10 +50,24 @@
         </ionic-selectable>
       </ion-item>
     </ion-col>
-    <ion-col size-sm="4">
+  </ion-row>
+  <ion-row>
+    <ion-col>
       <ion-item>
         <ion-label position="floating">מספר בית<ion-text color="danger">*</ion-text></ion-label>
-        <ion-input type="number" required></ion-input>
+        <ion-input type="number" name="houseNumber" ngModel value="houseNumber" required (change)="onHouseNumberChosen($event)"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">מספר דירה</ion-label>
+        <ion-input type="number"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">כניסה</ion-label>
+        <ion-input type="number"></ion-input>
       </ion-item>
     </ion-col>
   </ion-row>
