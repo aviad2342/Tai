@@ -76,12 +76,6 @@ export class EditUserPage implements OnInit, OnDestroy {
           phone: this.user.phone,
           password: this.user.password,
           date: this.user.date,
-          country: this.user.country,
-          city: this.user.city,
-          street: this.user.street,
-          houseNumber: this.user.houseNumber,
-          apartment: this.user.apartment,
-          entry: this.user.entry
           };
         // this.form.value.firstName = this.user.firstName;
         this.form.setValue(userObj);
@@ -125,7 +119,7 @@ export class EditUserPage implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm) {
-    console.log(this.updateImage);
+    console.log(this.address);
     if (!form.valid) {
       return;
     }
@@ -141,12 +135,12 @@ export class EditUserPage implements OnInit, OnDestroy {
           form.value.phone,
           form.value.email,
           new Date(form.value.date),
-          form.value.country,
-          form.value.city,
-          form.value.street,
-          form.value.houseNumber,
-          form.value.apartment,
-          form.value.entry,
+          this.address.country,
+          this.address.city,
+          this.address.street,
+          this.address.houseNumber,
+          this.address.apartment,
+          this.address.entry,
           uploadRes.imageUrl
         );
         return this.userService.updateUser(userToUpdate);
@@ -165,12 +159,12 @@ export class EditUserPage implements OnInit, OnDestroy {
         form.value.phone,
         form.value.email,
         new Date(form.value.date),
-        form.value.country,
-        form.value.city,
-        form.value.street,
-        form.value.houseNumber,
-        form.value.apartment,
-        form.value.entry,
+        this.address.country,
+        this.address.city,
+        this.address.street,
+        this.address.houseNumber,
+        this.address.apartment,
+        this.address.entry,
         this.user.profilePicture
       );
       this.userService.updateUser(userToUpdate).subscribe(() => {

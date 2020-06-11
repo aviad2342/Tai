@@ -4,6 +4,7 @@ import { Address } from '../../address.model';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/user/user.model';
+import { PickerController, IonInput } from '@ionic/angular';
 
 @Component({
   selector: 'app-address-picker',
@@ -19,12 +20,12 @@ export class AddressPickerComponent implements OnInit {
   @Input() isEdit = false;
   @Input() userAddress = new Address();
   selectedAddress: Address = new Address();
-  autocompleteItems: string[];
+  rangeArray: any[] = [1, 2, 3, 4, 5, 6, 7, 8];
 
   country: string;
   city: string;
   street: string;
-  houseNumber = 3;
+  houseNumber: string;
   apartment: string;
   entry: string;
 
@@ -47,16 +48,9 @@ export class AddressPickerComponent implements OnInit {
   showCitiesList = false;
   showStreetsList = false;
 
-  constructor(private addressService: AddressService) { }
+  constructor(private addressService: AddressService, private pickerController: PickerController) { }
 
   ngOnInit() {
-
-    if (this.isEdit) {
-     // this.houseNumber = this.userAddress.houseNumber;
-      this.apartment = this.userAddress.apartment;
-      this.entry = this.userAddress.entry;
-      console.log(this.userAddress);
-    }
 
     this.addressService.getCountries().subscribe(countries => {
       this.countriesList = this.countries = countries;
@@ -69,17 +63,21 @@ export class AddressPickerComponent implements OnInit {
        this.citiesList = this.cities = cities;
        if (this.isEdit) {
         this.city = this.userAddress.city;
+        this.getStreetsListByCity(this.city);
+        this.street = this.userAddress.street;
       }
       });
 
+    if (this.isEdit) {
+         this.houseNumber = this.userAddress.houseNumber;
+         this.apartment = this.userAddress.apartment;
+         this.entry = this.userAddress.entry;
+         this.selectedAddress = this.userAddress;
+         this.addressPicked.emit(this.selectedAddress);
+       }
+
   }
 
-  portChange(event: {
-    component: IonicSelectableComponent,
-    value: any
-  }) {
-    console.log('port:', event.value);
-  }
 
   async updateSearchCountriesResults(evt) {
     const countrySearchTerm = evt.text;
@@ -104,7 +102,6 @@ export class AddressPickerComponent implements OnInit {
     if (country.length > 0) {
     return this.addressService.getCountriesPrediction(country).subscribe(countries => {
       this.countries = countries;
-      console.log(countries);
     });
   }
   }
@@ -113,13 +110,9 @@ export class AddressPickerComponent implements OnInit {
     component: IonicSelectableComponent,
     value: any
   }) {
-    this.selectedAddress.country = this.selectCountry = event.value;
-    this.showCitiesList = true;
-  }
-
-  reSetStreetList() {
-    this.selectstreet = '';
-    this.showStreetsList = false;
+    // this.selectedAddress.country = this.selectCountry = event.value;
+    this.selectedAddress.country = event.value;
+    this.addressPicked.emit(this.selectedAddress);
   }
 
   async selectCitiesResult(event: {
@@ -129,13 +122,15 @@ export class AddressPickerComponent implements OnInit {
     if (!event.value) {
       return;
     }
-    this.selectedAddress.city = this.selectCity = event.value;
-    this.showStreetsList = true;
-    this.addressService.getCityStreets(this.selectCity).subscribe(streets => {
+    // this.selectedAddress.city = this.selectCity = event.value;
+    this.selectedAddress.city = event.value;
+    this.addressPicked.emit(this.selectedAddress);
+    this.getStreetsListByCity(event.value);
+  }
+
+  async getStreetsListByCity(city: string) {
+    this.addressService.getCityStreets(city).subscribe(streets => {
       this.streetsList = this.streets = streets;
-      if (this.isEdit) {
-        this.street = this.userAddress.street;
-      }
     });
   }
 
@@ -143,7 +138,9 @@ export class AddressPickerComponent implements OnInit {
     component: IonicSelectableComponent,
     value: any
   }) {
-    this.selectedAddress.street = this.selectstreet = event.value;
+    // this.selectedAddress.street = this.selectstreet = event.value;
+    this.selectedAddress.street = event.value;
+    this.addressPicked.emit(this.selectedAddress);
   }
 
   onHouseNumberChosen(event: any) {
@@ -151,6 +148,79 @@ export class AddressPickerComponent implements OnInit {
     this.selectedAddress.houseNumber = event.target.value;
     this.addressPicked.emit(this.selectedAddress);
     }
+  }
+
+  onApartmentChosen(event: any) {
+    if (event.target.value) {
+    this.selectedAddress.apartment = event.target.value;
+    this.addressPicked.emit(this.selectedAddress);
+    }
+  }
+
+  onEntryChosen(event: any) {
+    if (event.target.value) {
+    this.selectedAddress.entry = event.target.value;
+    this.addressPicked.emit(this.selectedAddress);
+    }
+  }
+  getColumnOptions() {
+    const options = [];
+    for (let i = 1; i < 300; i++) {
+      options.push({
+        text: i,
+        value: i,
+        selected: false
+      });
+    }
+    return options;
+  }
+async openPicker(input: string) {
+    const picker = await this.pickerController.create({
+      columns: [{
+        name: 'Number',
+        options: this.getColumnOptions()
+      }],
+     // input: {input: Number},
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: '+100',
+          role: 'add'
+        },
+        {
+          text: 'Confirm',
+          handler: (value: any) => {
+            switch (input) {
+              case 'houseNumber':
+                this.selectedAddress.houseNumber = value.Number.value;
+                this.addressPicked.emit(this.selectedAddress);
+                console.log(value);
+                break;
+              case 'apartment':
+                this.selectedAddress.apartment = value.Number.value;
+                this.addressPicked.emit(this.selectedAddress);
+                break;
+              case 'entry':
+                this.selectedAddress.entry = value.Number.value;
+                this.addressPicked.emit(this.selectedAddress);
+                break;
+              default:
+                break;
+            }
+          }
+        }
+      ]
+    });
+
+    await picker.present();
+    // picker.getColumn()
+    picker.addEventListener('ionPickerColChange', async (event: any) => {
+      event.detail.options[9].text = 555;
+      console.log(event.detail.options[9]);
+    });
   }
 
 }

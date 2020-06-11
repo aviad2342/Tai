@@ -1,10 +1,11 @@
 <div class="address">
-  <div class="titlebox">כתובת   <ion-icon name="location-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon></div>
+  <div class="titlebox" size="large">כתובת <ion-text color="danger">*</ion-text></div>
+  <ion-icon name="location-outline" size="large" class="ion-align-self-center titlebox-icon"></ion-icon>
 <ion-grid class="grid">
   <ion-row>
     <ion-col>
       <ion-item>
-        <ion-label>בחר מדינה</ion-label>
+        <ion-label>בחר מדינה <ion-text color="danger">*</ion-text></ion-label>
         <ionic-selectable
           #selectableCountriesComponent
           [items]="countriesList"
@@ -20,7 +21,7 @@
   <ion-row>
     <ion-col>
       <ion-item>
-        <ion-label>בחר עיר</ion-label>
+        <ion-label>בחר עיר <ion-text color="danger">*</ion-text></ion-label>
         <ionic-selectable
           #selectableCitiesComponent
           (onOpen)="this.selectableStreetComponent.clear()"
@@ -37,7 +38,7 @@
   <ion-row>
     <ion-col >
       <ion-item>
-        <ion-label>בחר רחוב</ion-label>
+        <ion-label>בחר רחוב <ion-text color="danger">*</ion-text></ion-label>
         <ionic-selectable
           #selectableStreetComponent
           [isEnabled]="this.selectableCitiesComponent.hasValue() && !this.selectableCitiesComponent.isOpened"
@@ -55,19 +56,19 @@
     <ion-col>
       <ion-item>
         <ion-label position="floating">מספר בית<ion-text color="danger">*</ion-text></ion-label>
-        <ion-input type="number" name="houseNumber" ngModel value="houseNumber" required (change)="onHouseNumberChosen($event)"></ion-input>
+        <ion-input #houseNumberComponent type="number" [(ngModel)]="this.userAddress.houseNumber" required (click)="openPicker('houseNumber')"></ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
       <ion-item>
         <ion-label position="floating">מספר דירה</ion-label>
-        <ion-input type="number"></ion-input>
+        <ion-input type="number" [(ngModel)]="this.userAddress.apartment" (click)="openPicker('apartment')"></ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
       <ion-item>
         <ion-label position="floating">כניסה</ion-label>
-        <ion-input type="number"></ion-input>
+        <ion-input type="number" [(ngModel)]="this.userAddress.entry" (click)="openPicker('entry')"></ion-input>
       </ion-item>
     </ion-col>
   </ion-row>
