@@ -45,8 +45,7 @@ export class AddressPickerComponent implements OnInit {
   selectCity: string;
   selectstreet: string;
 
-  showCitiesList = false;
-  showStreetsList = false;
+  showpickers = true;
 
   constructor(private addressService: AddressService, private pickerController: PickerController) { }
 
@@ -69,6 +68,7 @@ export class AddressPickerComponent implements OnInit {
       });
 
     if (this.isEdit) {
+         this.showpickers = false;
          this.houseNumber = this.userAddress.houseNumber;
          this.apartment = this.userAddress.apartment;
          this.entry = this.userAddress.entry;
@@ -141,6 +141,7 @@ export class AddressPickerComponent implements OnInit {
     // this.selectedAddress.street = this.selectstreet = event.value;
     this.selectedAddress.street = event.value;
     this.addressPicked.emit(this.selectedAddress);
+    this.enablePickers();
   }
 
   onHouseNumberChosen(event: any) {
@@ -165,7 +166,7 @@ export class AddressPickerComponent implements OnInit {
   }
   getColumnOptions() {
     const options = [];
-    for (let i = 1; i < 300; i++) {
+    for (let i = 0; i < 280; i++) {
       options.push({
         text: i,
         value: i,
@@ -174,6 +175,8 @@ export class AddressPickerComponent implements OnInit {
     }
     return options;
   }
+
+
 async openPicker(input: string) {
     const picker = await this.pickerController.create({
       columns: [{
@@ -185,13 +188,11 @@ async openPicker(input: string) {
         {
           text: 'Cancel',
           role: 'cancel',
-        },
-        {
-          text: '+100',
-          role: 'add'
+          cssClass: 'ion-text-capitalize'
         },
         {
           text: 'Confirm',
+          cssClass: 'ion-text-capitalize',
           handler: (value: any) => {
             switch (input) {
               case 'houseNumber':
@@ -214,13 +215,26 @@ async openPicker(input: string) {
         }
       ]
     });
-
     await picker.present();
     // picker.getColumn()
-    picker.addEventListener('ionPickerColChange', async (event: any) => {
-      event.detail.options[9].text = 555;
-      console.log(event.detail.options[9]);
-    });
+    // picker.addEventListener('ionPickerColChange', async (event: any) => {
+    //   // event.detail.options = this.getColumncOptions(10);
+    //  // picker.present();
+    //   console.log(event);
+    //   console.log(event.detail.selectedIndex);
+    //   console.log(event.detail.options[9]);
+    //   event.detail.selectedIndex = event.detail.selectedIndex + 25;
+    // });
+  }
+
+  disablPickers() {
+    this.showpickers = true;
+    this.selectedAddress.houseNumber = '';
+    this.selectedAddress.apartment = '';
+    this.selectedAddress.entry = '';
+  }
+  enablePickers() {
+    this.showpickers = false;
   }
 
 }

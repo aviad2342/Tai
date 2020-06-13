@@ -119,7 +119,6 @@ export class EditUserPage implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm) {
-    console.log(this.address);
     if (!form.valid) {
       return;
     }

@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../user.service';
 import { NgForm } from '@angular/forms';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { User } from '../user.model';
 import { Router } from '@angular/router';
 import { Address } from 'src/app/shared/address.model';
@@ -38,48 +37,18 @@ function base64toBlob(base64Data, contentType) {
 export class NewUserPage implements OnInit {
 
   @ViewChild('f', { static: true }) form: NgForm;
-  // startDate: string  = new Date('2015-12-02').toISOString();
-  autocompleteItems: string[];
-  autocomplete = '';
+
   countries: string[] = [];
   selectCountry: string;
   hideList = false;
-  address: Address;
+  address: Address = new Address();
 
   constructor(
     private router: Router,
-    private http: HttpClient,
     private userService: UserService
     ) { }
 
   ngOnInit() {
-    // new Intl.DateTimeFormat('he-IL').format(this.startDate);
-  }
-  async updateSearchResults(evt) {
-    const searchTerm = evt.srcElement.value;
-    console.log(searchTerm);
-    if (!searchTerm) {
-      this.hideList = true;
-      return;
-    }
-    this.hideList = false;
-    this.getCountriesAutoComplete(searchTerm);
-  }
-
-
-  getCountriesAutoComplete(country: string) {
-    if (country.length > 0) {
-    return this.userService.getCities(country).subscribe(countries => {
-      this.countries = countries;
-      console.log(countries);
-    });
-  }
-  }
-
-  selectCountryResult(country) {
-    this.selectCountry = country;
-    this.autocomplete = this.selectCountry;
-    this.hideList = true;
   }
 
   onImagePicked(imageData: string | File) {
@@ -97,6 +66,7 @@ export class NewUserPage implements OnInit {
     } else {
       imageFile = imageData;
     }
+
     this.form.value.image = imageFile;
   }
 
@@ -105,10 +75,11 @@ export class NewUserPage implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (!form.valid || !form.value.image) {
+    console.log(form.value.image);
+    if (!form.valid || !this.form.value.image) {
       return;
     }
-    this.userService.uploadImage(form.value.image, form.value.email)
+    this.userService.uploadImage(this.form.value.image, form.value.email)
     .pipe(
       switchMap(uploadRes => {
         const userToAdd = new User(

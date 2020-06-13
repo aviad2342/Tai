@@ -11,7 +11,7 @@
           [items]="countriesList"
           [(ngModel)]="country" 
           [canSearch]="true"
-          (onOpen)="this.selectableStreetComponent.clear(); this.selectableCitiesComponent.clear()"
+          (onOpen)="this.selectableStreetComponent.clear(); this.selectableCitiesComponent.clear(); disablPickers()"
           (onSearch)="updateSearchCountriesResults($event)"
           (onChange)="selectCountryResult($event)">
         </ionic-selectable>
@@ -24,7 +24,7 @@
         <ion-label>בחר עיר <ion-text color="danger">*</ion-text></ion-label>
         <ionic-selectable
           #selectableCitiesComponent
-          (onOpen)="this.selectableStreetComponent.clear()"
+          (onOpen)="this.selectableStreetComponent.clear(); disablPickers()"
           [isEnabled]="this.selectableCountriesComponent.hasValue() && !this.selectableCountriesComponent.isOpened"
           [items]="citiesList"
           [(ngModel)]="city" 
@@ -41,6 +41,7 @@
         <ion-label>בחר רחוב <ion-text color="danger">*</ion-text></ion-label>
         <ionic-selectable
           #selectableStreetComponent
+          (onOpen)="disablPickers()"
           [isEnabled]="this.selectableCitiesComponent.hasValue() && !this.selectableCitiesComponent.isOpened"
           [items]="streetsList"
           [(ngModel)]="street" 
@@ -56,19 +57,36 @@
     <ion-col>
       <ion-item>
         <ion-label position="floating">מספר בית<ion-text color="danger">*</ion-text></ion-label>
-        <ion-input #houseNumberComponent type="number" [(ngModel)]="this.userAddress.houseNumber" required (click)="openPicker('houseNumber')"></ion-input>
+        <ion-input 
+        [disabled]="showpickers" 
+        #houseNumberComponent 
+        type="number" 
+        [(ngModel)]="this.selectedAddress.houseNumber" 
+        required 
+        (click)="openPicker('houseNumber')">
+      </ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
       <ion-item>
         <ion-label position="floating">מספר דירה</ion-label>
-        <ion-input type="number" [(ngModel)]="this.userAddress.apartment" (click)="openPicker('apartment')"></ion-input>
+        <ion-input 
+        [disabled]="showpickers"
+        type="number" 
+        [(ngModel)]="this.selectedAddress.apartment" 
+        (click)="openPicker('apartment')">
+      </ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
       <ion-item>
         <ion-label position="floating">כניסה</ion-label>
-        <ion-input type="number" [(ngModel)]="this.userAddress.entry" (click)="openPicker('entry')"></ion-input>
+        <ion-input 
+        [disabled]="showpickers"
+        type="number" 
+        [(ngModel)]="this.selectedAddress.entry" 
+        (click)="openPicker('entry')">
+      </ion-input>
       </ion-item>
     </ion-col>
   </ion-row>
