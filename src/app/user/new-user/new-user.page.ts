@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { UserService } from '../user.service';
 import { NgForm } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
@@ -42,6 +41,8 @@ export class NewUserPage implements OnInit {
   selectCountry: string;
   hideList = false;
   address: Address = new Address();
+  userImage = '../../../assets/images/user-default-image.png';
+  file: File;
 
   constructor(
     private router: Router,
@@ -66,8 +67,9 @@ export class NewUserPage implements OnInit {
     } else {
       imageFile = imageData;
     }
-
+    this.file = imageFile;
     this.form.value.image = imageFile;
+
   }
 
   onAddressPicked(address: Address) {
@@ -75,7 +77,7 @@ export class NewUserPage implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    console.log(form.value.image);
+    form.value.image = this.file;
     if (!form.valid || !this.form.value.image) {
       return;
     }
@@ -86,9 +88,9 @@ export class NewUserPage implements OnInit {
           null,
           form.value.firstName,
           form.value.lastName,
-          form.value.email,
-          form.value.phone,
           form.value.password,
+          form.value.phone,
+          form.value.email,
           new Date(form.value.dateOfBirth),
           this.address.country,
           this.address.city,
