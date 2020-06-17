@@ -22,7 +22,7 @@ export class UserService {
     return this._users.asObservable();
   }
 
-  constructor( private http: HttpClient) { }
+  constructor( private http: HttpClient ) { }
 
   getUsers() {
     return this.http.get<User[]>('http://localhost:3000/api/user/users')

@@ -1,0 +1,22 @@
+ion-card {
+    max-width: 240px;
+    margin-right: auto;
+    margin-left: auto;
+    border: 1px solid rgb(230, 75, 113);
+    background-color: rgb(198, 216, 221);
+}
+
+ion-thumbnail {
+    --size: 10rem;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid rgb(218, 152, 169);
+    border-radius: 10px;
+    text-align: center;
+    background-color: white;
+}
+
+ion-img {
+    border-radius: 7px;
+    object-fit: fill;
+}
