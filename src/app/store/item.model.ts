@@ -8,7 +8,8 @@ export class Item {
         public thumbnail: string,
         public images: string[],
         public catalogNumber: string,
-        public quantity: number
+        public quantity: number,
+        public category: string
       ) {}
 
     }

@@ -31,6 +31,15 @@ ion-toolbar {
     --color: var(--ion-color-dark);
 }
 
+ion-tab-bar{
+    --background: rgb(234, 244, 245);
+}
+
+.title-icon {
+    font-size: x-large;
+    padding-left: 5px;
+    padding-right: 5px;
+}
 // ion-picker {
 //     direction: ltr;
 // }

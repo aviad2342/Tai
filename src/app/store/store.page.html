@@ -1,10 +1,28 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>חנות</ion-title>
+    <ion-title class="ion-no-padding">חנות</ion-title>
+    <ion-icon class="title-icon" slot="start" name="pricetags-outline"></ion-icon>
+    <ion-button slot="end" fill="outline">
+      <ion-icon name="cart-outline" slot="icon-only" color="dark" class="cart-icon"></ion-icon>
+      <ion-badge color="danger" class="cart-badge">3</ion-badge>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div *ngFor="let cat of categories" class="category-block">
+    <ion-row class="category-banner ion-no-padding">
+      <ion-col class="button tappable ion-text-center">{{ cat }}</ion-col>
+    </ion-row>
+    <ion-slides [options]="sliderConfig">
+      <ion-slide class="item-slide" *ngFor="let item of getItemByCategory(cat)">
+          <app-store-item [item]="item"></app-store-item>
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ion-content>
+
+<!-- <ion-content>
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-sm="6" offset-sm="3" class="ion-text-center">
@@ -18,4 +36,4 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-</ion-content>
+</ion-content> -->

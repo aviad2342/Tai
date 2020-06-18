@@ -14,6 +14,12 @@ export class StorePage implements OnInit, OnDestroy {
   items: Item[];
   isLoading = false;
   private itemsSubscription: Subscription;
+  categories = ['ספרים', 'הרצאות', 'אביזרים', 'אחר'];
+  sliderConfig = {
+    slidesPerView: 1.6,
+    spaceBetween: 10,
+    centeredSlides: true
+  };
 
   constructor( private storeService: StoreService ) { }
 
@@ -24,10 +30,11 @@ export class StorePage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
-    // this.isLoading = true;
-    // this.storeService.fetchPlaces().subscribe(() => {
-    //   this.isLoading = false;
-    // });
+    this.storeService.getItems().subscribe();
+  }
+  getItemByCategory(category: string) {
+    const items = this.items.filter(p => p.category === category).slice();
+    return items;
   }
 
   ngOnDestroy() {
