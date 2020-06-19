@@ -13,17 +13,26 @@
 }
 
 .category-block {
-    // width: min-content;
     margin-bottom: 4px;
 }
 
-.item-slide {
-    width: 300px !important;
+.category-title {
+    font-size: larger;
+    font-weight: bolder;
+    background-color: rgb(194, 194, 194);
 }
 
-.category-banner {
-    background: var(--ion-color-light);
-    height: 40px;
-    padding: 10px;
-    // font-weight: 500;
+.store-item {
+    min-width: max-content;
+    // position: fixed;
+    // top: 0;
+    // right: 0;
 }
+
+// .item-slide {
+
+// }
+
+// .category-banner {
+
+// }

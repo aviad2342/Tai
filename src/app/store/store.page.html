@@ -12,11 +12,11 @@
 <ion-content>
   <div *ngFor="let cat of categories" class="category-block">
     <ion-row class="category-banner ion-no-padding">
-      <ion-col class="button tappable ion-text-center">{{ cat }}</ion-col>
+      <ion-col class="button tappable ion-text-center align-self-center category-title">{{ cat }}</ion-col>
     </ion-row>
     <ion-slides [options]="sliderConfig">
       <ion-slide class="item-slide" *ngFor="let item of getItemByCategory(cat)">
-          <app-store-item [item]="item"></app-store-item>
+          <app-store-item [item]="item" class="store-item"></app-store-item>
       </ion-slide>
     </ion-slides>
   </div>

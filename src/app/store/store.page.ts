@@ -18,10 +18,37 @@ export class StorePage implements OnInit, OnDestroy {
   sliderConfig = {
     slidesPerView: 1.6,
     spaceBetween: 10,
-    centeredSlides: true
+    centeredSlides: true,
+    breakpoints: {
+      150: {
+        slidesPerView: 1,
+        spaceBetween: 10
+      },
+      320: {
+        slidesPerView: 1.6,
+        spaceBetween: 10
+      },
+      480: {
+        slidesPerView: 2,
+        spaceBetween: 10
+      },
+      650: {
+        slidesPerView: 3,
+        spaceBetween: 10
+      },
+      750: {
+        slidesPerView: 3,
+        spaceBetween: 10
+      },
+      1080: {
+        slidesPerView: 5,
+        spaceBetween: 3,
+        initialSlide: 1
+      }
+    }
   };
 
-  constructor( private storeService: StoreService ) { }
+  constructor( private storeService: StoreService) { }
 
   ngOnInit() {
     this.itemsSubscription = this.storeService.items.subscribe(items => {
