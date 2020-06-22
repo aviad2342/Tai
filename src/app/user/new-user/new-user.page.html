@@ -124,7 +124,11 @@
               <ion-datetime
               display-format="DD/MM/YYYY"
               pickerFormat="DD MMM YY"
+              monthNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
+              monthShortNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
               ngModel
+              [value]="date"
+              [pickerOptions]="pickerOptions"
               name="dateOfBirth"
               required
               #dateOfBirthCtrl="ngModel"

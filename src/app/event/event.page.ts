@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Event } from './event.model';
+import { Subscription } from 'rxjs';
+import { EventService } from './event.service';
 
 @Component({
   selector: 'app-event',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventPage implements OnInit {
 
-  constructor() { }
+  events: Event[];
+  private eventSubscription: Subscription;
+
+  constructor( private eventService: EventService) { }
 
   ngOnInit() {
+    this.eventSubscription = this.eventService.events.subscribe(events => {
+      this.events = events;
+      console.log(this.events);
+    });
   }
 
 }

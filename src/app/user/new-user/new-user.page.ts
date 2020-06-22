@@ -43,6 +43,27 @@ export class NewUserPage implements OnInit {
   address: Address = new Address();
   userImage = '../../../assets/images/user-default-image.png';
   file: File;
+  date = new Date();
+  pickerOptions = {
+    // cssClass: 'ion-justify-content-start',
+    // buttons: [
+    //   {
+    //     text: 'ביטול',
+    //     role: 'cancel',
+    //     cssClass: 'ion-justify-content-start'
+    //   },
+    //   {
+    //     text: 'אישור',
+    //     role: 'confirm',
+    //     cssClass: 'ion-justify-content-start',
+    //     handler: (value: any) => {
+    //       console.log(value);
+    //       this.date = value;
+    //     }
+    //   }
+    // ]
+  };
+
 
   constructor(
     private router: Router,

@@ -5,67 +5,6 @@ import { BehaviorSubject } from 'rxjs';
 import { Item } from './item.model';
 import { take, map, tap } from 'rxjs/operators';
 
-// new Item(
-//   '1',
-//   'הספר של גדי',
-//   'קורות חייו של גדי וילצנסקי',
-//   19.99,
-//   'https://www.hook.co.il/wp-content/uploads/2019/03/gadi-book.jpg',
-//   null,
-//   '444552',
-//   40
-// ),
-// new Item(
-//   '2',
-//   'הספר של גדי',
-//   'קורות חייו של גדי וילצנסקי',
-//   19.99,
-//   'https://www.e-vrit.co.il/Images/Products/covers_2019/bishul_master.jpg',
-//   null,
-//   '444552',
-//   40
-// ),
-// new Item(
-//   '3',
-//   'הספר של גדי',
-//   'קורות חייו של גדי וילצנסקי',
-//   19.99,
-//   'https://www.hook.co.il/wp-content/uploads/2019/03/gadi-book.jpg',
-//   null,
-//   '444552',
-//   40
-// ),
-// new Item(
-//   '4',
-//   'הספר של גדי',
-//   'קורות חייו של גדי וילצנסקי',
-//   19.99,
-//   'https://www.hook.co.il/wp-content/uploads/2019/03/gadi-book.jpg',
-//   null,
-//   '444552',
-//   40
-// ),
-// new Item(
-//   '5',
-//   'הספר של גדי',
-//   'קורות חייו של גדי וילצנסקי',
-//   19.99,
-//   'https://www.e-vrit.co.il/Images/Products/covers_2019/bishul_master.jpg',
-//   null,
-//   '444552',
-//   40
-// ),
-// new Item(
-//   '6',
-//   'הספר של גדי',
-//   'קורות חייו של גדי וילצנסקי',
-//   19.99,
-//   'https://www.hook.co.il/wp-content/uploads/2019/03/gadi-book.jpg',
-//   null,
-//   '444552',
-//   40
-// )
-
 @Injectable({
   providedIn: 'root'
 })

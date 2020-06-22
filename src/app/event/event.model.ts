@@ -1,4 +1,4 @@
-import { Time } from '@angular/common';
+import { Speaker } from './speaker.model';
 
 export class Event {
 
@@ -7,13 +7,13 @@ export class Event {
       public title: string,
       public description: string,
       public date: Date,
-      public beginsAt: Time,
-      public endsAt: Time,
+      public beginsAt: Date,
+      public endsAt: Date,
       public thumbnail: string,
       public images: string[],
-      public speakers: string,
+      public speakers: Speaker[],
       public maxCapacity: number,
-      public place: string,
+      public placeName: string,
       public country: string,
       public city: string,
       public street: string,
