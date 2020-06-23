@@ -1,3 +1,49 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu side="start" contentId="content">
+    <ion-menu-toggle auto-hide="false">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>
+          תפריט
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+  </ion-menu-toggle>
+
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item lines="none" routerLink="/tabs/event">
+            <ion-icon name="today-outline" slot="start"></ion-icon>
+            <ion-label slot="start">אירועים</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item lines="none" routerLink="/tabs/user">
+            <ion-icon name="people-outline" slot="start"></ion-icon>
+            <ion-label>משתמשים</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      <ion-menu-toggle auto-hide="false">
+        <ion-item lines="none" routerLink="/tabs/store">
+          <ion-icon name="pricetags-outline" slot="start"></ion-icon>
+          <ion-label>חנות</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+    <ion-menu-toggle auto-hide="false">
+      <ion-item lines="none" routerLink="/tabs/user">
+        <ion-icon name="checkbox-outline" slot="start"></ion-icon>
+        <ion-label>לקוחות</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item lines="none" (click)="onLogout()" button>
+            <ion-icon name="exit" slot="start"></ion-icon>
+            <ion-label>התנתק</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="content" main></ion-router-outlet>
 </ion-app>

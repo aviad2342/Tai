@@ -26,4 +26,8 @@ export class AppComponent {
       }
     });
   }
+
+  onLogout() {
+    // this.authService.logout();
+  }
 }

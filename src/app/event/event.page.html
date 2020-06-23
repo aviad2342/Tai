@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="isDesktop">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title class="ion-no-padding">אירועים</ion-title>
     <ion-icon class="title-icon" slot="start" name="pricetags-outline"></ion-icon>
   </ion-toolbar>

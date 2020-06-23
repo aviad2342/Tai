@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import { User } from './user.model';
 import { IonItemSliding } from '@ionic/angular';
+import { AppService } from '../app.service';
 
 
 
@@ -17,16 +18,19 @@ export class UserPage implements OnInit, OnDestroy {
 
   users: User[];
   private starsSub: Subscription;
+  isDesktop: boolean;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router, private appService: AppService) { }
 
   ngOnInit() {
+    console.log(this.appService.isRTL());
     this.starsSub = this.userService.users.subscribe(users => {
       this.users = users;
     });
   }
 
   ionViewWillEnter() {
+    this.isDesktop = this.appService.isDesktop();
     this.userService.getUsers().subscribe();
   }
 

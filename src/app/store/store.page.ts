@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { StoreService } from './store.service';
 import { Item } from './item.model';
+import { AppService } from '../app.service';
 
 
 @Component({
@@ -14,6 +15,7 @@ export class StorePage implements OnInit, OnDestroy {
   items: Item[];
   isLoading = false;
   private itemsSubscription: Subscription;
+  isDesktop: boolean;
   categories = ['ספרים', 'הרצאות', 'אביזרים', 'אחר'];
   sliderConfig = {
     slidesPerView: 1.6,
@@ -48,7 +50,7 @@ export class StorePage implements OnInit, OnDestroy {
     }
   };
 
-  constructor( private storeService: StoreService) { }
+  constructor( private storeService: StoreService, private appService: AppService) { }
 
   ngOnInit() {
     this.itemsSubscription = this.storeService.items.subscribe(items => {
@@ -57,6 +59,7 @@ export class StorePage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
+    this.isDesktop = this.appService.isDesktop();
     this.storeService.getItems().subscribe();
   }
   getItemByCategory(category: string) {
