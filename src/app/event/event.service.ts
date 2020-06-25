@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Event } from './event.model';
 import { Speaker, speakerTitle } from './speaker.model';
+import { take, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -110,4 +111,13 @@ export class EventService {
   }
 
   constructor() { }
+
+  getEvent(id: string) {
+    return this.events.pipe(
+      take(1),
+      map(events => {
+        return { ...events.find(p => p.id === id) };
+      })
+    );
+  }
 }

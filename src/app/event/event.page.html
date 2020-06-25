@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title class="ion-no-padding">אירועים</ion-title>
-    <ion-icon class="title-icon" slot="start" name="pricetags-outline"></ion-icon>
+    <ion-icon class="title-icon" slot="start" name="today-outline"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +14,7 @@
       <ion-col size="12" size-sm="6" offset-sm="3" class="ion-text-center">
         <ion-list>
           <div *ngFor="let event of events">
-            <app-event-item [event]="event" ></app-event-item>
+            <app-event-item [event]="event"></app-event-item>
           </div>
         </ion-list>
       </ion-col>

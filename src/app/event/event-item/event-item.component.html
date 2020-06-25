@@ -1,9 +1,9 @@
 <ion-item class="ion-text-center">
-<ion-card class="event-caed">
+<ion-card class="event-card">
   <ion-img [src]="event.thumbnail"></ion-img>
   <ion-card-header>
     <ion-card-title>{{ event.title }}</ion-card-title>
-    <ion-card-subtitle>{{ event.date | date }}</ion-card-subtitle>
+    <ion-card-subtitle>{{ event.date | date }} - {{ event.placeName }}</ion-card-subtitle>
   </ion-card-header>
   <ion-card-content>
     <p>{{ event.description }}</p>
@@ -13,13 +13,8 @@
       fill="solid"
       expand="full"
       color="primary"
-      [routerLink]="[
-        '/',
-        'tabs',
-        'discover',
-        event.id
-      ]"
-    >פרטים
+      [routerLink]="[ '/', 'tabs', 'event', event.id ]"
+      >פרטים
     <ion-icon name="receipt-outline" slot="start"></ion-icon>
     </ion-button>
   </div>
