@@ -31,6 +31,10 @@ ion-toolbar {
     --color: var(--ion-color-dark);
 }
 
+ion-back-button {
+  color: black;
+}
+
 ion-tab-bar{
     --background: rgb(234, 244, 245);
 }

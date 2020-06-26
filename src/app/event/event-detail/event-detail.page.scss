@@ -3,3 +3,9 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+div.swiper-pagination.swiper-pagination-bullets.swiper-pagination-bullet
+{
+stroke: #9f0 !important;
+background-color: red($color: #f80202) !important;
+}

@@ -12,6 +12,9 @@ export class GalleryComponent implements OnInit {
   slideOptsOne = {
     initialSlide: 0,
     slidesPerView: 1,
+    preloadImages: true,
+    updateOnImagesReady: true,
+    spaceBetween: 1,
     speed: 1000,
     loop: true,
     autoplay: true

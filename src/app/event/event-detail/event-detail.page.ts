@@ -13,6 +13,13 @@ export class EventDetailPage implements OnInit {
 
   event: Event;
 
+  speakerSlideOptions = {
+    initialSlide: 0,
+    slidesPerView: 1,
+    centeredSlides: true,
+    spaceBetween: 0
+  };
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,

@@ -8,6 +8,7 @@ import { EventDetailPageRoutingModule } from './event-detail-routing.module';
 
 import { EventDetailPage } from './event-detail.page';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { SpeakerItemComponent } from '../speaker-item/speaker-item.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
     EventDetailPageRoutingModule,
     SharedModule
   ],
-  declarations: [EventDetailPage]
+  declarations: [EventDetailPage, SpeakerItemComponent]
 })
 export class EventDetailPageModule {}

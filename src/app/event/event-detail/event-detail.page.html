@@ -11,12 +11,11 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
+      <ion-col size="12" size-sm="6" offset-sm="3" class="ion-text-center">
         <ion-card class="event-card">
           <app-gallery [images]="event.images"></app-gallery>
         <ion-card-header>
           <ion-card-title>{{ event.title }}</ion-card-title>
-          <ion-card-subtitle>{{ event.date | date }} - {{ event.placeName }}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
           <p>{{ event.description }}</p>
@@ -39,8 +38,17 @@
           </ion-item>
           <ion-item>
             <ion-icon name="location-outline"></ion-icon>
-            <ion-label class="ion-padding-start"> <strong>כתובת:</strong> {{ getAddress() }}</ion-label>
+            <ion-label class="ion-padding-start"> <strong>כתובת: </strong><a target="_blank" href="https://www.google.com/maps/place/{{getAddress()}}">{{ getAddress() }}</a></ion-label>
           </ion-item>
+          <ion-item lines="none">
+            <ion-icon name="mic-outline"></ion-icon>
+            <ion-label class="ion-padding-start"> <strong>נואמים: </strong></ion-label>
+          </ion-item>
+          <ion-slides pager="true" [options]="speakerSlideOptions" #speakerSlide>
+            <ion-slide *ngFor="let speaker of event.speakers">
+              <app-speaker-item [speaker]="speaker"></app-speaker-item>
+            </ion-slide>
+        </ion-slides>
         </ion-card-content>
         <div>
           <ion-button
