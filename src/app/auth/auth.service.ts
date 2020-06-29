@@ -6,15 +6,15 @@ import { User } from '../user/user.model';
 import { Plugins } from '@capacitor/core';
 import { UserLogged } from './userLogged.model';
 
-// export interface AuthResponseData {
-//   userId: string;
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   profilePicture: string;
-//   token: string;
-//   expiresIn: string;
-// }
+export interface AuthResponseData {
+  userId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  profilePicture: string;
+  token: string;
+  expiresIn: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -65,10 +65,12 @@ export class AuthService implements OnDestroy {
   autoLogin() {
     return from(Plugins.Storage.get({ key: 'authData' })).pipe(
       map(storedData => {
+        console.log(storedData);
         if (!storedData || !storedData.value) {
           return null;
         }
         const parsedData = JSON.parse(storedData.value) as UserLogged;
+        console.log(parsedData);
         const expirationTime = new Date(parsedData.tokenDuration);
         if (expirationTime <= new Date()) {
           return null;
@@ -99,7 +101,7 @@ export class AuthService implements OnDestroy {
 
   login(email: string, password: string) {
     return this.http
-      .post<UserLogged>(
+      .post<AuthResponseData>(
         `http://localhost:3000/api/auth/login`,
         { email, password }
       )
@@ -129,12 +131,11 @@ export class AuthService implements OnDestroy {
     }, duration);
   }
 
-  private setUserData(userData: UserLogged) {
+  private setUserData(userData: AuthResponseData) {
     const expirationTime = new Date(
-      new Date().getTime() + +userData.tokenDuration * 1000
-    );
+      new Date().getTime() + +userData.expiresIn * 1000);
     const user = new UserLogged(
-      userData.id,
+      userData.userId,
       userData.firstName,
       userData.lastName,
       userData.email,
@@ -142,13 +143,21 @@ export class AuthService implements OnDestroy {
       userData.token,
       expirationTime
     );
+    userData.expiresIn = expirationTime.toISOString();
     this._user.next(user);
     this.autoLogout(user.tokenDuration);
-    this.storeAuthData(user);
+    this.storeAuthData(userData);
   }
 
-  private storeAuthData(userLogged: UserLogged) {
-    const data = JSON.stringify(userLogged);
+  private storeAuthData(userLogged: AuthResponseData) {
+    const data = JSON.stringify({
+      userId: userLogged.userId,
+      firstNameus: userLogged.firstName,
+      lastName: userLogged.lastName,
+      email: userLogged.email,
+      token: userLogged.token,
+      tokenExpirationDate: userLogged.expiresIn
+    });
     Plugins.Storage.set({ key: 'authData', value: data });
   }
 }

@@ -86,6 +86,15 @@ export class UserService {
     }));
   }
 
+  getUserByEmail(email: string) {
+    return this.http
+      .get<User>(
+        `http://localhost:3000/api/user/users/email/${email}`)
+      .pipe(tap(user => {
+        return user;
+      }));
+  }
+
   uploadImage(image: File, fileName: string) {
     const uploadData = new FormData();
     uploadData.append('image', image, fileName);

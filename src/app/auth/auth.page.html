@@ -1,9 +1,80 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>auth</ion-title>
+    <ion-title>התחברות</ion-title>
+    <ion-icon class="title-icon" slot="start" name="log-in-outline"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content class="ion-padding">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-sm="4" offset-sm="4">
+          <ion-avatar>
+            <ion-img [src]="userProfilePicture">
+            </ion-img>
+          </ion-avatar>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" size-sm="4" offset-sm="4">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">אימייל</ion-label>
+              <ion-input
+                type="email"
+                ngModel="aviad@gmail.com"
+                name="email"
+                required
+                email
+                #emailCtrl="ngModel"
+                (ionBlur)="getUserProfilePicture(emailCtrl)"
+              ></ion-input>
+              <ion-icon name="at-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-item
+              *ngIf="!emailCtrl.valid && emailCtrl.touched"
+              lines="none"
+            >
+              <ion-label color="danger">
+                כתובת המייל אינה תקינה!
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">סיסמה</ion-label>
+              <ion-input
+                type="password"
+                ngModel="aviad2510"
+                name="password"
+                required
+                minlength="8"
+                #passwordCtrl="ngModel"
+              ></ion-input>
+              <ion-icon name="eye-off-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-item
+              *ngIf="!passwordCtrl.valid && passwordCtrl.touched"
+              lines="none"
+            >
+              <ion-label color="danger">
+                הסיסמה חייבת להיות בת 8 תווים לפחות!
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" size-sm="4" offset-sm="4">
+          <ion-button
+            type="submit"
+            color="primary"
+            expand="block"
+            [disabled]="!f.valid"
+          >
+          התחבר
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>
