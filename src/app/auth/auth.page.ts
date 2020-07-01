@@ -38,7 +38,7 @@ export class AuthPage implements OnInit {
           resData => {
             this.isLoading = false;
             loadingEl.dismiss();
-            // this.router.navigateByUrl('/places/tabs/discover');
+            this.router.navigateByUrl('/tabs/user');
           },
           errRes => {
             loadingEl.dismiss();
@@ -56,7 +56,6 @@ export class AuthPage implements OnInit {
   }
 
   getUserProfilePicture(emailCtrl: NgControl) {
-    this.authService.autoLogin().subscribe();
     if ( emailCtrl.touched && emailCtrl.valid ) {
       this.userService.getUserByEmail(emailCtrl.value).subscribe(user => {
         if (user) {

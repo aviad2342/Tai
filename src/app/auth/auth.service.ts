@@ -65,18 +65,33 @@ export class AuthService implements OnDestroy {
   autoLogin() {
     return from(Plugins.Storage.get({ key: 'authData' })).pipe(
       map(storedData => {
-        console.log(storedData);
         if (!storedData || !storedData.value) {
           return null;
         }
-        const parsedData = JSON.parse(storedData.value) as UserLogged;
+        const parsedData = JSON.parse(storedData.value) as {
+          userId: string;
+          firstName: string;
+          lastName: string;
+          email: string;
+          useprofilePicturerId: string;
+          token: string;
+          tokenExpirationDate: string;
+        };
         console.log(parsedData);
-        const expirationTime = new Date(parsedData.tokenDuration);
+        const expirationTime = new Date(parsedData.tokenExpirationDate);
         if (expirationTime <= new Date()) {
           return null;
         }
-        // const user = parsedData;
-        return parsedData;
+        const user = new UserLogged(
+          parsedData.userId,
+          parsedData.firstName,
+          parsedData.lastName,
+          parsedData.email,
+          parsedData.useprofilePicturerId,
+          parsedData.token,
+          expirationTime
+        );
+        return user;
       }),
       tap(user => {
         if (user) {
@@ -90,14 +105,14 @@ export class AuthService implements OnDestroy {
     );
   }
 
-  signup(email: string, password: string) {
-    return this.http
-      .post<UserLogged>(
-        `http://localhost:3000/api/auth/login`,
-        { email, password }
-      )
-      .pipe(tap(this.setUserData.bind(this)));
-  }
+  // signup(email: string, password: string) {
+  //   return this.http
+  //     .post<UserLogged>(
+  //       `http://localhost:3000/api/auth/login`,
+  //       { email, password }
+  //     )
+  //     .pipe(tap(this.setUserData.bind(this)));
+  // }
 
   login(email: string, password: string) {
     return this.http
@@ -152,9 +167,10 @@ export class AuthService implements OnDestroy {
   private storeAuthData(userLogged: AuthResponseData) {
     const data = JSON.stringify({
       userId: userLogged.userId,
-      firstNameus: userLogged.firstName,
+      firstName: userLogged.firstName,
       lastName: userLogged.lastName,
       email: userLogged.email,
+      profilePicture: userLogged.profilePicture,
       token: userLogged.token,
       tokenExpirationDate: userLogged.expiresIn
     });
