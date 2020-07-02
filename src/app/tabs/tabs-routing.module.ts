@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { AuthGuard } from '../auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -12,7 +13,7 @@ const routes: Routes = [
         children: [
           {
           path: '',
-          loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+          loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule), canLoad: [AuthGuard]
           }
         ]
       },
@@ -21,7 +22,7 @@ const routes: Routes = [
         children: [
           {
           path: '',
-          loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+          loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule), canLoad: [AuthGuard]
           }
         ]
       },
@@ -30,7 +31,7 @@ const routes: Routes = [
         children: [
           {
           path: '',
-          loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+          loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule), canLoad: [AuthGuard]
           }
         ]
       },
@@ -39,7 +40,7 @@ const routes: Routes = [
         children: [
           {
           path: '',
-          loadChildren: () => import('../user/user.module').then( m => m.UserPageModule)
+          loadChildren: () => import('../user/user.module').then( m => m.UserPageModule), canLoad: [AuthGuard]
           }
         ]
       },
@@ -48,7 +49,7 @@ const routes: Routes = [
         children: [
           {
           path: '',
-          loadChildren: () => import('../store/store.module').then( m => m.StorePageModule)
+          loadChildren: () => import('../store/store.module').then( m => m.StorePageModule), canLoad: [AuthGuard]
           }
         ]
       },
@@ -57,7 +58,7 @@ const routes: Routes = [
         children: [
           {
           path: '',
-          loadChildren: () => import('../event/event.module').then( m => m.EventPageModule)
+          loadChildren: () => import('../event/event.module').then( m => m.EventPageModule), canLoad: [AuthGuard]
           }
         ]
       },
@@ -87,14 +88,14 @@ const routes: Routes = [
       // },
       {
         path: '',
-        redirectTo: 'tabs/tabs/user',
+        redirectTo: '/tabs/user',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: 'tabs/tabs/user',
+    redirectTo: '/tabs/user',
     pathMatch: 'full'
   }
 ];

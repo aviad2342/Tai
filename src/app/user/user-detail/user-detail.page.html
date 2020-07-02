@@ -9,14 +9,14 @@
 
 <ion-content>
   <ion-grid class="ion-padding">
-    <ion-row>
-      <ion-col size="12" size-sm="4" offset-sm="4" class="main-col">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-sm="4" offset-sm="1" class="main-col ion-no-padding">
   <ion-card class="ion-text-center">
     <img [src]="this.user?.profilePicture" class="profile-image"/>
     <ion-card-header>
       <ion-card-title size="larg">{{ getUserFullName() }}</ion-card-title>
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content class="ion-no-padding">
       <ion-item>
         <ion-icon size="medium" name="at-outline"></ion-icon>
         <ion-label class="ion-padding-start">{{ user?.email }}</ion-label>

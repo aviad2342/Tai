@@ -15,7 +15,7 @@
 <ion-content>
   <div *ngFor="let cat of categories" class="category-block">
     <ion-row class="category-banner ion-no-padding">
-      <ion-col class="button tappable ion-text-center align-self-center category-title">{{ cat }}</ion-col>
+      <ion-col class="button tappable ion-text-right align-self-center category-title">{{ cat }}</ion-col>
     </ion-row>
     <ion-slides [options]="sliderConfig">
       <ion-slide class="item-slide" *ngFor="let item of getItemByCategory(cat)">

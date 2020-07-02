@@ -77,7 +77,6 @@ export class AuthService implements OnDestroy {
           token: string;
           tokenExpirationDate: string;
         };
-        console.log(parsedData);
         const expirationTime = new Date(parsedData.tokenExpirationDate);
         if (expirationTime <= new Date()) {
           return null;

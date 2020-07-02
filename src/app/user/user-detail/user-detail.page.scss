@@ -6,6 +6,7 @@
     bottom: calc(-1*(80px + 4px)); // -42px;
     border: 3px solid rgb(62, 63, 70);
     background-color: #fff;
+    object-fit: cover;
   }
 
   ion-card {
@@ -13,7 +14,7 @@
     background-size: 100% 40%;
     position: relative;
     height: 100%;
-    width: 400px;
+    width: auto;
 }
 
 ion-card-title {
@@ -21,5 +22,8 @@ ion-card-title {
 }
 
 .main-col {
-  max-width: 450px !important;
+  // max-width: 450px !important;
+  // min-width: 420px !important;
+  max-width: fit-content !important;
+  min-width: fit-content !important;
 }

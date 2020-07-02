@@ -21,7 +21,6 @@ export class EventPage implements OnInit {
   ngOnInit() {
     this.eventSubscription = this.eventService.events.subscribe(events => {
       this.events = events;
-      console.log(this.events);
     });
   }
 
