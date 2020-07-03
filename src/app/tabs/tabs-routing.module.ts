@@ -62,6 +62,15 @@ const routes: Routes = [
           }
         ]
       },
+      {
+        path: 'article',
+        children: [
+          {
+          path: '',
+          loadChildren: () => import('../article/article.module').then( m => m.ArticlePageModule), canLoad: [AuthGuard]
+          }
+        ]
+      },
       // {
       //   path: 'tab1',
       //   loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)

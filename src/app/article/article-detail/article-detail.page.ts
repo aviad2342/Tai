@@ -1,52 +1,45 @@
 import { Component, OnInit } from '@angular/core';
+import { Article } from '../article.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventService } from '../event.service';
 import { AlertController, NavController } from '@ionic/angular';
-import { Event } from '../event.model';
+import { ArticleService } from '../article.service';
 
 @Component({
-  selector: 'app-event-detail',
-  templateUrl: './event-detail.page.html',
-  styleUrls: ['./event-detail.page.scss'],
+  selector: 'app-article-detail',
+  templateUrl: './article-detail.page.html',
+  styleUrls: ['./article-detail.page.scss'],
 })
-export class EventDetailPage implements OnInit {
+export class ArticleDetailPage implements OnInit {
 
-  event: Event;
-
-  speakerSlideOptions = {
-    initialSlide: 0,
-    slidesPerView: 1,
-    centeredSlides: true,
-    spaceBetween: 0
-  };
+  article: Article;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private alertController: AlertController,
-    private eventService: EventService,
+    private articleService: ArticleService,
     private navController: NavController
     ) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
-        this.navController.navigateBack('/tabs/event');
+        this.navController.navigateBack('/tabs/article');
         return;
       }
-      this.eventService.getEvent(paramMap.get('id')).subscribe(event => {
-            this.event = event;
+      this.articleService.getArticle(paramMap.get('id')).subscribe(article => {
+            this.article = article;
           },
           error => {
             this.alertController
               .create({
                 header: 'ישנה תקלה!',
-                message: 'לא ניתן להציג את האירוע.',
+                message: 'לא ניתן להציג את המאמר.',
                 buttons: [
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.router.navigate(['/tabs/event']);
+                      this.router.navigate(['/tabs/article']);
                     }
                   }
                 ]
@@ -57,8 +50,8 @@ export class EventDetailPage implements OnInit {
     });
   }
 
-  getAddress() {
-    return this.event?.street + ' ' + this.event?.houseNumber + ', ' + this.event?.city + ', ' + this.event?.country;
+  getAuthorFullName() {
+    return this.article.author.firstName + ' ' + this.article.author.lastName;
   }
 
 }

@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="isDesktop">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-no-padding">מאמרים</ion-title>
+    <ion-icon class="title-icon" slot="start" name="newspaper-outline"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-sm="4" offset-sm="2" class="ion-text-center">
+        <ion-list>
+          <div *ngFor="let article of articles">
+            <app-article-item [article]="article" [routerLink]="['/', 'tabs', 'article', article.id]"></app-article-item>
+          </div>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
