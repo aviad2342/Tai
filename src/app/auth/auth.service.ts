@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../user/user.model';
 import { Plugins } from '@capacitor/core';
 import { UserLogged } from './userLogged.model';
+import { UserService } from '../user/user.service';
 
 export interface AuthResponseData {
   userId: string;
@@ -60,7 +61,11 @@ export class AuthService implements OnDestroy {
     );
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userSrvice: UserService) {}
+
+  getUserLogged() {
+    return this.userSrvice.getUser(this._user.value.id);
+  }
 
   autoLogin() {
     return from(Plugins.Storage.get({ key: 'authData' })).pipe(

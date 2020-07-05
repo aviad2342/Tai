@@ -1,3 +1,14 @@
-<p>
-  comment works!
-</p>
+<ion-item>
+  <ion-thumbnail  size="medium" slot="start">
+    <ion-img [src]="comment.author.profilePicture"></ion-img>
+  </ion-thumbnail>
+  <ion-label>
+    <ion-text>
+      <h2>{{ comment.title }}</h2>
+    </ion-text>
+    <ion-text color="medium">
+      <p>{{ comment.body }}</p>
+    </ion-text>
+    <p>{{ comment.date | date }}</p>
+  </ion-label>
+</ion-item>

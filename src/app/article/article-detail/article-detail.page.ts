@@ -3,6 +3,9 @@ import { Article } from '../article.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 import { ArticleService } from '../article.service';
+import { NgForm } from '@angular/forms';
+import { AuthService } from 'src/app/auth/auth.service';
+import { Comment } from '../comment.model';
 
 @Component({
   selector: 'app-article-detail',
@@ -18,7 +21,8 @@ export class ArticleDetailPage implements OnInit {
     private router: Router,
     private alertController: AlertController,
     private articleService: ArticleService,
-    private navController: NavController
+    private navController: NavController,
+    private authService: AuthService
     ) { }
 
   ngOnInit() {
@@ -47,6 +51,25 @@ export class ArticleDetailPage implements OnInit {
               .then(alertEl => alertEl.present());
           }
         );
+    });
+  }
+
+  onSubmit(form: NgForm) {
+    if (!form.valid) {
+      return;
+    }
+
+    this.authService.getUserLogged().subscribe(user => {
+      const comment = new Comment(
+        this.article.id,
+        null,
+        form.value.title,
+        form.value.body,
+        new Date(),
+        user
+      );
+      this.article.comments.push(comment);
+      form.reset();
     });
   }
 
