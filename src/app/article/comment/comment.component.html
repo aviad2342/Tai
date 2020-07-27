@@ -1,4 +1,4 @@
-<ion-item>
+<!-- <ion-item>
   <ion-thumbnail  size="medium" slot="start">
     <ion-img [src]="comment.author.profilePicture"></ion-img>
   </ion-thumbnail>
@@ -11,4 +11,22 @@
     </ion-text>
     <p>{{ comment.date | date }}</p>
   </ion-label>
+</ion-item> -->
+
+<ion-item lines="none">
+  <ion-avatar  size="medium" slot="start" class="ion-align-self-start">
+    <ion-img [src]="comment.author.profilePicture"></ion-img>
+  </ion-avatar>
+  <div class="talk-bubble tri-right round border right-top">
+    <div class="talktext">
+    <ion-text>
+      <b>{{ getAuthorFullName() }}</b>
+    </ion-text>
+    <ion-text color="medium">
+      <p>{{ comment.body }}</p>
+    </ion-text>
+    <small>{{ comment.date | date }}</small>
+    <!-- <p>{{ comment.date | date }}</p> -->
+  </div>
+  </div>
 </ion-item>

@@ -14,4 +14,7 @@ export class CommentComponent implements OnInit {
 
   ngOnInit() {}
 
+  getAuthorFullName() {
+    return this.comment.author.firstName + ' ' + this.comment.author.lastName;
+  }
 }
