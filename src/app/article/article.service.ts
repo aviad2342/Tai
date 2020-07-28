@@ -38,7 +38,7 @@ export class ArticleService {
           '0',
           'http://localhost:3000/images/aviad2342@.jpg'
         ),
-        [new Comment('1', '1', 'יפה מאוד', 'אהבתי את התוכן והכתיבה', new Date(), new User(
+        [new Comment('1', '1', 'אהבתי את התוכן והכתיבה', new Date(), new User(
           '7bec4c08-5841-4eb3-8a98-e629c5d86e37',
           'אביעד',
           'בן חיון',
@@ -54,7 +54,7 @@ export class ArticleService {
           '0',
           'http://localhost:3000/images/aviad2342@.jpg')
         ),
-        new Comment('1', '1', 'יפה מאוד', 'אהבתי את התוכן והכתיבה', new Date(), new User(
+        new Comment('1', '1', 'אהבתי את התוכן והכתיבה', new Date(), new User(
           '7bec4c08-5841-4eb3-8a98-e629c5d86e37',
           'אביעד',
           'בן חיון',
@@ -95,7 +95,7 @@ export class ArticleService {
           '0',
           'http://localhost:3000/images/aviad2342@.jpg'
         ),
-        [new Comment('1', '1', 'יפה מאוד', 'אהבתי את התוכן והכתיבה', new Date(), new User(
+        [new Comment('1', '1', 'אהבתי את התוכן והכתיבה', new Date(), new User(
           '7bec4c08-5841-4eb3-8a98-e629c5d86e37',
           'אביעד',
           'בן חיון',
@@ -111,7 +111,7 @@ export class ArticleService {
           '0',
           'http://localhost:3000/images/aviad2342@.jpg')
         ),
-        new Comment('1', '1', 'יפה מאוד', 'אהבתי את התוכן והכתיבה', new Date(), new User(
+        new Comment('1', '1', 'אהבתי את התוכן והכתיבה', new Date(), new User(
           '7bec4c08-5841-4eb3-8a98-e629c5d86e37',
           'אביעד',
           'בן חיון',
@@ -132,7 +132,7 @@ export class ArticleService {
         'aa12',
         'חזרה לאמא אדמה',
         'מאיפה הגענו ולאן אנו הולכים',
-        'הגישה הזאת אומרת שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם.',
+        '  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהםהגישה הזאת אומרת שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם.',
         new Date(),
         'https://images.wsj.net/im-101142?width=620&size=1.5',
         30,
@@ -152,7 +152,7 @@ export class ArticleService {
           '0',
           'http://localhost:3000/images/aviad2342@.jpg'
         ),
-        [new Comment('1', '1', 'יפה מאוד', 'אהבתי את התוכן והכתיבה', new Date(), new User(
+        [new Comment('1', '1', 'אהבתי את התוכן והכתיבה', new Date(), new User(
           '7bec4c08-5841-4eb3-8a98-e629c5d86e37',
           'אביעד',
           'בן חיון',
@@ -168,7 +168,7 @@ export class ArticleService {
           '0',
           'http://localhost:3000/images/aviad2342@.jpg')
         ),
-        new Comment('1', '1', 'יפה מאוד', 'אהבתי את התוכן והכתיבה', new Date(), new User(
+        new Comment('1', '1', 'אהבתי את התוכן והכתיבה', new Date(), new User(
           '7bec4c08-5841-4eb3-8a98-e629c5d86e37',
           'אביעד',
           'בן חיון',

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Article } from '../article.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, IonContent, IonList } from '@ionic/angular';
 import { ArticleService } from '../article.service';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -15,6 +15,8 @@ import { Comment } from '../comment.model';
 export class ArticleDetailPage implements OnInit {
 
   article: Article;
+  @ViewChild(IonContent) content: IonContent;
+  addComment = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -63,7 +65,6 @@ export class ArticleDetailPage implements OnInit {
       const comment = new Comment(
         this.article.id,
         null,
-        form.value.title,
         form.value.body,
         new Date(),
         user
@@ -71,6 +72,18 @@ export class ArticleDetailPage implements OnInit {
       this.article.comments.push(comment);
       form.reset();
     });
+    this.content.scrollToBottom(200);
+  }
+
+   getContent() {
+    return document.querySelector('ion-content');
+  }
+
+   scrollToBottom() {
+    this.getContent().scrollToBottom(500);
+  }
+  showForm() {
+     this.addComment = true;
   }
 
   getAuthorFullName() {

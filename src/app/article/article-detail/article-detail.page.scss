@@ -13,3 +13,13 @@
 // .btn-submit-comment {
 //     float: left;
 // }
+
+.comment-input {
+    width: 100%;
+    border: 1px solid var(--ion-color-primary);
+    border-radius: 10px;
+    background: #fff;
+    resize: none;
+    padding-left: 10px;
+    padding-right: 10px;
+}
