@@ -71,6 +71,7 @@ export class ArticleDetailPage implements OnInit {
       );
       this.article.comments.push(comment);
       form.reset();
+      this.content.scrollToBottom(200);
     });
     this.content.scrollToBottom(200);
   }

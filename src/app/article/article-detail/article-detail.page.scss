@@ -4,6 +4,12 @@
 
 .comment-item {
     padding-bottom: 5px;
+    min-height: 100%;
+    width: 100%;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    margin: 0 auto;
 }
 
 .comment-form {
@@ -22,4 +28,12 @@
     resize: none;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.btn-send {
+    width: fit-content;
+}
+
+.spacer-div {
+    height: 100px;
 }

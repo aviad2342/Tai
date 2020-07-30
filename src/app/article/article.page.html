@@ -14,7 +14,7 @@
       <ion-col size="12" size-sm="4" offset-sm="2" class="ion-text-center">
         <ion-list>
           <div *ngFor="let article of articles">
-            <app-article-item [article]="article" [routerLink]="['/', 'tabs', 'article', article.id]"></app-article-item>
+            <app-article-item [article]="article" [routerLink]="['/', 'article', article.id]"></app-article-item>
           </div>
         </ion-list>
       </ion-col>
