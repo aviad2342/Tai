@@ -1,9 +1,151 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>new-article</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/article"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-no-padding">כתוב מאמר</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-sm="4" offset-sm="4">
+          <quill-editor></quill-editor>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" size-sm="4" offset-sm="4">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating"> שם <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="text"
+                ngModel
+                name="firstName"
+                required
+                #firstNameCtrl="ngModel"
+              ></ion-input>
+              <ion-icon name="text-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-item
+            *ngIf="!firstNameCtrl.valid && firstNameCtrl.touched"
+            lines="none">
+            <ion-label color="danger">
+              זהו שדה חובה!
+            </ion-label>
+          </ion-item>
+            <ion-item>
+              <ion-label position="floating"> שם משפחה <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="text"
+                ngModel
+                name="lastName"
+                required
+                #lastNameCtrl="ngModel"
+              ></ion-input>
+              <ion-icon name="text-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-item
+            *ngIf="!lastNameCtrl.valid && lastNameCtrl.touched"
+            lines="none">
+            <ion-label color="danger">
+              זהו שדה חובה!
+            </ion-label>
+          </ion-item>
+            <ion-item>
+              <ion-label position="floating"> אימייל <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="email"
+                ngModel
+                name="email"
+                required
+                email
+                #emailCtrl="ngModel"
+              ></ion-input>
+              <ion-icon name="at" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-item
+              *ngIf="!emailCtrl.valid && emailCtrl.touched"
+              lines="none">
+              <ion-label color="danger">
+                כתובת המייל אינה תקינה!
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating"> מספר טלפון <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="tel"
+                ngModel
+                name="phone"
+                minlength="10"
+                maxlength="10"
+                required
+                tel
+                #phoneCtrl="ngModel"
+              ></ion-input>
+              <ion-icon name="call-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-item
+              *ngIf="!phoneCtrl.valid && phoneCtrl.touched"
+              lines="none">
+              <ion-label color="danger">
+                כתובת המייל אינה תקינה!
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">סיסמה<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="password"
+                ngModel
+                name="password"
+                required
+                minlength="6"
+                #passwordCtrl="ngModel"
+              ></ion-input>
+              <ion-icon name="eye-off-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-item
+              *ngIf="!passwordCtrl.valid && passwordCtrl.touched"
+              lines="none">
+              <ion-label color="danger">
+                Should at least be 6 characters long.
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">תאריך לידה<ion-text color="danger">*</ion-text></ion-label>
 
+              <ion-icon name="calendar-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-item
+              *ngIf=""
+              lines="none">
+              <ion-label color="danger">
+                Should at least be 6 characters long.
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" size-sm="4" offset-sm="4" class="address-picker">
+
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" size-sm="4" offset-sm="4">
+          <ion-button
+            type="submit"
+            color="primary"
+            expand="block"
+            [disabled]="!f.valid"
+          >
+          הוסף
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>
+

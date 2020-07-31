@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { NewArticlePageRoutingModule } from './new-article-routing.module';
 
 import { NewArticlePage } from './new-article.page';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    NewArticlePageRoutingModule
+    NewArticlePageRoutingModule,
+    QuillModule
   ],
   declarations: [NewArticlePage]
 })

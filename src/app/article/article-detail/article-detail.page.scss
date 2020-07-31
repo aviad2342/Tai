@@ -30,8 +30,13 @@
     padding-right: 10px;
 }
 
+// .article-chat-box-input {
+//     margin-right: 0;
+// }
+
 .btn-send {
-    width: fit-content;
+    --padding-start: 0.5em;
+    --padding-end: 0.5em;
 }
 
 .spacer-div {

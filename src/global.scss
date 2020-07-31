@@ -25,6 +25,10 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~quill/dist/quill.snow.css';
+
 
 ion-toolbar {
     --background: var(--ion-color-primary);
@@ -57,6 +61,10 @@ ion-icon {
   
     &[class*="custom-waze"] {
       mask-image: url(./assets/icon/waze.svg);
+    }
+
+    &[class*="custom-text-add"] {
+      mask-image: url(./assets/icon/text-add.svg);
     }
   
   }

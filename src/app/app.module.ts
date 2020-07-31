@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { QuillModule } from 'ngx-quill';
 import localeHe from '@angular/common/locales/he';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,7 +21,8 @@ registerLocaleData(localeHe, 'he-HE');
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    QuillModule.forRoot()
   ],
   providers: [
     StatusBar,
