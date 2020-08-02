@@ -8,6 +8,7 @@ import { NewArticlePageRoutingModule } from './new-article-routing.module';
 
 import { NewArticlePage } from './new-article.page';
 import { QuillModule } from 'ngx-quill';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { QuillModule } from 'ngx-quill';
     FormsModule,
     IonicModule,
     NewArticlePageRoutingModule,
-    QuillModule
+    QuillModule,
+    SharedModule
   ],
   declarations: [NewArticlePage]
 })

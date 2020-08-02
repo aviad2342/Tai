@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Comment } from '../comment.model';
+import { UserService } from 'src/app/user/user.service';
+import { User } from 'src/app/user/user.model';
 
 @Component({
   selector: 'app-comment',
@@ -9,12 +11,17 @@ import { Comment } from '../comment.model';
 export class CommentComponent implements OnInit {
 
   @Input() comment: Comment;
+  author: User;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userService.getUser(this.comment.authorId).subscribe(user => {
+      this.author = user;
+    });
+  }
 
   getAuthorFullName() {
-    return this.comment.author.firstName + ' ' + this.comment.author.lastName;
+    return this.author?.firstName + ' ' + this.author?.lastName;
   }
 }

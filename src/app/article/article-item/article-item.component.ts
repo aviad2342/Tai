@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Article } from '../article.model';
+import { UserService } from 'src/app/user/user.service';
+import { User } from 'src/app/user/user.model';
 
 @Component({
   selector: 'app-article-item',
@@ -9,13 +11,18 @@ import { Article } from '../article.model';
 export class ArticleItemComponent implements OnInit {
 
   @Input() article: Article;
+  author: User;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userService.getUser(this.article.authorId).subscribe(user => {
+      this.author = user;
+    });
+  }
 
   getAuthorFullName() {
-    return this.article.author.firstName + ' ' + this.article.author.lastName;
+    return this.author?.firstName + ' ' + this.author?.lastName;
   }
 
 }

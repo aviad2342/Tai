@@ -3,11 +3,11 @@ import { User } from '../user/user.model';
 export class Comment {
 
     constructor(
-      public articleId: string,
       public id: string,
+      public articleId: string,
+      public authorId: string,
       public body: string,
-      public date: Date,
-      public author: User
+      public date: Date
     ) {}
 
 }
