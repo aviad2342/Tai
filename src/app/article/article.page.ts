@@ -26,6 +26,7 @@ export class ArticlePage implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
     this.isDesktop = this.appService.isDesktop();
+    this.articleService.getArticles().subscribe();
   }
 
   ngOnDestroy() {

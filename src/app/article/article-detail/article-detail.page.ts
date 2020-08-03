@@ -1,14 +1,16 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { Article } from '../article.model';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController, IonContent, IonList } from '@ionic/angular';
-import { ArticleService } from '../article.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { AuthService } from 'src/app/auth/auth.service';
-import { Comment } from '../comment.model';
-import { UserService } from 'src/app/user/user.service';
-import { User } from 'src/app/user/user.model';
 import { Subscription } from 'rxjs';
+import { flatMap, switchMap, map } from 'rxjs/operators';
+import { UserService } from 'src/app/user/user.service';
+import { ArticleService } from '../article.service';
+import { AuthService } from 'src/app/auth/auth.service';
+import { Article } from '../article.model';
+import { Comment } from '../comment.model';
+import { User } from 'src/app/user/user.model';
+
 
 @Component({
   selector: 'app-article-detail',
@@ -61,14 +63,45 @@ export class ArticleDetailPage implements OnInit, OnDestroy {
           }
         );
     });
-    this.userService.getUser(this.article.authorId).subscribe(user => {
-      this.author = user;
-    });
-    this.commentsSub = this.articleService.getComments(this.article.id).subscribe(comments => {
+
+    this.commentsSub = this.articleService.getCommentss(this.article?.id).subscribe(comments => {
+      // comments.forEach(comment => {
+      //   this.comments.push(comment);
+      // });
       this.comments = comments;
       console.log(this.comments);
     });
-  }
+    this.userService.getUser(this.article?.authorId).subscribe(user => {
+      this.author = user;
+    });
+
+    // this.route.paramMap.subscribe(paramMap => {
+    //   if (!paramMap.has('id')) {
+    //     this.navController.navigateBack('/tabs/article');
+    //     return;
+    //   }
+    //   this.articleService.getArticle(paramMap.get('id')).pipe(
+    //   map(article => {
+    //     this.article = article;
+    //     this.articleService.getComments(this.article.id).pipe(
+    //   map(comments => {
+    //         this.comments = comments;
+    //         console.log(this.comments);
+    //         this.userService.getUser(this.article.authorId).pipe(
+    //           map(user => {
+    //             this.author = user;
+    //           })
+    //         ).subscribe();
+    //       })
+    //     ).subscribe();
+    //   })
+    // ).subscribe();
+  // });
+}
+
+// ionViewWillEnter() {
+//   this.articleService.getComments(this.article.id).subscribe();
+// }
 
   onSubmit(form: NgForm) {
     if (!form.valid) {

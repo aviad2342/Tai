@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { take, map } from 'rxjs/operators';
+import { take, map, tap, switchMap } from 'rxjs/operators';
 
 import { Article } from './article.model';
 import { Comment } from './comment.model';
-import { User } from '../user/user.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -13,61 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class ArticleService {
 
     // tslint:disable-next-line: variable-name
-    private _articles = new BehaviorSubject<Article[]>([
-      new Article(
-        '1',
-        '8b36691a-a8d0-420b-881c-8d056683bb98',
-        'aa12',
-        'חזרה לאמא אדמה',
-        'מאיפה הגענו ולאן אנו הולכים',
-        '  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהםהגישה הזאת אומרת שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם.',
-        new Date(),
-        new Date(),
-        'https://images.wsj.net/im-101142?width=620&size=1.5',
-        30,
-        3
-        ),
-        new Article(
-          '2',
-          '8b36691a-a8d0-420b-881c-8d056683bb98',
-          'aa12',
-          'חזרה לאמא אדמה',
-          'מאיפה הגענו ולאן אנו הולכים',
-          '  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהםהגישה הזאת אומרת שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם.',
-          new Date(),
-          new Date(),
-          'https://images.wsj.net/im-101142?width=620&size=1.5',
-          30,
-          3
-          ),
-          new Article(
-            '3',
-            '8b36691a-a8d0-420b-881c-8d056683bb98',
-            'aa12',
-            'חזרה לאמא אדמה',
-            'מאיפה הגענו ולאן אנו הולכים',
-            '  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהםהגישה הזאת אומרת שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם.',
-            new Date(),
-            new Date(),
-            'https://images.wsj.net/im-101142?width=620&size=1.5',
-            30,
-            3
-            ),
-            new Article(
-              '4',
-              '8b36691a-a8d0-420b-881c-8d056683bb98',
-              'aa12',
-              'חזרה לאמא אדמה',
-              'מאיפה הגענו ולאן אנו הולכים',
-              '  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם  שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהםהגישה הזאת אומרת שעלינו לנהל את הבעיות הרגשיות שלנו וכי הבעיות בכלל קיימות וחיינו לא מושלמים כיפשוט עוד לא התחלנו לפקח עליהם.',
-              new Date(),
-              new Date(),
-              'https://images.wsj.net/im-101142?width=620&size=1.5',
-              30,
-              3
-              )
-
-    ]);
+    private _articles = new BehaviorSubject<Article[]>([]);
 
     // tslint:disable-next-line: variable-name
     private _comments = new BehaviorSubject<Comment[]>([
@@ -75,7 +20,7 @@ export class ArticleService {
       new Comment('2', '1', '7bec4c08-5841-4eb3-8a98-e629c5d86e37', 'אהבתי את התוכן והכתיבה', new Date()),
       new Comment('3', '2', '001fe71a-f9e3-4f8a-8df5-d67807349efc', 'אהבתי את התוכן והכתיבה', new Date()),
       new Comment('4', '3', '001fe71a-f9e3-4f8a-8df5-d67807349efc', 'אהבתי את התוכן והכתיבה', new Date()),
-      new Comment('5', '3', '17bec4c08-5841-4eb3-8a98-e629c5d86e37', 'אהבתי את התוכן והכתיבה', new Date()),
+      new Comment('5', '3', '17bec4c08-5841-4eb3-8a98-e629c5d86e37', 'אהבתי את התוכן והכתיבה', new Date())
     ]);
 
 
@@ -89,13 +34,80 @@ export class ArticleService {
 
     constructor(private http: HttpClient ) { }
 
+    getArticles() {
+      return this.http.get<Article[]>('http://localhost:3000/api/article/articles')
+      .pipe(tap(resDta => {
+        this._articles.next(resDta);
+      }));
+    }
+
     getArticle(id: string) {
-      return this.articles.pipe(
+      return this.http.get<Article>(`http://localhost:3000/api/article/article/${id}`)
+      .pipe(tap(resDta => {
+        return resDta;
+      }));
+    }
+
+    addArticle(article: Article) {
+      return this.http.post<{id: string}>('http://localhost:3000/api/article/article',
+      {
+        ...article
+      }).
+      pipe(
+        switchMap(resData => {
+          article.id = resData.id;
+          return this.articles;
+        }),
         take(1),
-        map(articles => {
-          return { ...articles.find(p => p.id === id) };
-        })
-      );
+        tap(articles => {
+          this._articles.next(articles.concat(article));
+        }));
+    }
+
+    updateArticle(article: Article) {
+      const articleObj = {
+         authorId: article.authorId,
+         catalogNumber: article.catalogNumber,
+         title: article.title,
+         subtitle: article.subtitle,
+         body: article.body,
+         date: article.date,
+         lastEdit: article.lastEdit,
+         thumbnail: article.thumbnail,
+         views: article.views,
+         comments: article.comments
+        };
+      return this.http.put(`http://localhost:3000/api/article/article/${article.id}`,
+      {
+        ...articleObj
+      }).
+      pipe(
+        switchMap(resData => {
+          return this.getArticles();
+        }),
+        tap(articles => {
+          this._articles.next(articles);
+        }));
+    }
+
+    deleteUser(id: string) {
+      return this.http.delete(`http://localhost:3000/api/article/article/${id}`).
+      pipe(
+        switchMap(resData => {
+          return this.getArticles();
+        }),
+        tap(articles => {
+          this._articles.next(articles.filter(u => u.id !== id));
+        }));
+    }
+
+    getArticleByUser(authorId: string) {
+      return this.http
+        .get<Article>(
+          `http://localhost:3000/api/article/article/email/${authorId}`)
+        .pipe(tap(user => {
+          return user;
+        }));
     }
 
     getComments(articleId: string) {
@@ -106,8 +118,12 @@ export class ArticleService {
       );
     }
 
-
-    addArticle(article: Article) {
+    getCommentss(articleId: string) {
+      return this.comments.pipe(
+        map(comments => {
+          return comments.filter(p => p.articleId === articleId);
+        })
+      );
     }
 
 
