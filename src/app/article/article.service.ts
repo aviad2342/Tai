@@ -15,13 +15,7 @@ export class ArticleService {
     private _articles = new BehaviorSubject<Article[]>([]);
 
     // tslint:disable-next-line: variable-name
-    private _comments = new BehaviorSubject<Comment[]>([
-      new Comment('1', '1', '001fe71a-f9e3-4f8a-8df5-d67807349efc', 'אהבתי את התוכן והכתיבה', new Date()),
-      new Comment('2', '1', '7bec4c08-5841-4eb3-8a98-e629c5d86e37', 'אהבתי את התוכן והכתיבה', new Date()),
-      new Comment('3', '2', '001fe71a-f9e3-4f8a-8df5-d67807349efc', 'אהבתי את התוכן והכתיבה', new Date()),
-      new Comment('4', '3', '001fe71a-f9e3-4f8a-8df5-d67807349efc', 'אהבתי את התוכן והכתיבה', new Date()),
-      new Comment('5', '3', '17bec4c08-5841-4eb3-8a98-e629c5d86e37', 'אהבתי את התוכן והכתיבה', new Date())
-    ]);
+    private _comments = new BehaviorSubject<Comment[]>([]);
 
 
     get articles() {
@@ -33,6 +27,8 @@ export class ArticleService {
     }
 
     constructor(private http: HttpClient ) { }
+
+    // ------------------------------------ Comment Services -----------------------------------
 
     getArticles() {
       return this.http.get<Article[]>('http://localhost:3000/api/article/articles')
@@ -104,28 +100,11 @@ export class ArticleService {
     getArticleByUser(authorId: string) {
       return this.http
         .get<Article>(
-          `http://localhost:3000/api/article/article/email/${authorId}`)
-        .pipe(tap(user => {
-          return user;
+          `http://localhost:3000/api/article/article/authorId/${authorId}`)
+        .pipe(tap(article => {
+          return article;
         }));
     }
-
-    getComments(articleId: string) {
-      return this.comments.pipe(
-        map(comments => {
-          return { ...comments.filter(p => p.articleId === articleId) };
-        })
-      );
-    }
-
-    getCommentss(articleId: string) {
-      return this.comments.pipe(
-        map(comments => {
-          return comments.filter(p => p.articleId === articleId);
-        })
-      );
-    }
-
 
     uploadArticleThumbnail(image: File, fileName: string) {
       const uploadData = new FormData();
@@ -135,4 +114,84 @@ export class ArticleService {
         uploadData
       );
     }
+
+ // ------------------------------------ Comment Services -----------------------------------
+
+    getComments() {
+      return this.http.get<Comment[]>('http://localhost:3000/api/comment/comments')
+      .pipe(tap(resDta => {
+        this._comments.next(resDta);
+      }));
+    }
+
+    getComment(id: string) {
+      return this.http.get<Comment>(`http://localhost:3000/api/comment/comment/${id}`)
+      .pipe(tap(resDta => {
+        return resDta;
+      }));
+    }
+
+    addComment(comment: Comment) {
+      return this.http.post<{id: string}>('http://localhost:3000/api/comment/comment',
+      {
+        ...comment
+      }).
+      pipe(
+        switchMap(resData => {
+          comment.id = resData.id;
+          return this.comments;
+        }),
+        take(1),
+        tap(comments => {
+          this._comments.next(comments.concat(comment));
+        }));
+    }
+
+    updateComment(comment: Comment) {
+      const commentObj = {
+         articleId: comment.articleId,
+         authorId: comment.authorId,
+         body: comment.body,
+         date: comment.date,
+        };
+      return this.http.put(`http://localhost:3000/api/comment/comment/${comment.id}`,
+      {
+        ...commentObj
+      }).
+      pipe(
+        switchMap(resData => {
+          return this.getComments();
+        }),
+        tap(comments => {
+          this._comments.next(comments);
+        }));
+    }
+
+    deleteComment(id: string) {
+      return this.http.delete(`http://localhost:3000/api/comment/comment/${id}`).
+      pipe(
+        switchMap(resData => {
+          return this.getComments();
+        }),
+        tap(comments => {
+          this._comments.next(comments.filter(u => u.id !== id));
+        }));
+    }
+
+    getArticleComments(articleId: string) {
+      return this.http.get<Comment[]>( `http://localhost:3000/api/comment/comment/articleId/${articleId}`)
+        .pipe(tap(comments => {
+          this._comments.next(comments);
+        }));
+    }
+
+    getCommentByUser(authorId: string) {
+      return this.http
+        .get<Comment[]>(
+          `http://localhost:3000/api/comment/comment/authorId/${authorId}`)
+        .pipe(tap(comments => {
+          return comments;
+        }));
+    }
+
 }

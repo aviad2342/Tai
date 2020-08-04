@@ -20,11 +20,13 @@ import { User } from 'src/app/user/user.model';
 export class ArticleDetailPage implements OnInit, OnDestroy {
 
   article: Article;
+  articleId = '';
   comments: Comment[];
   @ViewChild(IonContent) content: IonContent;
+  private commentSub: Subscription;
   author: User;
-  private commentsSub: Subscription;
   addComment = false;
+  isLoading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,8 +44,12 @@ export class ArticleDetailPage implements OnInit, OnDestroy {
         this.navController.navigateBack('/tabs/article');
         return;
       }
+      this.articleId = paramMap.get('id');
       this.articleService.getArticle(paramMap.get('id')).subscribe(article => {
             this.article = article;
+            this.userService.getUser(this.article?.authorId).subscribe(user => {
+              this.author = user;
+            });
           },
           error => {
             this.alertController
@@ -62,46 +68,19 @@ export class ArticleDetailPage implements OnInit, OnDestroy {
               .then(alertEl => alertEl.present());
           }
         );
+      this.commentSub = this.articleService.getArticleComments(paramMap.get('id')).subscribe(comments => {
+          this.comments = comments;
+        });
     });
 
-    this.commentsSub = this.articleService.getCommentss(this.article?.id).subscribe(comments => {
-      // comments.forEach(comment => {
-      //   this.comments.push(comment);
-      // });
-      this.comments = comments;
-      console.log(this.comments);
-    });
-    this.userService.getUser(this.article?.authorId).subscribe(user => {
-      this.author = user;
-    });
-
-    // this.route.paramMap.subscribe(paramMap => {
-    //   if (!paramMap.has('id')) {
-    //     this.navController.navigateBack('/tabs/article');
-    //     return;
-    //   }
-    //   this.articleService.getArticle(paramMap.get('id')).pipe(
-    //   map(article => {
-    //     this.article = article;
-    //     this.articleService.getComments(this.article.id).pipe(
-    //   map(comments => {
-    //         this.comments = comments;
-    //         console.log(this.comments);
-    //         this.userService.getUser(this.article.authorId).pipe(
-    //           map(user => {
-    //             this.author = user;
-    //           })
-    //         ).subscribe();
-    //       })
-    //     ).subscribe();
-    //   })
-    // ).subscribe();
-  // });
 }
 
-// ionViewWillEnter() {
-//   this.articleService.getComments(this.article.id).subscribe();
-// }
+ionViewWillEnter() {
+  this.isLoading = true;
+  this.articleService.getArticleComments(this.articleId).subscribe(() => {
+    this.isLoading = false;
+  });
+}
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
@@ -116,9 +95,11 @@ export class ArticleDetailPage implements OnInit, OnDestroy {
         form.value.body,
         new Date()
       );
-      this.comments.push(comment);
-      form.reset();
-      this.content.scrollToBottom(200);
+      this.articleService.addComment(comment).subscribe(newComment => {
+        this.comments.push(comment);
+        form.reset();
+        this.content.scrollToBottom(200);
+      });
     });
     this.content.scrollToBottom(200);
   }
@@ -139,8 +120,8 @@ export class ArticleDetailPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.commentsSub) {
-      this.commentsSub.unsubscribe();
+    if (this.commentSub) {
+      this.commentSub.unsubscribe();
     }
   }
 
