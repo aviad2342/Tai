@@ -67,6 +67,10 @@ export class AuthService implements OnDestroy {
     return this.userSrvice.getUser(this._user.value.id);
   }
 
+  isTheCurrentUserLogged(id: string) {
+    return (this._user.value.id === id);
+  }
+
   autoLogin() {
     return from(Plugins.Storage.get({ key: 'authData' })).pipe(
       map(storedData => {

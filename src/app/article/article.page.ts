@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Article } from './article.model';
 import { ArticleService } from './article.service';
 import { AppService } from '../app.service';
+import { AuthService } from '../auth/auth.service';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class ArticlePage implements OnInit, OnDestroy {
   private articleSubscription: Subscription;
   isDesktop: boolean;
 
-  constructor( private articleService: ArticleService, private appService: AppService ) { }
+  constructor( private articleService: ArticleService, private appService: AppService, private authService: AuthService ) { }
 
   ngOnInit() {
     this.articleSubscription = this.articleService.articles.subscribe(articles => {
@@ -27,6 +28,10 @@ export class ArticlePage implements OnInit, OnDestroy {
   ionViewWillEnter() {
     this.isDesktop = this.appService.isDesktop();
     this.articleService.getArticles().subscribe();
+  }
+
+  isArticleAuthor(authorId: string) {
+    return this.authService.isTheCurrentUserLogged(authorId);
   }
 
   ngOnDestroy() {

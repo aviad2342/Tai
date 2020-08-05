@@ -11,7 +11,10 @@
 <!------------------------------------------article section -------------------------------------------->
   <ion-grid>
     <ion-row>
-      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
+      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="articleIsLoading">
+        <ion-spinner color="primary"></ion-spinner>
+      </ion-col>
+      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="!articleIsLoading">
         <div class="container ion-padding">
         <ion-text>
           <h1>{{ article?.title }}</h1>
@@ -19,8 +22,11 @@
         <ion-text>
           <h3>{{ article?.subtitle }}</h3>
         </ion-text>
-        <ion-text>
-          <p>נכתב ע"י {{ getAuthorFullName() }} בתאריך {{ article?.date | date  }}</p>
+        <ion-text  class="ion-no-padding">
+          <p class="article-author-date">נכתב ע"י {{ getAuthorFullName() }} בתאריך {{ article?.date | date  }}</p>
+        </ion-text>
+        <ion-text color="medium" *ngIf="article?.date !== article?.lastEdit">
+          <small>נערך בתאריך: {{ article?.lastEdit | date }}</small>
         </ion-text>
         <ion-textarea>{{ article?.body }}</ion-textarea>
       </div>
@@ -31,8 +37,8 @@
       <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="isLoading">
         <ion-spinner color="primary"></ion-spinner>
       </ion-col>
-      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center"*ngIf="!isLoading">
-        <ion-list>
+      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="!isLoading && !articleIsLoading">
+        <ion-list *ngIf="comments !== null">
           <div class="comment-item" *ngFor="let comment of comments">
             <app-comment [comment]="comment"></app-comment>
           </div>
@@ -104,7 +110,7 @@
   </ion-grid>
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="!articleIsLoading">
 <ion-toolbar color="light">
   <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="comment-form">
     <ion-row class="ion-align-items-center ion-no-padding">

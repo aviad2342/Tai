@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/co
 import { AlertController, NavController, IonContent, IonList } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, interval } from 'rxjs';
 import { flatMap, switchMap, map } from 'rxjs/operators';
 import { UserService } from 'src/app/user/user.service';
 import { ArticleService } from '../article.service';
@@ -27,6 +27,7 @@ export class ArticleDetailPage implements OnInit, OnDestroy {
   author: User;
   addComment = false;
   isLoading = false;
+  articleIsLoading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,6 +40,7 @@ export class ArticleDetailPage implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
+    this.articleIsLoading = true;
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
         this.navController.navigateBack('/tabs/article');
@@ -49,6 +51,7 @@ export class ArticleDetailPage implements OnInit, OnDestroy {
             this.article = article;
             this.userService.getUser(this.article?.authorId).subscribe(user => {
               this.author = user;
+              this.articleIsLoading = false;
             });
           },
           error => {
