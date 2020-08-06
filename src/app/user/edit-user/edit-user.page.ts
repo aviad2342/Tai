@@ -8,6 +8,7 @@ import { UserService } from '../user.service';
 import { User } from '../user.model';
 import { Subscription } from 'rxjs';
 import { Address } from '../../shared/address.model';
+import { AppService } from 'src/app/app.service';
 
 
 
@@ -50,7 +51,8 @@ export class EditUserPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private userService: UserService,
     private navCtrl: NavController,
-    private router: Router
+    private router: Router,
+    public appService: AppService
   ) {}
 
   ngOnInit() {
@@ -146,6 +148,11 @@ export class EditUserPage implements OnInit, OnDestroy {
       })
     ).subscribe(() => {
       form.reset();
+      this.appService.presentToast('המשתמש נשמר בהצלחה', true);
+      this.router.navigate(['/tabs/user']);
+    }, error => {
+      form.reset();
+      this.appService.presentToast('חלה תקלה פרטי המשתמש לא נשמרו', false);
       this.router.navigate(['/tabs/user']);
     });
 
@@ -168,6 +175,11 @@ export class EditUserPage implements OnInit, OnDestroy {
       );
       this.userService.updateUser(userToUpdate).subscribe(() => {
         form.reset();
+        this.appService.presentToast('המשתמש נשמר בהצלחה', true);
+        this.router.navigate(['/tabs/user']);
+      }, error => {
+        form.reset();
+        this.appService.presentToast('חלה תקלה פרטי המשתמש לא נשמרו', false);
         this.router.navigate(['/tabs/user']);
       });
     }

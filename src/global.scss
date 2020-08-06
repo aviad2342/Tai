@@ -49,6 +49,11 @@ ion-tab-bar{
     padding-right: 5px;
 }
 
+.toast-scheme {
+  text-align: center;
+  font-size: large;
+}
+
 ion-icon {
     &[class*="custom-"] {
       mask-size: contain;
