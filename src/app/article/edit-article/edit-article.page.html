@@ -1,9 +1,89 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>edit-article</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/article"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-no-padding">מאמר חדש</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content class="ion-padding">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-sm="4" offset-sm="4">
+          <app-image-picker 
+          [selectedImage] = "this.article?.thumbnail"
+          [showPreview]="true"  
+          (imagePick)="onImagePicked($event)" 
+          class="ion-padding">
+        </app-image-picker>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" size-sm="4" offset-sm="4">
+          <ion-list>
+            <ion-item class="ion-text-center">
+              <ion-label position="floating"> כותרת <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="text"
+                ngModel
+                name="title"
+                required
+                #titleNameCtrl="ngModel"
+              ></ion-input>
+            </ion-item>
+            <ion-item
+            *ngIf="!titleNameCtrl.valid && titleNameCtrl.touched"
+            lines="none">
+            <ion-label color="danger">
+              זהו שדה חובה!
+            </ion-label>
+          </ion-item>
+            <ion-item class="ion-text-center">
+              <ion-label position="floating"> תת כותרת <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="text"
+                ngModel
+                name="subtitle"
+                required
+                #subtitleCtrl="ngModel"
+              ></ion-input>
+            </ion-item>
+            <ion-item
+            *ngIf="!subtitleCtrl.valid && subtitleCtrl.touched"
+            lines="none">
+            <ion-label color="danger">
+              זהו שדה חובה!
+            </ion-label>
+          </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" size-sm="6" offset-sm="3">
+          <quill-editor 
+          direction="rtl"
+          ngModel 
+          name="body"
+          placeholder="גוף המאמר"
+          ></quill-editor>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" size-sm="4" offset-sm="4">
+          <ion-button
+            type="submit"
+            color="primary"
+            expand="block"
+            [disabled]="!f.valid"
+          >
+          הוסף
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>
+
+

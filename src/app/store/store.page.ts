@@ -17,6 +17,7 @@ export class StorePage implements OnInit, OnDestroy {
   private itemsSubscription: Subscription;
   isDesktop: boolean;
   categories = ['ספרים', 'הרצאות', 'אביזרים', 'אחר'];
+
   sliderConfig = {
     slidesPerView: 1.6,
     spaceBetween: 10,

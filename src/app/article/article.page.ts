@@ -34,6 +34,11 @@ export class ArticlePage implements OnInit, OnDestroy {
     return this.authService.isTheCurrentUserLogged(authorId);
   }
 
+  onDelete(id: string) {
+    this.articleService.deleteArticle(id).subscribe(() => {
+    });
+  }
+
   ngOnDestroy() {
     if (this.articleSubscription) {
       this.articleSubscription.unsubscribe();

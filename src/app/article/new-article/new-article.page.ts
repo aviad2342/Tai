@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ArticleService } from '../article.service';
-import { Article } from '../article.model';
-import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { Article } from '../article.model';
+import { AuthService } from 'src/app/auth/auth.service';
+import { AppService } from 'src/app/app.service';
+
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';
@@ -35,34 +38,19 @@ export class NewArticlePage implements OnInit {
 
   @ViewChild('f', { static: true }) form: NgForm;
   file: File;
+  authorId;
 
-   modules = {
-    toolbar: [
-      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-      ['blockquote', 'code-block'],
-
-      [{ header: 1 }, { header: 2 }],               // custom button values
-      [{ list: 'ordered'}, { list: 'bullet' }],
-      [{ script: 'sub'}, { script: 'super' }],      // superscript/subscript
-      [{ indent: '-1'}, { indent: '+1' }],          // outdent/indent
-      [{ direction: 'rtl' }],                         // text direction
-
-      [{ size: ['small', false, 'large', 'huge'] }],  // custom dropdown
-      [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-      [{ color: [] }, { background: [] }],          // dropdown with defaults from theme
-      [{ font: [] }],
-      [{ align: [] }],
-
-      ['clean'],                                         // remove formatting button
-
-      ['link', 'image', 'video']                         // link and image, video
-    ]
-  };
-
-  constructor(private articleService: ArticleService, private router: Router) { }
+  constructor(
+    private articleService: ArticleService,
+    private router: Router,
+    private authService: AuthService,
+    public appService: AppService
+    ) { }
 
   ngOnInit() {
+    this.authService.getUserLogged().subscribe(author => {
+      this.authorId = author.id;
+    })
   }
 
   onImagePicked(imageData: string | File) {
@@ -85,31 +73,37 @@ export class NewArticlePage implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    // form.value.image = this.file;
-    // if (!form.valid || !this.form.value.image) {
-    //   return;
-    // }
-    // this.articleService.uploadArticleThumbnail(this.form.value.image, 'articl')
-    // .pipe(
-    //   switchMap(uploadRes => {
-    //     const articleToAdd = new Article(
-    //       null,
-    //       null,
-    //       form.value.title,
-    //       form.value.subtitle,
-    //       form.value.body,
-    //       new Date(),
-    //       uploadRes.imageUrl,
-    //       0,
-    //       this.address.city,
-    //       this.address.street,
-    //     );
-    //     return this.articleService.addArticle(articleToAdd);
-    //   })
-    // ).subscribe(() => {
-    //   form.reset();
-    //   this.router.navigate(['/tabs/article']);
-    // });
+    form.value.image = this.file;
+    if (!form.valid || !this.form.value.image) {
+      return;
+    }
+    this.articleService.uploadArticleThumbnail(this.form.value.image, 'article')
+    .pipe(
+      switchMap(uploadRes => {
+        const articleToAdd = new Article(
+          null,
+          this.authorId,
+          'aa11',
+          form.value.title,
+          form.value.subtitle,
+          form.value.body,
+          new Date(),
+          new Date(),
+          uploadRes.imageUrl,
+          0,
+          0
+        );
+        return this.articleService.addArticle(articleToAdd);
+      })
+    ).subscribe(() => {
+      form.reset();
+      this.appService.presentToast('המאמר נשמר בהצלחה', true);
+      this.router.navigate(['/tabs/article']);
+    }, error => {
+      form.reset();
+      this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
+      this.router.navigate(['/tabs/article']);
+    });
   }
 
 }

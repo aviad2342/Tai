@@ -54,6 +54,14 @@ ion-tab-bar{
   font-size: large;
 }
 
+.toolbar-icon {
+  color: black;
+}
+
+// .swiper-wrapper {
+//   transform: translate3d(-7.5px, 0px, 0px) !important;
+// }
+
 ion-icon {
     &[class*="custom-"] {
       mask-size: contain;
@@ -63,12 +71,29 @@ ion-icon {
       width: 1em;
       height: 1em;
     }
+
+    &[class*="toolbar-icon-"] {
+      mask-size: contain;
+      mask-position: 50% 50%;
+      mask-repeat: no-repeat;
+      background: black;
+      width: 1em;
+      height: 1em;
+    }
   
     &[class*="custom-waze"] {
       mask-image: url(./assets/icon/waze.svg);
     }
+  
+    &[class*="toolbar-icon-waze"] {
+      mask-image: url(./assets/icon/waze.svg);
+    }
 
     &[class*="custom-text-add"] {
+      mask-image: url(./assets/icon/text-add.svg);
+    }
+
+    &[class*="toolbar-icon-text-add"] {
       mask-image: url(./assets/icon/text-add.svg);
     }
   

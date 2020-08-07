@@ -79,20 +79,7 @@ export class EditUserPage implements OnInit, OnDestroy {
           password: this.user.password,
           date: this.user.date,
           };
-        // this.form.value.firstName = this.user.firstName;
         this.form.setValue(userObj);
-        // this.form.value.email = this.user.email;
-        // this.form.value.phone = this.user.phone;
-        // this.form.value.password = this.user.password;
-        // this.form.value.dateOfBirth = this.user.date;
-        // this.form.value.country = this.user.country;
-        // this.form.value.city = this.user.city;
-        // this.form.value.street = this.user.street;
-        // this.form.value.houseNumber = this.user.houseNumber;
-        // this.form.value.apartment = this.user.apartment;
-        // this.form.value.entry = this.user.entry;
-        // this.form.value.imageUrl = this.user.profilePicture;
-        console.log(this.user);
       });
     });
   }

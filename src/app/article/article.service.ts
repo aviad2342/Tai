@@ -86,7 +86,7 @@ export class ArticleService {
         }));
     }
 
-    deleteUser(id: string) {
+    deleteArticle(id: string) {
       return this.http.delete(`http://localhost:3000/api/article/article/${id}`).
       pipe(
         switchMap(resData => {
