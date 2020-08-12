@@ -30,7 +30,19 @@ export class Tab1Page implements OnInit, AfterViewInit {
   async initializeYoutubePlayerPluginWeb() {
     const options = {playerId: 'youtube-player', playerSize: {width: 640, height: 360}, videoId: 'M0_-eBtW0p4'};
     const result  = await YoutubePlayerWeb.initialize(options);
-    this.bb = (await YoutubePlayerWeb.getCurrentTime('youtube-player')).result.value;
+
+    (result as any).player.addEventListener('onStateChange', (event) => {
+      console.log('state is', event.target);
+      console.log(event.target.playerInfo.currentTime);
+    });
+  await YoutubePlayerWeb.getCurrentTime('youtube-player').then(data => {
+    console.log(data.result);
+  });
+    await YoutubePlayerWeb.cueVideoById('youtube-player',{
+      videoId:'M0_-eBtW0p4',
+    }).then(data => {
+      console.log(data.result);
+    });
     console.log('playerReady', result);
   }
 
