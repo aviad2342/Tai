@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Course } from '../course.model';
+import { User } from 'src/app/user/user.model';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-course-item',
@@ -7,8 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CourseItemComponent implements OnInit {
 
-  constructor() { }
+  @Input() course: Course;
+  author: User;
 
-  ngOnInit() {}
+  constructor(private userService: UserService) { }
+
+  ngOnInit() {
+    this.userService.getUser(this.course.authorId).subscribe(user => {
+      this.author = user;
+    });
+  }
+
+  getAuthorFullName() {
+    return this.author?.firstName + ' ' + this.author?.lastName;
+  }
 
 }

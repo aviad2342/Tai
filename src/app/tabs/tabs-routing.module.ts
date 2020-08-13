@@ -71,6 +71,15 @@ const routes: Routes = [
           }
         ]
       },
+      {
+        path: 'course',
+        children: [
+          {
+          path: '',
+          loadChildren: () => import('../course/course.module').then( m => m.CoursePageModule), canLoad: [AuthGuard]
+          }
+        ]
+      },
       // {
       //   path: 'tab1',
       //   loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)

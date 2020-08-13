@@ -96,5 +96,29 @@ ion-icon {
     &[class*="toolbar-icon-text-add"] {
       mask-image: url(./assets/icon/text-add.svg);
     }
+
+    &[class*="custom-online-learning"] {
+      mask-image: url(./assets/icon/online-learning.svg);
+    }
+
+    &[class*="toolbar-icon-online-learning"] {
+      mask-image: url(./assets/icon/online-learning.svg);
+    }
+
+    &[class*="custom-online-course"] {
+      mask-image: url(./assets/icon/online-course.svg);
+    }
+
+    &[class*="toolbar-icon-online-course"] {
+      mask-image: url(./assets/icon/online-course.svg);
+    }
+
+    &[class*="custom-training"] {
+      mask-image: url(./assets/icon/training.svg);
+    }
+
+    &[class*="toolbar-icon-training"] {
+      mask-image: url(./assets/icon/training.svg);
+    }
   
   }

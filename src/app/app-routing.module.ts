@@ -29,7 +29,7 @@ const routes: Routes = [
   },
   {
     path: 'course',
-    loadChildren: () => import('./course/course.module').then( m => m.CoursePageModule)
+    loadChildren: () => import('./course/course.module').then( m => m.CoursePageModule), canLoad: [AuthGuard]
   }
 ];
 @NgModule({
