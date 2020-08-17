@@ -1,3 +1,12 @@
-<p>
-  lesson-item works!
-</p>
+<ion-item>
+  <ion-thumbnail size="medium" slot="start">
+    <ion-img [src]="lesson.thumbnail"></ion-img>
+  </ion-thumbnail>
+  <ion-label>
+    <h2>שיעור מספר {{ lesson.lessonNumber }}: {{ lesson.title }}</h2>
+    <h3>{{ lesson.description }}</h3>
+    <ion-text color="medium">
+      <p>{{ lesson?.date | date }}</p>
+    </ion-text>
+  </ion-label>
+</ion-item>
