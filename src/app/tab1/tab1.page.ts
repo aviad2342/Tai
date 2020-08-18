@@ -28,7 +28,8 @@ export class Tab1Page implements OnInit, AfterViewInit {
   }
 
   async initializeYoutubePlayerPluginWeb() {
-    const options = {playerId: 'youtube-player', playerSize: {width: 640, height: 360}, videoId: 'M0_-eBtW0p4'};
+    const options = {playerId: 'youtube-player', playerSize: {width: 640, height: 360},
+    videoId: 'M0_-eBtW0p4?rel=0&showinfo=0&modestbranding=1&playsinline=1&'};
     const result  = await YoutubePlayerWeb.initialize(options);
 
     (result as any).player.addEventListener('onStateChange', (event) => {

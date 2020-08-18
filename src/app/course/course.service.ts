@@ -30,9 +30,9 @@ export class CourseService {
       new Lesson
       ('1', '1', '_RTe9IhhGTg', 'https://www.youtube.com/watch?v=_RTe9IhhGTg', 2, 'כותרת 1', 'תוכן 1', new Date('2020-08-07'), this.thumb),
       new Lesson
-      ('1', '1', '_eoNoXpagNc&t=603s', 'https://www.youtube.com/watch?v=_eoNoXpagNc&t=603s', 3,'כותרת 1', 'תוכן 1', new Date('2020-08-07'), this.thumb),
+      ('1', '1', '_eoNoXpagNc', 'https://www.youtube.com/watch?v=_eoNoXpagNc', 3,'כותרת 1', 'תוכן 1', new Date('2020-08-07'), this.thumb),
       new Lesson
-      ('1', '1', 'pg9tgv7YFLY&t=1s', 'https://www.youtube.com/watch?v=pg9tgv7YFLY&t=1s', 4, 'כותרת 1', 'תוכן 1',new Date('2020-08-07'), this.thumb)
+      ('1', '1', 'pg9tgv7YFLY', 'https://www.youtube.com/watch?v=pg9tgv7YFLY', 4, 'כותרת 1', 'תוכן 1',new Date('2020-08-07'), this.thumb)
     ]);
 
 
@@ -62,4 +62,9 @@ export class CourseService {
       })
     );
   }
+
+  getVideoThumbnail(videoId: string){
+    return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+  }
+
 }

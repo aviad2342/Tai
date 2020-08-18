@@ -1,6 +1,6 @@
 <ion-item>
   <ion-thumbnail size="medium" slot="start">
-    <ion-img [src]="lesson.thumbnail"></ion-img>
+    <ion-img [src]="getVideoThumbnail()" class="lesson-thumbnail-image"></ion-img>
   </ion-thumbnail>
   <ion-label>
     <h2>שיעור מספר {{ lesson.lessonNumber }}: {{ lesson.title }}</h2>

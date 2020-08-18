@@ -14,4 +14,8 @@ export class LessonItemComponent implements OnInit {
 
   ngOnInit() {}
 
+  getVideoThumbnail(){
+    return `https://img.youtube.com/vi/${this.lesson.videoId}/sddefault.jpg`;
+  }
+
 }
