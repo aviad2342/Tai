@@ -55,6 +55,15 @@ export class CourseService {
     );
   }
 
+  getLesson(id: string) {
+    return this._lessons.pipe(
+      take(1),
+      map(lessons => {
+        return { ...lessons.find(p => p.id === id) };
+      })
+    );
+  }
+
   getCourseLessons(courseId: string) {
     return this.lessons.pipe(
       map(lessons => {

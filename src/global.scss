@@ -120,5 +120,13 @@ ion-icon {
     &[class*="toolbar-icon-training"] {
       mask-image: url(./assets/icon/training.svg);
     }
+
+    &[class*="custom-conference"] {
+      mask-image: url(./assets/icon/conference.svg);
+    }
+
+    &[class*="toolbar-icon-conference"] {
+      mask-image: url(./assets/icon/conference.svg);
+    }
   
   }

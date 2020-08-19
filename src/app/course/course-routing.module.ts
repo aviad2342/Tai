@@ -13,7 +13,7 @@ const routes: Routes = [
     loadChildren: () => import('./course-detail/course-detail.module').then( m => m.CourseDetailPageModule)
   },
   {
-    path: 'lesson-detail',
+    path: 'lesson/:id',
     loadChildren: () => import('./lesson-detail/lesson-detail.module').then( m => m.LessonDetailPageModule)
   }
 ];
