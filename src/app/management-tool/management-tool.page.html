@@ -1,34 +1,64 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/user"></ion-back-button>
+    </ion-buttons>
     <ion-title>כלי ניהול</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<ion-grid>
-  <ion-row>
-    <ion-col>
-        <ion-tab-button>
-          <ion-icon name="people-outline"></ion-icon>
-          <ion-label>משתמשים</ion-label>
+<ion-grid fixed="true">
+  <ion-row class="ion-justify-content-center">
+    <ion-col class="ion-text-center ion-margin manage-tool-tab">
+        <ion-tab-button routerLink="users">
+          <ion-icon class="custom-employees"></ion-icon>
+          <ion-label class="manage-tool-tab-label">משתמשים</ion-label>
         </ion-tab-button>
     </ion-col>
-    <ion-col>
+    <ion-col class="ion-text-center ion-margin manage-tool-tab">
         <ion-tab-button>
           <ion-icon class="custom-online-course"></ion-icon>
-          <ion-label>קורסים</ion-label>
+          <ion-label class="manage-tool-tab-label">קורסים</ion-label>
         </ion-tab-button>
     </ion-col>
-    <ion-col>
+    <ion-col class="ion-text-center ion-margin manage-tool-tab">
         <ion-tab-button>
           <ion-icon class="custom-conference"></ion-icon>
-          <ion-label>כנסים</ion-label>
+          <ion-label class="manage-tool-tab-label">כנסים</ion-label>
         </ion-tab-button>
     </ion-col>
-    <ion-col>
+    <ion-col class="ion-text-center ion-margin manage-tool-tab">
         <ion-tab-button>
           <ion-icon name="newspaper-outline"></ion-icon>
-          <ion-label>מאמרים</ion-label>
+          <ion-label class="manage-tool-tab-label">מאמרים</ion-label>
+        </ion-tab-button>
+    </ion-col>
+  </ion-row>
+  <!--------------------------------------------------- row 2 --------------------------------------------------->
+  <ion-row class="ion-justify-content-center">
+    <ion-col class="ion-text-center ion-margin manage-tool-tab">
+        <ion-tab-button>
+          <ion-icon class="custom-calendar-event"></ion-icon>
+          <ion-label class="manage-tool-tab-label">אירועים</ion-label>
+        </ion-tab-button>
+    </ion-col>
+    <ion-col class="ion-text-center ion-margin manage-tool-tab">
+        <ion-tab-button>
+          <ion-icon class="custom-shopping-cart"></ion-icon>
+          <ion-label class="manage-tool-tab-label">חנות</ion-label>
+        </ion-tab-button>
+    </ion-col>
+    <ion-col class="ion-text-center ion-margin manage-tool-tab">
+        <ion-tab-button>
+          <ion-icon class="custom-inventory"></ion-icon>
+          <ion-label class="manage-tool-tab-label">מוצרים</ion-label>
+        </ion-tab-button>
+    </ion-col>
+    <ion-col class="ion-text-center ion-margin manage-tool-tab">
+        <ion-tab-button>
+          <ion-icon class="custom-analytics"></ion-icon>
+          <ion-label class="manage-tool-tab-label">דוחות</ion-label>
         </ion-tab-button>
     </ion-col>
   </ion-row>

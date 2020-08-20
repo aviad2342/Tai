@@ -33,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: 'manage',
-    loadChildren: () => import('./management-tool/management-tool.module').then( m => m.ManagementToolPageModule)
+    loadChildren: () => import('./management-tool/management-tool.module').then( m => m.ManagementToolPageModule), canLoad: [AuthGuard]
   }
 ];
 @NgModule({

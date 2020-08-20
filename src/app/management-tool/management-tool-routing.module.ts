@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: ManagementToolPage
+  },
+  {
+    path: 'users',
+    loadChildren: () => import('./manage-users/manage-users.module').then( m => m.ManageUsersPageModule)
   }
 ];
 

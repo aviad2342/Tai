@@ -128,5 +128,54 @@ ion-icon {
     &[class*="toolbar-icon-conference"] {
       mask-image: url(./assets/icon/conference.svg);
     }
+
+    &[class*="custom-management"] {
+      mask-image: url(./assets/icon/management.svg);
+    }
+
+    &[class*="toolbar-icon-management"] {
+      mask-image: url(./assets/icon/management.svg);
+    }
+
+    &[class*="custom-employees"] {
+      mask-image: url(./assets/icon/employees.svg);
+    }
+
+    &[class*="toolbar-icon-employees"] {
+      mask-image: url(./assets/icon/employees.svg);
+    }
+
+    &[class*="custom-calendar-event"] {
+      mask-image: url(./assets/icon/calendar-event.svg);
+    }
+
+    &[class*="toolbar-icon-calendar-event"] {
+      mask-image: url(./assets/icon/calendar-event.svg);
+    }
+
+    &[class*="custom-shopping-cart"] {
+      mask-image: url(./assets/icon/shopping-cart.svg);
+    }
+
+    &[class*="toolbar-icon-shopping-cart"] {
+      mask-image: url(./assets/icon/shopping-cart.svg);
+    }
+
+    &[class*="custom-inventory"] {
+      mask-image: url(./assets/icon/inventory.svg);
+    }
+
+    &[class*="toolbar-icon-inventory"] {
+      mask-image: url(./assets/icon/inventory.svg);
+    }
+
+    
+    &[class*="custom-analytics"] {
+      mask-image: url(./assets/icon/analytics.svg);
+    }
+
+    &[class*="toolbar-icon-analytics"] {
+      mask-image: url(./assets/icon/analytics.svg);
+    }
   
   }
