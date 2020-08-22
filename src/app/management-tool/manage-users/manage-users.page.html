@@ -8,5 +8,64 @@
 </ion-header>
 
 <ion-content>
+  <ion-input   type="text"
+  style="padding:8px;margin:15px auto;width:30%;"
+  placeholder="הקלד שם לסינון תוצאות"
+  (keyup)="updateFilter($event)">
 
+  </ion-input>
+  <ngx-datatable
+  #usersTable
+  [rows]="users"
+  class="bootstrap"
+  [rowHeight]="'auto'"
+  [headerHeight]="50"
+  [columnMode]="ColumnMode.standard"
+  [selected]="selected"
+  [selectionType]="SelectionType.single"
+  [rowClass]="getRowClass.bind(this)"
+  (activate)="onActivate($event)"
+  (select)="onSelect($event)"
+>
+  <ngx-datatable-column name="firstName">
+    <ng-template let-column="column" ngx-datatable-header-template><strong>שם פרטי</strong></ng-template>
+    <!-- <ng-template let-value="value" ngx-datatable-cell-template>
+      Hi: <strong>{{value}}</strong>
+    </ng-template> -->
+  </ngx-datatable-column>
+  <ngx-datatable-column name="lastName">
+    <ng-template let-column="column" ngx-datatable-header-template>שם משפחה</ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="phone">
+    <ng-template let-column="column" ngx-datatable-header-template>מספר טלפון</ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="email">
+    <ng-template let-column="column" ngx-datatable-header-template>אימייל</ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="כתובת" [sortable]="true">
+    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+      <a href="https://www.google.com/maps/place/{{row.street}} {{row.houseNumber}}, {{row.city}}, {{row.country}}">
+        <i [innerHTML]="row['street']"></i>&nbsp;  
+        <i [innerHTML]="row['houseNumber']"></i>,&nbsp;  
+        <i [innerHTML]="row['city']"></i>,&nbsp;
+        <i [innerHTML]="row['country']"></i> 
+      </a>
+    </ng-template>
+  </ngx-datatable-column> 
+
+  <!-- <ngx-datatable-column name="פעולות" [sortable]="false">
+    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+      <ion-button size="small" fill="outline" (click)="open(row)"
+        >Details</ion-button
+      >
+    </ng-template>
+  </ngx-datatable-column> -->
+</ngx-datatable>
+  <!-- <ngx-datatable 
+  [selected]="selected"
+  on-select="onSelect(this)"
+   class="material"
+   [rows]="rows" 
+   [columns]="columns"
+   > </ngx-datatable> -->
 </ion-content>

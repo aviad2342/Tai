@@ -31,6 +31,12 @@ export class UserService {
     }));
   }
 
+  getAllUsers() {
+    return this.http.get('http://localhost:3000/api/user/users')
+    .pipe(tap(resDta => {
+    }));
+  }
+
   getCountries(country: string) {
     return this.http.get<any>(
       // tslint:disable-next-line: max-line-length

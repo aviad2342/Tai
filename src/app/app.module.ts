@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import { registerLocaleData } from '@angular/common';
 
 
+
 registerLocaleData(localeHe, 'he-HE');
 @NgModule({
   declarations: [AppComponent],
