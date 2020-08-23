@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ColumnMode, SelectionType, DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { UserService } from 'src/app/user/user.service';
+import { ModalController } from '@ionic/angular';
+import { AddUserComponent } from './add-user/add-user.component';
 
 
 @Component({
@@ -14,7 +16,7 @@ export class ManageUsersPage implements OnInit {
   users;
   @ViewChild(DatatableComponent) usersTable: DatatableComponent;
 	tableStyle = 'dark';
-  customRowClass = false;
+  isRowSelected = false;
   ColumnMode = ColumnMode;
   SelectionType = SelectionType;
   temp = [];
@@ -27,13 +29,27 @@ export class ManageUsersPage implements OnInit {
   // ];
   // columns = [{ prop: 'מספר מזהה' }, { name: 'שם' }, { name: 'שם משפחה' }];
 
-  constructor( private userservice: UserService) { }
+  constructor( private userservice: UserService , private modalController: ModalController) { }
 
   ngOnInit() {
     this.userservice.getAllUsers().subscribe(users => {
       this.users = users;
       this.temp = [...this.users];
     })
+  }
+
+  async onAddUser() {
+    const modal = await this.modalController.create({
+      component: AddUserComponent,
+      cssClass: 'my-custom-class',
+    },);
+    return await modal.present();
+  }
+
+  dismiss() {
+    this.modalController.dismiss({
+      dismissed: true
+    });
   }
 
   switchStyle() {
@@ -44,23 +60,14 @@ export class ManageUsersPage implements OnInit {
 		}
 	}
 
-	getRowClass(row) {
-		const isMale = row.gender === 'male';
 
-		if (!this.customRowClass) {
-			return {};
-		}
-		return {
-			'male-row': isMale,
-			'female-row': !isMale,
-		};
-	}
 
 	async open(row) {
 		console.log(row);
   }
 
   onSelect({ selected }) {
+    this.isRowSelected = true;
     console.log('Select Event', selected, this.selected[0]);
   }
 

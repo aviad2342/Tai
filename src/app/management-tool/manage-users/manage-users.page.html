@@ -8,22 +8,55 @@
 </ion-header>
 
 <ion-content>
-  <ion-input   type="text"
-  style="padding:8px;margin:15px auto;width:30%;"
-  placeholder="הקלד שם לסינון תוצאות"
-  (keyup)="updateFilter($event)">
+  <ion-grid>
 
-  </ion-input>
+    <ion-row>
+      <ion-col>
+        <ion-input   
+        type="text"
+        placeholder="הקלד שם לסינון תוצאות"
+        (keyup)="updateFilter($event)">
+        </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-button color="primary" (click)="onAddUser()">
+        <ion-icon name="person-add-outline" slot="start"></ion-icon>
+        <ion-label>הוסף</ion-label>
+      </ion-button>
+
+      <ion-button color="secondary" [disabled]="!isRowSelected">
+        <ion-icon name="eye-outline" slot="start"></ion-icon>
+        <ion-label>פרופיל</ion-label>
+      </ion-button>
+
+      <ion-button color="warning" [disabled]="!isRowSelected">
+        <ion-icon name="create-outline" slot="start"></ion-icon>
+        <ion-label>ערוך</ion-label>
+      </ion-button>
+
+      <ion-button color="danger" [disabled]="!isRowSelected">
+        <ion-icon name="trash-outline" slot="start"></ion-icon>
+        <ion-label>מחק</ion-label>
+      </ion-button>
+
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+
   <ngx-datatable
   #usersTable
   [rows]="users"
   class="bootstrap"
   [rowHeight]="'auto'"
   [headerHeight]="50"
-  [columnMode]="ColumnMode.standard"
+  [columnMode]="ColumnMode.force"
   [selected]="selected"
   [selectionType]="SelectionType.single"
-  [rowClass]="getRowClass.bind(this)"
   (activate)="onActivate($event)"
   (select)="onSelect($event)"
 >
