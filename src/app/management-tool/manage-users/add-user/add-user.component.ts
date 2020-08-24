@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -70,7 +71,8 @@ export class AddUserComponent implements OnInit {
   constructor(
     private router: Router,
     private userService: UserService,
-    public appService: AppService
+    public appService: AppService,
+    private modalController: ModalController
     ) { }
 
   ngOnInit() {
@@ -136,6 +138,10 @@ export class AddUserComponent implements OnInit {
       this.router.navigate(['/tabs/user']);
     }
     );
+  }
+
+  async close() {
+    await this.modalController.dismiss();
   }
 
 

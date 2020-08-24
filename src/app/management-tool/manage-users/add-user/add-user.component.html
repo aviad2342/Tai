@@ -1,14 +1,19 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>הוספת משתמש</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline" class="toolbar-icon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" fullscreen="true">
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>
-      <ion-row>
-        <ion-col size="12" size-sm="4" offset-sm="4">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size="6">
           <app-image-picker 
           [showPreview]="this.file" 
           (imagePick)="onImagePicked($event)" 
@@ -16,8 +21,8 @@
         </app-image-picker>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col size="12" size-sm="4" offset-sm="4">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size="8">
           <ion-list>
             <ion-item>
               <ion-label position="floating"> שם <ion-text color="danger">*</ion-text></ion-label>
@@ -140,8 +145,8 @@
           </ion-list>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col size="12" size-sm="4" offset-sm="4" class="address-picker">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size="8" class="address-picker">
           <app-address-picker (addressPicked)="onAddressPicked($event)"></app-address-picker>
         </ion-col>
       </ion-row>

@@ -16,7 +16,7 @@ export class UserService {
 
   // tslint:disable-next-line: variable-name
   private _users = new BehaviorSubject<User[]>([]);
-  countries: string[] = [];
+  // countries: string[] = [];
 
   get users() {
     return this._users.asObservable();

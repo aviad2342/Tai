@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
 import { ColumnMode, SelectionType, DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { UserService } from 'src/app/user/user.service';
 import { ModalController } from '@ionic/angular';
 import { AddUserComponent } from './add-user/add-user.component';
+import { Subscription } from 'rxjs';
+import { User } from 'src/app/user/user.model';
 
 
 @Component({
@@ -11,9 +13,10 @@ import { AddUserComponent } from './add-user/add-user.component';
   styleUrls: ['./manage-users.page.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ManageUsersPage implements OnInit {
+export class ManageUsersPage implements OnInit, OnDestroy {
 
-  users;
+  users: User[];
+  private usersSubscription: Subscription;
   @ViewChild(DatatableComponent) usersTable: DatatableComponent;
 	tableStyle = 'dark';
   isRowSelected = false;
@@ -32,16 +35,21 @@ export class ManageUsersPage implements OnInit {
   constructor( private userservice: UserService , private modalController: ModalController) { }
 
   ngOnInit() {
-    this.userservice.getAllUsers().subscribe(users => {
+    this.usersSubscription = this.userservice.users.subscribe(users => {
       this.users = users;
       this.temp = [...this.users];
     })
   }
 
+  ionViewWillEnter() {
+    this.userservice.getUsers().subscribe();
+  }
+
   async onAddUser() {
     const modal = await this.modalController.create({
       component: AddUserComponent,
-      cssClass: 'my-custom-class',
+      cssClass: 'add-user-modal',
+      animated: true
     },);
     return await modal.present();
   }
@@ -87,6 +95,12 @@ export class ManageUsersPage implements OnInit {
     this.users = temp;
     // Whenever the filter changes, always go back to the first page
     // this.usersTable.offset = 0;
+  }
+
+  ngOnDestroy() {
+    if (this.usersSubscription) {
+      this.usersSubscription.unsubscribe();
+    }
   }
 
 }
