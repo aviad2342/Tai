@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { Address } from 'src/app/shared/address.model';
 import { AppService } from 'src/app/app.service';
 import { UserService } from 'src/app/user/user.service';
@@ -69,7 +68,6 @@ export class AddUserComponent implements OnInit {
 
 
   constructor(
-    private router: Router,
     private userService: UserService,
     public appService: AppService,
     private modalController: ModalController
@@ -131,11 +129,11 @@ export class AddUserComponent implements OnInit {
     ).subscribe(() => {
       form.reset();
       this.appService.presentToast('המשתמש נשמר בהצלחה', true);
-      this.router.navigate(['/tabs/user']);
+      this.close();
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי המשתמש לא נשמרו', false);
-      this.router.navigate(['/tabs/user']);
+      this.close();
     }
     );
   }

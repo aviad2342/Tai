@@ -1,0 +1,33 @@
+.profile-image {
+    width: 300px;
+    height: 300px;
+    margin-top: 15%;
+    border-radius: 50%;
+    bottom: calc(-1*(80px + 4px)); // -42px;
+    border: 3px solid rgb(62, 63, 70);
+    background-color: #fff;
+    object-fit: cover;
+  }
+
+  ion-card {
+    --background: url("../../../../assets/background/backgColor.jpg") no-repeat top, #fff;
+    background-size: 101% 40%;
+    position: relative;
+    height: 100%;
+    width: auto;
+}
+
+ion-card-title {
+    font-size: xx-large;
+}
+
+.main-col {
+  // max-width: 450px !important;
+  // min-width: 420px !important;
+  max-width: fit-content !important;
+  min-width: fit-content !important;
+}
+
+.user-detail-card {
+  width: 400px !important;
+}

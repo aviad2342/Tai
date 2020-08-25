@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
 import { ColumnMode, SelectionType, DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { UserService } from 'src/app/user/user.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { AddUserComponent } from './add-user/add-user.component';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/user/user.model';
+import { ViewUserComponent } from './view-user/view-user.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 
 @Component({
@@ -16,6 +18,7 @@ import { User } from 'src/app/user/user.model';
 export class ManageUsersPage implements OnInit, OnDestroy {
 
   users: User[];
+  selectedUserId;
   private usersSubscription: Subscription;
   @ViewChild(DatatableComponent) usersTable: DatatableComponent;
 	tableStyle = 'dark';
@@ -32,7 +35,9 @@ export class ManageUsersPage implements OnInit, OnDestroy {
   // ];
   // columns = [{ prop: 'מספר מזהה' }, { name: 'שם' }, { name: 'שם משפחה' }];
 
-  constructor( private userservice: UserService , private modalController: ModalController) { }
+  constructor( private userservice: UserService,
+    private modalController: ModalController,
+    private alertController: AlertController) { }
 
   ngOnInit() {
     this.usersSubscription = this.userservice.users.subscribe(users => {
@@ -54,47 +59,119 @@ export class ManageUsersPage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
+  async onViewUser() {
+    const modal = await this.modalController.create({
+      component: ViewUserComponent,
+      cssClass: 'view-user-modal',
+      componentProps: {
+        id: this.selectedUserId
+      }
+    });
+    return await modal.present();
+  }
+
+  async onEditUser() {
+    const modal = await this.modalController.create({
+      component: EditUserComponent,
+      cssClass: 'edit-user-modal',
+      componentProps: {
+        id: this.selectedUserId
+      }
+    });
+     modal.onDidDismiss().then( data => {
+      if(data.data.didUpdate) {
+        this.isRowSelected = false;
+        this.selectedUserId = '';
+      }
+    });
+    return await modal.present();
+  }
+
+  async onDeleteUser() {
+      const alert = await this.alertController.create({
+        cssClass: 'delete-user-alert',
+        header: 'אישור מחיקת משתמש',
+        message: `האם אתה בטוח שברצונך למחוק את המשתמש ${this.getUserFullName()} לצמיתות?`,
+        buttons: [
+          {
+            text: 'ביטול',
+            role: 'cancel',
+            cssClass: 'delete-user-alert-btn-cancel',
+            handler: () => {
+            }
+          }, {
+            text: 'אישור',
+            handler: () => {
+              this.userservice.deleteUser(this.selectedUserId).subscribe( () => {
+                this.isRowSelected = false;
+              });
+            }
+          }
+        ]
+      });
+      await alert.present();
+  }
+
+
+  ionModalDidDismiss() {
+    console.log('dis');
+  }
   dismiss() {
     this.modalController.dismiss({
       dismissed: true
     });
   }
 
-  switchStyle() {
-		if (this.tableStyle === 'dark') {
-			this.tableStyle = 'bootstrap';
-		} else {
-			this.tableStyle = 'dark';
-		}
-	}
-
-
-
-	async open(row) {
-		console.log(row);
-  }
-
   onSelect({ selected }) {
-    this.isRowSelected = true;
-    console.log('Select Event', selected, this.selected[0]);
+    if(this.selectedUserId === selected[0].id) {
+      this.selected = [];
+      this.selectedUserId = '';
+      this.isRowSelected = false;
+    } else {
+      this.isRowSelected = true;
+      this.selectedUserId = selected[0].id;
+      console.log('Select Event', selected[0], this.selected[0].id);
+    }
   }
 
   onActivate(event) {
     // console.log('Activate Event', event);
   }
 
-  updateFilter(event) {
+  filterByFirstName(event) {
     const val = event.target.value.toLowerCase();
-
-    // filter our data
     const temp = this.temp.filter((d)=> {
       return d.firstName.toLowerCase().indexOf(val) !== -1 || !val;
-    });
+  });
+  this.users = temp;
+}
 
-    // update the rows
+  filterByLastName(event) {
+    const val = event.target.value.toLowerCase();
+    const temp = this.temp.filter((d)=> {
+      return d.lastName.toLowerCase().indexOf(val) !== -1 || !val;
+  });
+  this.users = temp;
+}
+
+  filterByMail(event) {
+    const val = event.target.value.toLowerCase();
+    const temp = this.temp.filter((d)=> {
+      return d.email.toLowerCase().indexOf(val) !== -1 || !val;
+  });
+  this.users = temp;
+}
+
+  filterByCity(event) {
+    const val = event.target.value.toLowerCase();
+    const temp = this.temp.filter((d)=> {
+      return d.city.toLowerCase().indexOf(val) !== -1 || !val;
+  });
     this.users = temp;
-    // Whenever the filter changes, always go back to the first page
-    // this.usersTable.offset = 0;
+  }
+
+  getUserFullName() {
+    return this.selected[0]?.firstName + ' ' + this.selected[0]?.lastName;
   }
 
   ngOnDestroy() {

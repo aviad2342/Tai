@@ -11,13 +11,39 @@
   <ion-grid>
 
     <ion-row>
+
       <ion-col>
         <ion-input   
         type="text"
-        placeholder="הקלד שם לסינון תוצאות"
-        (keyup)="updateFilter($event)">
+        placeholder="סנן לפי שם"
+        (keyup)="filterByFirstName($event)">
         </ion-input>
       </ion-col>
+
+      <ion-col>
+        <ion-input   
+        type="text"
+        placeholder="סנן לפי שם משפחה"
+        (keyup)="filterByLastName($event)">
+        </ion-input>
+      </ion-col>
+
+      <ion-col>
+        <ion-input   
+        type="text"
+        placeholder="סנן לפי אימייל"
+        (keyup)="filterByMail($event)">
+        </ion-input>
+      </ion-col>
+
+      <ion-col>
+        <ion-input   
+        type="text"
+        placeholder="סנן לפי יישוב"
+        (keyup)="filterByCity($event)">
+        </ion-input>
+      </ion-col>
+
     </ion-row>
 
     <ion-row>
@@ -27,17 +53,17 @@
         <ion-label>הוסף</ion-label>
       </ion-button>
 
-      <ion-button color="secondary" [disabled]="!isRowSelected">
+      <ion-button color="secondary" (click)="onViewUser()" [disabled]="!isRowSelected">
         <ion-icon name="eye-outline" slot="start"></ion-icon>
         <ion-label>פרופיל</ion-label>
       </ion-button>
 
-      <ion-button color="warning" [disabled]="!isRowSelected">
+      <ion-button color="warning" (click)="onEditUser()" [disabled]="!isRowSelected">
         <ion-icon name="create-outline" slot="start"></ion-icon>
         <ion-label>ערוך</ion-label>
       </ion-button>
 
-      <ion-button color="danger" [disabled]="!isRowSelected">
+      <ion-button color="danger" (click)="onDeleteUser()" [disabled]="!isRowSelected">
         <ion-icon name="trash-outline" slot="start"></ion-icon>
         <ion-label>מחק</ion-label>
       </ion-button>

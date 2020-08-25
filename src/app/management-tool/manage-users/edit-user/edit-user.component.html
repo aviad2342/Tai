@@ -1,24 +1,24 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>הוספת משתמש</ion-title>
     <ion-buttons slot="start">
-      <ion-button (click)="close()">
+      <ion-button (click)="close(false)">
         <ion-icon slot="icon-only" name="close-outline" class="toolbar-icon"></ion-icon>
       </ion-button>
     </ion-buttons>
+    <ion-title>עריכת משתמש</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" fullscreen="true">
+<ion-content class="ion-padding">
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>
       <ion-row class="ion-justify-content-center">
         <ion-col size="12" size="6">
           <app-image-picker 
-          [showPreview]="this.file" 
+          [selectedImage] = "this.user?.profilePicture"
+          [showPreview]="true" 
           (imagePick)="onImagePicked($event)" 
-          class="ion-padding">
-        </app-image-picker>
+          class="ion-padding"></app-image-picker>
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center">
@@ -124,19 +124,15 @@
               <ion-datetime
               display-format="DD/MM/YYYY"
               pickerFormat="DD MMM YY"
-              monthNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
-              monthShortNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
               ngModel
-              [value]="date"
-              [pickerOptions]="pickerOptions"
-              name="dateOfBirth"
+              name="date"
               required
-              #dateOfBirthCtrl="ngModel"
+              #dateCtrl="ngModel"
             ></ion-datetime>
               <ion-icon name="calendar-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
             </ion-item>
             <ion-item
-              *ngIf="!dateOfBirthCtrl.valid && dateOfBirthCtrl.touched"
+              *ngIf="!dateCtrl.valid && dateCtrl.touched"
               lines="none">
               <ion-label color="danger">
                 זהו שדה חובה!
@@ -147,7 +143,7 @@
       </ion-row>
       <ion-row class="ion-justify-content-center">
         <ion-col size="12" size="8" class="address-picker">
-          <app-address-picker (addressPicked)="onAddressPicked($event)"></app-address-picker>
+          <app-address-picker [userAddress]="address" (addressPicked)="onAddressPicked($event)" [isEdit]="true"></app-address-picker>
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center">
@@ -158,7 +154,7 @@
             expand="block"
             [disabled]="!f.valid"
           >
-          הוסף
+          ערוך
           </ion-button>
         </ion-col>
       </ion-row>

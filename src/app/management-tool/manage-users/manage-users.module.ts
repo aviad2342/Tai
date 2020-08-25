@@ -10,6 +10,8 @@ import { ManageUsersPage } from './manage-users.page';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AddUserComponent } from './add-user/add-user.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ViewUserComponent } from './view-user/view-user.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 @NgModule({
   imports: [
@@ -21,7 +23,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ReactiveFormsModule,
     SharedModule
   ],
-  declarations: [ManageUsersPage, AddUserComponent],
+  declarations: [ManageUsersPage, AddUserComponent, ViewUserComponent, EditUserComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class ManageUsersPageModule {}
