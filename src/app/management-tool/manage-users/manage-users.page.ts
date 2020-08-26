@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { User } from 'src/app/user/user.model';
 import { ViewUserComponent } from './view-user/view-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { AppService } from 'src/app/app.service';
 
 
 @Component({
@@ -20,10 +21,10 @@ export class ManageUsersPage implements OnInit, OnDestroy {
   users: User[];
   selectedUserId;
   private usersSubscription: Subscription;
-  @ViewChild(DatatableComponent) usersTable: DatatableComponent;
+  @ViewChild('usersTable') usersTable: DatatableComponent;
 	tableStyle = 'dark';
   isRowSelected = false;
-  ColumnMode = ColumnMode;
+  columnMode = ColumnMode;
   SelectionType = SelectionType;
   temp = [];
   selected = [];
@@ -37,13 +38,15 @@ export class ManageUsersPage implements OnInit, OnDestroy {
 
   constructor( private userservice: UserService,
     private modalController: ModalController,
-    private alertController: AlertController) { }
+    private alertController: AlertController,
+    private appservice: AppService
+    ) { }
 
   ngOnInit() {
     this.usersSubscription = this.userservice.users.subscribe(users => {
       this.users = users;
       this.temp = [...this.users];
-    })
+    });
   }
 
   ionViewWillEnter() {
