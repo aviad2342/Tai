@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/manage"></ion-back-button>
     </ion-buttons>
-    <ion-title>ניהול משתמשים</ion-title>
+    <ion-title>ניהול קורסים</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,22 +12,22 @@
 <!---------------------------------- Action Buttons -------------------------------------------------->
     <ion-row>
       <ion-col>
-        <ion-button color="primary" (click)="onAddUser()">
+        <ion-button color="primary" (click)="onAddCourse()">
         <ion-icon name="person-add-outline" slot="start"></ion-icon>
         <ion-label>הוסף</ion-label>
       </ion-button>
 
-      <ion-button color="secondary" (click)="onViewUser()" [disabled]="!isRowSelected">
+      <ion-button color="secondary" (click)="onViewCourse()" [disabled]="!isRowSelected">
         <ion-icon name="eye-outline" slot="start"></ion-icon>
         <ion-label>פרופיל</ion-label>
       </ion-button>
 
-      <ion-button color="warning" (click)="onEditUser()" [disabled]="!isRowSelected">
+      <ion-button color="warning" (click)="onEditCourse()" [disabled]="!isRowSelected">
         <ion-icon name="create-outline" slot="start"></ion-icon>
         <ion-label>ערוך</ion-label>
       </ion-button>
 
-      <ion-button color="danger" (click)="onDeleteUser()" [disabled]="!isRowSelected">
+      <ion-button color="danger" (click)="onDeleteCourse()" [disabled]="!isRowSelected">
         <ion-icon name="trash-outline" slot="start"></ion-icon>
         <ion-label>מחק</ion-label>
       </ion-button>
@@ -80,9 +80,10 @@
     </ion-row>
 <!------------------------------------------datatable -------------------------------------------------->
     <ion-row>
+      
       <ngx-datatable
       #usersTable
-      [rows]="users"
+      [rows]="courses"
       class="bootstrap"
       [rowHeight]="'auto'"
       [headerHeight]="50"
@@ -95,54 +96,35 @@
       (select)="onSelect($event)"
     >
     <ngx-datatable-column name="" [sortable]="false" [width]="120">
+
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
         <ion-thumbnail>
-          <ion-img [src]="row['profilePicture']"></ion-img>
+          <ion-img [src]="row['thumbnail']"></ion-img>
         </ion-thumbnail>
       </ng-template>
     </ngx-datatable-column> 
-      <ngx-datatable-column name="firstName" [width]="150">
-        <ng-template let-column="column" ngx-datatable-header-template><strong>שם פרטי</strong></ng-template>
-        <!-- <ng-template let-value="value" ngx-datatable-cell-template>
-          Hi: <strong>{{value}}</strong>
-        </ng-template> -->
+
+      <ngx-datatable-column name="title" [width]="150">
+        <ng-template let-column="column" ngx-datatable-header-template><strong>כותרת הקורס</strong></ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="lastName" [width]="150">
-        <ng-template let-column="column" ngx-datatable-header-template><strong>שם משפחה</strong></ng-template>
+
+      <ngx-datatable-column name="authorName" [width]="150">
+        <ng-template let-column="column" ngx-datatable-header-template><strong>מרצה</strong></ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="phone" [width]="180">
-        <ng-template let-column="column" ngx-datatable-header-template><strong>מספר טלפון</strong></ng-template>
-      </ngx-datatable-column>
-      <ngx-datatable-column name="email" [width]="220">
-        <ng-template let-column="column" ngx-datatable-header-template><strong>אימייל</strong></ng-template>
-      </ngx-datatable-column>
-      <ngx-datatable-column name="city" [sortable]="true" [width]="270">
-        <ng-template let-column="column" ngx-datatable-header-template><strong>כתובת</strong></ng-template>
+
+      <ngx-datatable-column name="date" [sortable]="true" [width]="120">
+        <ng-template let-column="column" ngx-datatable-header-template><strong>תאריך</strong></ng-template>
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-          <a href="https://www.google.com/maps/place/{{row.street}} {{row.houseNumber}}, {{row.city}}, {{row.country}}">
-            <i [innerHTML]="row['street']"></i>&nbsp;  
-            <i [innerHTML]="row['houseNumber']"></i>,&nbsp;  
-            <i [innerHTML]="row['city']"></i>,&nbsp;
-            <i [innerHTML]="row['country']"></i> 
-          </a>
+          <p>{{ row['date'] | date }}</p>
         </ng-template>
       </ngx-datatable-column> 
-    
-      <!-- <ngx-datatable-column name="פעולות" [sortable]="false">
-        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-          <ion-button size="small" fill="outline" (click)="open(row)"
-            >Details</ion-button
-          >
-        </ng-template>
-      </ngx-datatable-column> -->
+
+      <ngx-datatable-column name="courseLessons" [width]="220">
+        <ng-template let-column="column" ngx-datatable-header-template><strong>שיעורים</strong></ng-template>
+      </ngx-datatable-column>
+
     </ngx-datatable>
-      <!-- <ngx-datatable 
-      [selected]="selected"
-      on-select="onSelect(this)"
-       class="material"
-       [rows]="rows" 
-       [columns]="columns"
-       > </ngx-datatable> -->
+
     </ion-row>
 
   </ion-grid>

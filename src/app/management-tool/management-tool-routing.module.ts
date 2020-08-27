@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'users',
     loadChildren: () => import('./manage-users/manage-users.module').then( m => m.ManageUsersPageModule)
+  },
+  {
+    path: 'courses',
+    loadChildren: () => import('./manage-courses/manage-courses.module').then( m => m.ManageCoursesPageModule)
   }
 ];
 

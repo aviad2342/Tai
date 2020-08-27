@@ -24,7 +24,7 @@
         </ion-text>
         <ion-img [src]="course.thumbnail" class="course-thumbnail"></ion-img>
         <ion-text  class="ion-no-padding">
-          <p class="article-author-date ion-no-margin"> המרצה {{ getAuthorFullName() }}</p>
+          <p class="article-author-date ion-no-margin"> המרצה {{ course.authorName }}</p>
         </ion-text>
         <ion-text  class="ion-no-padding">
           <p class="article-author-date"> {{ course?.date | date  }}</p>

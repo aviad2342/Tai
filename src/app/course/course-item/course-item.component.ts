@@ -11,18 +11,18 @@ import { UserService } from 'src/app/user/user.service';
 export class CourseItemComponent implements OnInit {
 
   @Input() course: Course;
-  author: User;
+  // author: User;
 
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.userService.getUser(this.course.authorId).subscribe(user => {
-      this.author = user;
-    });
+    // this.userService.getUser(this.course.authorId).subscribe(user => {
+    //   this.author = user;
+    // });
   }
 
-  getAuthorFullName() {
-    return this.author?.firstName + ' ' + this.author?.lastName;
-  }
+  // getAuthorFullName() {
+  //   return this.author?.firstName + ' ' + this.author?.lastName;
+  // }
 
 }

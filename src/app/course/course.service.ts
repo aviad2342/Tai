@@ -14,13 +14,17 @@ export class CourseService {
   // tslint:disable-next-line: variable-name
   private _courses = new BehaviorSubject<Course[]>([
     new Course
-    ('1', '8b36691a-a8d0-420b-881c-8d056683bb98', 'ab1', 'השלמה עצמית', 'דרכים לקבלה עצמית', new Date('2020-08-07'), this.image, 4 ),
+    ('1', '8b36691a-a8d0-420b-881c-8d056683bb98',
+     'אביעד בן חיון','ab1', 'השלמה עצמית', 'דרכים לקבלה עצמית', new Date('2020-08-06'), this.image, 4 ),
     new Course
-    ('2', '8b36691a-a8d0-420b-881c-8d056683bb98', 'ab1', 'השלמה עצמית', 'דרכים לקבלה עצמית', new Date('2020-08-07'), this.image, 4 ),
+    ('2', '8b36691a-a8d0-420b-881c-8d056683bb98',
+     'אביעד בן חיון','ab1', 'השלמה עצמית', 'דרכים לקבלה עצמית', new Date('2020-08-07'), this.image, 4 ),
     new Course
-    ('3', '8b36691a-a8d0-420b-881c-8d056683bb98', 'ab1', 'השלמה עצמית', 'דרכים לקבלה עצמית', new Date('2020-08-07'), this.image, 4 ),
+    ('3', '8b36691a-a8d0-420b-881c-8d056683bb98',
+     'אביעד בן חיון','ab1', 'השלמה עצמית', 'דרכים לקבלה עצמית', new Date('2020-08-05'), this.image, 4 ),
     new Course
-    ('4', '8b36691a-a8d0-420b-881c-8d056683bb98', 'ab1', 'השלמה עצמית', 'דרכים לקבלה עצמית', new Date('2020-08-07'), this.image, 4 ),
+    ('4', '8b36691a-a8d0-420b-881c-8d056683bb98',
+     'אביעד בן חיון','ab1', 'השלמה עצמית', 'דרכים לקבלה עצמית', new Date('2020-08-04'), this.image, 4 ),
   ]);
 
     // tslint:disable-next-line: variable-name

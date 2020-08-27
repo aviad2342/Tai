@@ -17,7 +17,7 @@ export class CourseDetailPage implements OnInit {
   course :Course;
   lessons :Lesson[];
   courseId;
-  author: User;
+  // author: User;
   isLoading = false;
   lessonsIsLoading = false;
 
@@ -40,10 +40,11 @@ export class CourseDetailPage implements OnInit {
       this.courseId = paramMap.get('id');
       this.courseService.getCourse(paramMap.get('id')).subscribe(course => {
             this.course = course;
-            this.userService.getUser(this.course?.authorId).subscribe(user => {
-              this.author = user;
-              this.isLoading = false;
-            });
+            this.isLoading = false;
+            // this.userService.getUser(this.course?.authorId).subscribe(user => {
+            //   this.author = user;
+            //   this.isLoading = false;
+            // });
           },
           error => {
             this.alertController
@@ -70,8 +71,8 @@ export class CourseDetailPage implements OnInit {
     });
   }
 
-  getAuthorFullName() {
-    return this.author?.firstName + ' ' + this.author?.lastName;
-  }
+  // getAuthorFullName() {
+  //   return this.author?.firstName + ' ' + this.author?.lastName;
+  // }
 
 }

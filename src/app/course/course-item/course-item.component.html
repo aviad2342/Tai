@@ -7,7 +7,7 @@
     <ion-card-content>
       <ion-img [src]="course.thumbnail" class="article-thumbnail"></ion-img>
       <p>נוסף בתאריך: {{ course.date | date }}</p>
-      <ion-label>מחבר: {{ getAuthorFullName() }}</ion-label>
+      <ion-label>מחבר: {{ course.authorName }}</ion-label>
     </ion-card-content>
   </ion-card>
 </ion-item>
