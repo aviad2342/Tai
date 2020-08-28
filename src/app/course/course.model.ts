@@ -8,6 +8,7 @@ export class Course {
       public title: string,
       public description: string,
       public date: Date,
+      public lastEdit: Date,
       public thumbnail: string,
       public courseLessons: number
     ) {}

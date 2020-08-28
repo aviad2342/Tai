@@ -13,13 +13,13 @@
     <ion-row>
       <ion-col>
         <ion-button color="primary" (click)="onAddCourse()">
-        <ion-icon name="person-add-outline" slot="start"></ion-icon>
+        <ion-icon class="custom-online-course" slot="start"></ion-icon>
         <ion-label>הוסף</ion-label>
       </ion-button>
 
       <ion-button color="secondary" (click)="onViewCourse()" [disabled]="!isRowSelected">
         <ion-icon name="eye-outline" slot="start"></ion-icon>
-        <ion-label>פרופיל</ion-label>
+        <ion-label>צפייה</ion-label>
       </ion-button>
 
       <ion-button color="warning" (click)="onEditCourse()" [disabled]="!isRowSelected">
@@ -37,52 +37,23 @@
 <!---------------------------------- filtering inputs -------------------------------------------------->
     <ion-row>
 
-      <ion-col size="2" class="ion-padding-end">
+      <ion-col size="4" class="ion-padding-end">
         <ion-item>
           <ion-input   
           type="text"
-          placeholder="סנן לפי שם"
-          (keyup)="filterByFirstName($event)">
+          placeholder="חפש קורס"
+          (keyup)="filterCourses($event)">
           </ion-input>
-        </ion-item>
-      </ion-col>
-
-      <ion-col size="2" class="ion-padding-end">
-        <ion-item>
-          <ion-input   
-          type="text"
-          placeholder="סנן לפי שם משפחה"
-          (keyup)="filterByLastName($event)">
-          </ion-input>
-        </ion-item>
-      </ion-col>
-
-      <ion-col size="2" class="ion-padding-end">
-        <ion-item>
-          <ion-input   
-          type="text"
-          placeholder="סנן לפי אימייל"
-          (keyup)="filterByMail($event)">
-          </ion-input>
-        </ion-item>
-      </ion-col>
-
-      <ion-col size="2" class="ion-padding-end">
-        <ion-item>
-          <ion-input   
-          type="text"
-          placeholder="סנן לפי יישוב"
-          (keyup)="filterByCity($event)">
-          </ion-input>
+          <ion-icon name="funnel-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
         </ion-item>
       </ion-col>
 
     </ion-row>
-<!------------------------------------------datatable -------------------------------------------------->
+<!------------------------------------------ courses datatable -------------------------------------------------->
     <ion-row>
       
       <ngx-datatable
-      #usersTable
+      #coursesTable
       [rows]="courses"
       class="bootstrap"
       [rowHeight]="'auto'"
@@ -95,7 +66,7 @@
       (activate)="onActivate($event)"
       (select)="onSelect($event)"
     >
-    <ngx-datatable-column name="" [sortable]="false" [width]="120">
+    <ngx-datatable-column name="" [sortable]="false" [width]="100">
 
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
         <ion-thumbnail>
@@ -115,15 +86,59 @@
       <ngx-datatable-column name="date" [sortable]="true" [width]="120">
         <ng-template let-column="column" ngx-datatable-header-template><strong>תאריך</strong></ng-template>
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-          <p>{{ row['date'] | date }}</p>
+          {{ row['date'] | date }}
         </ng-template>
       </ngx-datatable-column> 
 
-      <ngx-datatable-column name="courseLessons" [width]="220">
+      <ngx-datatable-column name="courseLessons" [width]="80">
         <ng-template let-column="column" ngx-datatable-header-template><strong>שיעורים</strong></ng-template>
       </ngx-datatable-column>
 
     </ngx-datatable>
+
+<!------------------------------------------ lessons datatable -------------------------------------------------->
+    <ngx-datatable *ngIf="isRowSelected"
+    #ulessonsTable
+    [rows]="lessons"
+    class="material ion-margin"
+    [rowHeight]="'auto'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [limit]="50"
+    [columnMode]="columnMode.standard"
+  >
+    <ngx-datatable-column name="lessonNumber" [width]="50">
+      <ng-template let-column="column" ngx-datatable-header-template><strong>שיעור</strong></ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="" [sortable]="false" [width]="100">
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <ion-thumbnail>
+          <ion-img [src]="getVideoThumbnail(row['videoId'])"></ion-img>
+        </ion-thumbnail>
+      </ng-template>
+    </ngx-datatable-column> 
+
+    <ngx-datatable-column name="title" [width]="150">
+      <ng-template let-column="column" ngx-datatable-header-template><strong>כותרת שיעור</strong></ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="date" [sortable]="true" [width]="120">
+      <ng-template let-column="column" ngx-datatable-header-template><strong>תאריך</strong></ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        {{ row['date'] | date }}
+      </ng-template>
+    </ngx-datatable-column> 
+
+    <ngx-datatable-column name="פעולות" [sortable]="false" [width]="130">
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <ion-icon slot="start" color="primary" name="eye-outline" class="icon-size-large icon-vertical-line" (click)="onViewLesson(row.id)"></ion-icon>
+        <ion-icon slot="start" color="warning" name="create-outline" class="icon-size-large icon-vertical-line" (click)="onEditLesson(row.id)"></ion-icon>
+        <ion-icon slot="start" color="danger" name="trash-outline" class="icon-size-large" (click)="onDeleteLesson(row.id)"></ion-icon>
+      </ng-template>
+    </ngx-datatable-column>
+
+  </ngx-datatable>
 
     </ion-row>
 

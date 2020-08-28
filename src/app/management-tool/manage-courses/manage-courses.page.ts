@@ -5,6 +5,7 @@ import { ModalController, AlertController } from '@ionic/angular';
 import { AppService } from 'src/app/app.service';
 import { CourseService } from 'src/app/course/course.service';
 import { Course } from 'src/app/course/course.model';
+import { Lesson } from 'src/app/course/lesson.model';
 
 @Component({
   selector: 'app-manage-courses',
@@ -14,15 +15,16 @@ import { Course } from 'src/app/course/course.model';
 export class ManageCoursesPage implements OnInit, OnDestroy {
 
   courses: Course[];
+  lessons: Lesson[];
   selectedCourseId;
   private courseSubscription: Subscription;
   // @ViewChild('usersTable') usersTable: DatatableComponent;
-	tableStyle = 'dark';
   isRowSelected = false;
   columnMode = ColumnMode;
   SelectionType = SelectionType;
   temp = [];
   selected = [];
+
 
   constructor( private courseservice: CourseService,
     private modalController: ModalController,
@@ -33,44 +35,21 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
     ngOnInit() {
       this.courseSubscription = this.courseservice.courses.subscribe(courses=> {
         this.courses = courses;
+        this.temp = [...this.courses];
       });
     }
 
     ionViewWillEnter() {
-      // this.courseService.getCourses().subscribe();
+      this.courseservice.getCourses().subscribe();
     }
 
-  filterByFirstName(event) {
+   filterCourses(event) {
     const val = event.target.value.toLowerCase();
     const temp = this.temp.filter((d)=> {
-      return d.firstName.toLowerCase().indexOf(val) !== -1 || !val;
-  });
-  this.courses = temp;
-}
-
-  filterByLastName(event) {
-    const val = event.target.value.toLowerCase();
-    const temp = this.temp.filter((d)=> {
-      return d.lastName.toLowerCase().indexOf(val) !== -1 || !val;
-  });
-  this.courses = temp;
-}
-
-  filterByMail(event) {
-    const val = event.target.value.toLowerCase();
-    const temp = this.temp.filter((d)=> {
-      return d.email.toLowerCase().indexOf(val) !== -1 || !val;
-  });
-  this.courses = temp;
-}
-
-  filterByCity(event) {
-    const val = event.target.value.toLowerCase();
-    const temp = this.temp.filter((d)=> {
-      return d.city.toLowerCase().indexOf(val) !== -1 || !val;
-  });
-    this.courses = temp;
-  }
+      return d.title.toLowerCase().indexOf(val) !== -1 || !val;
+     });
+   this.courses = temp;
+    }
 
   async onAddCourse() {
     // const modal = await this.modalController.create({
@@ -134,16 +113,35 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
       await alert.present();
   }
 
+  onViewLesson(id: string) {
+    console.log(id);
+  }
+
+  onEditLesson(id: string) {
+    console.log(id);
+  }
+
+  onDeleteLesson(id: string) {
+    console.log(id);
+  }
+
   onSelect({ selected }) {
     if(this.selectedCourseId === selected[0].id) {
       this.selected = [];
       this.selectedCourseId = '';
       this.isRowSelected = false;
     } else {
-      this.isRowSelected = true;
+      this.courseservice.getCourseLessons(selected[0].id).subscribe(lessons => {
+        this.lessons = lessons;
+        this.isRowSelected = true;
+      });
       this.selectedCourseId = selected[0].id;
       console.log('Select Event', selected[0], this.selected[0].id);
     }
+  }
+
+  getVideoThumbnail(videoId: string){
+    return `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
   }
 
   onActivate(event) {

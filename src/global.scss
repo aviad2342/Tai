@@ -78,6 +78,15 @@ ion-icon {
       height: 1em;
     }
 
+    &[class*="icon-size-large"] {
+      font-size: x-large;
+    }
+
+    &[class*="icon-vertical-line"] {
+      padding-left: 4px;
+      border-left: 1px solid rgb(104, 100, 100);
+    }
+
     &[class*="toolbar-icon-"] {
       mask-size: contain;
       mask-position: 50% 50%;

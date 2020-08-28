@@ -26,7 +26,7 @@ export class CoursePage implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
     this.isDesktop = this.appService.isDesktop();
-    // this.courseService.getCourses().subscribe();
+    this.courseService.getCourses().subscribe();
   }
 
   isArticleAuthor(authorId: string) {
