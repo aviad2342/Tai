@@ -6,6 +6,7 @@ import { AppService } from 'src/app/app.service';
 import { CourseService } from 'src/app/course/course.service';
 import { Course } from 'src/app/course/course.model';
 import { Lesson } from 'src/app/course/lesson.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-courses',
@@ -29,6 +30,7 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
   constructor( private courseservice: CourseService,
     private modalController: ModalController,
     private alertController: AlertController,
+    private router: Router,
     private appservice: AppService
     ) { }
 
@@ -52,12 +54,7 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
     }
 
   async onAddCourse() {
-    // const modal = await this.modalController.create({
-    //   component: ,
-    //   cssClass: 'add-course-modal',
-    //   animated: true
-    // },);
-    // return await modal.present();
+    this.router.navigate(['manage', 'courses', 'new']);
   }
 
   async onViewCourse() {
