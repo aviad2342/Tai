@@ -14,17 +14,8 @@ export class CourseService {
   // tslint:disable-next-line: variable-name
   private _courses = new BehaviorSubject<Course[]>([]);
 
-    // tslint:disable-next-line: variable-name
-    private _lessons = new BehaviorSubject<Lesson[]>([
-      new Lesson
-      ('1', '1', 'z1-n2C-8gyA', 'https://www.youtube.com/watch?v=z1-n2C-8gyA', 1, 'כותרת 1', 'תוכן 1',new Date('2020-08-07'), this.thumb),
-      new Lesson
-      ('2', '1', '_RTe9IhhGTg', 'https://www.youtube.com/watch?v=_RTe9IhhGTg', 2, 'כותרת 1', 'תוכן 1', new Date('2020-08-07'), this.thumb),
-      new Lesson
-      ('3', '1', '_eoNoXpagNc', 'https://www.youtube.com/watch?v=_eoNoXpagNc', 3,'כותרת 1', 'תוכן 1', new Date('2020-08-07'), this.thumb),
-      new Lesson
-      ('4', '1', 'pg9tgv7YFLY', 'https://www.youtube.com/watch?v=pg9tgv7YFLY', 4, 'כותרת 1', 'תוכן 1',new Date('2020-08-07'), this.thumb)
-    ]);
+  // tslint:disable-next-line: variable-name
+  private _lessons = new BehaviorSubject<Lesson[]>([]);
 
 
   get courses() {
@@ -61,8 +52,24 @@ export class CourseService {
     }));
   }
 
+  // addCourse(course: Course) {
+  //   return this.http.post<{id: string}>('http://localhost:3000/api/course/course',
+  //   {
+  //     ...course
+  //   }).
+  //   pipe(
+  //     switchMap(resData => {
+  //       course.id = resData.id;
+  //       return this.courses;
+  //     }),
+  //     take(1),
+  //     tap(courses => {
+  //       this._courses.next(courses.concat(course));
+  //     }));
+  // }
+
   addCourse(course: Course) {
-    return this.http.post<{id: string}>('http://localhost:3000/api/course/course',
+    return this.http.post<Course>('http://localhost:3000/api/course/course',
     {
       ...course
     }).
@@ -74,6 +81,7 @@ export class CourseService {
       take(1),
       tap(courses => {
         this._courses.next(courses.concat(course));
+         return courses;
       }));
   }
 
@@ -126,6 +134,15 @@ export class CourseService {
       .pipe(tap(lessons => {
         this._lessons.next(lessons);
       }));
+  }
+
+  uploadCourseThumbnail(image: File, fileName: string) {
+    const uploadData = new FormData();
+    uploadData.append('image', image, fileName);
+    return this.http.post<{ imageUrl: string}>(
+      'http://localhost:3000/api/image/uploadCourseImage',
+      uploadData
+    );
   }
 
  // ------------------------------------------ Lesson Functions --------------------------------------------------
