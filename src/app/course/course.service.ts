@@ -10,12 +10,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CourseService {
 
-  thumb ='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/YouTube_play_buttom_icon_%282013-2017%29.svg/1280px-YouTube_play_buttom_icon_%282013-2017%29.svg.png';
   // tslint:disable-next-line: variable-name
   private _courses = new BehaviorSubject<Course[]>([]);
 
   // tslint:disable-next-line: variable-name
   private _lessons = new BehaviorSubject<Lesson[]>([]);
+
+  course: Course;
 
 
   get courses() {
@@ -68,6 +69,27 @@ export class CourseService {
   //     }));
   // }
 
+  // addCourse(course: Course) {
+  //   return this.http.post<Course>('http://localhost:3000/api/course/course',
+  //   {
+  //     ...course
+  //   }).
+  //   pipe(
+  //     switchMap(resData => {
+  //       course.id = resData.id;
+  //       return this.courses;
+  //     }),
+  //     take(1),
+  //     switchMap(courses => {
+  //       this._courses.next(courses.concat(course));
+  //        return courses;
+  //     }),
+  //     tap(courses => {
+  //        return courses;
+  //     }
+  //   ));
+  // }
+
   addCourse(course: Course) {
     return this.http.post<Course>('http://localhost:3000/api/course/course',
     {
@@ -79,9 +101,10 @@ export class CourseService {
         return this.courses;
       }),
       take(1),
-      tap(courses => {
-        this._courses.next(courses.concat(course));
-         return courses;
+      switchMap(cours => {
+        this._courses.next(cours.concat(course));
+        this.course = course;
+         return this.getCourse(course.id);
       }));
   }
 

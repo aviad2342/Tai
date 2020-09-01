@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, ModalController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 import { CourseService } from 'src/app/course/course.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { AppService } from 'src/app/app.service';
 import { Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { Course } from 'src/app/course/course.model';
 import { Lesson } from 'src/app/course/lesson.model';
+import { AddLessonComponent } from '../add-lesson/add-lesson.component';
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';
@@ -56,6 +57,7 @@ export class AddCoursePage implements OnInit {
   constructor(
     private courseService: CourseService,
     private router: Router,
+    private modalController: ModalController,
     private authService: AuthService,
     public appService: AppService
     ) { }
@@ -109,7 +111,7 @@ export class AddCoursePage implements OnInit {
         return this.courseService.addCourse(courseToAdd);
       })
     ).subscribe(newCourse => {
-      console.log(newCourse);
+      this.course = newCourse;
       this.newCourseStepper.slideNext();
       form.reset();
       // console.log(newCourse);
@@ -124,6 +126,15 @@ export class AddCoursePage implements OnInit {
       this.router.navigate(['/manage/courses']);
     }
     );
+  }
+
+  async onAddLesson() {
+    const modal = await this.modalController.create({
+      component: AddLessonComponent,
+      cssClass: 'add-lesson-modal',
+      animated: true
+    },);
+    return await modal.present();
   }
 
   next(){
