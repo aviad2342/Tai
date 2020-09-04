@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { IonSlides, ModalController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 import { CourseService } from 'src/app/course/course.service';
@@ -9,6 +9,7 @@ import { switchMap, take } from 'rxjs/operators';
 import { Course } from 'src/app/course/course.model';
 import { Lesson } from 'src/app/course/lesson.model';
 import { AddLessonComponent } from '../add-lesson/add-lesson.component';
+import { Subscription } from 'rxjs';
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';
@@ -36,14 +37,14 @@ function base64toBlob(base64Data, contentType) {
   templateUrl: './add-course.page.html',
   styleUrls: ['./add-course.page.scss'],
 })
-export class AddCoursePage implements OnInit {
+export class AddCoursePage implements OnInit, OnDestroy {
 
   @ViewChild('stepper') newCourseStepper: IonSlides;
   @ViewChild('f', { static: true }) form: NgForm;
   course: Course;
   lessons: Lesson[];
   file: File;
-  bla;
+  private lessonsSubscription: Subscription;
   authorId: string;
   authorName: string;
   isLoading = false;
@@ -66,7 +67,10 @@ export class AddCoursePage implements OnInit {
     this.authService.getUserLogged().subscribe(author => {
       this.authorId = author.id;
       this.authorName = author.firstName + ' ' + author.lastName;
-    })
+    });
+    this.lessonsSubscription = this.courseService.lessons.subscribe( lessons => {
+      this.lessons = lessons;
+    });
   }
 
   onImagePicked(imageData: string | File) {
@@ -132,13 +136,49 @@ export class AddCoursePage implements OnInit {
     const modal = await this.modalController.create({
       component: AddLessonComponent,
       cssClass: 'add-lesson-modal',
-      animated: true
-    },);
+      animated: true,
+      componentProps: {
+        id: this.course.id,
+        lessonNumber: this.getLessonNumber()
+      }
+    });
+    modal.onDidDismiss().then( data => {
+      if(data.data.didAdd) {
+        this.courseService.getCourseLessons(this.course.id).subscribe();
+      }
+    });
     return await modal.present();
+  }
+
+  onSaveAndExit() {
+    if(this.lessons !== null) {
+      this.course.courseLessons = this.lessons.length;
+      this.courseService.updateCourse(this.course).subscribe(resData => {
+        this.appService.presentToast('השיעור נשמר בהצלחה', true);
+        this.router.navigate(['/manage/courses']);
+      }, error => {
+        this.appService.presentToast('חלה תקלה השיעור לא נשמר', false);
+        this.router.navigate(['/manage/courses']);
+      });
+    }
+    this.router.navigate(['/manage/courses']);
   }
 
   next(){
     this.newCourseStepper.slideNext();
+  }
+
+  getLessonNumber(){
+    if(this.lessons !== null) {
+      return this.lessons.length + 1;
+    }
+    return 1;
+  }
+
+  ngOnDestroy() {
+    if (this.lessonsSubscription) {
+      this.lessonsSubscription.unsubscribe();
+    }
   }
 
 }

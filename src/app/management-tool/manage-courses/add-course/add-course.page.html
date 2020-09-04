@@ -106,17 +106,38 @@
         </ion-row>
 
         <ion-row>
-          <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="lessonsIsLoading">
-            <ion-spinner color="primary"></ion-spinner>
-          </ion-col>
-          <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="!isLoading && !lessonsIsLoading">
+          <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
             <ion-fab vertical="start" horizontal="start" slot="fixed" edge>
               <ion-fab-button (click)="onAddLesson()">
                 <ion-icon name="create-outline"></ion-icon>
               </ion-fab-button>
             </ion-fab>
+            <ion-button (click)="onAddLesson()"></ion-button>
             <ion-list *ngIf="lessons !== null">
+              <div class="comment-item" *ngFor="let lesson of lessons">
+                <ion-item>
+                  <ion-thumbnail size="medium" slot="start">
+                    <ion-img [src]="lesson.thumbnail" class="lesson-thumbnail-image"></ion-img>
+                  </ion-thumbnail>
+                  <ion-label>
+                    <h2>שיעור מספר {{ lesson.lessonNumber }}: {{ lesson.title }}</h2>
+                    <h3>{{ lesson.description }}</h3>
+                    <ion-text color="medium">
+                      <p>{{ lesson?.date | date }}</p>
+                    </ion-text>
+                  </ion-label>
+                </ion-item>
+              </div>
             </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="8">
+            <ion-button 
+            fill="clear" 
+            expand="block"
+            (click)="onSaveAndExit()"
+            >שמור וסיים <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>

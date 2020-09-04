@@ -119,7 +119,9 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
   }
 
   onDeleteLesson(id: string) {
-    console.log(id);
+    this.courseservice.deleteLesson(id).subscribe(lesson => {
+
+    });
   }
 
   onSelect({ selected }) {
