@@ -178,6 +178,17 @@ export class ArticleService {
         }));
     }
 
+    deleteArticleComments(articleId: string) {
+      return this.http.delete(`http://localhost:3000/api/comment/comment/articleId/${articleId}`).
+      pipe(
+        switchMap(resData => {
+          return this.getComments();
+        }),
+        tap(comments => {
+          this._comments.next(comments.filter(u => u.articleId !== articleId));
+        }));
+    }
+
     getArticleComments(articleId: string) {
       return this.http.get<Comment[]>( `http://localhost:3000/api/comment/comment/articleId/${articleId}`)
         .pipe(tap(comments => {

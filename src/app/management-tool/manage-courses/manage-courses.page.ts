@@ -7,6 +7,7 @@ import { CourseService } from 'src/app/course/course.service';
 import { Course } from 'src/app/course/course.model';
 import { Lesson } from 'src/app/course/lesson.model';
 import { Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-manage-courses',
@@ -100,9 +101,17 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
           }, {
             text: 'אישור',
             handler: () => {
-              // this.userservice.deleteUser(this.selectedUserId).subscribe( () => {
-              //   this.isRowSelected = false;
-              // });
+              this.courseservice.deleteCourseLessons(this.selectedCourseId)
+              .pipe(
+                switchMap( resData => {
+                  return this.courseservice.deleteCourse(this.selectedCourseId);
+                })
+              ).subscribe( () => {
+                this.isRowSelected = false;
+                this.appservice.presentToast('הקורס נמחק בהצלחה!', true);
+              }, error => {
+                this.appservice.presentToast('חלה תקלה פעולת המחיקה נכשלה!', false);
+              });
             }
           }
         ]

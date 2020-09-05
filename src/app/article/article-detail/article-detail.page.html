@@ -28,7 +28,7 @@
         <ion-text color="medium" *ngIf="article?.date !== article?.lastEdit">
           <small>נערך בתאריך: {{ article?.lastEdit | date }}</small>
         </ion-text>
-        <ion-textarea>{{ article?.body }}</ion-textarea>
+        <ion-textarea><i [innerHTML]="article?.body"></i> </ion-textarea>
       </div>
       </ion-col>
     </ion-row>

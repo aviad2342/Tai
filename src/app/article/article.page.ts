@@ -4,6 +4,7 @@ import { Article } from './article.model';
 import { ArticleService } from './article.service';
 import { AppService } from '../app.service';
 import { AuthService } from '../auth/auth.service';
+import { switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -17,7 +18,12 @@ export class ArticlePage implements OnInit, OnDestroy {
   private articleSubscription: Subscription;
   isDesktop: boolean;
 
-  constructor( private articleService: ArticleService, private appService: AppService, private authService: AuthService ) { }
+  constructor(
+    private articleService: ArticleService,
+    private appService: AppService,
+    private authService: AuthService,
+    private appservice: AppService
+     ) { }
 
   ngOnInit() {
     this.articleSubscription = this.articleService.articles.subscribe(articles => {
@@ -35,7 +41,15 @@ export class ArticlePage implements OnInit, OnDestroy {
   }
 
   onDelete(id: string) {
-    this.articleService.deleteArticle(id).subscribe(() => {
+    this.articleService.deleteArticleComments(id)
+    .pipe(
+      switchMap( resData => {
+        return this.articleService.deleteArticle(id);
+      })
+    ).subscribe( () => {
+      this.appservice.presentToast('המאמר נמחק בהצלחה!', true);
+    }, error => {
+      this.appservice.presentToast('חלה תקלה פעולת המחיקה נכשלה!', false);
     });
   }
 

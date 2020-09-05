@@ -244,6 +244,17 @@ export class CourseService {
       }));
   }
 
+  deleteCourseLessons(courseId: string) {
+    return this.http.delete(`http://localhost:3000/api/lesson/lesson/courseId/${courseId}`).
+    pipe(
+      switchMap(resData => {
+        return this.getLessons();
+      }),
+      tap(lessons => {
+        this._lessons.next(lessons.filter(u => u.courseId !== courseId));
+      }));
+  }
+
   getVideoThumbnail(videoId: string){
     return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
   }
