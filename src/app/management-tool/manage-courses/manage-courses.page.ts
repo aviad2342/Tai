@@ -8,6 +8,7 @@ import { Course } from 'src/app/course/course.model';
 import { Lesson } from 'src/app/course/lesson.model';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { AddLessonComponent } from './add-lesson/add-lesson.component';
 
 @Component({
   selector: 'app-manage-courses',
@@ -20,6 +21,7 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
   lessons: Lesson[];
   selectedCourseId;
   private courseSubscription: Subscription;
+  private lessonSubscription: Subscription;
   // @ViewChild('usersTable') usersTable: DatatableComponent;
   isRowSelected = false;
   columnMode = ColumnMode;
@@ -58,6 +60,32 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
     this.router.navigate(['manage', 'courses', 'new']);
   }
 
+  async onAddLesson() {
+    const modal = await this.modalController.create({
+      component: AddLessonComponent,
+      cssClass: 'add-lesson-modal',
+      animated: true,
+      componentProps: {
+        id: this.selectedCourseId,
+        lessonNumber: this.getLessonNumber()
+      }
+    });
+    modal.onDidDismiss().then( data => {
+      if(data.data.didAdd) {
+        this.courseservice.getCourseLessons(this.selectedCourseId).subscribe(lessons => {
+          this.lessons = lessons;
+          const courseToUpdate: Course = this.selected[0];
+          courseToUpdate.courseLessons = lessons.length;
+          this.courseservice.updateCourse(courseToUpdate).subscribe();
+          this.appservice.presentToast('השיעור נוסף בהצלחה!', true);
+        }, error => {
+          this.appservice.presentToast('חלה תקלה פעולת ההוספה נכשלה!', false);
+        });
+      }
+    });
+    return await modal.present();
+  }
+
   async onViewCourse() {
     // const modal = await this.modalController.create({
     //   component: ,
@@ -70,32 +98,19 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
   }
 
   async onEditCourse() {
-    // const modal = await this.modalController.create({
-    //   component: ,
-    //   cssClass: 'edit-course-modal',
-    //   componentProps: {
-    //     id: this.selectedCourseId
-    //   }
-    // });
-    //  modal.onDidDismiss().then( data => {
-    //   if(data.data.didUpdate) {
-    //     this.isRowSelected = false;
-    //     this.selectedCourseId = '';
-    //   }
-    // });
-    // return await modal.present();
+    this.router.navigate(['manage', 'courses', 'edit', this.selectedCourseId]);
   }
 
   async onDeleteCourse() {
       const alert = await this.alertController.create({
-        cssClass: 'delete-user-alert',
-        header: 'אישור מחיקת משתמש',
-        message: `האם אתה בטוח שברצונך למחוק את המשתמש ${this.selectedCourseId} לצמיתות?`,
+        cssClass: 'delete-course-alert',
+        header: 'אישור מחיקת קורס',
+        message: `האם אתה בטוח שברצונך למחוק את קורס ${this.selected[0].title} לצמיתות?`,
         buttons: [
           {
             text: 'ביטול',
             role: 'cancel',
-            cssClass: 'delete-user-alert-btn-cancel',
+            cssClass: 'delete-course-alert-btn-cancel',
             handler: () => {
             }
           }, {
@@ -127,10 +142,32 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
     console.log(id);
   }
 
-  onDeleteLesson(id: string) {
-    this.courseservice.deleteLesson(id).subscribe(lesson => {
-
+  async onDeleteLesson(id: string) {
+    const alert = await this.alertController.create({
+      cssClass: 'delete-lesson-alert',
+      header: 'אישור מחיקת שיעור',
+      message: `האם אתה בטוח שברצונך למחוק את השיעור לצמיתות?`,
+      buttons: [
+        {
+          text: 'ביטול',
+          role: 'cancel',
+          cssClass: 'delete-lesson-alert-btn-cancel',
+          handler: () => {
+          }
+        }, {
+          text: 'אישור',
+          handler: () => {
+            this.courseservice.deleteLesson(id).subscribe(lessons => {
+              this.lessons = lessons;
+              this.appservice.presentToast('השיעור נמחק בהצלחה!', true);
+            }, error => {
+              this.appservice.presentToast('חלה תקלה פעולת המחיקה נכשלה!', false);
+            });
+          }
+        }
+      ]
     });
+    await alert.present();
   }
 
   onSelect({ selected }) {
@@ -139,7 +176,7 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
       this.selectedCourseId = '';
       this.isRowSelected = false;
     } else {
-      this.courseservice.getCourseLessons(selected[0].id).subscribe(lessons => {
+     this.lessonSubscription = this.courseservice.getCourseLessons(selected[0].id).subscribe(lessons => {
         this.lessons = lessons;
         this.isRowSelected = true;
       });
@@ -156,10 +193,20 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
     // console.log('Activate Event', event);
   }
 
+  getLessonNumber(){
+    if(this.lessons !== null) {
+      return this.lessons.length + 1;
+    }
+    return 1;
+  }
+
 
   ngOnDestroy() {
     if (this.courseSubscription) {
       this.courseSubscription.unsubscribe();
+    }
+    if (this.lessonSubscription) {
+      this.lessonSubscription.unsubscribe();
     }
   }
 

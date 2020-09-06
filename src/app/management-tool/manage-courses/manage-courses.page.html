@@ -97,13 +97,14 @@
     </ngx-datatable>
 
 <!------------------------------------------ lessons datatable -------------------------------------------------->
+
     <ngx-datatable *ngIf="isRowSelected"
     #ulessonsTable
     [rows]="lessons"
     class="material ion-margin"
     [rowHeight]="'auto'"
     [headerHeight]="50"
-    [footerHeight]="50"
+    [footerHeight]="100"
     [limit]="50"
     [columnMode]="columnMode.standard"
   >
@@ -137,6 +138,22 @@
         <ion-icon slot="start" color="danger" name="trash-outline" class="icon-size-large" (click)="onDeleteLesson(row.id)"></ion-icon>
       </ng-template>
     </ngx-datatable-column>
+
+    <ngx-datatable-footer>
+      <ng-template ngx-datatable-footer-template 
+      let-rowCount="rowCount"
+      let-curPage="curPage"
+      >
+        <div style="padding: 5px 10px">
+        <ion-button (click)="onAddLesson()">
+          <ion-icon name="add" slot="start"></ion-icon>
+          <ion-label>הוסף שיעור</ion-label>
+        </ion-button>
+          <hr style="width:100%" />
+              <div>שורות: {{ rowCount }} | עמוד: {{ curPage }}</div>
+        </div>
+      </ng-template>
+    </ngx-datatable-footer>
 
   </ngx-datatable>
 

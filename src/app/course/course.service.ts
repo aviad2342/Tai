@@ -237,7 +237,7 @@ export class CourseService {
     return this.http.delete(`http://localhost:3000/api/lesson/lesson/${id}`).
     pipe(
       switchMap(resData => {
-        return this.getLessons();
+        return this.lessons;
       }),
       tap(lessons => {
         this._lessons.next(lessons.filter(u => u.id !== id));
