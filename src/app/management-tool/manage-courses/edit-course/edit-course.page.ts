@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CourseService } from 'src/app/course/course.service';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController, ModalController, IonReorderGroup } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 import { Course } from 'src/app/course/course.model';
 import { switchMap } from 'rxjs/operators';
@@ -41,6 +41,7 @@ export class EditCoursePage implements OnInit {
   lessons: Lesson[];
   id: string;
   @ViewChild('f', { static: true }) form: NgForm;
+  @ViewChild(IonReorderGroup) reorderGroup: IonReorderGroup;
   file: File;
   isLoading = false;
   lessonsIsLoading = false;
@@ -123,9 +124,20 @@ export class EditCoursePage implements OnInit {
     return await modal.present();
   }
 
-  onReorder(event) {
-    console.log(event);
-    event.detail.complete();
+  async onReorder(event: any) {
+    const reorderLessons: Lesson[] = this.lessons;
+    const fromLessonnumber = reorderLessons[event.detail.from].lessonNumber;
+    reorderLessons[event.detail.from].lessonNumber = this.lessons[event.detail.to].lessonNumber;
+    reorderLessons[event.detail.to].lessonNumber = fromLessonnumber;
+    this.lessons = reorderLessons;
+    // event.detail.complete();
+    this.courseService.reorderLessons(this.lessons[event.detail.from].id, this.lessons[event.detail.to].id)
+    .subscribe( lessons => {
+      console.log(lessons);
+    }, error => {
+      console.log(error);
+    });
+    event.detail.complete(true);
   }
 
   onSubmit(form: NgForm) {

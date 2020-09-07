@@ -233,6 +233,17 @@ export class CourseService {
       }));
   }
 
+  reorderLessons(fromId: string, toId: string) {
+    return this.http.get(`http://localhost:3000/api/lesson/lesson/reorder/${fromId}/${toId}`).
+    pipe(
+      switchMap(resData => {
+        return this.lessons;
+      }),
+      tap(lessons => {
+        this._lessons.next(lessons);
+      }));
+  }
+
   deleteLesson(id: string) {
     return this.http.delete(`http://localhost:3000/api/lesson/lesson/${id}`).
     pipe(

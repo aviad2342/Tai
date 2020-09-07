@@ -10,7 +10,8 @@
       <ion-row class="ion-justify-content-center">
         <ion-col size="4">
           <app-image-picker 
-          [showPreview]="this.course?.thumbnail" 
+          [selectedImage]="this.course?.thumbnail"
+          [showPreview]="true" 
           (imagePick)="onImagePicked($event)" 
           class="ion-padding">
         </app-image-picker>
