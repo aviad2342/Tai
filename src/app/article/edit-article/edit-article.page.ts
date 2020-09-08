@@ -98,6 +98,7 @@ export class EditArticlePage implements OnInit, OnDestroy {
         const articleToUpdate = new Article(
           this.id,
           this.article.authorId,
+          this.article.authorName,
           this.article.catalogNumber,
           form.value.title,
           form.value.subtitle,
@@ -124,6 +125,7 @@ export class EditArticlePage implements OnInit, OnDestroy {
       const articleToUpdate = new Article(
         this.id,
         this.article.authorId,
+        this.article.authorName,
         this.article.catalogNumber,
         form.value.title,
         form.value.subtitle,

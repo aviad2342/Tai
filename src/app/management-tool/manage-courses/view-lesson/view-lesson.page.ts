@@ -1,20 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController, ViewDidEnter } from '@ionic/angular';
-import { CourseService } from '../course.service';
-import { Lesson } from '../lesson.model';
 import { Capacitor, Plugins } from '@capacitor/core';
+import { CourseService } from 'src/app/course/course.service';
 import { YoutubePlayerWeb } from 'capacitor-youtube-player';
+import { Lesson } from 'src/app/course/lesson.model';
+
 
 @Component({
-  selector: 'app-lesson-detail',
-  templateUrl: './lesson-detail.page.html',
-  styleUrls: ['./lesson-detail.page.scss'],
+  selector: 'app-view-lesson',
+  templateUrl: './view-lesson.page.html',
+  styleUrls: ['./view-lesson.page.scss'],
 })
-export class LessonDetailPage implements OnInit, ViewDidEnter {
+export class ViewLessonPage implements OnInit, ViewDidEnter {
 
   lesson :Lesson;
+  lessons :Lesson[];
   isLoading = false;
+  hesNextClass = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,12 +31,18 @@ export class LessonDetailPage implements OnInit, ViewDidEnter {
     this.isLoading = true;
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
-        this.navController.navigateBack('/tabs/course');
+        this.navController.navigateBack('/manage/courses');
         return;
       }
       this.courseService.getLesson(paramMap.get('id')).subscribe(lesson => {
             this.lesson = lesson;
             this.isLoading = false;
+            this.courseService.getCourseLessons(lesson.courseId).subscribe(lessons => {
+              this.lessons = lessons;
+              if(this.lesson.lessonNumber < lessons.length) {
+                this.hesNextClass = true;
+              }
+            });
           },
           error => {
             this.alertController
@@ -44,7 +53,7 @@ export class LessonDetailPage implements OnInit, ViewDidEnter {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.router.navigate(['/tabs/course']);
+                      this.router.navigate(['/manage/courses']);
                     }
                   }
                 ]
@@ -54,6 +63,15 @@ export class LessonDetailPage implements OnInit, ViewDidEnter {
         );
 
     });
+  }
+
+  onNextClass() {
+    this.lesson = this.lessons[this.lesson.lessonNumber];
+    if(this.lesson.lessonNumber === this.lessons.length) {
+      this.hesNextClass = false;
+    }
+    this.destroyYoutubePlayerPluginWeb();
+    this.initializeYoutubePlayerPluginWeb();
   }
 
   ionViewDidEnter() {
@@ -81,6 +99,5 @@ export class LessonDetailPage implements OnInit, ViewDidEnter {
     const options = {width: 640, height: 360, videoId: `${this.lesson.videoId}?rel=0&showinfo=0&modestbranding=1&playsinline=1&`};
     const playerReady = await YoutubePlayer.initialize(options);
   }
-
 
 }

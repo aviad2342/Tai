@@ -21,7 +21,4 @@ export class CommentComponent implements OnInit {
     });
   }
 
-  getAuthorFullName() {
-    return this.author?.firstName + ' ' + this.author?.lastName;
-  }
 }

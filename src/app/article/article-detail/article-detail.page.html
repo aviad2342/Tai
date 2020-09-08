@@ -23,7 +23,7 @@
           <h3>{{ article?.subtitle }}</h3>
         </ion-text>
         <ion-text  class="ion-no-padding">
-          <p class="article-author-date">נכתב ע"י {{ getAuthorFullName() }} בתאריך {{ article?.date | date  }}</p>
+          <p class="article-author-date">נכתב ע"י {{ article?.authorName }} בתאריך {{ article?.date | date  }}</p>
         </ion-text>
         <ion-text color="medium" *ngIf="article?.date !== article?.lastEdit">
           <small>נערך בתאריך: {{ article?.lastEdit | date }}</small>

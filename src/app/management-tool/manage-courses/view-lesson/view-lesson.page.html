@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="['/', 'course', lesson.courseId]"></ion-back-button>
+      <ion-back-button [defaultHref]="['/', 'manage','courses', 'view', lesson?.courseId]"></ion-back-button>
     </ion-buttons>
     <ion-title class="ion-no-padding">שיעור</ion-title>
   </ion-toolbar>
@@ -10,6 +10,7 @@
 <ion-content fullscreen="true">
 <!------------------------------------------lesson section -------------------------------------------->
   <ion-grid>
+
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="isLoading">
         <ion-spinner color="primary"></ion-spinner>
@@ -17,7 +18,7 @@
       <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="!isLoading">
         <div class="course-container ion-padding">
         <ion-text>
-          <h1 class="ion-no-margin">{{ lesson?.title }}</h1>
+          <h1 class="ion-no-margin">שיעור מספר {{ lesson.lessonNumber }}: {{ lesson.title }}</h1>
         </ion-text>
         <ion-text>
           <h5 class="ion-margin-top">{{ lesson?.description }}</h5>
@@ -28,9 +29,21 @@
       </div>
       </ion-col>
     </ion-row>
+
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="!isLoading">
         <div id="youtube-player"></div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="8">
+        <ion-button 
+        *ngIf="hesNextClass"
+        fill="clear" 
+        expand="block"
+        (click)="onNextClass()"
+        > שיעור הבא <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

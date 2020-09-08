@@ -11,18 +11,9 @@ import { User } from 'src/app/user/user.model';
 export class ArticleItemComponent implements OnInit {
 
   @Input() article: Article;
-  author: User;
 
   constructor(private userService: UserService) { }
 
-  ngOnInit() {
-    this.userService.getUser(this.article.authorId).subscribe(user => {
-      this.author = user;
-    });
-  }
-
-  getAuthorFullName() {
-    return this.author?.firstName + ' ' + this.author?.lastName;
-  }
+  ngOnInit() {}
 
 }

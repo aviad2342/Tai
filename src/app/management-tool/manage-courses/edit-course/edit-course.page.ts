@@ -94,7 +94,7 @@ export class EditCoursePage implements OnInit {
     } else {
       imageFile = imageData;
     }
-    this.file = imageFile;
+    // this.file = imageFile;
     this.form.value.image = imageFile;
   }
 
@@ -114,6 +114,7 @@ export class EditCoursePage implements OnInit {
           this.lessons = lessons;
           const courseToUpdate: Course = this.course;
           courseToUpdate.courseLessons = lessons.length;
+          courseToUpdate.lastEdit = new Date();
           this.courseService.updateCourse(courseToUpdate).subscribe();
           this.appService.presentToast('השיעור נוסף בהצלחה!', true);
         }, error => {
@@ -124,27 +125,21 @@ export class EditCoursePage implements OnInit {
     return await modal.present();
   }
 
-  async onReorder(event: any) {
-    const reorderLessons: Lesson[] = this.lessons;
-    const fromLessonnumber = reorderLessons[event.detail.from].lessonNumber;
-    reorderLessons[event.detail.from].lessonNumber = this.lessons[event.detail.to].lessonNumber;
-    reorderLessons[event.detail.to].lessonNumber = fromLessonnumber;
-    this.lessons = reorderLessons;
-    // event.detail.complete();
-    this.courseService.reorderLessons(this.lessons[event.detail.from].id, this.lessons[event.detail.to].id)
-    .subscribe( lessons => {
-      console.log(lessons);
-    }, error => {
-      console.log(error);
+   onReorder(event: any) {
+    this.lessons = event.detail.complete(this.lessons);
+    this.lessons.forEach((lesson, index) => {
+      lesson.lessonNumber = index + 1;
+      this.courseService.updateLesson(lesson).subscribe();
     });
-    event.detail.complete(true);
+console.log(this.lessons.length);
   }
 
   onSubmit(form: NgForm) {
-    form.value.image = this.file;
-    if (!form.valid || !form.value.image) {
+    // form.value.image = this.file;
+    if (!form.valid) {
       return;
     }
+    if (form.value.image) {
     this.courseService.uploadCourseThumbnail(form.value.image, 'course')
     .pipe(
       switchMap(uploadRes => {
@@ -158,9 +153,9 @@ export class EditCoursePage implements OnInit {
           this.course.date,
           new Date(),
           uploadRes.imageUrl,
-          0
+          this.lessons.length
         );
-        return this.courseService.addCourse(courseToUpdate);
+        return this.courseService.updateCourse(courseToUpdate);
       })
     ).subscribe(newCourse => {
       this.appService.presentToast('הקורס עודכן בהצלחה', true);
@@ -171,6 +166,29 @@ export class EditCoursePage implements OnInit {
       this.router.navigate(['/manage/courses']);
     }
     );
+  } else {
+    const courseToUpdate = new Course(
+      this.course.id,
+      this.course.authorId,
+      this.course.authorName,
+      this.course.catalogNumber,
+      form.value.title,
+      form.value.description,
+      this.course.date,
+      new Date(),
+      this.course.thumbnail,
+      this.lessons.length
+    );
+    this.courseService.updateCourse(courseToUpdate).subscribe(newCourse => {
+      this.appService.presentToast('הקורס עודכן בהצלחה', true);
+      this.router.navigate(['/manage/courses']);
+    }, error => {
+      form.reset();
+      this.appService.presentToast('חלה תקלה עדכון הקורס נכשל!', false);
+      this.router.navigate(['/manage/courses']);
+    }
+    );
+  }
   }
 
   getLessonNumber(){

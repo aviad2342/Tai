@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Course } from '../course.model';
-import { Lesson } from '../lesson.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
-import { CourseService } from '../course.service';
-import { User } from 'src/app/user/user.model';
+import { CourseService } from 'src/app/course/course.service';
 import { UserService } from 'src/app/user/user.service';
+import { Course } from 'src/app/course/course.model';
+import { Lesson } from 'src/app/course/lesson.model';
 
 @Component({
-  selector: 'app-course-detail',
-  templateUrl: './course-detail.page.html',
-  styleUrls: ['./course-detail.page.scss'],
+  selector: 'app-view-course',
+  templateUrl: './view-course.page.html',
+  styleUrls: ['./view-course.page.scss'],
 })
-export class CourseDetailPage implements OnInit {
+export class ViewCoursePage implements OnInit {
 
   course :Course;
   lessons :Lesson[];
@@ -34,17 +33,13 @@ export class CourseDetailPage implements OnInit {
     this.isLoading = true;
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
-        this.navController.navigateBack('/tabs/course');
+        this.navController.navigateBack('/manage/courses');
         return;
       }
       this.courseId = paramMap.get('id');
       this.courseService.getCourse(paramMap.get('id')).subscribe(course => {
             this.course = course;
             this.isLoading = false;
-            // this.userService.getUser(this.course?.authorId).subscribe(user => {
-            //   this.author = user;
-            //   this.isLoading = false;
-            // });
           },
           error => {
             this.alertController
@@ -55,7 +50,7 @@ export class CourseDetailPage implements OnInit {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.router.navigate(['/tabs/course']);
+                      this.router.navigate(['/manage/courses']);
                     }
                   }
                 ]

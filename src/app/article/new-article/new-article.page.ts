@@ -41,6 +41,7 @@ export class NewArticlePage implements OnInit {
   @ViewChild('#quillEditor', { static: true }) quillEditor: QuillEditorComponent;
   file: File;
   authorId: string;
+  authorName: string;
 
   modules = {
     toolbar: [
@@ -83,6 +84,7 @@ export class NewArticlePage implements OnInit {
     // this.quillEditor.format('direction','rtl');
     this.authService.getUserLogged().subscribe(author => {
       this.authorId = author.id;
+      this.authorName = author.firstName + ' ' + author.lastName;
     })
   }
 
@@ -122,6 +124,7 @@ export class NewArticlePage implements OnInit {
         const articleToAdd = new Article(
           null,
           this.authorId,
+          this.authorName,
           'aa11',
           form.value.title,
           form.value.subtitle,

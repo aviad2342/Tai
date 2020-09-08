@@ -15,6 +15,14 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     loadChildren: () => import('./edit-course/edit-course.module').then( m => m.EditCoursePageModule)
+  },
+  {
+    path: 'view/:id',
+    loadChildren: () => import('./view-course/view-course.module').then( m => m.ViewCoursePageModule)
+  },
+  {
+    path: 'lesson/:id',
+    loadChildren: () => import('./view-lesson/view-lesson.module').then( m => m.ViewLessonPageModule)
   }
 ];
 

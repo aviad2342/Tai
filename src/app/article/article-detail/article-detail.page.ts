@@ -1,15 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { AlertController, NavController, IonContent, IonList } from '@ionic/angular';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { AlertController, NavController, IonContent } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { Subscription, interval } from 'rxjs';
-import { flatMap, switchMap, map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/user/user.service';
 import { ArticleService } from '../article.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Article } from '../article.model';
 import { Comment } from '../comment.model';
-import { User } from 'src/app/user/user.model';
 
 
 @Component({
@@ -24,7 +22,6 @@ export class ArticleDetailPage implements OnInit, OnDestroy {
   comments: Comment[];
   @ViewChild(IonContent) content: IonContent;
   private commentSub: Subscription;
-  author: User;
   addComment = false;
   isLoading = false;
   articleIsLoading = false;
@@ -49,10 +46,7 @@ export class ArticleDetailPage implements OnInit, OnDestroy {
       this.articleId = paramMap.get('id');
       this.articleService.getArticle(paramMap.get('id')).subscribe(article => {
             this.article = article;
-            this.userService.getUser(this.article?.authorId).subscribe(user => {
-              this.author = user;
-              this.articleIsLoading = false;
-            });
+            this.articleIsLoading = false;
           },
           error => {
             this.alertController
@@ -95,6 +89,7 @@ ionViewWillEnter() {
         null,
         this.article.id,
         user.id,
+        user.firstName + ' ' + user.lastName,
         form.value.body,
         new Date()
       );
@@ -116,10 +111,6 @@ ionViewWillEnter() {
   }
   showForm() {
      this.addComment = true;
-  }
-
-  getAuthorFullName() {
-    return this.author?.firstName + ' ' + this.author?.lastName;
   }
 
   ngOnDestroy() {

@@ -76,6 +76,7 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
           this.lessons = lessons;
           const courseToUpdate: Course = this.selected[0];
           courseToUpdate.courseLessons = lessons.length;
+          courseToUpdate.lastEdit = new Date();
           this.courseservice.updateCourse(courseToUpdate).subscribe();
           this.appservice.presentToast('השיעור נוסף בהצלחה!', true);
         }, error => {
@@ -87,14 +88,7 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
   }
 
   async onViewCourse() {
-    // const modal = await this.modalController.create({
-    //   component: ,
-    //   cssClass: 'view-course-modal',
-    //   componentProps: {
-    //     id: this.selectedCourseId
-    //   }
-    // });
-    // return await modal.present();
+    this.router.navigate(['manage', 'courses', 'view', this.selectedCourseId]);
   }
 
   async onEditCourse() {
