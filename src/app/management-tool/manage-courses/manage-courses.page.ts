@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, SelectionType, DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { ModalController, AlertController } from '@ionic/angular';
 import { AppService } from 'src/app/app.service';
 import { CourseService } from 'src/app/course/course.service';
@@ -22,7 +22,7 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
   selectedCourseId;
   private courseSubscription: Subscription;
   private lessonSubscription: Subscription;
-  // @ViewChild('usersTable') usersTable: DatatableComponent;
+   @ViewChild('coursesTable') coursesTable: DatatableComponent;
   isRowSelected = false;
   columnMode = ColumnMode;
   SelectionType = SelectionType;
@@ -38,14 +38,18 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
-      this.courseSubscription = this.courseservice.courses.subscribe(courses=> {
+      this.courseSubscription = this.courseservice.courses.subscribe(courses => {
         this.courses = courses;
         this.temp = [...this.courses];
       });
     }
 
     ionViewWillEnter() {
-      this.courseservice.getCourses().subscribe();
+      this.courseservice.getCourses().subscribe(courses => {
+        if(this.selectedCourseId !== null) {
+          this.selected[0] = courses.find(u => u.id === this.selectedCourseId);;
+        }
+      });
     }
 
    filterCourses(event) {
@@ -57,6 +61,8 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
     }
 
   async onAddCourse() {
+    this.selectedCourseId = null;
+    this.isRowSelected = false;
     this.router.navigate(['manage', 'courses', 'new']);
   }
 
@@ -77,7 +83,11 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
           const courseToUpdate: Course = this.selected[0];
           courseToUpdate.courseLessons = lessons.length;
           courseToUpdate.lastEdit = new Date();
-          this.courseservice.updateCourse(courseToUpdate).subscribe();
+          // this.selected[0] = courseToUpdate;
+          this.courseservice.updateCourse(courseToUpdate).subscribe(courses => {
+            this.selected[0] = courses.find(u => u.id === this.selectedCourseId);
+          });
+          // this.coursesTable.selected.push(courseToUpdate);
           this.appservice.presentToast('השיעור נוסף בהצלחה!', true);
         }, error => {
           this.appservice.presentToast('חלה תקלה פעולת ההוספה נכשלה!', false);
@@ -117,6 +127,7 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
                 })
               ).subscribe( () => {
                 this.isRowSelected = false;
+                this.selectedCourseId = null;
                 this.appservice.presentToast('הקורס נמחק בהצלחה!', true);
               }, error => {
                 this.appservice.presentToast('חלה תקלה פעולת המחיקה נכשלה!', false);
@@ -151,12 +162,35 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
         }, {
           text: 'אישור',
           handler: () => {
-            this.courseservice.deleteLesson(id).subscribe(lessons => {
+            this.courseservice.deleteLesson(id).pipe(
+              switchMap(delRes => {
+                return this.courseservice.getCourseLessons(this.selectedCourseId);
+              })
+            ).subscribe(lessons => {
               this.lessons = lessons;
-              this.appservice.presentToast('השיעור נמחק בהצלחה!', true);
+              const courseToUpdate: Course = this.selected[0];
+                courseToUpdate.courseLessons = lessons.length;
+                console.log(lessons.length);
+                courseToUpdate.lastEdit = new Date();
+                this.courseservice.updateCourse(courseToUpdate).subscribe();
             }, error => {
               this.appservice.presentToast('חלה תקלה פעולת המחיקה נכשלה!', false);
             });
+            // this.courseservice.deleteLesson(id).subscribe(delRes => {
+            //   this.courseservice.getCourseLessons(this.selectedCourseId).subscribe(lessons => {
+            //     this.lessons = lessons;
+            //     const courseToUpdate: Course = this.selected[0];
+            //     courseToUpdate.courseLessons = lessons.length;
+            //     console.log(lessons.length);
+            //     courseToUpdate.lastEdit = new Date();
+            //     this.courseservice.updateCourse(courseToUpdate).subscribe();
+            //   }, error => {
+            //     this.appservice.presentToast('חלה תקלה פעולת ההוספה נכשלה!', false);
+            //   });
+            //   this.appservice.presentToast('השיעור נמחק בהצלחה!', true);
+            // }, error => {
+            //   this.appservice.presentToast('חלה תקלה פעולת המחיקה נכשלה!', false);
+            // });
           }
         }
       ]

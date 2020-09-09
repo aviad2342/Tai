@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { IonSlides, ModalController } from '@ionic/angular';
+import { IonSlides, ModalController, AlertController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 import { CourseService } from 'src/app/course/course.service';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -60,6 +60,7 @@ export class AddCoursePage implements OnInit, OnDestroy {
     private router: Router,
     private modalController: ModalController,
     private authService: AuthService,
+    private alertController: AlertController,
     public appService: AppService
     ) { }
 
@@ -116,17 +117,12 @@ export class AddCoursePage implements OnInit, OnDestroy {
       })
     ).subscribe(newCourse => {
       this.course = newCourse;
+      this.courseService.getCourseLessons(newCourse.id).subscribe();
       this.newCourseStepper.slideNext();
       form.reset();
-      // console.log(newCourse);
-      // this.course = newCourse;
-      // this.bla = newCourse;
-      // form.reset();
-      // this.appService.presentToast('המאמר נשמר בהצלחה', true);
-      // this.router.navigate(['/tabs/article']);
     }, error => {
       form.reset();
-      this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
+      this.appService.presentToast('חלה תקלה פרטי הקורס לא נשמרו', false);
       this.router.navigate(['/manage/courses']);
     }
     );
@@ -150,8 +146,36 @@ export class AddCoursePage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
-  onSaveAndExit() {
-    if(this.lessons !== null) {
+  async onDeleteLesson(id: string) {
+    const alert = await this.alertController.create({
+      cssClass: 'delete-lesson-alert',
+      header: 'אישור מחיקת שיעור',
+      message: `האם אתה בטוח שברצונך למחוק את השיעור לצמיתות?`,
+      buttons: [
+        {
+          text: 'ביטול',
+          role: 'cancel',
+          cssClass: 'delete-lesson-alert-btn-cancel',
+          handler: () => {
+          }
+        }, {
+          text: 'אישור',
+          handler: () => {
+            this.courseService.deleteLesson(id).subscribe(lessons => {
+              this.lessons = lessons;
+              this.appService.presentToast('השיעור נמחק בהצלחה!', true);
+            }, error => {
+              this.appService.presentToast('חלה תקלה פעולת המחיקה נכשלה!', false);
+            });
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async onSaveAndExit() {
+    if(this.lessons !== null && this.lessons && this.lessons.length > 0) {
       this.course.courseLessons = this.lessons.length;
       this.courseService.updateCourse(this.course).subscribe(resData => {
         this.appService.presentToast('השיעור נשמר בהצלחה', true);
@@ -160,8 +184,40 @@ export class AddCoursePage implements OnInit, OnDestroy {
         this.appService.presentToast('חלה תקלה השיעור לא נשמר', false);
         this.router.navigate(['/manage/courses']);
       });
+    } else {
+      const alert = await this.alertController.create({
+        cssClass: 'no-class-added-alert',
+        header: 'לא נוספו שיעורים',
+        backdropDismiss: false,
+        message: 'נראה שלא הוספת שיעורים לקורס זה! האם ברצונך לבטל את יצירת הקורס? לשמור את הקורס ללא שיעורים או להוסיף שיעורים?',
+        buttons: [
+          {
+            text: 'בטל יצירת קורס',
+            role: 'cancel',
+            cssClass: 'delete-course-alert-btn-cancel',
+            handler: () => {
+              this.courseService.deleteCourse(this.course.id).subscribe(() => {
+                this.appService.presentToast('בוטלה פעולת השמירה והקורס נמחק!', true);
+                this.router.navigate(['/manage/courses']);
+              });
+            }
+          }, {
+            text: 'הוסף שיעורים',
+            handler: () => {
+              this.onAddLesson();
+              return;
+            }
+          }, {
+            text: 'שמור קורס',
+            handler: () => {
+              this.appService.presentToast('הקורס נשמר בהצלחה!', true);
+              this.router.navigate(['/manage/courses']);
+            }
+          }
+        ]
+      });
+      await alert.present();
     }
-    this.router.navigate(['/manage/courses']);
   }
 
   next(){

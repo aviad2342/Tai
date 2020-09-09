@@ -107,12 +107,6 @@
 
         <ion-row>
           <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
-            <ion-fab vertical="start" horizontal="start" slot="fixed" edge>
-              <ion-fab-button (click)="onAddLesson()">
-                <ion-icon name="create-outline"></ion-icon>
-              </ion-fab-button>
-            </ion-fab>
-            <ion-button (click)="onAddLesson()"></ion-button>
             <ion-list *ngIf="lessons !== null">
               <div class="comment-item" *ngFor="let lesson of lessons">
                 <ion-item>
@@ -126,8 +120,20 @@
                       <p>{{ lesson?.date | date }}</p>
                     </ion-text>
                   </ion-label>
+                  <ion-button color="danger" (click)="onDeleteLesson(lesson.id)" fill="clear" slot="end">
+                    <ion-icon name="trash-outline" slot="start"></ion-icon>
+                    <ion-label>מחק שיעור</ion-label>
+                  </ion-button>
                 </ion-item>
               </div>
+              <ion-item>
+                <div style="padding: 5px 10px">
+                  <ion-button (click)="onAddLesson()">
+                    <ion-icon name="add" slot="start"></ion-icon>
+                    <ion-label>הוסף שיעור</ion-label>
+                  </ion-button>
+                  </div>
+              </ion-item>
             </ion-list>
           </ion-col>
         </ion-row>
