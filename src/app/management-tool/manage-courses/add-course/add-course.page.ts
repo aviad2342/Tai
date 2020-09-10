@@ -161,7 +161,7 @@ export class AddCoursePage implements OnInit, OnDestroy {
         }, {
           text: 'אישור',
           handler: () => {
-            this.courseService.deleteLesson(id).subscribe(lessons => {
+            this.courseService.deleteLesson(id, this.course.id).subscribe(lessons => {
               this.lessons = lessons;
               this.appService.presentToast('השיעור נמחק בהצלחה!', true);
             }, error => {

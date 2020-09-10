@@ -42,12 +42,16 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
         this.courses = courses;
         this.temp = [...this.courses];
       });
+      this.lessonSubscription = this.courseservice.lessons.subscribe(lessons => {
+        this.lessons = lessons;
+      });
     }
 
     ionViewWillEnter() {
       this.courseservice.getCourses().subscribe(courses => {
         if(this.selectedCourseId !== null) {
-          this.selected[0] = courses.find(u => u.id === this.selectedCourseId);;
+          this.selected[0] = courses.find(u => u.id === this.selectedCourseId);
+          this.courseservice.getCourseLessons(this.selectedCourseId).subscribe();
         }
       });
     }
@@ -76,18 +80,16 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
         lessonNumber: this.getLessonNumber()
       }
     });
-    modal.onDidDismiss().then( data => {
+     modal.onDidDismiss().then( data => {
       if(data.data.didAdd) {
         this.courseservice.getCourseLessons(this.selectedCourseId).subscribe(lessons => {
-          this.lessons = lessons;
-          const courseToUpdate: Course = this.selected[0];
-          courseToUpdate.courseLessons = lessons.length;
-          courseToUpdate.lastEdit = new Date();
-          // this.selected[0] = courseToUpdate;
-          this.courseservice.updateCourse(courseToUpdate).subscribe(courses => {
-            this.selected[0] = courses.find(u => u.id === this.selectedCourseId);
-          });
-          // this.coursesTable.selected.push(courseToUpdate);
+          // this.lessons = lessons;
+        });
+        const courseToUpdate: Course = this.selected[0];
+        courseToUpdate.courseLessons = this.lessons.length;
+        courseToUpdate.lastEdit = new Date();
+        this.courseservice.updateCourse(courseToUpdate).subscribe(courses => {
+          this.selected[0] = courses.find(u => u.id === this.selectedCourseId);
           this.appservice.presentToast('השיעור נוסף בהצלחה!', true);
         }, error => {
           this.appservice.presentToast('חלה תקלה פעולת ההוספה נכשלה!', false);
@@ -162,35 +164,18 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
         }, {
           text: 'אישור',
           handler: () => {
-            this.courseservice.deleteLesson(id).pipe(
-              switchMap(delRes => {
-                return this.courseservice.getCourseLessons(this.selectedCourseId);
-              })
-            ).subscribe(lessons => {
-              this.lessons = lessons;
-              const courseToUpdate: Course = this.selected[0];
-                courseToUpdate.courseLessons = lessons.length;
-                console.log(lessons.length);
-                courseToUpdate.lastEdit = new Date();
-                this.courseservice.updateCourse(courseToUpdate).subscribe();
+            this.courseservice.deleteLesson(id, this.selectedCourseId).subscribe(delRes => {
+              this.courseservice.getCourse(this.selectedCourseId).subscribe(course => {
+                course.courseLessons = this.lessons.length;
+                course.lastEdit = new Date();
+                this.courseservice.updateCourse(course).subscribe(courses => {
+                  this.selected[0] = courses.find(u => u.id === this.selectedCourseId);
+                });
+              });
+              this.appservice.presentToast('השיעור נמחק בהצלחה!', true);
             }, error => {
               this.appservice.presentToast('חלה תקלה פעולת המחיקה נכשלה!', false);
             });
-            // this.courseservice.deleteLesson(id).subscribe(delRes => {
-            //   this.courseservice.getCourseLessons(this.selectedCourseId).subscribe(lessons => {
-            //     this.lessons = lessons;
-            //     const courseToUpdate: Course = this.selected[0];
-            //     courseToUpdate.courseLessons = lessons.length;
-            //     console.log(lessons.length);
-            //     courseToUpdate.lastEdit = new Date();
-            //     this.courseservice.updateCourse(courseToUpdate).subscribe();
-            //   }, error => {
-            //     this.appservice.presentToast('חלה תקלה פעולת ההוספה נכשלה!', false);
-            //   });
-            //   this.appservice.presentToast('השיעור נמחק בהצלחה!', true);
-            // }, error => {
-            //   this.appservice.presentToast('חלה תקלה פעולת המחיקה נכשלה!', false);
-            // });
           }
         }
       ]

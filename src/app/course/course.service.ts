@@ -244,11 +244,11 @@ export class CourseService {
       }));
   }
 
-  deleteLesson(id: string) {
+  deleteLesson(id: string, courseId: string) {
     return this.http.delete(`http://localhost:3000/api/lesson/lesson/${id}`).
     pipe(
       switchMap(resData => {
-        return this.lessons;
+        return this.getCourseLessons(courseId);
       }),
       tap(lessons => {
         this._lessons.next(lessons.filter(u => u.id !== id));
@@ -259,7 +259,7 @@ export class CourseService {
     return this.http.delete(`http://localhost:3000/api/lesson/lesson/courseId/${courseId}`).
     pipe(
       switchMap(resData => {
-        return this.getLessons();
+        return this.getCourseLessons(courseId);
       }),
       tap(lessons => {
         this._lessons.next(lessons.filter(u => u.courseId !== courseId));

@@ -30,9 +30,33 @@
       </ion-col>
     </ion-row>
 
-    <ion-row>
-      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="!isLoading">
-        <div id="youtube-player"></div>
+    <ion-row class="ion-justify-content-center ion-padding">
+      <ion-col size="12" size="4" *ngIf="!isLoading">
+        <ion-list *ngIf="lessons !== null" class="ion-no-padding">
+          <div class="comment-item" *ngFor="let lesson of lessons">
+            <ion-item (click)="playNextClass(lesson)" [routerLink]="">
+              <ion-thumbnail size="medium" slot="start">
+                <ion-img [src]="lesson.thumbnail" class="lesson-thumbnail-image" [class.active]="this.lesson === lesson"></ion-img>
+              </ion-thumbnail>
+              <ion-label>
+                <h2>שיעור מספר {{ lesson.lessonNumber }}: {{ lesson.title }}</h2>
+                <h3>{{ lesson.description }}</h3>
+                <ion-text color="medium">
+                  <p>{{ lesson?.date | date }}</p>
+                </ion-text>
+              </ion-label>
+            </ion-item>
+          </div>
+        </ion-list>
+      </ion-col>
+      <ion-col size="12" size="7" *ngIf="!isLoading">
+          <div id="youtube-player"></div>
+        <ion-button 
+        *ngIf="hesNextClass"
+        fill="clear" 
+        expand="block"
+        (click)="onNextClass()"
+        > שיעור הבא <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
       </ion-col>
     </ion-row>
 

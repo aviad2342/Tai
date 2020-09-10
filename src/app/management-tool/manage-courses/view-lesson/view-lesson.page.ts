@@ -65,6 +65,17 @@ export class ViewLessonPage implements OnInit, ViewDidEnter {
     });
   }
 
+  playNextClass(lesson: Lesson) {
+    this.lesson = lesson;
+    this.destroyYoutubePlayerPluginWeb();
+    this.initializeYoutubePlayerPluginWeb();
+    if(lesson.lessonNumber >= this.lessons.length) {
+      this.hesNextClass = false;
+    } else {
+      this.hesNextClass = true;
+    }
+  }
+
   onNextClass() {
     this.lesson = this.lessons[this.lesson.lessonNumber];
     if(this.lesson.lessonNumber === this.lessons.length) {
