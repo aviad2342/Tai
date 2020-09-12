@@ -3,9 +3,24 @@
 }
 
 .video-player-panel {
-    background: url("../../../../assets/background/screen.png") no-repeat top, #fff;
+    background: url("../../../../assets/background/screenTv.png") no-repeat top, #fff;
     background-size: 100% 100%;
-    height: 100%;
+    height: 627px;
+    width: 728px;
+    text-align: center;
+}
+
+.row-arrow-buttons {
+    width: 640px;
+}
+
+.lesson-thumbnail {
+    width: 90px;
+    height: 69px;
+}
+
+.lesson-thumbnail-image {
+    object-fit: fill;
 }
 
 // #youtube-player {

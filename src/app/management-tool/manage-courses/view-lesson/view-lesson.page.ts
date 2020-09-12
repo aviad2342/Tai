@@ -18,6 +18,7 @@ export class ViewLessonPage implements OnInit, ViewDidEnter {
   lessons :Lesson[];
   isLoading = false;
   hesNextClass = false;
+  hesPrevious = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,6 +43,9 @@ export class ViewLessonPage implements OnInit, ViewDidEnter {
               if(this.lesson.lessonNumber < lessons.length) {
                 this.hesNextClass = true;
               }
+              if(this.lesson.lessonNumber > 1) {
+                this.hesPrevious = true;
+              }
             });
           },
           error => {
@@ -65,7 +69,7 @@ export class ViewLessonPage implements OnInit, ViewDidEnter {
     });
   }
 
-  playNextClass(lesson: Lesson) {
+  playClass(lesson: Lesson) {
     this.lesson = lesson;
     this.destroyYoutubePlayerPluginWeb();
     this.initializeYoutubePlayerPluginWeb();
@@ -74,12 +78,28 @@ export class ViewLessonPage implements OnInit, ViewDidEnter {
     } else {
       this.hesNextClass = true;
     }
+    if(lesson.lessonNumber === 1) {
+      this.hesPrevious = false;
+    } else {
+      this.hesPrevious = true;
+    }
   }
 
   onNextClass() {
+    this.hesPrevious = true;
     this.lesson = this.lessons[this.lesson.lessonNumber];
     if(this.lesson.lessonNumber === this.lessons.length) {
       this.hesNextClass = false;
+    }
+    this.destroyYoutubePlayerPluginWeb();
+    this.initializeYoutubePlayerPluginWeb();
+  }
+
+  onPreviousClass() {
+    this.hesNextClass = true;
+    this.lesson = this.lessons[this.lesson.lessonNumber - 2];
+    if(this.lesson.lessonNumber === 1) {
+      this.hesPrevious = false;
     }
     this.destroyYoutubePlayerPluginWeb();
     this.initializeYoutubePlayerPluginWeb();
@@ -102,7 +122,7 @@ export class ViewLessonPage implements OnInit, ViewDidEnter {
 
   async destroyYoutubePlayerPluginWeb() {
     const result = await YoutubePlayerWeb.destroy('youtube-player');
-    console.log('destroyYoutubePlayer', result);
+    // console.log('destroyYoutubePlayer', result);
   }
 
   async initializeYoutubePlayerPluginNative() {

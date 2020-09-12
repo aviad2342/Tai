@@ -49,10 +49,15 @@ ion-tab-bar{
     --background: rgb(234, 244, 245);
 }
 
+// #youtube-player {
+//   box-sizing: border-box;
+//   border-width: 50px;
+//   border-image: url(assets/background/screen.png) 50 stretch;
+// }
+
 #youtube-player {
-  box-sizing: border-box;
-  border-width: 50px;
-  border-image: url(assets/background/screen.png) 50 stretch;
+  border-radius: 4px;
+    margin-top: 46px;
 }
 
 .title-icon {

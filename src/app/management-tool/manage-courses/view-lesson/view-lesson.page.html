@@ -30,37 +30,51 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-justify-content-center ion-padding">
-      <ion-col size="12" size="4" *ngIf="!isLoading">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="4" *ngIf="!isLoading">
         <ion-list *ngIf="lessons !== null" class="ion-no-padding">
-          <div class="comment-item" *ngFor="let lesson of lessons">
-            <ion-item (click)="playNextClass(lesson)" [routerLink]="">
-              <ion-thumbnail size="medium" slot="start">
-                <ion-img [src]="lesson.thumbnail" class="lesson-thumbnail-image" [class.active]="this.lesson === lesson"></ion-img>
+          <div class="comment-item" *ngFor="let lessonItem of lessons">
+            <ion-item (click)="playClass(lessonItem)" [routerLink]="" [class.active]="lessonItem.id === this.lesson.id">
+              <ion-thumbnail size="medium" slot="start" class="lesson-thumbnail">
+                <ion-img [src]="lessonItem.thumbnail" class="lesson-thumbnail-image"></ion-img>
               </ion-thumbnail>
               <ion-label>
-                <h2>שיעור מספר {{ lesson.lessonNumber }}: {{ lesson.title }}</h2>
-                <h3>{{ lesson.description }}</h3>
+                <h2>שיעור מספר {{ lessonItem.lessonNumber }}: {{ lessonItem.title }}</h2>
+                <h3>{{ lessonItem.description }}</h3>
                 <ion-text color="medium">
-                  <p>{{ lesson?.date | date }}</p>
+                  <p>{{ lessonItem?.date | date }}</p>
                 </ion-text>
               </ion-label>
             </ion-item>
           </div>
         </ion-list>
       </ion-col>
-      <ion-col size="12" size="7" *ngIf="!isLoading">
+      <ion-col size="7" *ngIf="!isLoading">
+        <div class="video-player-panel">
           <div id="youtube-player"></div>
-        <ion-button 
-        *ngIf="hesNextClass"
-        fill="clear" 
-        expand="block"
-        (click)="onNextClass()"
-        > שיעור הבא <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
+        </div>
+          <ion-row class="row-arrow-buttons">
+            <ion-col>
+              <ion-button 
+              *ngIf="hesPrevious"
+              fill="clear" 
+              expand="block"
+              (click)="onPreviousClass()"
+              > שיעור קודם <ion-icon slot="start" name="arrow-back"></ion-icon></ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button 
+              *ngIf="hesNextClass"
+              fill="clear" 
+              expand="block"
+              (click)="onNextClass()"
+              > שיעור הבא <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
+            </ion-col>
+          </ion-row>
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-justify-content-center">
+    <!-- <ion-row class="ion-justify-content-center">
       <ion-col size="8">
         <ion-button 
         *ngIf="hesNextClass"
@@ -69,6 +83,6 @@
         (click)="onNextClass()"
         > שיעור הבא <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
   </ion-grid>
 </ion-content>

@@ -131,7 +131,6 @@ export class EditCoursePage implements OnInit {
       lesson.lessonNumber = index + 1;
       this.courseService.updateLesson(lesson).subscribe();
     });
-console.log(this.lessons.length);
   }
 
   onSubmit(form: NgForm) {
