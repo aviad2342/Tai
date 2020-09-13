@@ -10,6 +10,7 @@ import { ManageCoursesPage } from './manage-courses.page';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AddLessonComponent } from './add-lesson/add-lesson.component';
+import { EditLessonComponent } from './edit-lesson/edit-lesson.component';
 
 @NgModule({
   imports: [
@@ -21,6 +22,6 @@ import { AddLessonComponent } from './add-lesson/add-lesson.component';
     ReactiveFormsModule,
     SharedModule
   ],
-  declarations: [ManageCoursesPage, AddLessonComponent]
+  declarations: [ManageCoursesPage, AddLessonComponent, EditLessonComponent]
 })
 export class ManageCoursesPageModule {}

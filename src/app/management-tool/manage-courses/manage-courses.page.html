@@ -134,7 +134,7 @@
     <ngx-datatable-column name="פעולות" [sortable]="false" [width]="130">
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
         <ion-icon slot="start" color="primary" name="eye-outline" class="icon-size-large icon-vertical-line" (click)="onViewLesson(row.id)"></ion-icon>
-        <ion-icon slot="start" color="warning" name="create-outline" class="icon-size-large icon-vertical-line" (click)="onEditLesson(row.id)"></ion-icon>
+        <ion-icon slot="start" color="warning" name="create-outline" class="icon-size-large icon-vertical-line" (click)="onEditLesson(row)"></ion-icon>
         <ion-icon slot="start" color="danger" name="trash-outline" class="icon-size-large" (click)="onDeleteLesson(row.id)"></ion-icon>
       </ng-template>
     </ngx-datatable-column>

@@ -226,7 +226,7 @@ export class CourseService {
     }).
     pipe(
       switchMap(resData => {
-        return this.getLessons();
+        return this.getCourseLessons(lesson.courseId);
       }),
       tap(lessons => {
         this._lessons.next(lessons);
@@ -263,6 +263,30 @@ export class CourseService {
       }),
       tap(lessons => {
         this._lessons.next(lessons.filter(u => u.courseId !== courseId));
+      }));
+  }
+
+  getVimeoVideoId(url: string) {
+    return this.http.get<{video_id: string}>(`https://vimeo.com/api/oembed.json?url=${url}`).
+    pipe(
+      map(resData => {
+        return resData.video_id;
+      }));
+  }
+
+  getVimeoVideoThumbnail(url: string) {
+    return this.http.get<{thumbnail_url: string}>(`https://vimeo.com/api/oembed.json?url=${url}`).
+    pipe(
+      map(resData => {
+        return resData.thumbnail_url;
+      }));
+  }
+
+  getYouTubeVideoThumbnail(url: string) {
+    return this.http.get<{thumbnail_url: string}>(`https://www.youtube.com/oembed?format=json&url=${url}`).
+    pipe(
+      map(resData => {
+        return resData.thumbnail_url;
       }));
   }
 

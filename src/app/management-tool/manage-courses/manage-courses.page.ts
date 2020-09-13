@@ -9,6 +9,7 @@ import { Lesson } from 'src/app/course/lesson.model';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { AddLessonComponent } from './add-lesson/add-lesson.component';
+import { EditLessonComponent } from './edit-lesson/edit-lesson.component';
 
 @Component({
   selector: 'app-manage-courses',
@@ -142,11 +143,36 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
   }
 
   onViewLesson(id: string) {
-    console.log(id);
+    this.router.navigate(['manage', 'courses', 'lesson', id]);
   }
 
-  onEditLesson(id: string) {
-    console.log(id);
+  async onEditLesson(lesson: Lesson) {
+    const modal = await this.modalController.create({
+      component: EditLessonComponent,
+      cssClass: 'edit-lesson-modal',
+      animated: true,
+      backdropDismiss: false,
+      componentProps: {
+        lesson
+      }
+    });
+     modal.onDidDismiss().then( data => {
+      // if(data.data.didAdd) {
+      //   this.courseservice.getCourseLessons(this.selectedCourseId).subscribe(lessons => {
+      //     // this.lessons = lessons;
+      //   });
+      //   const courseToUpdate: Course = this.selected[0];
+      //   courseToUpdate.courseLessons = this.lessons.length;
+      //   courseToUpdate.lastEdit = new Date();
+      //   this.courseservice.updateCourse(courseToUpdate).subscribe(courses => {
+      //     this.selected[0] = courses.find(u => u.id === this.selectedCourseId);
+      //     this.appservice.presentToast('השיעור נוסף בהצלחה!', true);
+      //   }, error => {
+      //     this.appservice.presentToast('חלה תקלה פעולת ההוספה נכשלה!', false);
+      //   });
+      // }
+    });
+    return await modal.present();
   }
 
   async onDeleteLesson(id: string) {

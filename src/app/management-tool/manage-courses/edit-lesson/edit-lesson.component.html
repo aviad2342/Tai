@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close(false)">
+        <ion-icon slot="icon-only" name="close-outline" class="toolbar-icon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-no-padding">עדכון שיעור</ion-title>
+  </ion-toolbar>
+</ion-header> 
+
+<ion-content class="ion-padding">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="6" class="ion-text-center">
+          <ion-img [src]="lesson?.thumbnail"></ion-img>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="8">
+          <ion-list>
+
+            <ion-item>
+              <ion-label position="floating"> כותרת <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="text"
+                ngModel
+                name="title"
+                required
+                #titleCtrl="ngModel"
+              ></ion-input>
+            </ion-item>
+            <ion-item
+            *ngIf="!titleCtrl.valid && titleCtrl.touched"
+            lines="none">
+            <ion-label color="danger">
+              זהו שדה חובה!
+            </ion-label>
+          </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">תיאור<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="text"
+                ngModel
+                name="description"
+                required
+                #descriptionCtrl="ngModel"
+              ></ion-input>
+            </ion-item>
+            <ion-item
+            *ngIf="!descriptionCtrl.valid && descriptionCtrl.touched"
+            lines="none">
+            <ion-label color="danger">
+              זהו שדה חובה!
+            </ion-label>
+          </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">קישור<ion-text color="danger">*</ion-text></ion-label>
+          <ion-input
+            type="text"
+            ngModel
+            name="videoURL"
+            required
+            #videoURLCtrl="ngModel"
+            (ionChange)="onUrlChange($event)"
+          ></ion-input>
+        </ion-item>
+        <ion-item
+        *ngIf="!videoURLCtrl.valid && videoURLCtrl.touched"
+        lines="none">
+        <ion-label color="danger">
+          זהו שדה חובה!
+        </ion-label>
+      </ion-item>
+
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="8">
+          <ion-button
+            type="submit"
+            color="primary"
+            expand="block"
+            [disabled]="!f.valid"
+          >
+          עדכן
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+
