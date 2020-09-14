@@ -14,6 +14,7 @@ export class AddLessonComponent implements OnInit {
 
   @Input() id: string;
   @Input() lessonNumber: number;
+  thumbnail = 'https://www.geirangerfjord.no/upload/images/2018_general/film-and-vid.jpg';
 
   constructor(
     private modalController: ModalController,
@@ -22,6 +23,13 @@ export class AddLessonComponent implements OnInit {
     ) { }
 
   ngOnInit() {}
+
+  onUrlChange(event) {
+    // console.log(this.getVideoID(event.detail.value));
+    if(event.detail.value && this.thumbnail !==  event.detail.value) {
+      this.thumbnail = this.getVideoThumbnail(this.getVideoID(event.detail.value));
+    }
+  }
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
@@ -51,9 +59,15 @@ export class AddLessonComponent implements OnInit {
   }
 
   getVideoID(videoURL: string){
-    const videoId = videoURL.split('v=')[1].split('&')[0];
-    console.log(videoId);
-    return videoId;
+    if(videoURL.includes('v=')) {
+      return videoURL.split('v=')[1].split('&')[0];
+    } else if(videoURL.includes('/embed/')) {
+      return videoURL.split('/embed/')[videoURL.split('/embed/').length - 1];
+    } else if(videoURL.includes('vimeo')) {
+      this.courseService.getVimeoVideoId(videoURL).subscribe(videoId => {
+        return videoId;
+      });
+    }
   }
 
   getVideoThumbnail(videoId: string){

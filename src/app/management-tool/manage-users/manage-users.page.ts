@@ -57,6 +57,7 @@ export class ManageUsersPage implements OnInit, OnDestroy {
     const modal = await this.modalController.create({
       component: AddUserComponent,
       cssClass: 'add-user-modal',
+      backdropDismiss: false,
       animated: true
     },);
     return await modal.present();
@@ -66,6 +67,7 @@ export class ManageUsersPage implements OnInit, OnDestroy {
     const modal = await this.modalController.create({
       component: ViewUserComponent,
       cssClass: 'view-user-modal',
+      animated: true,
       componentProps: {
         id: this.selectedUserId
       }
@@ -77,6 +79,8 @@ export class ManageUsersPage implements OnInit, OnDestroy {
     const modal = await this.modalController.create({
       component: EditUserComponent,
       cssClass: 'edit-user-modal',
+      backdropDismiss: false,
+      animated: true,
       componentProps: {
         id: this.selectedUserId
       }

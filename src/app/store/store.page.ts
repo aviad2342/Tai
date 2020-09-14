@@ -25,11 +25,23 @@ export class StorePage implements OnInit, OnDestroy {
     breakpoints: {
       150: {
         slidesPerView: 1,
-        spaceBetween: 10
+        spaceBetween: 100
+      },
+      180: {
+        slidesPerView: 1,
+        spaceBetween: 100
+      },
+      200: {
+        slidesPerView: 1,
+        spaceBetween: 100
+      },
+      250: {
+        slidesPerView: 1,
+        spaceBetween: 100
       },
       320: {
         slidesPerView: 1.6,
-        spaceBetween: 10
+        spaceBetween: 100
       },
       480: {
         slidesPerView: 2,

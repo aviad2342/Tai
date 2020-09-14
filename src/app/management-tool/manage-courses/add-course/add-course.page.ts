@@ -133,6 +133,7 @@ export class AddCoursePage implements OnInit, OnDestroy {
       component: AddLessonComponent,
       cssClass: 'add-lesson-modal',
       animated: true,
+      backdropDismiss: false,
       componentProps: {
         id: this.course.id,
         lessonNumber: this.getLessonNumber()

@@ -6,6 +6,7 @@ import { NgForm, NgControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { UserLogged } from './userLogged.model';
 import { UserService } from '../user/user.service';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-auth',
@@ -16,16 +17,21 @@ export class AuthPage implements OnInit {
 
   isLoading = false;
   userProfilePicture = 'http://localhost:3000/images/user-default-image.png';
+  homePage = '/tabs/user'
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private loadingController: LoadingController,
     private alertController: AlertController,
+    private appService: AppService,
     private userService: UserService
   ) {}
 
   ngOnInit() {
+    if(this.appService.isDesktop()) {
+      this.homePage = '/user';
+    }
   }
 
   authenticate(email: string, password: string) {
@@ -38,7 +44,7 @@ export class AuthPage implements OnInit {
           resData => {
             this.isLoading = false;
             loadingEl.dismiss();
-            this.router.navigateByUrl('/tabs/user');
+            this.router.navigateByUrl(this.homePage);
           },
           errRes => {
             loadingEl.dismiss();

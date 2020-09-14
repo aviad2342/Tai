@@ -13,6 +13,11 @@
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>
       <ion-row class="ion-justify-content-center">
+        <ion-col size="6" class="ion-text-center">
+          <ion-img [src]="thumbnail"></ion-img>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
         <ion-col size="12" size="8">
           <ion-list>
 
@@ -78,6 +83,7 @@
             name="videoURL"
             required
             #videoURLCtrl="ngModel"
+            (ionChange)="onUrlChange($event)"
           ></ion-input>
         </ion-item>
         <ion-item
