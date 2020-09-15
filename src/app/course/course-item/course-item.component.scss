@@ -1,14 +1,15 @@
 .article-thumbnail {
-    width: 300px;
     height: 200px;
     object-fit: fill;
-    padding-bottom: 5px;
 }
 
-ion-item {
-    width: fit-content;
-}
+// ion-item {
+//     width: fit-content;
+// }
 
-.event-card {
+.course-card {
     background-color: #e8e8e8;
+    width: -webkit-fill-available;
+    margin-left: auto;
+    margin-right: auto;
 }

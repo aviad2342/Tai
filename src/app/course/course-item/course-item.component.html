@@ -1,13 +1,14 @@
 <ion-item class="ion-text-center">
-  <ion-card class="event-card">
+  <ion-card class="course-card">
     <ion-card-header>
       <ion-card-title>{{ course.title}}</ion-card-title>
       <ion-card-subtitle>{{ course.description }}</ion-card-subtitle>
     </ion-card-header>
+    <ion-img [src]="course.thumbnail" class="article-thumbnail"></ion-img>
     <ion-card-content>
-      <ion-img [src]="course.thumbnail" class="article-thumbnail"></ion-img>
-      <p>נוסף בתאריך: {{ course.date | date }}</p>
       <ion-label>מחבר: {{ course.authorName }}</ion-label>
+      <p>נוסף בתאריך: {{ course.date | date }}</p>
+      <p>מספר שיעורים: {{ course.courseLessons }}</p>
     </ion-card-content>
   </ion-card>
 </ion-item>

@@ -15,11 +15,11 @@
 
 <ion-content>
   <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-sm="4" offset-sm="2" class="ion-text-center">
+    <ion-row>
+      <ion-col size="12" size-sm="6" offset-sm="3" class="ion-text-center">
         <ion-list>
           <div *ngFor="let course of courses">
-            <ion-fab vertical="start" horizontal="start" slot="fixed" *ngIf="isArticleAuthor(course.authorId)" edge>
+            <!-- <ion-fab vertical="start" horizontal="start" slot="fixed" *ngIf="isArticleAuthor(course.authorId)" edge>
               <ion-fab-button>
                 <ion-icon name="create-outline"></ion-icon>
               </ion-fab-button>
@@ -34,7 +34,7 @@
                   <ion-icon name="logo-vimeo"></ion-icon>
                 </ion-fab-button>
               </ion-fab-list>
-            </ion-fab>
+            </ion-fab> -->
             <app-course-item [course]="course" [routerLink]="['/', 'course', course.id]"></app-course-item>
           </div>
         </ion-list>
