@@ -1,17 +1,54 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 3
+      אלבומים
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-sm="6" offset-sm="3" class="ion-text-center">
+        <ion-list>
+          <div *ngFor="let album of albums">
+            <ion-item [routerLink]="" (click)="onSelectAlbum(album.id)">
+              <ion-avatar slot="start">
+                <ion-img [src]="album?.thumbnail"></ion-img>
+              </ion-avatar>
+              <ion-label>
+                <h2>{{ album.title }}</h2>
+                <ion-text color="medium">
+                  <p>{{ album.date | date }}</p>
+                </ion-text>
+                <ion-text color="medium">
+                  <p>מספר תמונות באלבום: {{ album.views }}</p>
+                </ion-text>
+              </ion-label>
+            </ion-item>
+          </div>
+        </ion-list>
+      </ion-col>
+    </ion-row>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+    <ion-row class="ion-justify-content-center" *ngIf="showPhotos">
+      <ion-col size="12" size-sm="6" offset-sm="3" class="ion-text-center">
+        <ion-list>
+          <div *ngFor="let photo of selectedAlbum.photos">
+            <ion-item [routerLink]="">
+              <ion-avatar slot="start">
+                <ion-img [src]="photo?.url"></ion-img>
+              </ion-avatar>
+              <ion-label>
+                <h2>{{ photo.title }}</h2>
+                <ion-text color="medium">
+                  <p>{{ photo.date | date }}</p>
+                </ion-text>
+              </ion-label>
+            </ion-item>
+          </div>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
