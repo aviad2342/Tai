@@ -1,3 +1,4 @@
+import { Comment } from './comment.model';
 
 export class Article {
 
@@ -13,7 +14,8 @@ export class Article {
       public lastEdit: Date,
       public thumbnail: string,
       public views: number,
-      public comments: number
+      public numberOfComments: number,
+      public comments: Comment[]
     ) {}
 
   }

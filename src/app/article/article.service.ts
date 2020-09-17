@@ -132,24 +132,18 @@ export class ArticleService {
     }
 
     addComment(comment: Comment) {
-      return this.http.post<{id: string}>('http://localhost:3000/api/comment/comment',
+      return this.http.post<Comment>('http://localhost:3000/api/comment/comment',
       {
         ...comment
       }).
-      pipe(
-        switchMap(resData => {
-          comment.id = resData.id;
-          return this.comments;
-        }),
-        take(1),
-        tap(comments => {
-          this._comments.next(comments.concat(comment));
-        }));
+      pipe(tap(resDta => {
+        return resDta;
+      }));
     }
 
     updateComment(comment: Comment) {
       const commentObj = {
-         articleId: comment.articleId,
+         article: comment.article,
          authorId: comment.authorId,
          body: comment.body,
          date: comment.date,
@@ -178,16 +172,16 @@ export class ArticleService {
         }));
     }
 
-    deleteArticleComments(articleId: string) {
-      return this.http.delete(`http://localhost:3000/api/comment/comment/articleId/${articleId}`).
-      pipe(
-        switchMap(resData => {
-          return this.getComments();
-        }),
-        tap(comments => {
-          this._comments.next(comments.filter(u => u.articleId !== articleId));
-        }));
-    }
+    // deleteArticleComments(articleId: string) {
+    //   return this.http.delete(`http://localhost:3000/api/comment/comment/articleId/${articleId}`).
+    //   pipe(
+    //     switchMap(resData => {
+    //       return this.getComments();
+    //     }),
+    //     tap(comments => {
+    //       this._comments.next(comments.filter(u => u.articleId !== articleId));
+    //     }));
+    // }
 
     getArticleComments(articleId: string) {
       return this.http.get<Comment[]>( `http://localhost:3000/api/comment/comment/articleId/${articleId}`)

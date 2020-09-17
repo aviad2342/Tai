@@ -107,7 +107,8 @@ export class EditArticlePage implements OnInit, OnDestroy {
           new Date(),
           uploadRes.imageUrl,
           this.article.views,
-          this.article.comments
+          this.article.numberOfComments,
+          null
         );
         return this.articleService.updateArticle(articleToUpdate);
       })
@@ -134,7 +135,8 @@ export class EditArticlePage implements OnInit, OnDestroy {
         new Date(),
         this.article.thumbnail,
         this.article.views,
-        this.article.comments
+        this.article.numberOfComments,
+          null
       );
       this.articleService.updateArticle(articleToUpdate).subscribe(() => {
         form.reset();

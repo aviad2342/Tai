@@ -133,7 +133,8 @@ export class NewArticlePage implements OnInit {
           new Date(),
           uploadRes.imageUrl,
           0,
-          0
+          0,
+          []
         );
         return this.articleService.addArticle(articleToAdd);
       })

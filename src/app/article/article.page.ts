@@ -40,13 +40,22 @@ export class ArticlePage implements OnInit, OnDestroy {
     return this.authService.isTheCurrentUserLogged(authorId);
   }
 
+  // onDelete(id: string) {
+  //   this.articleService.deleteArticleComments(id)
+  //   .pipe(
+  //     switchMap( resData => {
+  //       return this.articleService.deleteArticle(id);
+  //     })
+  //   ).subscribe( () => {
+  //     this.appservice.presentToast('המאמר נמחק בהצלחה!', true);
+  //   }, error => {
+  //     this.appservice.presentToast('חלה תקלה פעולת המחיקה נכשלה!', false);
+  //   });
+  // }
+
   onDelete(id: string) {
-    this.articleService.deleteArticleComments(id)
-    .pipe(
-      switchMap( resData => {
-        return this.articleService.deleteArticle(id);
-      })
-    ).subscribe( () => {
+    this.articleService.deleteArticle(id)
+    .subscribe( () => {
       this.appservice.presentToast('המאמר נמחק בהצלחה!', true);
     }, error => {
       this.appservice.presentToast('חלה תקלה פעולת המחיקה נכשלה!', false);

@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { AlertController, NavController, IonContent } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { UserService } from 'src/app/user/user.service';
 import { ArticleService } from '../article.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Article } from '../article.model';
 import { Comment } from '../comment.model';
+import { AppService } from 'src/app/app.service';
+
 
 
 @Component({
@@ -15,13 +15,10 @@ import { Comment } from '../comment.model';
   templateUrl: './article-detail.page.html',
   styleUrls: ['./article-detail.page.scss'],
 })
-export class ArticleDetailPage implements OnInit, OnDestroy {
+export class ArticleDetailPage implements OnInit {
 
   article: Article;
-  articleId = '';
-  comments: Comment[];
   @ViewChild(IonContent) content: IonContent;
-  private commentSub: Subscription;
   addComment = false;
   isLoading = false;
   articleIsLoading = false;
@@ -33,7 +30,7 @@ export class ArticleDetailPage implements OnInit, OnDestroy {
     private articleService: ArticleService,
     private navController: NavController,
     private authService: AuthService,
-    private userService: UserService
+    public appService: AppService
     ) { }
 
   ngOnInit() {
@@ -43,7 +40,6 @@ export class ArticleDetailPage implements OnInit, OnDestroy {
         this.navController.navigateBack('/tabs/article');
         return;
       }
-      this.articleId = paramMap.get('id');
       this.articleService.getArticle(paramMap.get('id')).subscribe(article => {
             this.article = article;
             this.articleIsLoading = false;
@@ -65,19 +61,19 @@ export class ArticleDetailPage implements OnInit, OnDestroy {
               .then(alertEl => alertEl.present());
           }
         );
-      this.commentSub = this.articleService.getArticleComments(paramMap.get('id')).subscribe(comments => {
-          this.comments = comments;
-        });
+      // this.commentSub = this.articleService.getArticleComments(paramMap.get('id')).subscribe(comments => {
+      //     this.comments = comments;
+      //   });
     });
 
 }
 
-ionViewWillEnter() {
-  this.isLoading = true;
-  this.articleService.getArticleComments(this.articleId).subscribe(() => {
-    this.isLoading = false;
-  });
-}
+// ionViewWillEnter() {
+//   this.isLoading = true;
+//   this.articleService.getArticleComments(this.articleId).subscribe(() => {
+//     this.isLoading = false;
+//   });
+// }
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
@@ -87,20 +83,24 @@ ionViewWillEnter() {
     this.authService.getUserLogged().subscribe(user => {
       const comment = new Comment(
         null,
-        this.article.id,
         user.id,
         user.firstName + ' ' + user.lastName,
         form.value.body,
-        new Date()
+        new Date(),
+        this.article,
       );
       this.articleService.addComment(comment).subscribe(newComment => {
-        this.comments.push(comment);
+        this.article.comments.push(newComment);
         form.reset();
         this.content.scrollToBottom(200);
+      }, error => {
+        form.reset();
+        this.appService.presentToast('חלה תקלה התגובה לא נשמרה', false);
       });
     });
     this.content.scrollToBottom(200);
   }
+
 
    getContent() {
     return document.querySelector('ion-content');
@@ -111,12 +111,6 @@ ionViewWillEnter() {
   }
   showForm() {
      this.addComment = true;
-  }
-
-  ngOnDestroy() {
-    if (this.commentSub) {
-      this.commentSub.unsubscribe();
-    }
   }
 
 }
