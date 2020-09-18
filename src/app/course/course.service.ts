@@ -152,10 +152,17 @@ export class CourseService {
   //   );
   // }
 
-  getCourseLessons(courseId: string) {
-    return this.http.get<Lesson[]>( `http://localhost:3000/api/lesson/lesson/courseId/${courseId}`)
+  getCourseLessons(course: string) {
+    return this.http.get<Lesson[]>( `http://localhost:3000/api/lesson/lesson/course/${course}`)
       .pipe(tap(lessons => {
         this._lessons.next(lessons);
+      }));
+  }
+
+  getLessonsOfCourse(id: string) {
+    return this.http.get<Lesson[]>( `http://localhost:3000/api/lesson/lesson/lessons/${id}`)
+      .pipe(tap(lessons => {
+        return lessons;
       }));
   }
 
@@ -211,14 +218,14 @@ export class CourseService {
 
   updateLesson(lesson: Lesson) {
     const lessonObj = {
-      courseId: lesson.courseId,
       authorName: lesson.videoId,
       catalogNumber: lesson.videoURL,
       lessonNumber: lesson.lessonNumber,
       title: lesson.title,
       description: lesson.description,
       date: lesson.date,
-      thumbnail: lesson.thumbnail
+      thumbnail: lesson.thumbnail,
+      course: lesson.course
       };
     return this.http.put(`http://localhost:3000/api/lesson/lesson/${lesson.id}`,
     {
@@ -226,7 +233,7 @@ export class CourseService {
     }).
     pipe(
       switchMap(resData => {
-        return this.getCourseLessons(lesson.courseId);
+        return this.getCourseLessons(lesson.course);
       }),
       tap(lessons => {
         this._lessons.next(lessons);
@@ -262,7 +269,7 @@ export class CourseService {
         return this.getCourseLessons(courseId);
       }),
       tap(lessons => {
-        this._lessons.next(lessons.filter(u => u.courseId !== courseId));
+        this._lessons.next(lessons.filter(u => u.course !== courseId));
       }));
   }
 

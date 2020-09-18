@@ -111,7 +111,8 @@ export class AddCoursePage implements OnInit, OnDestroy {
           new Date(),
           new Date(),
           uploadRes.imageUrl,
-          0
+          0,
+          []
         );
         return this.courseService.addCourse(courseToAdd);
       })

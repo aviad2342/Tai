@@ -84,9 +84,7 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
     });
      modal.onDidDismiss().then( data => {
       if(data.data.didAdd) {
-        this.courseservice.getCourseLessons(this.selectedCourseId).subscribe(lessons => {
-          // this.lessons = lessons;
-        });
+        this.courseservice.getCourseLessons(this.selectedCourseId).subscribe();
         const courseToUpdate: Course = this.selected[0];
         courseToUpdate.courseLessons = this.lessons.length;
         courseToUpdate.lastEdit = new Date();
@@ -124,12 +122,7 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
           }, {
             text: 'אישור',
             handler: () => {
-              this.courseservice.deleteCourseLessons(this.selectedCourseId)
-              .pipe(
-                switchMap( resData => {
-                  return this.courseservice.deleteCourse(this.selectedCourseId);
-                })
-              ).subscribe( () => {
+              this.courseservice.deleteCourse(this.selectedCourseId).subscribe( () => {
                 this.isRowSelected = false;
                 this.selectedCourseId = null;
                 this.appservice.presentToast('הקורס נמחק בהצלחה!', true);
@@ -158,20 +151,19 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
       }
     });
      modal.onDidDismiss().then( data => {
-      // if(data.data.didAdd) {
-      //   this.courseservice.getCourseLessons(this.selectedCourseId).subscribe(lessons => {
-      //     // this.lessons = lessons;
-      //   });
-      //   const courseToUpdate: Course = this.selected[0];
-      //   courseToUpdate.courseLessons = this.lessons.length;
-      //   courseToUpdate.lastEdit = new Date();
-      //   this.courseservice.updateCourse(courseToUpdate).subscribe(courses => {
-      //     this.selected[0] = courses.find(u => u.id === this.selectedCourseId);
-      //     this.appservice.presentToast('השיעור נוסף בהצלחה!', true);
-      //   }, error => {
-      //     this.appservice.presentToast('חלה תקלה פעולת ההוספה נכשלה!', false);
-      //   });
-      // }
+      if(data.data.didEdit) {
+        this.courseservice.getCourseLessons(this.selectedCourseId).subscribe(lessons => {
+          // this.lessons = lessons;
+        });
+        const courseToUpdate: Course = this.selected[0];
+        courseToUpdate.lastEdit = new Date();
+        this.courseservice.updateCourse(courseToUpdate).subscribe(courses => {
+          this.selected[0] = courses.find(u => u.id === this.selectedCourseId);
+          this.appservice.presentToast('השיעור עודכן בהצלחה!', true);
+        }, error => {
+          this.appservice.presentToast('חלה תקלה פעולת העדכון נכשלה!', false);
+        });
+      }
     });
     return await modal.present();
   }

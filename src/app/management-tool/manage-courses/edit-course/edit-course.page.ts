@@ -153,7 +153,8 @@ export class EditCoursePage implements OnInit {
           this.course.date,
           new Date(),
           uploadRes.imageUrl,
-          this.lessons.length
+          this.lessons.length,
+          this.lessons
         );
         return this.courseService.updateCourse(courseToUpdate);
       })
@@ -177,7 +178,8 @@ export class EditCoursePage implements OnInit {
       this.course.date,
       new Date(),
       this.course.thumbnail,
-      this.lessons.length
+      this.lessons.length,
+      this.lessons
     );
     this.courseService.updateCourse(courseToUpdate).subscribe(newCourse => {
       this.appService.presentToast('הקורס עודכן בהצלחה', true);

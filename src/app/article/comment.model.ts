@@ -8,7 +8,7 @@ export class Comment {
       public authorName: string,
       public body: string,
       public date: Date,
-      public article: Article
+      public article: string
     ) {}
 
 }

@@ -38,7 +38,7 @@ export class ViewLessonPage implements OnInit, ViewDidEnter {
       this.courseService.getLesson(paramMap.get('id')).subscribe(lesson => {
             this.lesson = lesson;
             this.isLoading = false;
-            this.courseService.getCourseLessons(lesson.courseId).subscribe(lessons => {
+            this.courseService.getLessonsOfCourse(paramMap.get('id')).subscribe(lessons => {
               this.lessons = lessons;
               if(this.lesson.lessonNumber < lessons.length) {
                 this.hesNextClass = true;
@@ -52,7 +52,7 @@ export class ViewLessonPage implements OnInit, ViewDidEnter {
             this.alertController
               .create({
                 header: 'ישנה תקלה!',
-                message: 'לא ניתן להציג את המאמר.',
+                message: 'לא ניתן להציג את השיעור.',
                 buttons: [
                   {
                     text: 'אישור',

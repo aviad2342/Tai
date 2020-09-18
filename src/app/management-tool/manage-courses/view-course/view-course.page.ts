@@ -14,11 +14,7 @@ import { Lesson } from 'src/app/course/lesson.model';
 export class ViewCoursePage implements OnInit {
 
   course :Course;
-  lessons :Lesson[];
-  courseId;
-  // author: User;
   isLoading = false;
-  lessonsIsLoading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,7 +32,6 @@ export class ViewCoursePage implements OnInit {
         this.navController.navigateBack('/manage/courses');
         return;
       }
-      this.courseId = paramMap.get('id');
       this.courseService.getCourse(paramMap.get('id')).subscribe(course => {
             this.course = course;
             this.isLoading = false;
@@ -58,11 +53,6 @@ export class ViewCoursePage implements OnInit {
               .then(alertEl => alertEl.present());
           }
         );
-        this.lessonsIsLoading = true;
-      this.courseService.getCourseLessons(paramMap.get('id')).subscribe(lessons => {
-          this.lessons = lessons;
-          this.lessonsIsLoading = false;
-        });
     });
   }
 

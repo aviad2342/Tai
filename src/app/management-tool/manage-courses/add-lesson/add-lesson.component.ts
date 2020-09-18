@@ -38,14 +38,14 @@ export class AddLessonComponent implements OnInit {
     const videoId =  this.getVideoID(form.value.videoURL);
     const lessonToAdd = new Lesson(
       null,
-      this.id,
       videoId,
       form.value.videoURL,
       this.lessonNumber,
       form.value.title,
       form.value.description,
       new Date(),
-      this.getVideoThumbnail(videoId)
+      this.getVideoThumbnail(videoId),
+      this.id,
     );
     this.courseService.addLesson(lessonToAdd).subscribe(lesson => {
       form.reset();

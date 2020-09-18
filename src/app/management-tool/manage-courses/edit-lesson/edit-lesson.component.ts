@@ -46,14 +46,14 @@ export class EditLessonComponent implements OnInit {
     const videoId =  this.getVideoID(form.value.videoURL);
     const lessonToUpdate = new Lesson(
       this.lesson.id,
-      this.lesson.courseId,
       videoId,
       form.value.videoURL,
       this.lesson.lessonNumber,
       form.value.title,
       form.value.description,
       this.lesson.date,
-      this.getVideoThumbnail(videoId)
+      this.getVideoThumbnail(videoId),
+      this.lesson.course,
     );
     this.courseService.updateLesson(lessonToUpdate).subscribe(lesson => {
       form.reset();
@@ -96,8 +96,8 @@ export class EditLessonComponent implements OnInit {
   //   }
   // }
 
-  async close(didAdd: boolean) {
-    await this.modalController.dismiss({didAdd});
+  async close(didEdit: boolean) {
+    await this.modalController.dismiss({didEdit});
   }
 
   async closeBtn() {

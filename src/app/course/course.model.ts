@@ -1,3 +1,5 @@
+import { Lesson } from './lesson.model';
+
 export class Course {
 
     constructor(
@@ -10,7 +12,8 @@ export class Course {
       public date: Date,
       public lastEdit: Date,
       public thumbnail: string,
-      public courseLessons: number
+      public courseLessons: number,
+      public lessons: Lesson[],
     ) {}
 
   }

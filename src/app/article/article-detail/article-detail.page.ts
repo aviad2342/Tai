@@ -31,7 +31,7 @@ export class ArticleDetailPage implements OnInit {
     private navController: NavController,
     private authService: AuthService,
     public appService: AppService
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.articleIsLoading = true;
@@ -41,39 +41,29 @@ export class ArticleDetailPage implements OnInit {
         return;
       }
       this.articleService.getArticle(paramMap.get('id')).subscribe(article => {
-            this.article = article;
-            this.articleIsLoading = false;
-          },
-          error => {
-            this.alertController
-              .create({
-                header: 'ישנה תקלה!',
-                message: 'לא ניתן להציג את המאמר.',
-                buttons: [
-                  {
-                    text: 'אישור',
-                    handler: () => {
-                      this.router.navigate(['/tabs/article']);
-                    }
+        this.article = article;
+        this.articleIsLoading = false;
+      },
+        error => {
+          this.alertController
+            .create({
+              header: 'ישנה תקלה!',
+              message: 'לא ניתן להציג את המאמר.',
+              buttons: [
+                {
+                  text: 'אישור',
+                  handler: () => {
+                    this.router.navigate(['/tabs/article']);
                   }
-                ]
-              })
-              .then(alertEl => alertEl.present());
-          }
-        );
-      // this.commentSub = this.articleService.getArticleComments(paramMap.get('id')).subscribe(comments => {
-      //     this.comments = comments;
-      //   });
+                }
+              ]
+            })
+            .then(alertEl => alertEl.present());
+        }
+      );
     });
 
-}
-
-// ionViewWillEnter() {
-//   this.isLoading = true;
-//   this.articleService.getArticleComments(this.articleId).subscribe(() => {
-//     this.isLoading = false;
-//   });
-// }
+  }
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
@@ -87,7 +77,7 @@ export class ArticleDetailPage implements OnInit {
         user.firstName + ' ' + user.lastName,
         form.value.body,
         new Date(),
-        this.article,
+        this.article.id,
       );
       this.articleService.addComment(comment).subscribe(newComment => {
         this.article.comments.push(newComment);
@@ -102,15 +92,15 @@ export class ArticleDetailPage implements OnInit {
   }
 
 
-   getContent() {
+  getContent() {
     return document.querySelector('ion-content');
   }
 
-   scrollToBottom() {
+  scrollToBottom() {
     this.getContent().scrollToBottom(500);
   }
   showForm() {
-     this.addComment = true;
+    this.addComment = true;
   }
 
 }
