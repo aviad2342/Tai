@@ -10,8 +10,6 @@ export class Event {
       public beginsAt: Date,
       public endsAt: Date,
       public thumbnail: string,
-      public images: string[],
-      public speakers: Speaker[],
       public maxCapacity: number,
       public placeName: string,
       public country: string,
@@ -19,7 +17,9 @@ export class Event {
       public street: string,
       public houseNumber: string,
       public apartment: string,
-      public entry: string
+      public entry: string,
+      public images: string[],
+      public speakers: Speaker[]
     ) {}
 
   }

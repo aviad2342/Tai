@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="/manage"></ion-back-button>
+  </ion-buttons>
+  <ion-title>ניהול אירועים</ion-title>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+<!---------------------------------- Action Buttons -------------------------------------------------->
+    <ion-row>
+      <ion-col>
+        <ion-button color="primary" (click)="onAddEvent()">
+        <ion-icon class="custom-online-course" slot="start"></ion-icon>
+        <ion-label>הוסף</ion-label>
+      </ion-button>
+
+      <ion-button color="secondary" (click)="onViewEvent()" [disabled]="!isRowSelected">
+        <ion-icon name="eye-outline" slot="start"></ion-icon>
+        <ion-label>צפייה</ion-label>
+      </ion-button>
+
+      <ion-button color="warning" (click)="onEditEvent()" [disabled]="!isRowSelected">
+        <ion-icon name="create-outline" slot="start"></ion-icon>
+        <ion-label>ערוך</ion-label>
+      </ion-button>
+
+      <ion-button color="danger" (click)="onDeleteEvent()" [disabled]="!isRowSelected">
+        <ion-icon name="trash-outline" slot="start"></ion-icon>
+        <ion-label>מחק</ion-label>
+      </ion-button>
+
+      </ion-col>
+    </ion-row>
+<!---------------------------------- filtering inputs -------------------------------------------------->
+    <ion-row>
+
+      <ion-col size="4" class="ion-padding-end">
+        <ion-item>
+          <ion-input   
+          type="text"
+          placeholder="חפש קורס"
+          (keyup)="filterEvents($event)">
+          </ion-input>
+          <ion-icon name="funnel-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+<!------------------------------------------ courses datatable -------------------------------------------------->
+    <ion-row>
+      
+      <ngx-datatable
+      #coursesTable
+      [rows]="events"
+      class="bootstrap"
+      [rowHeight]="'auto'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [limit]="50"
+      [columnMode]="columnMode.standard"
+      [selected]="selected"
+      [selectionType]="SelectionType.single"
+      (activate)="onActivate($event)"
+      (select)="onSelect($event)"
+    >
+    <ngx-datatable-column name="" [sortable]="false" [width]="100">
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <ion-thumbnail>
+          <ion-img [src]="row['thumbnail']"></ion-img>
+        </ion-thumbnail>
+      </ng-template>
+    </ngx-datatable-column> 
+
+      <ngx-datatable-column name="title" [width]="150">
+        <ng-template let-column="column" ngx-datatable-header-template><strong>כותרת האירוע</strong></ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="authorName" [width]="150">
+        <ng-template let-column="column" ngx-datatable-header-template><strong>מרצה</strong></ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="date" [sortable]="true" [width]="120">
+        <ng-template let-column="column" ngx-datatable-header-template><strong>תאריך</strong></ng-template>
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          {{ row['date'] | date }}
+        </ng-template>
+      </ngx-datatable-column> 
+
+      <ngx-datatable-column name="city" [sortable]="true" [width]="270">
+        <ng-template let-column="column" ngx-datatable-header-template><strong>מקום</strong></ng-template>
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <a href="https://www.google.com/maps/place/{{row.street}} {{row.houseNumber}}, {{row.city}}, {{row.country}}">
+            <i [innerHTML]="row['street']"></i>&nbsp;  
+            <i [innerHTML]="row['houseNumber']"></i>,&nbsp;  
+            <i [innerHTML]="row['city']"></i>,&nbsp;
+            <i [innerHTML]="row['country']"></i> 
+          </a>
+        </ng-template>
+      </ngx-datatable-column> 
+
+      <ngx-datatable-column name="maxCapacity" [width]="80">
+        <ng-template let-column="column" ngx-datatable-header-template><strong>כמות משתתפים</strong></ng-template>
+      </ngx-datatable-column>
+
+    </ngx-datatable>
+
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

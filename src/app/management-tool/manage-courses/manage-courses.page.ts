@@ -125,6 +125,7 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
               this.courseservice.deleteCourse(this.selectedCourseId).subscribe( () => {
                 this.isRowSelected = false;
                 this.selectedCourseId = null;
+                this.selected = [];
                 this.appservice.presentToast('הקורס נמחק בהצלחה!', true);
               }, error => {
                 this.appservice.presentToast('חלה תקלה פעולת המחיקה נכשלה!', false);

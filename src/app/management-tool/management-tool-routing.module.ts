@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'courses',
     loadChildren: () => import('./manage-courses/manage-courses.module').then( m => m.ManageCoursesPageModule)
+  },
+  {
+    path: 'events',
+    loadChildren: () => import('./manage-events/manage-events.module').then( m => m.ManageEventsPageModule)
   }
 ];
 

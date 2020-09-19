@@ -50,7 +50,11 @@ export class ManageUsersPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
-    this.userservice.getUsers().subscribe();
+    this.userservice.getUsers().subscribe(users => {
+      if(this.selectedUserId !== null) {
+        this.selected[0] = users.find(u => u.id === this.selectedUserId);
+      }
+    });
   }
 
   async onAddUser() {
@@ -87,8 +91,9 @@ export class ManageUsersPage implements OnInit, OnDestroy {
     });
      modal.onDidDismiss().then( data => {
       if(data.data.didUpdate) {
-        this.isRowSelected = false;
-        this.selectedUserId = '';
+        this.selected[0] = this.users.find(u => u.id === this.selectedUserId);
+        this.isRowSelected = true;
+        // this.selectedUserId = '';
       }
     });
     return await modal.present();
@@ -111,6 +116,8 @@ export class ManageUsersPage implements OnInit, OnDestroy {
             handler: () => {
               this.userservice.deleteUser(this.selectedUserId).subscribe( () => {
                 this.isRowSelected = false;
+                this.selectedUserId = null;
+                this.selected = [];
               });
             }
           }
@@ -137,7 +144,6 @@ export class ManageUsersPage implements OnInit, OnDestroy {
     } else {
       this.isRowSelected = true;
       this.selectedUserId = selected[0].id;
-      console.log('Select Event', selected[0], this.selected[0].id);
     }
   }
 

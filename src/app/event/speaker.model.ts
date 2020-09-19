@@ -12,8 +12,9 @@ export class Speaker {
       public title: speakerTitle,
       public firstName: string,
       public lastName: string,
-      public image: string
-
+      public description: string,
+      public picture: string,
+      public event: string
     ) {}
 
   }
