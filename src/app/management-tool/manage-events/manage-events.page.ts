@@ -62,7 +62,7 @@ export class ManageEventsPage implements OnInit, OnDestroy {
   async onAddEvent() {
     this.selectedEventId = null;
     this.isRowSelected = false;
-    this.router.navigate(['manage', 'courses', 'new']);
+    this.router.navigate(['manage', 'events', 'new']);
   }
 
   async onAddLesson() {
