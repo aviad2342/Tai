@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
 import { AppService } from 'src/app/app.service';
 import { Event } from 'src/app/event/event.model';
 import { EventService } from 'src/app/event/event.service';
+import { Speaker } from 'src/app/event/speaker.model';
 import { Address } from 'src/app/shared/address.model';
+import { AddSpeakerComponent } from '../add-speaker/add-speaker.component';
 
 
 function base64toBlob(base64Data, contentType) {
@@ -38,33 +41,74 @@ export class AddEventPage implements OnInit {
   @ViewChild('f', { static: true }) form: NgForm;
   countries: string[] = [];
   selectCountry: string;
+  speakers: Speaker[] = [];
   hideList = false;
   address: Address = new Address();
   userImage = '../../../assets/images/user-default-image.png';
   file: File;
   date = new Date();
+  beginsAt = new Date();
+  endsAt = new Date();
   pickerOptions = {
-    // cssClass: 'ion-justify-content-start',
-    // buttons: [
-    //   {
-    //     text: 'ביטול',
-    //     role: 'cancel',
-    //     cssClass: 'ion-justify-content-start'
-    //   },
-    //   {
-    //     text: 'אישור',
-    //     role: 'confirm',
-    //     cssClass: 'ion-justify-content-start',
-    //     handler: (value: any) => {
-    //       console.log(value);
-    //       this.date = value;
-    //     }
-    //   }
-    // ]
+    cssClass: 'date-picker-class',
+    buttons: [
+      {
+        text: 'ביטול',
+        role: 'cancel',
+        cssClass: 'picker-cancel-btn'
+      },
+      {
+        text: 'אישור',
+        role: 'confirm',
+        cssClass: 'picker-confirm-btn',
+        handler: (value: any) => {
+          this.date = value;
+        }
+      }
+    ]
+  };
+
+  beginsAtpickerOptions = {
+    cssClass: 'date-picker-class',
+    buttons: [
+      {
+        text: 'ביטול',
+        role: 'cancel',
+        cssClass: 'picker-cancel-btn'
+      },
+      {
+        text: 'אישור',
+        role: 'confirm',
+        cssClass: 'picker-confirm-btn',
+        handler: (value: any) => {
+          this.beginsAt = value;
+        }
+      }
+    ]
+  };
+
+  endsAtpickerOptions = {
+    cssClass: 'date-picker-class',
+    buttons: [
+      {
+        text: 'ביטול',
+        role: 'cancel',
+        cssClass: 'picker-cancel-btn'
+      },
+      {
+        text: 'אישור',
+        role: 'confirm',
+        cssClass: 'picker-confirm-btn',
+        handler: (value: any) => {
+          this.endsAt = value;
+        }
+      }
+    ]
   };
 
   constructor(
     private eventService: EventService,
+    private modalController: ModalController,
     public appService: AppService
     ) { }
 
@@ -91,8 +135,27 @@ export class AddEventPage implements OnInit {
 
   }
 
+  getName(speaker: Speaker) {
+    return speaker?.title + ' ' + speaker?.firstName + ' ' + speaker?.lastName;
+  }
+
   onAddressPicked(address: Address) {
     this.address = address;
+  }
+
+  async onAddSpeaker() {
+    const modal = await this.modalController.create({
+      component: AddSpeakerComponent,
+      cssClass: 'add-speaker-modal',
+      animated: true,
+      backdropDismiss: false,
+    });
+     modal.onDidDismiss<Speaker>().then( data => {
+      if(data.data !== null  && data.data ) {
+        this.speakers.push(data.data);
+      }
+    });
+    return await modal.present();
   }
 
   onSubmit(form: NgForm) {
@@ -105,31 +168,31 @@ export class AddEventPage implements OnInit {
       switchMap(uploadRes => {
         const eventToAdd = new Event(
           null,
-          form.value.firstName,
-          form.value.lastName,
-          form.value.password,
-          new Date(form.value.dateOfBirth),
-          form.value.phone,
-          form.value.email,
-          form.value.email,
-          this.address.entry,
+          form.value.title,
+          form.value.description,
+          this.date,
+          this.beginsAt,
+          this.endsAt,
+          uploadRes.imageUrl,
+          form.value.maxCapacity,
+          form.value.placeName,
           this.address.country,
           this.address.city,
           this.address.street,
           this.address.houseNumber,
           this.address.apartment,
-          uploadRes.imageUrl,
-          form.value.email,
-          form.value.email
+          this.address.entry,
+          [],
+          this.speakers
         );
         return this.eventService.addEvent(eventToAdd);
       })
     ).subscribe(() => {
       form.reset();
-      this.appService.presentToast('המשתמש נשמר בהצלחה', true);
+      this.appService.presentToast('האירוע נשמר בהצלחה', true);
     }, error => {
       form.reset();
-      this.appService.presentToast('חלה תקלה פרטי המשתמש לא נשמרו', false);
+      this.appService.presentToast('חלה תקלה פרטי האירוע לא נשמרו', false);
     }
     );
   }

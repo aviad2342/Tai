@@ -1,3 +1,35 @@
 .address-picker {
-    margin-top: 30px;
+    margin-top: 40px;
+}
+
+.date-picker-class {
+    --background: black;
+}
+
+.picker-cancel-btn {
+    color: black;
+}
+
+ion-datetime .picker-toolbar {
+    justify-content: right !important;
+}
+
+.description-input {
+    width: 100%;
+    border: 1px solid var(--ion-color-primary);
+    border-radius: 10px;
+    background: #fff;
+    resize: none;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.add-speaker-list {
+    margin-top: 9px;
+    border-top: 1px solid lightgray;
+}
+
+.add-speaker-modal {
+    --width: 700px;
+    --height: 900px;
 }

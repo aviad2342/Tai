@@ -1,0 +1,125 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>הוספת נואם</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="close(null)">
+        <ion-icon slot="icon-only" name="close-outline" class="toolbar-icon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" fullscreen="true">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size="6">
+          <app-image-picker 
+          [showPreview]="this.file" 
+          (imagePick)="onImagePicked($event)" 
+          class="ion-padding">
+        </app-image-picker>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size="6">
+          <ion-list>
+
+            <ion-item>
+              <ion-label position="floating"> תואר <ion-text color="danger">*</ion-text></ion-label>
+              <ion-select
+              ngModel
+              name="title"
+              required
+              #titleNameCtrl="ngModel"
+              interface="popover"
+              [interfaceOptions]="customAlertOptions"
+              >
+              <ion-select-option *ngFor="let title of titles">{{title}}</ion-select-option>
+              </ion-select>
+              <ion-icon name="text-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-item
+            *ngIf="!titleNameCtrl.valid && titleNameCtrl.touched"
+            lines="none">
+            <ion-label color="danger">
+              זהו שדה חובה!
+            </ion-label>
+          </ion-item>
+
+            <ion-item>
+              <ion-label position="floating"> שם <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="text"
+                ngModel
+                name="firstName"
+                required
+                #firstNameCtrl="ngModel"
+              ></ion-input>
+              <ion-icon name="text-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-item
+            *ngIf="!firstNameCtrl.valid && firstNameCtrl.touched"
+            lines="none">
+            <ion-label color="danger">
+              זהו שדה חובה!
+            </ion-label>
+          </ion-item>
+          
+            <ion-item>
+              <ion-label position="floating"> שם משפחה <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="text"
+                ngModel
+                name="lastName"
+                required
+                #lastNameCtrl="ngModel"
+              ></ion-input>
+              <ion-icon name="text-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-item
+            *ngIf="!lastNameCtrl.valid && lastNameCtrl.touched"
+            lines="none">
+            <ion-label color="danger">
+              זהו שדה חובה!
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating"> תיאור <ion-text color="danger">*</ion-text></ion-label>
+            <ion-textarea 
+              type="text"
+              ngModel
+              name="description"
+              required
+              #descriptionCtrl="ngModel"
+            ></ion-textarea>
+          </ion-item>
+          <ion-item
+          *ngIf="!descriptionCtrl.valid && descriptionCtrl.touched"
+          lines="none">
+          <ion-label color="danger">
+            זהו שדה חובה!
+          </ion-label>
+        </ion-item>
+
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size="6">
+          <ion-button
+            type="submit"
+            color="primary"
+            expand="block"
+            [disabled]="!f.valid"
+          >
+          הוסף
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+

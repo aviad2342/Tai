@@ -7,7 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { AddEventPageRoutingModule } from './add-event-routing.module';
 
 import { AddEventPage } from './add-event.page';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from '../../../shared/shared.module';
+import { AddSpeakerComponent } from '../add-speaker/add-speaker.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
     AddEventPageRoutingModule,
     SharedModule
   ],
-  declarations: [AddEventPage]
+  declarations: [AddEventPage, AddSpeakerComponent]
 })
 export class AddEventPageModule {}

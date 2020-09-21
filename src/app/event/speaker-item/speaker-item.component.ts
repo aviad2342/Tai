@@ -12,7 +12,7 @@ export class SpeakerItemComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   getName() {
     return this.speaker?.title + ' ' + this.speaker?.firstName + ' ' + this.speaker?.lastName;

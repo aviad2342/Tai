@@ -1,6 +1,6 @@
 export enum speakerTitle {
     MISTER  = 'מר',
-    MISS = '\'גב',
+    MISS = 'גב\'',
     DOCTOR = 'ד"ר',
     PROFESSOR = 'פרופ\''
   }

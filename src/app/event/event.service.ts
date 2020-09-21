@@ -212,4 +212,13 @@ export class EventService {
         return speakers;
       }));
   }
+
+  uploadSpeakerPicture(image: File, fileName: string) {
+    const uploadData = new FormData();
+    uploadData.append('image', image, fileName);
+    return this.http.post<{ imageUrl: string}>(
+      'http://localhost:3000/api/image/uploadSpeakerImage',
+      uploadData
+    );
+  }
 }
