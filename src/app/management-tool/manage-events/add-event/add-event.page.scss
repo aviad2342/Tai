@@ -1,3 +1,9 @@
+
+.add-speaker-modal {
+    --width: 700px;
+    --height: 900px;
+}
+
 .address-picker {
     margin-top: 40px;
 }
@@ -27,9 +33,4 @@ ion-datetime .picker-toolbar {
 .add-speaker-list {
     margin-top: 9px;
     border-top: 1px solid lightgray;
-}
-
-.add-speaker-modal {
-    --width: 700px;
-    --height: 900px;
 }

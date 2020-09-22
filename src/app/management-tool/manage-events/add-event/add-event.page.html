@@ -51,10 +51,12 @@
           <ion-label position="floating">תאריך<ion-text color="danger">*</ion-text></ion-label>
             <ion-datetime
               display-format="DD/MM/YYYY"
-              pickerFormat="DD MMM YY"
+              pickerFormat="DD MMM YYYY"
               monthNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
               monthShortNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
               ngModel
+              max="2025-12-29"
+              [min]="now"
               [value]="date"
               [pickerOptions]="pickerOptions"
               name="date"
@@ -74,6 +76,7 @@
             <ion-item>
               <ion-label position="floating">שעת התחלה<ion-text color="danger">*</ion-text></ion-label>
                 <ion-datetime
+                  [disabled]="!dateCtrl.touched || !dateCtrl.valid"
                   display-format="HH:mm"
                   pickerFormat="HH:mm"
                   ngModel
@@ -96,18 +99,19 @@
             <ion-item>
               <ion-label position="floating">שעת סיום<ion-text color="danger">*</ion-text></ion-label>
                 <ion-datetime
-                display-format="HH:mm"
-                pickerFormat="HH:mm"
+                  [disabled]="!dateCtrl.touched || !dateCtrl.valid"
+                  display-format="HH:mm"
+                  pickerFormat="HH:mm"
                   ngModel
                   [value]="endsAt"
                   [pickerOptions]="endsAtpickerOptions"
                   name="endsAt"
                   required
-                  #endsAt="ngModel"
+                  #endsAtCtrl="ngModel"
                 ></ion-datetime>
                   <ion-icon name="time" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
             </ion-item>
-            <ion-item *ngIf="!endsAt.valid && endsAt.touched" lines="none">
+            <ion-item *ngIf="!endsAtCtrl.valid && endsAtCtrl.touched" lines="none">
               <ion-label color="danger">
                     זהו שדה חובה!
               </ion-label>

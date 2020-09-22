@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
-import { ColumnMode, DatatableComponent, SelectionType } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, DatatableComponent, SelectionType } from '../../../../projects/swimlane/ngx-datatable/src/public-api';
 import { Subscription } from 'rxjs';
-import { AppService } from 'src/app/app.service';
-import { Event } from 'src/app/event/event.model';
-import { EventService } from 'src/app/event/event.service';
-import { Speaker } from 'src/app/event/speaker.model';
+import { AppService } from '../../app.service';
+import { Event } from '../../event/event.model';
+import { EventService } from '../../event/event.service';
+import { Speaker } from '../../event/speaker.model';
 
 @Component({
   selector: 'app-manage-events',

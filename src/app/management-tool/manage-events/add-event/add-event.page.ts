@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
-import { AppService } from 'src/app/app.service';
-import { Event } from 'src/app/event/event.model';
-import { EventService } from 'src/app/event/event.service';
-import { Speaker } from 'src/app/event/speaker.model';
-import { Address } from 'src/app/shared/address.model';
+import { AppService } from '../../../app.service';
+import { Event } from '../../../event/event.model';
+import { EventService } from '../../../event/event.service';
+import { Speaker } from '../../../event/speaker.model';
+import { Address } from '../../../shared/address.model';
 import { AddSpeakerComponent } from '../add-speaker/add-speaker.component';
 
 
@@ -46,8 +47,9 @@ export class AddEventPage implements OnInit {
   address: Address = new Address();
   userImage = '../../../assets/images/user-default-image.png';
   file: File;
-  date = new Date();
-  beginsAt = new Date();
+  now = new Date().toISOString();
+  date: Date;
+  beginsAt: Date;
   endsAt = new Date();
   pickerOptions = {
     cssClass: 'date-picker-class',
@@ -62,7 +64,9 @@ export class AddEventPage implements OnInit {
         role: 'confirm',
         cssClass: 'picker-confirm-btn',
         handler: (value: any) => {
-          this.date = value;
+          console.log(value);
+          this.date = new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value);
+          console.log(this.date);
         }
       }
     ]
@@ -81,7 +85,8 @@ export class AddEventPage implements OnInit {
         role: 'confirm',
         cssClass: 'picker-confirm-btn',
         handler: (value: any) => {
-          this.beginsAt = value;
+    this.beginsAt = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate(), value.hour.value, value.minute.value,0 ,0);
+          console.log(this.beginsAt);
         }
       }
     ]
@@ -100,7 +105,7 @@ export class AddEventPage implements OnInit {
         role: 'confirm',
         cssClass: 'picker-confirm-btn',
         handler: (value: any) => {
-          this.endsAt = value;
+      this.endsAt = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate(), value.hour.value, value.minute.value,0 ,0);
         }
       }
     ]
@@ -109,6 +114,7 @@ export class AddEventPage implements OnInit {
   constructor(
     private eventService: EventService,
     private modalController: ModalController,
+    private router: Router,
     public appService: AppService
     ) { }
 
@@ -148,7 +154,7 @@ export class AddEventPage implements OnInit {
       component: AddSpeakerComponent,
       cssClass: 'add-speaker-modal',
       animated: true,
-      backdropDismiss: false,
+      backdropDismiss: false
     });
      modal.onDidDismiss<Speaker>().then( data => {
       if(data.data !== null  && data.data ) {
@@ -163,7 +169,7 @@ export class AddEventPage implements OnInit {
     if (!form.valid || !this.form.value.image) {
       return;
     }
-    this.eventService.uploadEventThumbnail(this.form.value.image, form.value.email)
+    this.eventService.uploadEventThumbnail(this.form.value.image, 'Event')
     .pipe(
       switchMap(uploadRes => {
         const eventToAdd = new Event(
@@ -185,13 +191,15 @@ export class AddEventPage implements OnInit {
           [],
           this.speakers
         );
+        console.log(eventToAdd);
         return this.eventService.addEvent(eventToAdd);
       })
     ).subscribe(() => {
       form.reset();
       this.appService.presentToast('האירוע נשמר בהצלחה', true);
+      this.router.navigate(['/manage/events']);
     }, error => {
-      form.reset();
+      console.log(error);
       this.appService.presentToast('חלה תקלה פרטי האירוע לא נשמרו', false);
     }
     );

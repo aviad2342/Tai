@@ -13,7 +13,7 @@
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>
       <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size="6">
+        <ion-col size="12" size="8">
           <app-image-picker 
           [showPreview]="this.file" 
           (imagePick)="onImagePicked($event)" 
@@ -22,7 +22,7 @@
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size="6">
+        <ion-col size="12" size="8">
           <ion-list>
 
             <ion-item>
@@ -37,7 +37,6 @@
               >
               <ion-select-option *ngFor="let title of titles">{{title}}</ion-select-option>
               </ion-select>
-              <ion-icon name="text-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
             </ion-item>
             <ion-item
             *ngIf="!titleNameCtrl.valid && titleNameCtrl.touched"
@@ -56,7 +55,6 @@
                 required
                 #firstNameCtrl="ngModel"
               ></ion-input>
-              <ion-icon name="text-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
             </ion-item>
             <ion-item
             *ngIf="!firstNameCtrl.valid && firstNameCtrl.touched"
@@ -75,7 +73,6 @@
                 required
                 #lastNameCtrl="ngModel"
               ></ion-input>
-              <ion-icon name="text-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
             </ion-item>
             <ion-item
             *ngIf="!lastNameCtrl.valid && lastNameCtrl.touched"

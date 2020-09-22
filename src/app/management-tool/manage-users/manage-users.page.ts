@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
-import { ColumnMode, SelectionType, DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, DatatableComponent, SelectionType } from '../../../../projects/swimlane/ngx-datatable/src/public-api';
 import { UserService } from 'src/app/user/user.service';
 import { ModalController, AlertController } from '@ionic/angular';
 import { AddUserComponent } from './add-user/add-user.component';
