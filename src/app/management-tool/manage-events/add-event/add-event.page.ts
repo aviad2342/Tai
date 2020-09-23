@@ -159,6 +159,7 @@ export class AddEventPage implements OnInit {
      modal.onDidDismiss<Speaker>().then( data => {
       if(data.data !== null  && data.data ) {
         this.speakers.push(data.data);
+        console.log(this.speakers);
       }
     });
     return await modal.present();
@@ -172,6 +173,7 @@ export class AddEventPage implements OnInit {
     this.eventService.uploadEventThumbnail(this.form.value.image, 'Event')
     .pipe(
       switchMap(uploadRes => {
+        console.log(this.speakers);
         const eventToAdd = new Event(
           null,
           form.value.title,
@@ -188,6 +190,7 @@ export class AddEventPage implements OnInit {
           this.address.houseNumber,
           this.address.apartment,
           this.address.entry,
+          'cc11',
           [],
           this.speakers
         );

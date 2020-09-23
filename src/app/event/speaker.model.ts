@@ -14,7 +14,21 @@ export class Speaker {
       public lastName: string,
       public description: string,
       public picture: string,
-      public event: string
+      public eventId: string
     ) {}
 
   }
+
+//   export class Lecturer extends Speaker {
+//     constructor(
+//       public id: string,
+//       public title: speakerTitle,
+//       public firstName: string,
+//       public lastName: string,
+//       public description: string,
+//       public picture: string,
+//       public event: string
+//       ) {
+//       super(id, title, firstName, lastName, description, picture, event);
+//     }
+// }

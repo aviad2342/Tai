@@ -68,22 +68,23 @@ export class EventService {
 
   updateEvent(event: Event) {
     const eventObj = {
-       title:       event.title,
-       description: event.description,
-       date:        event.date,
-       beginsAt:    event.beginsAt,
-       endsAt:      event.endsAt,
-       thumbnail:   event.thumbnail,
-       maxCapacity: event.maxCapacity,
-       placeName:   event.placeName,
-       country:     event.country,
-       city:        event.city,
-       street:      event.street,
-       houseNumber: event.houseNumber,
-       apartment:   event.apartment,
-       entry:       event.entry,
-       images:      event.images,
-       speakers:    event.speakers
+       title:         event.title,
+       description:   event.description,
+       date:          event.date,
+       beginsAt:      event.beginsAt,
+       endsAt:        event.endsAt,
+       thumbnail:     event.thumbnail,
+       maxCapacity:   event.maxCapacity,
+       placeName:     event.placeName,
+       country:       event.country,
+       city:          event.city,
+       street:        event.street,
+       houseNumber:   event.houseNumber,
+       apartment:     event.apartment,
+       entry:         event.entry,
+       catalogNumber: event.catalogNumber,
+       images:        event.images,
+       speakers:      event.speakers
       };
     return this.http.put(`http://localhost:3000/api/event/event/${event.id}`,
     {
@@ -160,7 +161,7 @@ export class EventService {
       lastName:    speaker.lastName,
       description: speaker.description,
       picture:     speaker.picture,
-      event:       speaker.event
+      eventId:       speaker.eventId
       };
     return this.http.put(`http://localhost:3000/api/speaker/speaker/${speaker.id}`,
     {

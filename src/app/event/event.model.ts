@@ -18,6 +18,7 @@ export class Event {
       public houseNumber: string,
       public apartment: string,
       public entry: string,
+      public catalogNumber: string,
       public images: string[],
       public speakers: Speaker[]
     ) {}

@@ -214,7 +214,6 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
         this.isRowSelected = true;
       });
       this.selectedCourseId = selected[0].id;
-      console.log('Select Event', selected[0], this.selected[0].id);
     }
   }
 

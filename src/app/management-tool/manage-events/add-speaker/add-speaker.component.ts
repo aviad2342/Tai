@@ -91,7 +91,7 @@ export class AddSpeakerComponent implements OnInit {
         form.value.lastName,
         form.value.description,
         uploadRes.imageUrl,
-        null
+        ''
       );
       this.close(speakerToAdd);
     });
