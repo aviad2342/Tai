@@ -2,6 +2,7 @@
   <div class="titlebox" size="large">כתובת <ion-text color="danger">*</ion-text></div>
   <ion-icon name="location-outline" size="large" class="ion-align-self-center titlebox-icon"></ion-icon>
 <ion-grid class="grid">
+
   <ion-row>
     <ion-col>
       <ion-item>
@@ -11,13 +12,26 @@
           [items]="countriesList"
           [(ngModel)]="country" 
           [canSearch]="true"
+          [hasConfirmButton]="true"
+          confirmButtonText="בחר"
+          searchPlaceholder="חפש מדינה..."
+          closeButtonText="ביטול"
+          closeButtonSlot="end"
+          [searchFailText]="'אין תוצאות התואמות את החיפוש'"
+          [shouldBackdropClose]="false"
           (onOpen)="this.selectableStreetComponent.clear(); this.selectableCitiesComponent.clear(); disablPickers()"
           (onSearch)="updateSearchCountriesResults($event)"
           (onChange)="selectCountryResult($event)">
+          <!-- <ng-template ionicSelectableHeaderTemplate>
+            <ion-toolbar>
+              <ion-title>בחר מדינה</ion-title>
+            </ion-toolbar>
+          </ng-template> -->
         </ionic-selectable>
       </ion-item>
     </ion-col>
   </ion-row>
+
   <ion-row>
     <ion-col>
       <ion-item>
@@ -25,16 +39,24 @@
         <ionic-selectable
           #selectableCitiesComponent
           (onOpen)="this.selectableStreetComponent.clear(); disablPickers()"
+          [shouldBackdropClose]="false"
           [isEnabled]="this.selectableCountriesComponent.hasValue() && !this.selectableCountriesComponent.isOpened"
           [items]="citiesList"
           [(ngModel)]="city" 
           [canSearch]="true"
+          [hasConfirmButton]="true"
+          confirmButtonText="בחר"
+          searchPlaceholder="חפש עיר..."
+          closeButtonText="ביטול"
+          closeButtonSlot="end"
+          [searchFailText]="'אין תוצאות התואמות את החיפוש'"
           (onSearch)="updateSearchCitiesResults($event)"
           (onChange)="selectCitiesResult($event)">
         </ionic-selectable>
       </ion-item>
     </ion-col>
   </ion-row>
+
   <ion-row>
     <ion-col >
       <ion-item>
@@ -42,17 +64,25 @@
         <ionic-selectable
           #selectableStreetComponent
           (onOpen)="disablPickers()"
+          [shouldBackdropClose]="false"
           [isEnabled]="this.selectableCitiesComponent.hasValue() && !this.selectableCitiesComponent.isOpened"
           [items]="streetsList"
           [(ngModel)]="street" 
           [canSearch]="true"
           [canClear]="true"
+          [hasConfirmButton]="true"
+          confirmButtonText="בחר"
+          searchPlaceholder="חפש רחוב..."
+          closeButtonText="ביטול"
+          closeButtonSlot="end"
+          [searchFailText]="'אין תוצאות התואמות את החיפוש'"
           (onSearch)="updateSearchStreetsResults($event)"
           (onChange)="selectStreetResult($event)">
         </ionic-selectable>
       </ion-item>
     </ion-col>
   </ion-row>
+
   <ion-row>
     <ion-col>
       <ion-item>
@@ -67,6 +97,7 @@
       </ion-input>
       </ion-item>
     </ion-col>
+
     <ion-col>
       <ion-item>
         <ion-label position="floating">מספר דירה</ion-label>
@@ -78,6 +109,7 @@
       </ion-input>
       </ion-item>
     </ion-col>
+
     <ion-col>
       <ion-item>
         <ion-label position="floating">כניסה</ion-label>

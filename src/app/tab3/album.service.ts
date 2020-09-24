@@ -217,4 +217,13 @@ export class AlbumService {
           }));
       }
 
+      uploadAlbumPhotos(photos: File[], fileName: string) {
+        // const uploadData = new FormData();
+        // uploadData.append('images', photos, fileName);
+        return this.http.post<object>(
+          'http://localhost:3000/api/image/uploadEventePictures',
+          photos
+        );
+      }
+
 }

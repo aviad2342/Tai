@@ -179,6 +179,8 @@ export class AddressPickerComponent implements OnInit {
 
 async openPicker(input: string) {
     const picker = await this.pickerController.create({
+      animated: true,
+      backdropDismiss: false,
       columns: [{
         name: 'Number',
         options: this.getColumnOptions()
@@ -186,12 +188,12 @@ async openPicker(input: string) {
      // input: {input: Number},
       buttons: [
         {
-          text: 'Cancel',
+          text: 'ביטול',
           role: 'cancel',
           cssClass: 'ion-text-capitalize'
         },
         {
-          text: 'Confirm',
+          text: 'אישור',
           cssClass: 'ion-text-capitalize',
           handler: (value: any) => {
             switch (input) {
