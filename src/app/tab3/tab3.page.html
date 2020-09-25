@@ -33,8 +33,8 @@
 
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-sm="6" offset-sm="3" class="ion-text-center">
-        <ngx-dropzone (change)="onFilesAdded($event)">
-          <ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
+        <ngx-dropzone (change)="onFilesAdded($event)" class="dropzone">
+          <ngx-dropzone-label>גרור קבצים לכאן...</ngx-dropzone-label>
           <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
           </ngx-dropzone-image-preview>
         </ngx-dropzone>

@@ -1,9 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { switchMap, take, tap } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { Album } from './album.model';
 import { Photo } from './photo.model';
+
+interface PhotoData {
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  destination: string;
+  filename: string;
+  path: string;
+  size: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -217,13 +228,27 @@ export class AlbumService {
           }));
       }
 
-      uploadAlbumPhotos(photos: File[], fileName: string) {
-        // const uploadData = new FormData();
-        // uploadData.append('images', photos, fileName);
-        return this.http.post<object>(
+      uploadAlbumPhotos(photos: File[]) {
+        const uploadData = new FormData();
+        photos.forEach(photo => {
+          uploadData.append('images', photo);
+        });
+        return this.http.post<string[]>(
           'http://localhost:3000/api/image/uploadEventePictures',
-          photos
+          uploadData
+        ).pipe(
+          map(images => {
+             return images;
+          })
         );
+      }
+
+      deleteAlbumPhoto(image: string) {
+        return this.http.delete(`http://localhost:3000/api/image/deleteEventImage/${image}`).
+        pipe(
+          map(resData => {
+            return resData;
+          }));
       }
 
 }
