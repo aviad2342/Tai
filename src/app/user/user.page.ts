@@ -17,14 +17,14 @@ import { AppService } from '../app.service';
 export class UserPage implements OnInit, OnDestroy {
 
   users: User[];
-  private starsSub: Subscription;
+  private usersSubscription: Subscription;
   isDesktop: boolean;
 
   constructor(private userService: UserService, private router: Router, private appService: AppService) { }
 
   ngOnInit() {
     console.log(this.appService.isRTL());
-    this.starsSub = this.userService.users.subscribe(users => {
+    this.usersSubscription = this.userService.users.subscribe(users => {
       this.users = users;
     });
   }
@@ -47,8 +47,8 @@ export class UserPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.starsSub) {
-      this.starsSub.unsubscribe();
+    if (this.usersSubscription) {
+      this.usersSubscription.unsubscribe();
     }
   }
 

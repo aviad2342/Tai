@@ -12,6 +12,7 @@ import { Event } from '../event.model';
 export class EventDetailPage implements OnInit {
 
   event: Event;
+  isLoading = false;
 
   speakerSlideOptions = {
     initialSlide: 0,
@@ -34,8 +35,10 @@ export class EventDetailPage implements OnInit {
         this.navController.navigateBack('/tabs/event');
         return;
       }
+      this.isLoading = true;
       this.eventService.getEvent(paramMap.get('id')).subscribe(event => {
             this.event = event;
+            this.isLoading = false;
           },
           error => {
             this.alertController

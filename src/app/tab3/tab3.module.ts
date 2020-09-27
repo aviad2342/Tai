@@ -8,6 +8,7 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { Tab3PageRoutingModule } from './tab3-routing.module'
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { NgxImageGalleryModule } from 'ngx-image-gallery';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: Tab3Page }]),
     Tab3PageRoutingModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    NgxImageGalleryModule
   ],
   declarations: [Tab3Page]
 })

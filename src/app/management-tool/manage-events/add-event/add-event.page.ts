@@ -192,6 +192,7 @@ export class AddEventPage implements OnInit {
           this.address.entry,
           'cc11',
           [],
+          [],
           this.speakers
         );
         console.log(eventToAdd);

@@ -26,6 +26,7 @@ export class EventPage implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
     this.isDesktop = this.appService.isDesktop();
+    this.eventService.getEvents().subscribe();
   }
 
   ngOnDestroy() {

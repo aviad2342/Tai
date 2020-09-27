@@ -1,8 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { GALLERY_CONF, GALLERY_IMAGE, NgxImageGalleryComponent } from 'ngx-image-gallery';
 import { Subscription } from 'rxjs';
 import { AppService } from '../app.service';
 import { Album } from './album.model';
 import { AlbumService } from './album.service';
+import { Image } from './image.model';
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';
@@ -32,12 +34,37 @@ function base64toBlob(base64Data, contentType) {
 })
 export class Tab3Page implements OnInit, OnDestroy{
 
+
+  @ViewChild(NgxImageGalleryComponent) ngxImageGallery: NgxImageGalleryComponent;
+
   albums: Album[];
   files: File[] = [];
   images: string[] = [];
+  galleryImages: GALLERY_IMAGE[] = [];
   selectedAlbum: Album;
   showPhotos = false;
   private albumSubscription: Subscription;
+
+  conf: GALLERY_CONF = {
+    imageOffset: '0px',
+    showDeleteControl: false,
+    showImageTitle: false,
+  };
+
+  gimages: GALLERY_IMAGE[] = [
+    {
+      url: 'https://images.pexels.com/photos/669013/pexels-photo-669013.jpeg?w=1260',
+      altText: 'woman-in-black-blazer-holding-blue-cup',
+      title: 'woman-in-black-blazer-holding-blue-cup',
+      thumbnailUrl: 'https://images.pexels.com/photos/669013/pexels-photo-669013.jpeg?w=60'
+    },
+    {
+      url: 'https://images.pexels.com/photos/669006/pexels-photo-669006.jpeg?w=1260',
+      altText: 'two-woman-standing-on-the-ground-and-staring-at-the-mountain',
+      extUrl: 'https://www.pexels.com/photo/two-woman-standing-on-the-ground-and-staring-at-the-mountain-669006/',
+      thumbnailUrl: 'https://images.pexels.com/photos/669006/pexels-photo-669006.jpeg?w=60'
+    },
+  ];
 
   constructor( private albumService: AlbumService ,private appService: AppService) {}
 
@@ -58,14 +85,17 @@ export class Tab3Page implements OnInit, OnDestroy{
 
   onRemove(event) {
     let imageUrl = '';
+    console.log(event.name);
     this.images.forEach(image => {
       if(image.includes(event.name)) {
+        console.log(image);
         imageUrl = image;
       }
     });
-    console.log(imageUrl);
-    this.albumService.deleteAlbumPhoto(imageUrl).subscribe(deleted => {
-      this.appService.presentToast(deleted.toString(), true);
+    const imageToDelete = imageUrl.split('http://localhost:3000/eventImages/');
+    console.log(imageToDelete[1]);
+    this.albumService.deleteAlbumPhoto(imageToDelete[1]).subscribe(response => {
+      this.appService.presentToast(response, true);
       this.files.splice(this.files.indexOf(event), 1);
     }, error => {
       this.appService.presentToast('חלה תקלה התמונה לא הוסרה!', false);
@@ -74,12 +104,14 @@ export class Tab3Page implements OnInit, OnDestroy{
 
   onFilesAdded(event) {
     this.files.push(...event.addedFiles);
-    const imageFiles: any[] =[];
-    this.files.forEach(file => {
-      imageFiles.push(this.readImage(file));
-    });
-    this.albumService.uploadAlbumPhotos(imageFiles).subscribe(images => {
+    // const imageFiles: any[] =[];
+    // this.files.forEach(file => {
+    //   imageFiles.push(this.readImage(file));
+    // });
+    this.albumService.uploadAlbumPhotos(event.addedFiles).subscribe(images => {
       this.images.push(...images);
+      this.galleryImages.push(...this.setGalleryImages(images));
+      this.openGallery();
       console.log(images);
       });
     // this.readFile(this.files[0]).then(fileContents => {
@@ -133,6 +165,66 @@ export class Tab3Page implements OnInit, OnDestroy{
       this.selectedAlbum = album;
       this.showPhotos = true;
     });
+  }
+
+  setGalleryImages(images: string[]) {
+    const galleryInages: Image[] = [];
+    images.forEach(image => {
+      galleryInages.push(new Image(image, image));
+    });
+    return galleryInages;
+  }
+
+  openGallery(index: number = 0) {
+    this.ngxImageGallery.open(index);
+  }
+
+  // close gallery
+  closeGallery() {
+    this.ngxImageGallery.close();
+  }
+
+  // set new active(visible) image in gallery
+  newImage(index: number = 0) {
+    this.ngxImageGallery.setActiveImage(index);
+  }
+
+  // next image in gallery
+  nextImage(index: number = 0) {
+    this.ngxImageGallery.next();
+  }
+
+  // prev image in gallery
+  prevImage(index: number = 0) {
+    this.ngxImageGallery.prev();
+  }
+
+  /**************************************************/
+
+  // EVENTS
+  // callback on gallery opened
+  galleryOpened(index) {
+    console.log('Gallery opened at index ', index);
+  }
+
+  // callback on gallery closed
+  galleryClosed() {
+    console.log('Gallery closed.');
+  }
+
+  // callback on gallery image clicked
+  galleryImageClicked(index) {
+    console.log('Gallery image clicked with index ', index);
+  }
+
+  // callback on gallery image changed
+  galleryImageChanged(index) {
+    console.log('Gallery image changed to index ', index);
+  }
+
+  // callback on user clicked delete button
+  deleteImage(index) {
+    console.log('Delete image at index ', index);
   }
 
   ngOnDestroy() {

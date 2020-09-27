@@ -243,11 +243,11 @@ export class AlbumService {
         );
       }
 
-      deleteAlbumPhoto(image: string) {
-        return this.http.delete(`http://localhost:3000/api/image/deleteEventImage/${image}`).
+      deleteAlbumPhoto(name: string) {
+        return this.http.delete<{ response: string}>(`http://localhost:3000/api/image/deleteEventImage/${name}`).
         pipe(
           map(resData => {
-            return resData;
+            return resData.response;
           }));
       }
 

@@ -1,3 +1,4 @@
+import { Participant } from './participant.model';
 import { Speaker } from './speaker.model';
 
 export class Event {
@@ -20,6 +21,7 @@ export class Event {
       public entry: string,
       public catalogNumber: string,
       public images: string[],
+      public participants: Participant[],
       public speakers: Speaker[]
     ) {}
 
