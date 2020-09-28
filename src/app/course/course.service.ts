@@ -16,8 +16,6 @@ export class CourseService {
   // tslint:disable-next-line: variable-name
   private _lessons = new BehaviorSubject<Lesson[]>([]);
 
-  course: Course;
-
 
   get courses() {
     return this._courses.asObservable();
@@ -103,7 +101,6 @@ export class CourseService {
       take(1),
       switchMap(cours => {
         this._courses.next(cours.concat(course));
-        this.course = course;
          return this.getCourse(course.id);
       }));
   }

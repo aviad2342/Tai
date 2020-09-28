@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { switchMap } from 'rxjs/operators';
+import { AppService } from 'src/app/app.service';
 import { EventService } from 'src/app/event/event.service';
 import { Speaker, speakerTitle } from 'src/app/event/speaker.model';
 
@@ -32,6 +34,7 @@ function base64toBlob(base64Data, contentType) {
 })
 export class AddSpeakerComponent implements OnInit {
 
+  @Input() eventId: string;
   @ViewChild('f', { static: true }) form: NgForm;
   file: File;
   titles = [
@@ -48,6 +51,7 @@ export class AddSpeakerComponent implements OnInit {
 
   constructor(
     private eventService: EventService,
+    private appService: AppService,
     private modalController: ModalController
     ) { }
 
@@ -83,7 +87,8 @@ export class AddSpeakerComponent implements OnInit {
       return;
     }
     this.eventService.uploadSpeakerPicture(this.form.value.image, 'Speaker')
-    .subscribe(uploadRes => {
+    .pipe
+    (switchMap(uploadRes => {
       const speakerToAdd = new Speaker(
         null,
         form.value.title,
@@ -91,10 +96,18 @@ export class AddSpeakerComponent implements OnInit {
         form.value.lastName,
         form.value.description,
         uploadRes.imageUrl,
-        ''
+        this.eventId
       );
-      this.close(speakerToAdd);
-    });
+      return this.eventService.addSpeaker(speakerToAdd);
+    })).subscribe(speaker => {
+      form.reset();
+      this.appService.presentToast('הנואם נשמר בהצלחה', true);
+       this.close(speaker);
+    }, error => {
+      form.reset();
+      this.appService.presentToast('חלה תקלה פרטי הנואם לא נשמרו', false);
+      this.close(null);
+    } );
   }
 
 }

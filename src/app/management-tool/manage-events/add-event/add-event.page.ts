@@ -1,13 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { IonSlides, ModalController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
+import { Participant } from 'src/app/event/participant.model';
 import { AppService } from '../../../app.service';
 import { Event } from '../../../event/event.model';
 import { EventService } from '../../../event/event.service';
 import { Speaker } from '../../../event/speaker.model';
 import { Address } from '../../../shared/address.model';
+import { AddParticipantComponent } from '../add-participant/add-participant.component';
 import { AddSpeakerComponent } from '../add-speaker/add-speaker.component';
 
 
@@ -39,10 +41,13 @@ function base64toBlob(base64Data, contentType) {
 })
 export class AddEventPage implements OnInit {
 
+  @ViewChild('stepper') newEventStepper: IonSlides;
   @ViewChild('f', { static: true }) form: NgForm;
-  countries: string[] = [];
-  selectCountry: string;
+  event: Event;
+  eventId: string;
+  files: File[] = [];
   speakers: Speaker[] = [];
+  participants: Participant[] = [];
   hideList = false;
   address: Address = new Address();
   userImage = '../../../assets/images/user-default-image.png';
@@ -51,6 +56,19 @@ export class AddEventPage implements OnInit {
   date: Date;
   beginsAt: Date;
   endsAt = new Date();
+
+  slideOpts = {
+    allowSlidePrev: false,
+    allowTouchMove: false,
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'fraction'
+    },
+    renderProgressbar (progressbarFillClass) {
+      return '<span class="' + progressbarFillClass + '"></span>';
+  }
+  };
+
   pickerOptions = {
     cssClass: 'date-picker-class',
     buttons: [
@@ -119,8 +137,13 @@ export class AddEventPage implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.slideOpts.renderProgressbar('progressbarClass');
   }
 
+
+  goto() {
+    this.newEventStepper.slideTo(2);
+  }
   onImagePicked(imageData: string | File) {
     let imageFile;
     if (typeof imageData === 'string') {
@@ -141,10 +164,6 @@ export class AddEventPage implements OnInit {
 
   }
 
-  getName(speaker: Speaker) {
-    return speaker?.title + ' ' + speaker?.firstName + ' ' + speaker?.lastName;
-  }
-
   onAddressPicked(address: Address) {
     this.address = address;
   }
@@ -159,6 +178,22 @@ export class AddEventPage implements OnInit {
      modal.onDidDismiss<Speaker>().then( data => {
       if(data.data !== null  && data.data ) {
         this.speakers.push(data.data);
+        console.log(this.speakers);
+      }
+    });
+    return await modal.present();
+  }
+
+  async onAddParticipant() {
+    const modal = await this.modalController.create({
+      component: AddParticipantComponent,
+      cssClass: 'add-participant-modal',
+      animated: true,
+      backdropDismiss: false
+    });
+     modal.onDidDismiss<Participant>().then( data => {
+      if(data.data !== null  && data.data ) {
+        this.participants.push(data.data);
         console.log(this.speakers);
       }
     });
@@ -193,20 +228,60 @@ export class AddEventPage implements OnInit {
           'cc11',
           [],
           [],
-          this.speakers
+          []
         );
         console.log(eventToAdd);
         return this.eventService.addEvent(eventToAdd);
       })
-    ).subscribe(() => {
+    ).subscribe(newEvent => {
+      this.event = newEvent;
       form.reset();
       this.appService.presentToast('האירוע נשמר בהצלחה', true);
-      this.router.navigate(['/manage/events']);
+      this.newEventStepper.slideNext();
     }, error => {
       console.log(error);
       this.appService.presentToast('חלה תקלה פרטי האירוע לא נשמרו', false);
     }
     );
+  }
+
+  onFilesAdded(event) {
+    this.files.push(...event.addedFiles);
+  }
+
+  onRemove(event) {
+    this.files.splice(this.files.indexOf(event), 1);
+  }
+
+  onSaveSpeakers() {
+    this.newEventStepper.slideNext();
+  }
+
+  onSaveParticipants() {
+    this.newEventStepper.slideNext();
+  }
+
+ onSaveAndExit() {
+   if(this.files) {
+    this.eventService.uploadEventPhotos(this.files).subscribe(() => {
+      this.appService.presentToast('התמונות נוספו בהצלחה', true);
+      this.router.navigate(['/manage/events']);
+    }, error => {
+      console.log(error);
+      this.appService.presentToast('חלה תקלה התמונות לא נשמרו', false);
+      this.router.navigate(['/manage/events']);
+    });
+   }
+   this.appService.presentToast('סיימת בהצלחה את יצירת האירוע', true);
+      this.router.navigate(['/manage/events']);
+  }
+
+  getSpeakerName(speaker: Speaker) {
+    return speaker?.title + ' ' + speaker?.firstName + ' ' + speaker?.lastName;
+  }
+
+  getParticipantName(participant: Participant) {
+    return  participant?.firstName + ' ' + participant?.lastName;
   }
 
 }

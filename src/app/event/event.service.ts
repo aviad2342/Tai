@@ -4,17 +4,21 @@ import { Event } from './event.model';
 import { Speaker, speakerTitle } from './speaker.model';
 import { take, map, switchMap, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { Participant } from './participant.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EventService {
+export class EventService {Participant
 
   // tslint:disable-next-line: variable-name
   private _events = new BehaviorSubject<Event[]>([]);
 
   // tslint:disable-next-line: variable-name
   private _speakers = new BehaviorSubject<Speaker[]>([]);
+
+  // tslint:disable-next-line: variable-name
+  private _participants = new BehaviorSubject<Participant[]>([]);
 
 
   get events() {
@@ -23,6 +27,10 @@ export class EventService {
 
   get speakers() {
     return this._speakers.asObservable();
+  }
+
+  get participants() {
+    return this._participants.asObservable();
   }
 
   constructor(private http: HttpClient ) { }
@@ -61,10 +69,12 @@ export class EventService {
         return this.events;
       }),
       take(1),
-      tap(events => {
+      switchMap(events => {
         this._events.next(events.concat(event));
+        return this.getEvent(event.id);
       }));
   }
+
 
   updateEvent(event: Event) {
     const eventObj = {
@@ -125,6 +135,21 @@ export class EventService {
     return this.http.post<{ imageUrl: string}>(
       'http://localhost:3000/api/image/uploadEventImage',
       uploadData
+    );
+  }
+
+  uploadEventPhotos(photos: File[]) {
+    const uploadData = new FormData();
+    photos.forEach(photo => {
+      uploadData.append('images', photo);
+    });
+    return this.http.post<string[]>(
+      'http://localhost:3000/api/image/uploadEventePictures',
+      uploadData
+    ).pipe(
+      map(images => {
+         return images;
+      })
     );
   }
 
@@ -222,4 +247,90 @@ export class EventService {
       uploadData
     );
   }
+
+  // ------------------------------------ Participant Services -----------------------------------
+
+  getParticipants() {
+    return this.http.get<Participant[]>('http://localhost:3000/api/participant/participants')
+    .pipe(tap(resDta => {
+      this._participants.next(resDta);
+    }));
+  }
+
+  getParticipant(id: string) {
+    return this.http.get<Participant>(`http://localhost:3000/api/participant/participant/${id}`)
+    .pipe(tap(resDta => {
+      return resDta;
+    }));
+  }
+
+  addParticipant(participant: Participant) {
+    return this.http.post<Participant>('http://localhost:3000/api/participant/participant',
+    {
+      ...participant
+    }).
+    pipe(tap(resDta => {
+      return resDta;
+    }));
+  }
+
+  updateParticipant(participant: Participant) {
+    const participantObj = {
+      firstName:   participant.firstName,
+      lastName:    participant.lastName,
+      picture:     participant.picture,
+      eventId:     participant.eventId
+      };
+    return this.http.put(`http://localhost:3000/api/participant/participant/${participant.id}`,
+    {
+      ...participantObj
+    }).
+    pipe(
+      switchMap(resData => {
+        return this.getParticipants();
+      }),
+      tap(participants => {
+        this._participants.next(participants);
+      }));
+  }
+
+  deleteParticipant(id: string) {
+    return this.http.delete(`http://localhost:3000/api/participant/participant/${id}`).
+    pipe(
+      switchMap(resData => {
+        return this.getParticipants();
+      }),
+      tap(participants => {
+        this._participants.next(participants.filter(u => u.id !== id));
+      }));
+  }
+
+  getEventParticipants(articleId: string) {
+    return this.http.get<Participant[]>( `http://localhost:3000/api/participant/participant/articleId/${articleId}`)
+      .pipe(tap(participants => {
+        this._participants.next(participants);
+      }));
+  }
+
+  getParticipantByEvent(eventId: string) {
+    return this.http
+      .get<Participant[]>(
+        `http://localhost:3000/api/participant/participant/authorId/${eventId}`)
+      .pipe(tap(participants => {
+        return participants;
+      }));
+  }
+
+  uploadParticipantPicture(image: File, fileName: string) {
+    const uploadData = new FormData();
+    uploadData.append('image', image, fileName);
+    return this.http.post<{ imageUrl: string}>(
+      'http://localhost:3000/api/image/uploadParticipantImage',
+      uploadData
+    );
+  }
+
+
 }
+
+

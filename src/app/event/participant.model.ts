@@ -4,6 +4,8 @@ export class Participant {
       public id: string,
       public firstName: string,
       public lastName: string,
+      public phone: string,
+      public email: string,
       public picture: string,
       public eventId: string
     ) {}

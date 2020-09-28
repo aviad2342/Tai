@@ -9,6 +9,8 @@ import { AddEventPageRoutingModule } from './add-event-routing.module';
 import { AddEventPage } from './add-event.page';
 import { SharedModule } from '../../../shared/shared.module';
 import { AddSpeakerComponent } from '../add-speaker/add-speaker.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { AddParticipantComponent } from '../add-participant/add-participant.component';
 
 @NgModule({
   imports: [
@@ -17,8 +19,9 @@ import { AddSpeakerComponent } from '../add-speaker/add-speaker.component';
     IonicModule,
     AddEventPageRoutingModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NgxDropzoneModule
   ],
-  declarations: [AddEventPage, AddSpeakerComponent]
+  declarations: [AddEventPage, AddSpeakerComponent, AddParticipantComponent]
 })
 export class AddEventPageModule {}
