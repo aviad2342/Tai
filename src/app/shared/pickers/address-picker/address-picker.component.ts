@@ -180,6 +180,7 @@ export class AddressPickerComponent implements OnInit {
 async openPicker(input: string) {
     const picker = await this.pickerController.create({
       animated: true,
+      mode: 'ios',
       backdropDismiss: false,
       columns: [{
         name: 'Number',

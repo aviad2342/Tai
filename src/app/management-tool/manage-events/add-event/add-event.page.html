@@ -35,13 +35,10 @@
                     #titleCtrl="ngModel"
                   ></ion-input>
                 </ion-item>
-                <ion-item
-                *ngIf="!titleCtrl.valid && titleCtrl.touched"
-                lines="none">
-                <ion-label color="danger">
-                  זהו שדה חובה!
+                <ion-label *ngIf="!titleCtrl.valid && titleCtrl.touched" color="danger">
+                  <small>זהו שדה חובה!</small>
                 </ion-label>
-              </ion-item>
+              
     
               <ion-item>
                 <ion-label position="floating"> תאור <ion-text color="danger">*</ion-text></ion-label>
@@ -53,13 +50,10 @@
                   #descriptionCtrl="ngModel"
                 ></ion-textarea>
               </ion-item>
-              <ion-item
-              *ngIf="!descriptionCtrl.valid && descriptionCtrl.touched"
-              lines="none">
-              <ion-label color="danger">
-                זהו שדה חובה!
+              <ion-label *ngIf="!descriptionCtrl.valid && descriptionCtrl.touched" color="danger">
+                <small>זהו שדה חובה!</small>
               </ion-label>
-            </ion-item>
+            
     
             <ion-item>
               <ion-label position="floating">תאריך<ion-text color="danger">*</ion-text></ion-label>
@@ -79,11 +73,9 @@
                 ></ion-datetime>
                   <ion-icon name="calendar-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
             </ion-item>
-            <ion-item *ngIf="!dateCtrl.valid && dateCtrl.touched" lines="none">
-              <ion-label color="danger">
-                    זהו שדה חובה!
+              <ion-label *ngIf="!dateCtrl.valid && dateCtrl.touched" color="danger">
+                <small>זהו שדה חובה!</small>
               </ion-label>
-            </ion-item>
     
             <ion-row>
               <ion-col>
@@ -94,6 +86,7 @@
                       display-format="HH:mm"
                       pickerFormat="HH:mm"
                       ngModel
+                      [min]="now"
                       [value]="beginsAt"
                       [pickerOptions]="beginsAtpickerOptions"
                       name="beginsAt"
@@ -101,11 +94,6 @@
                       #beginsAtCtrl="ngModel"
                     ></ion-datetime>
                       <ion-icon name="time-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
-                </ion-item>
-                <ion-item *ngIf="!beginsAtCtrl.valid && beginsAtCtrl.touched" lines="none">
-                  <ion-label color="danger">
-                        זהו שדה חובה!
-                  </ion-label>
                 </ion-item>
               </ion-col>
     
@@ -125,12 +113,13 @@
                     ></ion-datetime>
                       <ion-icon name="time" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
                 </ion-item>
-                <ion-item *ngIf="!endsAtCtrl.valid && endsAtCtrl.touched" lines="none">
-                  <ion-label color="danger">
-                        זהו שדה חובה!
-                  </ion-label>
-                </ion-item>
               </ion-col>
+                <ion-label *ngIf="!endsAtCtrl.valid && endsAtCtrl.touched || !beginsAtCtrl.valid && beginsAtCtrl.touched" color="danger">
+                  <small>זהו שדה חובה!</small>
+                </ion-label>
+                <ion-label *ngIf="endsAt && endsAtCtrl.touched && (beginsAt.getTime() - endsAt.getTime()) > 0" color="danger">
+                    <small>על שעת הסיום להיות מאוחרת משעת ההתחלה!</small>
+                </ion-label>
             </ion-row>
     
             <ion-item>
@@ -144,13 +133,9 @@
               ></ion-input>
               <ion-icon name="people-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
             </ion-item>
-            <ion-item
-            *ngIf="!maxCapacityCtrl.valid && maxCapacityCtrl.touched"
-            lines="none">
-            <ion-label color="danger">
-              זהו שדה חובה!
+            <ion-label *ngIf="!maxCapacityCtrl.valid && maxCapacityCtrl.touched" color="danger">
+              <small>זהו שדה חובה!</small>
             </ion-label>
-          </ion-item>
     
             <ion-item>
               <ion-label position="floating"> מקום <ion-text color="danger">*</ion-text></ion-label>
@@ -161,15 +146,12 @@
                 required
                 #placeCtrl="ngModel"
               ></ion-input>
-              <ion-icon name="business-outline" slot="end" position="floating" class="ion-align-self-center" (click)="goto()"></ion-icon>
+              <ion-icon name="business-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
             </ion-item>
-            <ion-item
-            *ngIf="!placeCtrl.valid && placeCtrl.touched"
-            lines="none">
-            <ion-label color="danger">
-              זהו שדה חובה!
+            <ion-label *ngIf="!placeCtrl.valid && placeCtrl.touched" color="danger">
+              <small>זהו שדה חובה!</small>
             </ion-label>
-          </ion-item>
+          
     
           </ion-list>
     
@@ -204,7 +186,7 @@
 
         <ion-row class="ion-justify-content-center">
 
-          <ion-col>
+          <ion-col size="12" size="6">
 
             <ion-item lines="none">
               <ion-icon name="mic-outline" slot="end"></ion-icon>
@@ -260,23 +242,28 @@
 
         <ion-row class="ion-justify-content-center">
 
-          <ion-col>
+          <ion-col size="12" size="6">
 
             <ion-item lines="none">
               <ion-icon name="people-outline" slot="end"></ion-icon>
               <ion-label class="ion-padding-start"> <strong>משתתפים: </strong></ion-label>
             </ion-item>
     
-            <ion-list class="add-speaker-list" *ngIf="speakers !== null">
+            <ion-list class="add-speaker-list" *ngIf="participants !== null">
               <div *ngFor="let participant of participants">
                 <ion-item>
                   <ion-avatar size="medium" slot="start">
                     <ion-img [src]="participant.picture"></ion-img>
                   </ion-avatar>
-                  <ion-label><strong>
-                    {{ getParticipantName(participant) }}
-                  </strong>
+                  <ion-label>
+                    <strong>
+                      {{ getParticipantName(participant) }}
+                    </strong>
+                    <ion-text color="medium">
+                      <p>{{ participant.email }}</p>
+                    </ion-text>
                   </ion-label>
+                
                 </ion-item>
 
               </div>
@@ -292,6 +279,15 @@
 
             </ion-list>
 
+            <ion-row class="ion-justify-content-center">
+              <ion-col size="8">
+                <ion-button 
+                fill="clear" 
+                expand="block"
+                (click)="onSaveParticipants()"
+                >שמור והמשך <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
+              </ion-col>
+            </ion-row>
           </ion-col>
 
         </ion-row>
@@ -317,7 +313,15 @@
           </ion-col>
 
         </ion-row>
-
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="8">
+              <ion-button 
+              fill="clear" 
+              expand="block"
+              (click)="onSaveAndExit()"
+              >שמור וסיים <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
+            </ion-col>
+          </ion-row>
       </ion-grid>
 
     </ion-slide>

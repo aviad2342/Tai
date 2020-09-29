@@ -49,6 +49,16 @@ ion-tab-bar{
     --background: rgb(234, 244, 245);
 }
 
+.add-participant-modal {
+  --width: 700px !important;
+  --height: 900px !important;
+}
+
+.add-speaker-modal {
+  --width: 700px;
+  --height: 800px;
+}
+
 // #youtube-player {
 //   box-sizing: border-box;
 //   border-width: 50px;

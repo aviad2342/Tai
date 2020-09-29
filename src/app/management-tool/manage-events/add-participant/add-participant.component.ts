@@ -1,11 +1,14 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { SegmentChangeEventDetail } from '@ionic/core';
 import { NgForm } from '@angular/forms';
-import { IonSlides, ModalController } from '@ionic/angular';
+import { IonSegment, IonSlides, ModalController } from '@ionic/angular';
+import { v4 as uuidv4 } from 'uuid';
 import { EventService } from 'src/app/event/event.service';
 import { Participant } from 'src/app/event/participant.model';
 import { User } from 'src/app/user/user.model';
 import { UserService } from 'src/app/user/user.service';
+import { switchMap } from 'rxjs/operators';
+import { AppService } from 'src/app/app.service';
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';
@@ -37,6 +40,7 @@ export class AddParticipantComponent implements OnInit {
 
   @Input() eventId: string;
   @ViewChild('addParticipant') AddParticipantSlides: IonSlides;
+  @ViewChild('addFromSegment') segment: IonSegment;
   @ViewChild('f', { static: true }) form: NgForm;
   users: User[];
   participants: Participant[] = [];
@@ -51,6 +55,7 @@ export class AddParticipantComponent implements OnInit {
   constructor(
     private eventService: EventService,
     private userService: UserService,
+    private appService: AppService,
     private modalController: ModalController
     ) { }
 
@@ -78,8 +83,12 @@ export class AddParticipantComponent implements OnInit {
       user.profilePicture,
       this.eventId
     )
-    this.participants.push(participantToAdd);
-    this.users.splice(this.users.indexOf(user), 1);
+    this.eventService.addParticipant(participantToAdd).subscribe(participant => {
+      this.participants.push(participantToAdd);
+      this.users = this.users.filter(u => u.id !== user.id);
+    }, error => {
+      this.appService.presentToast('חלה תקלה הוספת הנואם בוטלה!', false);
+    } );
   }
 
   onImagePicked(imageData: string | File) {
@@ -107,31 +116,46 @@ export class AddParticipantComponent implements OnInit {
   }
 
   onDoneAdding() {
-    if(this.participants) {
-      this.close(this.participants);
+    if(this.segment.value === 'addFromList') {
+      if(this.participants) {
+        this.close(this.participants);
+    } else  {
+      this.close(null);
     }
-    this.close(null);
+    } else  {
+      this.onSubmit(this.form);
+    }
   }
 
   onSubmit(form: NgForm) {
     form.value.image = this.file;
     if (!form.valid || !this.form.value.image) {
+      console.log('nop');
       return;
     }
     this.eventService.uploadParticipantPicture(this.form.value.image, 'Participant')
-    .subscribe(uploadRes => {
+    .pipe(
+      switchMap(uploadRes => {
       const participantToAdd = new Participant(
-        null,
+        uuidv4(),
         form.value.firstName,
         form.value.lastName,
-        form.value.email,
         form.value.phone,
+        form.value.email,
         uploadRes.imageUrl,
         this.eventId
       );
-      this.participants.push(participantToAdd);
+      return this.eventService.addParticipant(participantToAdd);
+    })).subscribe(participant => {
+      this.participants.push(participant);
+      form.reset();
+      this.appService.presentToast('הנואם נשמר בהצלחה', true);
       this.close(this.participants);
-    });
+    }, error => {
+      form.reset();
+      this.appService.presentToast('חלה תקלה פרטי הנואם לא נשמרו', false);
+      this.close(null);
+    } );
   }
 
   async close(participants: Participant[]) {

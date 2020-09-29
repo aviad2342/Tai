@@ -7,7 +7,7 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-segment (ionChange)="onAddMethodChosen($event)" value="addFromList" class="add-participant-segment">
+  <ion-segment #addFromSegment (ionChange)="onAddMethodChosen($event)" value="addFromList" class="add-participant-segment">
     <ion-segment-button value="addFromList">בחר מרשימה</ion-segment-button>
     <ion-segment-button value="addNew">הוסף חדש</ion-segment-button>
   </ion-segment>
@@ -175,7 +175,7 @@
 
 </ion-content>
 
-<ion-footer>
+<ion-footer class="add-participant-footer">
   <ion-row class="ion-justify-content-center">
     <ion-col size="12" size-sm="6" class="ion-text-center">
       <ion-button color="primary" fill="outline" (click)="onDoneAdding()">

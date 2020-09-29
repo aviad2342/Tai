@@ -7,7 +7,7 @@ export class Participant {
       public phone: string,
       public email: string,
       public picture: string,
-      public eventId: string
+      public event: string
     ) {}
 
   }

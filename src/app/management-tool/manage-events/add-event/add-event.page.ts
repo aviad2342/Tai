@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonSlides, ModalController } from '@ionic/angular';
+import { IonInput, IonSlides, ModalController } from '@ionic/angular';
+import { interval } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Participant } from 'src/app/event/participant.model';
 import { AppService } from '../../../app.service';
@@ -55,7 +56,7 @@ export class AddEventPage implements OnInit {
   now = new Date().toISOString();
   date: Date;
   beginsAt: Date;
-  endsAt = new Date();
+  endsAt: Date;
 
   slideOpts = {
     allowSlidePrev: false,
@@ -70,6 +71,7 @@ export class AddEventPage implements OnInit {
   };
 
   pickerOptions = {
+    mode: 'ios',
     cssClass: 'date-picker-class',
     buttons: [
       {
@@ -92,6 +94,7 @@ export class AddEventPage implements OnInit {
 
   beginsAtpickerOptions = {
     cssClass: 'date-picker-class',
+    mode: 'ios',
     buttons: [
       {
         text: 'ביטול',
@@ -112,6 +115,7 @@ export class AddEventPage implements OnInit {
 
   endsAtpickerOptions = {
     cssClass: 'date-picker-class',
+    mode: 'ios',
     buttons: [
       {
         text: 'ביטול',
@@ -140,10 +144,6 @@ export class AddEventPage implements OnInit {
     this.slideOpts.renderProgressbar('progressbarClass');
   }
 
-
-  goto() {
-    this.newEventStepper.slideTo(2);
-  }
   onImagePicked(imageData: string | File) {
     let imageFile;
     if (typeof imageData === 'string') {
@@ -173,7 +173,10 @@ export class AddEventPage implements OnInit {
       component: AddSpeakerComponent,
       cssClass: 'add-speaker-modal',
       animated: true,
-      backdropDismiss: false
+      backdropDismiss: false,
+      componentProps: {
+        eventId: this.event.id
+      }
     });
      modal.onDidDismiss<Speaker>().then( data => {
       if(data.data !== null  && data.data ) {
@@ -189,12 +192,14 @@ export class AddEventPage implements OnInit {
       component: AddParticipantComponent,
       cssClass: 'add-participant-modal',
       animated: true,
-      backdropDismiss: false
+      backdropDismiss: false,
+      componentProps: {
+        eventId: this.event.id
+      }
     });
-     modal.onDidDismiss<Participant>().then( data => {
+     modal.onDidDismiss<Participant[]>().then( data => {
       if(data.data !== null  && data.data ) {
-        this.participants.push(data.data);
-        console.log(this.speakers);
+        this.participants.push(...data.data);
       }
     });
     return await modal.present();

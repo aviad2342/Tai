@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Output, Input, ElementRef, EventEmitter } from '@angular/core';
 import { Plugins, Capacitor, CameraSource, CameraResultType} from '@capacitor/core';
-import { Platform } from '@ionic/angular';
+import { ActionSheetController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-image-picker',
@@ -15,7 +15,7 @@ export class ImagePickerComponent implements OnInit {
   @Input() selectedImage: string;
   usePicker = false;
 
-  constructor(private platform: Platform) { }
+  constructor(private platform: Platform, private actionSheetCtrl: ActionSheetController,) { }
 
   ngOnInit() {
     console.log('Mobile:', this.platform.is('mobile'));
@@ -31,11 +31,37 @@ export class ImagePickerComponent implements OnInit {
     }
   }
 
+  onPickImageSource() {
+    this.actionSheetCtrl
+      .create({
+        mode: 'ios',
+        cssClass: 'action-sheet',
+        header: 'בחר מקור',
+        buttons: [
+          {
+            text: 'ספריית תמונות',
+            handler: () => {
+              this.filePickerRef.nativeElement.click();
+            }
+          },
+          {
+            text: 'מצלמה',
+            handler: () => {
+              this.onPickImage();
+            }
+          },
+          { text: 'ביטול', role: 'cancel' }
+        ]
+      }).then(actionSheetEl => {
+        actionSheetEl.present();
+      });
+  }
+
   onPickImage() {
     if (!Capacitor.isPluginAvailable('Camera')) {
       this.filePickerRef.nativeElement.click();
       return;
-    }
+    } else{
     Plugins.Camera.getPhoto({
       quality: 50,
       source: CameraSource.Prompt,
@@ -55,6 +81,7 @@ export class ImagePickerComponent implements OnInit {
         }
         return false;
       });
+    }
   }
 
   onFileChosen(event: Event) {
