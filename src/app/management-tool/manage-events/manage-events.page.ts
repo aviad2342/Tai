@@ -94,11 +94,11 @@ export class ManageEventsPage implements OnInit, OnDestroy {
   }
 
   async onViewEvent() {
-    this.router.navigate(['manage', 'event', 'view', this.selectedEventId]);
+    this.router.navigate(['manage', 'events', 'view', this.selectedEventId]);
   }
 
   async onEditEvent() {
-    this.router.navigate(['manage', 'event', 'edit', this.selectedEventId]);
+    this.router.navigate(['manage', 'events', 'edit', this.selectedEventId]);
   }
 
   async onDeleteEvent() {

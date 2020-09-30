@@ -213,5 +213,13 @@ ion-icon {
     &[class*="toolbar-icon-analytics"] {
       mask-image: url(./assets/icon/analytics.svg);
     }
+
+    &[class*="custom-seats"] {
+      mask-image: url(./assets/icon/seats.svg);
+    }
+
+    &[class*="toolbar-icon-seats"] {
+      mask-image: url(./assets/icon/seats.svg);
+    }
   
   }

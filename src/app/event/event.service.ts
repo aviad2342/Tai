@@ -94,6 +94,7 @@ export class EventService {Participant
        entry:         event.entry,
        catalogNumber: event.catalogNumber,
        images:        event.images,
+       participants:  event.participants,
        speakers:      event.speakers
       };
     return this.http.put(`http://localhost:3000/api/event/event/${event.id}`,
@@ -186,7 +187,7 @@ export class EventService {Participant
       lastName:    speaker.lastName,
       description: speaker.description,
       picture:     speaker.picture,
-      eventId:       speaker.eventId
+      eventId:     speaker.event
       };
     return this.http.put(`http://localhost:3000/api/speaker/speaker/${speaker.id}`,
     {
@@ -279,7 +280,7 @@ export class EventService {Participant
       firstName:   participant.firstName,
       lastName:    participant.lastName,
       picture:     participant.picture,
-      eventId:     participant.eventId
+      eventId:     participant.event
       };
     return this.http.put(`http://localhost:3000/api/participant/participant/${participant.id}`,
     {

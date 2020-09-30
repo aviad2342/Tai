@@ -8,7 +8,7 @@ import { ManageEventsPageRoutingModule } from './manage-events-routing.module';
 
 import { ManageEventsPage } from './manage-events.page';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [

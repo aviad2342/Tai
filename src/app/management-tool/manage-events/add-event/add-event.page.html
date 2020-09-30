@@ -7,7 +7,7 @@
 <ion-content>
   <ion-slides #stepper class="event-stepper" pager="true" [options]="slideOpts">
 <!-------------------------------------------------- Event Slide ------------------------------------------------------->
-    <ion-slide>
+    <ion-slide class="slide-step">
 
       <form #f="ngForm" (ngSubmit)="onSubmit(f)">
         <ion-grid>
@@ -180,7 +180,7 @@
 
     </ion-slide>
 <!------------------------------------------------- Speaker Slide --------------------------------------------------->
-    <ion-slide>
+    <ion-slide >
 
       <ion-grid>
 

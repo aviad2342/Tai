@@ -1,17 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonInput, IonSlides, ModalController } from '@ionic/angular';
-import { interval } from 'rxjs';
+import { IonSlides, ModalController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
-import { Participant } from 'src/app/event/participant.model';
+
+import { AddParticipantComponent } from '../add-participant/add-participant.component';
+import { AddSpeakerComponent } from '../add-speaker/add-speaker.component';
+import { Participant } from '../../../event/participant.model';
 import { AppService } from '../../../app.service';
 import { Event } from '../../../event/event.model';
 import { EventService } from '../../../event/event.service';
 import { Speaker } from '../../../event/speaker.model';
 import { Address } from '../../../shared/address.model';
-import { AddParticipantComponent } from '../add-participant/add-participant.component';
-import { AddSpeakerComponent } from '../add-speaker/add-speaker.component';
+
 
 
 function base64toBlob(base64Data, contentType) {
@@ -61,6 +62,7 @@ export class AddEventPage implements OnInit {
   slideOpts = {
     allowSlidePrev: false,
     allowTouchMove: false,
+    // autoHeight: true,
     pagination: {
       el: '.swiper-pagination',
       type: 'fraction'
@@ -141,7 +143,7 @@ export class AddEventPage implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.slideOpts.renderProgressbar('progressbarClass');
+    // this.slideOpts.renderProgressbar('progressbarClass');
   }
 
   onImagePicked(imageData: string | File) {
@@ -206,8 +208,10 @@ export class AddEventPage implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    console.log('kk');
     form.value.image = this.file;
     if (!form.valid || !this.form.value.image) {
+      console.log('npoe');
       return;
     }
     this.eventService.uploadEventThumbnail(this.form.value.image, 'Event')
@@ -246,6 +250,7 @@ export class AddEventPage implements OnInit {
     }, error => {
       console.log(error);
       this.appService.presentToast('חלה תקלה פרטי האירוע לא נשמרו', false);
+      this.router.navigate(['/manage/events']);
     }
     );
   }
@@ -268,7 +273,12 @@ export class AddEventPage implements OnInit {
 
  onSaveAndExit() {
    if(this.files) {
-    this.eventService.uploadEventPhotos(this.files).subscribe(() => {
+    this.eventService.uploadEventPhotos(this.files).pipe(
+      switchMap( images => {
+        this.event.images.push(...images);
+        return this.eventService.updateEvent(this.event);
+      }))
+    .subscribe(() => {
       this.appService.presentToast('התמונות נוספו בהצלחה', true);
       this.router.navigate(['/manage/events']);
     }, error => {

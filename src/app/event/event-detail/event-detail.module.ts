@@ -7,8 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { EventDetailPageRoutingModule } from './event-detail-routing.module';
 
 import { EventDetailPage } from './event-detail.page';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { SpeakerItemComponent } from '../speaker-item/speaker-item.component';
+import { SharedModule } from '../../shared/shared.module';
+import { EventSharedModule } from '../event-shared/event-shared.module';
 
 @NgModule({
   imports: [
@@ -16,8 +16,9 @@ import { SpeakerItemComponent } from '../speaker-item/speaker-item.component';
     FormsModule,
     IonicModule,
     EventDetailPageRoutingModule,
-    SharedModule
+    SharedModule,
+    EventSharedModule
   ],
-  declarations: [EventDetailPage, SpeakerItemComponent]
+  declarations: [EventDetailPage]
 })
 export class EventDetailPageModule {}

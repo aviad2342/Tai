@@ -51,6 +51,9 @@ export class AddressPickerComponent implements OnInit {
 
   ngOnInit() {
 
+    // this.selectedAddress.apartment = '0';
+    // this.selectedAddress.entry = '0';
+
     this.addressService.getCountries().subscribe(countries => {
       this.countriesList = this.countries = countries;
       if (this.isEdit) {

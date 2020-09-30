@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Speaker } from '../speaker.model';
+import { Speaker } from '../../speaker.model';
+
 
 @Component({
   selector: 'app-speaker-item',

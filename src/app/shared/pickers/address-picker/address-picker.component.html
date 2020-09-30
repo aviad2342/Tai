@@ -16,6 +16,7 @@
           confirmButtonText="בחר"
           searchPlaceholder="חפש מדינה..."
           closeButtonText="ביטול"
+          #selectableCountriesCtrl="ngModel"
           closeButtonSlot="end"
           [searchFailText]="'אין תוצאות התואמות את החיפוש'"
           [shouldBackdropClose]="false"
@@ -29,6 +30,9 @@
           </ng-template> -->
         </ionic-selectable>
       </ion-item>
+      <ion-label *ngIf="selectableCountriesCtrl.touched && !country" color="danger">
+        <small>זהו שדה חובה!</small>
+      </ion-label>
     </ion-col>
   </ion-row>
 
@@ -44,6 +48,7 @@
           [items]="citiesList"
           [(ngModel)]="city" 
           [canSearch]="true"
+          #selectableCitiesCtrl="ngModel"
           [hasConfirmButton]="true"
           confirmButtonText="בחר"
           searchPlaceholder="חפש עיר..."
@@ -54,6 +59,9 @@
           (onChange)="selectCitiesResult($event)">
         </ionic-selectable>
       </ion-item>
+      <ion-label *ngIf="selectableCitiesCtrl.touched && !city" color="danger">
+        <small>זהו שדה חובה!</small>
+      </ion-label>
     </ion-col>
   </ion-row>
 
@@ -70,6 +78,7 @@
           [(ngModel)]="street" 
           [canSearch]="true"
           [canClear]="true"
+          #selectableStreetCtrl="ngModel"
           [hasConfirmButton]="true"
           confirmButtonText="בחר"
           searchPlaceholder="חפש רחוב..."
@@ -80,6 +89,9 @@
           (onChange)="selectStreetResult($event)">
         </ionic-selectable>
       </ion-item>
+      <ion-label *ngIf="selectableStreetCtrl.touched && !street" color="danger">
+        <small>זהו שדה חובה!</small>
+      </ion-label>
     </ion-col>
   </ion-row>
 
@@ -92,6 +104,7 @@
         #houseNumberComponent 
         type="number" 
         [(ngModel)]="this.selectedAddress.houseNumber" 
+        #houseNumberCtrl="ngModel"
         required 
         (click)="openPicker('houseNumber')">
       </ion-input>
@@ -121,6 +134,10 @@
       </ion-input>
       </ion-item>
     </ion-col>
+    <!-- <ion-label 
+    *ngIf="houseNumberCtrl.valid && houseNumberCtrl.touched"  color="danger">
+      <small>זהו שדה חובה!</small>
+    </ion-label> -->
   </ion-row>
 </ion-grid>
 </div>
