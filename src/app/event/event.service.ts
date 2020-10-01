@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Event } from './event.model';
 import { Speaker, speakerTitle } from './speaker.model';
 import { take, map, switchMap, tap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Participant } from './participant.model';
 
 @Injectable({
@@ -110,6 +110,20 @@ export class EventService {Participant
       }));
   }
 
+  updateEventImages(id: string, images: string[]) {
+    return this.http.put(`http://localhost:3000/api/event/event/images/${id}`,
+    {
+      images
+    }).
+    pipe(
+      switchMap(resData => {
+        return this.getEvents();
+      }),
+      tap(events => {
+        this._events.next(events);
+      }));
+  }
+
   deleteEvent(id: string) {
     return this.http.delete(`http://localhost:3000/api/event/event/${id}`).
     pipe(
@@ -118,6 +132,16 @@ export class EventService {Participant
       }),
       tap(events => {
         this._events.next(events.filter(u => u.id !== id));
+      }));
+  }
+
+  deleteImage(image: string) {
+    const imageParam = new HttpParams();
+    imageParam.set('image', image);
+    return this.http.delete<{ response: string}>('http://localhost:3000/api/image/deletImage', {params: imageParam}).
+    pipe(
+      map(resData => {
+        return resData.response;
       }));
   }
 

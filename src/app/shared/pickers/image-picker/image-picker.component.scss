@@ -1,6 +1,6 @@
 .picker {
     width: 30rem;
-    max-width: 80%;
+    max-width: 95%;
     height: 20rem;
     max-height: 30vh;
     border: 1px solid var(--ion-color-primary);
@@ -13,7 +13,7 @@
   .image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
   }
   
   input[type='file'] {

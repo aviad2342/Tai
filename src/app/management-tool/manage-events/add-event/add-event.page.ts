@@ -86,9 +86,7 @@ export class AddEventPage implements OnInit {
         role: 'confirm',
         cssClass: 'picker-confirm-btn',
         handler: (value: any) => {
-          console.log(value);
           this.date = new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value);
-          console.log(this.date);
         }
       }
     ]
@@ -109,7 +107,6 @@ export class AddEventPage implements OnInit {
         cssClass: 'picker-confirm-btn',
         handler: (value: any) => {
     this.beginsAt = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate(), value.hour.value, value.minute.value,0 ,0);
-          console.log(this.beginsAt);
         }
       }
     ]
@@ -217,7 +214,6 @@ export class AddEventPage implements OnInit {
     this.eventService.uploadEventThumbnail(this.form.value.image, 'Event')
     .pipe(
       switchMap(uploadRes => {
-        console.log(this.speakers);
         const eventToAdd = new Event(
           null,
           form.value.title,
@@ -239,7 +235,6 @@ export class AddEventPage implements OnInit {
           [],
           []
         );
-        console.log(eventToAdd);
         return this.eventService.addEvent(eventToAdd);
       })
     ).subscribe(newEvent => {
@@ -248,7 +243,6 @@ export class AddEventPage implements OnInit {
       this.appService.presentToast('האירוע נשמר בהצלחה', true);
       this.newEventStepper.slideNext();
     }, error => {
-      console.log(error);
       this.appService.presentToast('חלה תקלה פרטי האירוע לא נשמרו', false);
       this.router.navigate(['/manage/events']);
     }
@@ -264,10 +258,16 @@ export class AddEventPage implements OnInit {
   }
 
   onSaveSpeakers() {
+    // if(this.speakers) {
+    //   this.event.speakers.push(...this.speakers);
+    // }
     this.newEventStepper.slideNext();
   }
 
   onSaveParticipants() {
+    // if(this.participants) {
+    //   this.event.participants.push(...this.participants);
+    // }
     this.newEventStepper.slideNext();
   }
 
@@ -275,8 +275,9 @@ export class AddEventPage implements OnInit {
    if(this.files) {
     this.eventService.uploadEventPhotos(this.files).pipe(
       switchMap( images => {
-        this.event.images.push(...images);
-        return this.eventService.updateEvent(this.event);
+        // this.event.images.push(...images);
+        // return this.eventService.updateEventImages(this.event.id, images);
+        return this.eventService.updateEventImages('2', images);
       }))
     .subscribe(() => {
       this.appService.presentToast('התמונות נוספו בהצלחה', true);
