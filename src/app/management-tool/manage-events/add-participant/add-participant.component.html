@@ -16,7 +16,7 @@
 <ion-content class="ion-padding" fullscreen="true">
 
   <ion-slides #addParticipant [options]="slideOpts">
-
+<!------------------------------------- Add From List Slide ----------------------------------------------->
     <ion-slide>
       <ion-grid>
       <ion-row class="ion-justify-content-center">
@@ -43,16 +43,16 @@
         </ion-virtual-scroll>
         </ion-col>
       </ion-row>
-      <ion-row class="ion-justify-content-center">
+      <!-- <ion-row class="ion-justify-content-center">
         <ion-col size="12" size-sm="6" class="ion-text-center">
           <ion-button color="primary" fill="outline" (click)="onDoneAdding()">
             <ion-label>סיום</ion-label>
           </ion-button>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
     </ion-grid>
     </ion-slide>
-
+<!------------------------------------- Add New Form Slide ----------------------------------------------->
     <ion-slide>
       <form #f="ngForm" (ngSubmit)="onSubmit(f)">
         <ion-grid>
@@ -154,7 +154,7 @@
             </ion-col>
           </ion-row>
 
-          <ion-row class="ion-justify-content-center">
+          <!-- <ion-row class="ion-justify-content-center">
             <ion-col size="12" size-sm="10">
               <ion-button
                 type="submit"
@@ -165,7 +165,7 @@
               הוסף
               </ion-button>
             </ion-col>
-          </ion-row>
+          </ion-row> -->
 
         </ion-grid>
       </form>

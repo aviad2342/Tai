@@ -1,0 +1,14 @@
+<ion-item>
+  <ion-avatar size="medium" slot="start">
+    <ion-img [src]="participant.picture"></ion-img>
+  </ion-avatar>
+  <ion-label>
+    <strong>
+    {{ getName() }}
+    </strong>
+    <ion-text color="medium">
+      <p>{{ participant.email }}</p>
+      <p>{{ participant.phone }}</p>
+    </ion-text>
+  </ion-label>
+</ion-item>

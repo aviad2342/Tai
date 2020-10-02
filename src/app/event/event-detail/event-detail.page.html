@@ -44,8 +44,13 @@
           </ion-item>
 
           <ion-item>
+            <ion-icon class="custom-seats"></ion-icon>
+            <ion-label class="ion-padding-start"> <strong>תפוסה מקסימאלית:</strong> {{ event.maxCapacity }}</ion-label>
+          </ion-item>
+
+          <ion-item>
             <ion-icon name="people-outline"></ion-icon>
-            <ion-label class="ion-padding-start"> <strong>כמות משתתפים:</strong> {{ event.maxCapacity }}</ion-label>
+            <ion-label class="ion-padding-start"> <strong>משתתפים: </strong> <a>{{ event.participants.length }}</a></ion-label>
           </ion-item>
 
           <ion-item lines="none">

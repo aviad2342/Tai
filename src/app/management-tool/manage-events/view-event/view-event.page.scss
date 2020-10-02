@@ -1,0 +1,14 @@
+
+
+.view-participants {
+    cursor: pointer;
+}
+
+.view-speaker {
+    cursor: pointer;
+}
+
+app-speaker-item .view-speaker  :hover {
+    --background: lightgray;
+    background-color: lightgray;
+}

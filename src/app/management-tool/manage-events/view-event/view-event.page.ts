@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, ModalController, NavController } from '@ionic/angular';
+import { Speaker } from 'src/app/event/speaker.model';
 import { Event } from '../../../event/event.model';
 import { EventService } from '../../../event/event.service';
+import { ViewParticipantComponent } from '../view-participant/view-participant.component';
+import { ViewSpeakerComponent } from '../view-speaker/view-speaker.component';
 
 
 @Component({
@@ -20,6 +23,7 @@ export class ViewEventPage implements OnInit {
     private router: Router,
     private alertController: AlertController,
     private navController: NavController,
+    private modalController: ModalController,
     private eventService: EventService
     ) { }
 
@@ -53,6 +57,33 @@ export class ViewEventPage implements OnInit {
           }
         );
     });
+  }
+
+
+  async onViewParticipants() {
+    const modal = await this.modalController.create({
+      component: ViewParticipantComponent,
+      cssClass: 'view-participant-modal',
+      backdropDismiss: false,
+      animated: true,
+      componentProps: {
+        participants: this.event.participants
+      }
+    });
+    return await modal.present();
+  }
+
+  async onViewspeaker(speaker: Speaker) {
+    const modal = await this.modalController.create({
+      component: ViewSpeakerComponent,
+      cssClass: 'view-speaker-modal',
+      backdropDismiss: false,
+      animated: true,
+      componentProps: {
+        speaker
+      }
+    });
+    return await modal.present();
   }
 
   getAddress() {
