@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/event"></ion-back-button>
+    </ion-buttons>
+    <ion-title>רשימת משתתפים</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-sm="6" class="ion-padding-end">
+        <ion-item>
+          <ion-input
+          [disabled]="isLoading"   
+          type="text"
+          placeholder="חפש משתתף לפי שם"
+          (keyup)="searchParticipant($event)">
+          </ion-input>
+          <ion-icon name="funnel-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-sm="4" class="ion-text-center" *ngIf="isLoading">
+        <ion-spinner color="primary"></ion-spinner>
+      </ion-col>
+      <ion-col size="12" size-sm="6" *ngIf="!isLoading">
+        <ion-virtual-scroll
+        [items]="participants"
+        approxItemHeight="60px"
+      >
+      <ion-item *virtualItem="let participant">
+        <ion-thumbnail size="medium" slot="start">
+          <ion-img [src]="participant.picture"></ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ participant.firstName + ' ' + participant.lastName }}</h2>
+          <ion-text color="medium">
+            <p>{{ participant.email }}</p>
+          </ion-text>
+          <ion-text color="medium">
+            <p>{{ participant.phone }}</p>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+      </ion-virtual-scroll>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

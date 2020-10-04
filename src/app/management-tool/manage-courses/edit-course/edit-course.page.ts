@@ -65,11 +65,11 @@ export class EditCoursePage implements OnInit {
       this.courseService.getCourse(paramMap.get('id')).
       subscribe(course => {
         this.course = course;
-        const coursebj = {
+        const courseObj = {
           title: this.course.title,
           description: this.course.description
           };
-        this.form.setValue(coursebj);
+        this.form.setValue(courseObj);
       });
       this.lessonsIsLoading = true;
       this.courseService.getCourseLessons(paramMap.get('id')).subscribe(lessons => {

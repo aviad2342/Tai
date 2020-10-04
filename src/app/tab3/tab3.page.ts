@@ -168,11 +168,11 @@ export class Tab3Page implements OnInit, OnDestroy{
   }
 
   setGalleryImages(images: string[]) {
-    const galleryInages: Image[] = [];
+    const galleryImages: Image[] = [];
     images.forEach(image => {
-      galleryInages.push(new Image(image, image));
+      galleryImages.push(new Image(image, image));
     });
-    return galleryInages;
+    return galleryImages;
   }
 
   openGallery(index: number = 0) {

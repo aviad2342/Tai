@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { IonSlides } from '@ionic/angular';
 
 @Component({
   selector: 'app-gallery',
@@ -8,6 +9,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class GalleryComponent implements OnInit {
 
   @Input() images: string[];
+  @ViewChild(IonSlides) GallerySlides: IonSlides;
+  @Output() slideActiveIndex = new EventEmitter<number>();
   sliderOne: any;
   slideOptsOne = {
     initialSlide: 0,
@@ -16,7 +19,7 @@ export class GalleryComponent implements OnInit {
     updateOnImagesReady: true,
     spaceBetween: 1,
     speed: 1000,
-    loop: true,
+    // loop: true,
     autoplay: true
   };
 
@@ -32,8 +35,10 @@ export class GalleryComponent implements OnInit {
 
 
       // Method called when slide is changed by drag or navigation
-    SlideDidChange(object, slideView) {
-      this.checkIfNavDisabled(object, slideView);
+    SlideDidChange(slideView: IonSlides) {
+      slideView.getActiveIndex().then(index => {
+        this.slideActiveIndex.emit(index);
+      });
     }
 
     // Call methods to check if slide is first or last to enable disbale navigation

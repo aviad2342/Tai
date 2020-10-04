@@ -11,6 +11,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { EventSharedModule } from '../../../event/event-shared/event-shared.module';
 import { ViewParticipantComponent } from '../view-participant/view-participant.component';
 import { ViewSpeakerComponent } from '../view-speaker/view-speaker.component';
+import { NgxImageGalleryModule } from 'ngx-image-gallery';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { ViewSpeakerComponent } from '../view-speaker/view-speaker.component';
     IonicModule,
     ViewEventPageRoutingModule,
     SharedModule,
-    EventSharedModule
+    EventSharedModule,
+    NgxImageGalleryModule
   ],
   declarations: [ViewEventPage, ViewParticipantComponent, ViewSpeakerComponent]
 })

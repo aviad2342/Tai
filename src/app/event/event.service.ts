@@ -97,16 +97,19 @@ export class EventService {Participant
        participants:  event.participants,
        speakers:      event.speakers
       };
-    return this.http.put(`http://localhost:3000/api/event/event/${event.id}`,
+    return this.http.put<Event>(`http://localhost:3000/api/event/event/${event.id}`,
     {
       ...eventObj
     }).
     pipe(
       switchMap(resData => {
-        return this.getEvents();
+        event = resData
+        return this.events;
       }),
-      tap(events => {
-        this._events.next(events);
+      take(1),
+      switchMap(events => {
+        this._events.next(events.concat(event));
+        return this.getEvent(event.id);
       }));
   }
 
@@ -330,10 +333,10 @@ export class EventService {Participant
       }));
   }
 
-  getEventParticipants(articleId: string) {
-    return this.http.get<Participant[]>( `http://localhost:3000/api/participant/participant/articleId/${articleId}`)
+  getEventParticipants(eventId: string) {
+    return this.http.get<Participant[]>( `http://localhost:3000/api/participant/participants/${eventId}`)
       .pipe(tap(participants => {
-        this._participants.next(participants);
+        return participants;
       }));
   }
 

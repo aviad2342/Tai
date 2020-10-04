@@ -1,9 +1,12 @@
-<ion-item detail="true" class="speaker-item">
+<ion-item class="speaker-item">
   <ion-avatar size="medium" slot="start">
     <ion-img [src]="speaker.picture"></ion-img>
   </ion-avatar>
   <ion-label><strong>
     {{ getName() }}
   </strong>
+  <ion-text color="medium">
+    <p>{{ speaker?.description }}</p>
+  </ion-text>
   </ion-label>
 </ion-item>

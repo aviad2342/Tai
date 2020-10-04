@@ -1,9 +1,336 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>edit-event</ion-title>
+    <ion-title>הוסף אירוע</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-slides #stepper class="event-stepper" pager="true" [options]="slideOpts">
+<!-------------------------------------------------- Event Slide ------------------------------------------------------->
+    <ion-slide class="slide-step">
+
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <ion-grid>
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="12" size="6">
+              <app-image-picker 
+              [selectedImage]="this.event?.thumbnail"
+              [showPreview]="true"
+              (imagePick)="onImagePicked($event)" 
+              class="ion-padding">
+              </app-image-picker>
+          </ion-col>
+        </ion-row>
+
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="12" size="6">
+              <ion-list>
+                
+                <ion-item>
+                  <ion-label position="floating"> כותרת <ion-text color="danger">*</ion-text></ion-label>
+                  <ion-input
+                    type="text"
+                    ngModel
+                    name="title"
+                    required
+                    #titleCtrl="ngModel"
+                  ></ion-input>
+                </ion-item>
+                <ion-label *ngIf="!titleCtrl.valid && titleCtrl.touched" color="danger">
+                  <small>זהו שדה חובה!</small>
+                </ion-label>
+              
+    
+              <ion-item>
+                <ion-label position="floating"> תאור <ion-text color="danger">*</ion-text></ion-label>
+                <ion-textarea 
+                  type="text"
+                  ngModel
+                  name="description"
+                  required
+                  #descriptionCtrl="ngModel"
+                ></ion-textarea>
+              </ion-item>
+              <ion-label *ngIf="!descriptionCtrl.valid && descriptionCtrl.touched" color="danger">
+                <small>זהו שדה חובה!</small>
+              </ion-label>
+            
+    
+            <ion-item>
+              <ion-label position="floating">תאריך<ion-text color="danger">*</ion-text></ion-label>
+                <ion-datetime
+                  display-format="DD/MM/YYYY"
+                  pickerFormat="DD MMM YYYY"
+                  monthNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
+                  monthShortNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
+                  ngModel
+                  max="2025-12-29"
+                  [min]="now"
+                  [value]="date"
+                  [pickerOptions]="pickerOptions"
+                  name="date"
+                  required
+                  #dateCtrl="ngModel"
+                ></ion-datetime>
+                  <ion-icon name="calendar-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+              <ion-label *ngIf="!dateCtrl.valid && dateCtrl.touched" color="danger">
+                <small>זהו שדה חובה!</small>
+              </ion-label>
+    
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating">שעת התחלה<ion-text color="danger">*</ion-text></ion-label>
+                    <ion-datetime
+                      display-format="HH:mm"
+                      pickerFormat="HH:mm"
+                      ngModel
+                      [min]="now"
+                      [value]="beginsAt"
+                      [pickerOptions]="beginsAtpickerOptions"
+                      name="beginsAt"
+                      required
+                      #beginsAtCtrl="ngModel"
+                    ></ion-datetime>
+                      <ion-icon name="time-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+                </ion-item>
+              </ion-col>
+    
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating">שעת סיום<ion-text color="danger">*</ion-text></ion-label>
+                    <ion-datetime
+                      display-format="HH:mm"
+                      pickerFormat="HH:mm"
+                      ngModel
+                      [value]="endsAt"
+                      [pickerOptions]="endsAtpickerOptions"
+                      name="endsAt"
+                      required
+                      #endsAtCtrl="ngModel"
+                    ></ion-datetime>
+                      <ion-icon name="time" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+                </ion-item>
+              </ion-col>
+                <ion-label *ngIf="!endsAtCtrl.valid && endsAtCtrl.touched || !beginsAtCtrl.valid && beginsAtCtrl.touched" color="danger">
+                  <small>זהו שדה חובה!</small>
+                </ion-label>
+                <ion-label *ngIf="endsAt && endsAtCtrl.touched && (beginsAt.getTime() - endsAt.getTime()) > 0" color="danger">
+                    <small>על שעת הסיום להיות מאוחרת משעת ההתחלה!</small>
+                </ion-label>
+            </ion-row>
+    
+            <ion-item>
+              <ion-label position="floating"> מספר משתתפים <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="number"
+                ngModel
+                name="maxCapacity"
+                required
+                #maxCapacityCtrl="ngModel"
+              ></ion-input>
+              <ion-icon name="people-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-label *ngIf="!maxCapacityCtrl.valid && maxCapacityCtrl.touched" color="danger">
+              <small>זהו שדה חובה!</small>
+            </ion-label>
+    
+            <ion-item>
+              <ion-label position="floating"> מקום <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="text"
+                ngModel
+                name="placeName"
+                required
+                #placeCtrl="ngModel"
+              ></ion-input>
+              <ion-icon name="business-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-label *ngIf="!placeCtrl.valid && placeCtrl.touched" color="danger">
+              <small>זהו שדה חובה!</small>
+            </ion-label>
+          
+    
+          </ion-list>
+    
+          <div class="address-picker">
+            <app-address-picker [address]="address" (addressPicked)="onAddressPicked($event)" [isEdit]="true"></app-address-picker>
+          </div>
+          
+            </ion-col>   
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="12" size="6">
+              <ion-button 
+              type="submit"
+              fill="clear" 
+              expand="block"
+              [disabled]="!f.valid"
+              >שמור והמשך <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
+              <br>
+            </ion-col>
+
+          </ion-row>
+
+        </ion-grid>
+
+      </form>
+
+    </ion-slide>
+<!------------------------------------------------- Speaker Slide --------------------------------------------------->
+    <ion-slide >
+
+      <ion-grid>
+
+        <ion-row class="ion-justify-content-center">
+
+          <ion-col size="12" size="6">
+
+            <ion-item lines="none">
+              <ion-icon name="mic-outline" slot="end"></ion-icon>
+              <ion-label class="ion-padding-start"> <strong>נואמים: </strong></ion-label>
+            </ion-item>
+    
+            <ion-list class="add-speaker-list" *ngIf="speakers !== null">
+              <div *ngFor="let speaker of event.speakers">
+                <ion-item>
+                  <ion-avatar size="medium" slot="start">
+                    <ion-img [src]="speaker.picture"></ion-img>
+                  </ion-avatar>
+                  <ion-label><strong>
+                    {{ getSpeakerName(speaker) }}
+                  </strong>
+                  <ion-text color="medium">
+                    <p>{{ speaker?.description }}</p>
+                  </ion-text>
+                  </ion-label>
+                </ion-item>
+
+              </div>
+              <ion-item>
+                <div style="padding: 5px 10px">
+                  <ion-button (click)="onAddSpeaker()">
+                    <ion-icon name="add" slot="start"></ion-icon>
+                    <ion-label>הוסף נואם</ion-label>
+                  </ion-button>
+                  </div>
+
+              </ion-item>
+
+            </ion-list>
+
+            <ion-row class="ion-justify-content-center">
+              <ion-col size="8">
+                <ion-button 
+                fill="clear" 
+                expand="block"
+                (click)="onSaveSpeakers()"
+                >שמור והמשך <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
+              </ion-col>
+            </ion-row>
+
+          </ion-col>
+
+        </ion-row>
+
+      </ion-grid>
+
+    </ion-slide>
+<!--------------------------------------------- Participant Slide --------------------------------------------->
+    <ion-slide>
+
+      <ion-grid>
+
+        <ion-row class="ion-justify-content-center">
+
+          <ion-col size="12" size="6">
+
+            <ion-item lines="none">
+              <ion-icon name="people-outline" slot="end"></ion-icon>
+              <ion-label class="ion-padding-start"> <strong>משתתפים: </strong></ion-label>
+            </ion-item>
+            <ion-virtual-scroll
+            [items]="event.participants"
+            approxItemHeight="60px"
+            *ngIf="participants !== null"
+          >
+                <ion-item *virtualItem="let participant">
+                  <ion-avatar size="medium" slot="start">
+                    <ion-img [src]="participant.picture"></ion-img>
+                  </ion-avatar>
+                  <ion-label>
+                    <strong>
+                      {{ getParticipantName(participant) }}
+                    </strong>
+                    <ion-text color="medium">
+                      <p>{{ participant.email }}</p>
+                    </ion-text>
+                  </ion-label>
+                  <ion-button color="primary" fill="outline" slot="end" (click)="onRemoveParticipant(participant.id)">
+                    <ion-icon name="person-add-outline" ></ion-icon>
+                    <ion-label>הוסף משתתף</ion-label>
+                  </ion-button>
+                </ion-item>
+              <ion-item>
+                <div style="padding: 5px 10px">
+                  <ion-button (click)="onAddParticipant()">
+                    <ion-icon name="add" slot="start"></ion-icon>
+                    <ion-label>הוסף משתתף</ion-label>
+                  </ion-button>
+                  </div>
+
+              </ion-item>
+
+            </ion-virtual-scroll>
+
+            <ion-row class="ion-justify-content-center">
+              <ion-col size="8">
+                <ion-button 
+                fill="clear" 
+                expand="block"
+                (click)="onSaveParticipants()"
+                >שמור והמשך <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+
+        </ion-row>
+
+      </ion-grid>
+
+    </ion-slide>
+<!--------------------------------------------- Images Slide --------------------------------------------->
+    <ion-slide>
+
+      <ion-grid>
+
+        <ion-row class="ion-justify-content-center">
+
+          <ion-col>
+
+                <ngx-dropzone (change)="onFilesAdded($event)" class="dropzone" [expandable]="true">
+                  <ngx-dropzone-label>גרור תמונות לכאן...</ngx-dropzone-label>
+                  <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let file of files" [file]="file" [removable]="true" (removed)="onRemove(file)">
+                  </ngx-dropzone-image-preview>
+                </ngx-dropzone>
+
+          </ion-col>
+
+        </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="8">
+              <ion-button 
+              fill="clear" 
+              expand="block"
+              (click)="onSaveAndExit()"
+              >שמור וסיים <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
+            </ion-col>
+          </ion-row>
+      </ion-grid>
+
+    </ion-slide>
+
+  </ion-slides>
 
 </ion-content>

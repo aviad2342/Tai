@@ -15,7 +15,11 @@
       </ion-col>
       <ion-col size="12" size-sm="6" class="ion-text-center" *ngIf="!isLoading">
         <ion-card class="event-card">
-          <app-gallery *ngIf="event.images.length" [images]="event.images"></app-gallery>
+          <app-gallery *ngIf="event.images.length" 
+          [images]="event.images" 
+          (slideActiveIndex)="onActiveIndexChange($event)" 
+          (click)="openGallery(slideActiveIndex)"
+          ></app-gallery>
           <ion-img *ngIf="!event.images.length" [src]="event.thumbnail" class="course-thumbnail"></ion-img>
         <ion-card-header>
           <ion-card-title>{{ event.title }}</ion-card-title>
@@ -35,7 +39,7 @@
           <ion-item>
             <ion-icon name="business-outline"></ion-icon>
             <ion-label class="ion-padding-start"> <strong>מקום:</strong> {{ event.placeName}}</ion-label>
-            <ion-icon class="custom-waze"></ion-icon>
+           <a href="https://www.google.com/maps/search/{{event.placeName}}" target="_blank" rel="noopener noreferrer"><ion-icon name="location-outline"></ion-icon></a>
           </ion-item>
 
           <ion-item>
@@ -65,6 +69,20 @@
         </ion-list>
         </ion-card-content>
         </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-sm="6" class="ion-text-center">
+        <ngx-image-gallery 
+          dir="ltr"
+          [images]="galleryImages" 
+          [conf]="conf"
+          (onOpen)="galleryOpened($event)"
+          (onClose)="galleryClosed()"
+          (onImageClicked)="galleryImageClicked($event)"
+          (onImageChange)="galleryImageChanged($event)"
+          (onDelete)="deleteImage($event)"
+        ></ngx-image-gallery>
       </ion-col>
     </ion-row>
   </ion-grid>

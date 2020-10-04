@@ -18,7 +18,7 @@ export class AddressPickerComponent implements OnInit {
   @ViewChild('selectableStreetComponent') StreetPickerRef: IonicSelectableComponent;
   @Output() addressPicked = new EventEmitter<Address>();
   @Input() isEdit = false;
-  @Input() userAddress = new Address();
+  @Input() address = new Address();
   selectedAddress: Address = new Address();
   rangeArray: any[] = [1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -57,25 +57,25 @@ export class AddressPickerComponent implements OnInit {
     this.addressService.getCountries().subscribe(countries => {
       this.countriesList = this.countries = countries;
       if (this.isEdit) {
-        this.country = this.userAddress.country;
+        this.country = this.address.country;
       }
      });
 
     this.addressService.getCities().subscribe(cities => {
        this.citiesList = this.cities = cities;
        if (this.isEdit) {
-        this.city = this.userAddress.city;
+        this.city = this.address.city;
         this.getStreetsListByCity(this.city);
-        this.street = this.userAddress.street;
+        this.street = this.address.street;
       }
       });
 
     if (this.isEdit) {
          this.showpickers = false;
-         this.houseNumber = this.userAddress.houseNumber;
-         this.apartment = this.userAddress.apartment;
-         this.entry = this.userAddress.entry;
-         this.selectedAddress = this.userAddress;
+         this.houseNumber = this.address.houseNumber;
+         this.apartment = this.address.apartment;
+         this.entry = this.address.entry;
+         this.selectedAddress = this.address;
          this.addressPicked.emit(this.selectedAddress);
        }
 

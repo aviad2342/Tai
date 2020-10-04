@@ -1,5 +1,5 @@
 <ion-slides pager="true" [options]="slideOptsOne" #slideWithNav
-  (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">
+  (ionSlideDidChange)="SlideDidChange(slideWithNav)">
     <ion-slide *ngFor="let image of sliderOne.slidesItems">
       <ion-img [src]="image"></ion-img>
     </ion-slide>
