@@ -146,10 +146,12 @@ export class EditEventPage implements OnInit {
         this.navCtrl.navigateBack('/manage/events');
         return;
       }
+      this.isLoading = true;
       this.id = paramMap.get('id');
       this.eventService.getEvent(paramMap.get('id')).
       subscribe(event => {
         this.event = event;
+        this.isLoading = false;
         this.address.setAddress(
           this.event.country,
           this.event.city,
@@ -170,6 +172,9 @@ export class EditEventPage implements OnInit {
           placeName:     event.placeName,
           };
         this.form.setValue(eventObj);
+      }, error => {
+        this.appService.presentToast('חלה תקלה לא ניתן לבצע עריכה! אנא נסה מאוחר יותר.', false);
+        this.router.navigate(['/manage/events']);
       });
     });
   }

@@ -1,10 +1,17 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>הוסף אירוע</ion-title>
+    <ion-title>עריכת אירוע</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <!-- <ion-row class="ion-justify-content-center">
+    <ion-col size="12" size-sm="6" class="ion-text-center" *ngIf="isLoading">
+      <ion-spinner color="primary"></ion-spinner>
+    </ion-col>
+  </ion-row>  -->
+
   <ion-slides #stepper class="event-stepper" pager="true" [options]="slideOpts">
 <!-------------------------------------------------- Event Slide ------------------------------------------------------->
     <ion-slide class="slide-step">
@@ -193,7 +200,7 @@
             </ion-item>
     
             <ion-list class="add-speaker-list" *ngIf="speakers !== null">
-              <div *ngFor="let speaker of event.speakers">
+              <div *ngFor="let speaker of event?.speakers">
                 <ion-item>
                   <ion-avatar size="medium" slot="start">
                     <ion-img [src]="speaker.picture"></ion-img>
@@ -251,7 +258,7 @@
               <ion-label class="ion-padding-start"> <strong>משתתפים: </strong></ion-label>
             </ion-item>
             <ion-virtual-scroll
-            [items]="event.participants"
+            [items]="event?.participants"
             approxItemHeight="60px"
             *ngIf="participants !== null"
           >
