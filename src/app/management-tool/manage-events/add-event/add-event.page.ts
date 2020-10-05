@@ -51,6 +51,7 @@ export class AddEventPage implements OnInit {
   speakers: Speaker[] = [];
   participants: Participant[] = [];
   hideList = false;
+  addressIsValid = false;
   address: Address = new Address();
   userImage = '../../../assets/images/user-default-image.png';
   file: File;
@@ -165,6 +166,10 @@ export class AddEventPage implements OnInit {
 
   onAddressPicked(address: Address) {
     this.address = address;
+  }
+
+  onAddressIsValid(isValid: boolean) {
+    this.addressIsValid = isValid;
   }
 
   async onAddSpeaker() {

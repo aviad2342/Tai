@@ -10,6 +10,7 @@
     <ion-col size="12" size-sm="6" class="ion-text-center" *ngIf="isLoading">
       <ion-spinner color="primary"></ion-spinner>
     </ion-col>
+    
   </ion-row>  -->
 
   <ion-slides #stepper class="event-stepper" pager="true" [options]="slideOpts">
@@ -162,7 +163,7 @@
           </ion-list>
     
           <div class="address-picker">
-            <app-address-picker [address]="address" (addressPicked)="onAddressPicked($event)" [isEdit]="true"></app-address-picker>
+            <app-address-picker [address]="address" (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)" [isEdit]="true"></app-address-picker>
           </div>
           
             </ion-col>   
@@ -173,7 +174,7 @@
               type="submit"
               fill="clear" 
               expand="block"
-              [disabled]="!f.valid"
+              [disabled]="!f.valid || !addressIsValid"
               >שמור והמשך <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
               <br>
             </ion-col>
@@ -186,7 +187,7 @@
 
     </ion-slide>
 <!------------------------------------------------- Speaker Slide --------------------------------------------------->
-    <ion-slide >
+    <ion-slide class="slide-step">
 
       <ion-grid>
 
@@ -199,7 +200,7 @@
               <ion-label class="ion-padding-start"> <strong>נואמים: </strong></ion-label>
             </ion-item>
     
-            <ion-list class="add-speaker-list" *ngIf="speakers !== null">
+            <ion-list class="add-speaker-list">
               <div *ngFor="let speaker of event?.speakers">
                 <ion-item>
                   <ion-avatar size="medium" slot="start">
@@ -245,7 +246,7 @@
 
     </ion-slide>
 <!--------------------------------------------- Participant Slide --------------------------------------------->
-    <ion-slide>
+    <ion-slide class="slide-step">
 
       <ion-grid>
 
@@ -258,11 +259,12 @@
               <ion-label class="ion-padding-start"> <strong>משתתפים: </strong></ion-label>
             </ion-item>
             <ion-virtual-scroll
-            [items]="event?.participants"
+            *ngIf="!isLoading"
+            [items]="event.participants"
             approxItemHeight="60px"
-            *ngIf="participants !== null"
           >
-                <ion-item *virtualItem="let participant">
+          <div *virtualItem="let participant">
+                <ion-item >
                   <ion-avatar size="medium" slot="start">
                     <ion-img [src]="participant.picture"></ion-img>
                   </ion-avatar>
@@ -279,6 +281,7 @@
                     <ion-label>הוסף משתתף</ion-label>
                   </ion-button>
                 </ion-item>
+              </div>
               <ion-item>
                 <div style="padding: 5px 10px">
                   <ion-button (click)="onAddParticipant()">
@@ -308,7 +311,7 @@
 
     </ion-slide>
 <!--------------------------------------------- Images Slide --------------------------------------------->
-    <ion-slide>
+    <ion-slide class="slide-step">
 
       <ion-grid>
 

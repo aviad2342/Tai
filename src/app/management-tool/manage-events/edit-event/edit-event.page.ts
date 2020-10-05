@@ -47,9 +47,10 @@ export class EditEventPage implements OnInit {
   files: File[] = [];
   file: File;
   address: Address = new Address();
-  images: string[];
-  participants: Participant[];
-  speakers: Speaker[];
+  // images: string[];
+  // participants: Participant[];
+  // speakers: Speaker[];
+  addressIsValid = false;
   isLoading = false;
   lessonsIsLoading = false;
   now = new Date().toISOString();
@@ -64,10 +65,7 @@ export class EditEventPage implements OnInit {
     pagination: {
       el: '.swiper-pagination',
       type: 'fraction'
-    },
-    renderProgressbar (progressbarFillClass) {
-      return '<span class="' + progressbarFillClass + '"></span>';
-  }
+    }
   };
 
 
@@ -152,16 +150,9 @@ export class EditEventPage implements OnInit {
       subscribe(event => {
         this.event = event;
         this.isLoading = false;
-        this.address.setAddress(
-          this.event.country,
-          this.event.city,
-          this.event.street,
-          this.event.houseNumber,
-          this.event.apartment,
-          this.event.entry);
-          this.images = event.images;
-          this.participants = event.participants;
-          this.speakers = event.speakers;
+        this.date = this.event.date;
+        this.beginsAt = this.event.beginsAt;
+        this.endsAt = this.event.endsAt;
         const eventObj = {
           title:         event.title,
           description:   event.description,
@@ -172,6 +163,14 @@ export class EditEventPage implements OnInit {
           placeName:     event.placeName,
           };
         this.form.setValue(eventObj);
+        this.address.setAddress(
+          this.event.country,
+          this.event.city,
+          this.event.street,
+          this.event.houseNumber,
+          this.event.apartment,
+          this.event.entry);
+          // this.form.value.image = null;
       }, error => {
         this.appService.presentToast('חלה תקלה לא ניתן לבצע עריכה! אנא נסה מאוחר יותר.', false);
         this.router.navigate(['/manage/events']);
@@ -202,6 +201,10 @@ export class EditEventPage implements OnInit {
     this.address = address;
   }
 
+  onAddressIsValid(isValid: boolean) {
+    this.addressIsValid = isValid;
+  }
+
   async onAddSpeaker() {
     const modal = await this.modalController.create({
       component: AddSpeakerComponent,
@@ -214,8 +217,7 @@ export class EditEventPage implements OnInit {
     });
      modal.onDidDismiss<Speaker>().then( data => {
       if(data.data !== null  && data.data ) {
-        this.speakers.push(data.data);
-        console.log(this.speakers);
+        this.event.speakers.push(data.data);
       }
     });
     return await modal.present();
@@ -233,7 +235,7 @@ export class EditEventPage implements OnInit {
     });
      modal.onDidDismiss<Participant[]>().then( data => {
       if(data.data !== null  && data.data ) {
-        this.participants.push(...data.data);
+        this.event.participants.push(...data.data);
       }
     });
     return await modal.present();
@@ -248,7 +250,7 @@ export class EditEventPage implements OnInit {
     .pipe(
       switchMap(uploadRes => {
         const eventToAdd = new Event(
-          null,
+          this.event.id,
           form.value.title,
           form.value.description,
           this.date,
@@ -263,16 +265,15 @@ export class EditEventPage implements OnInit {
           this.address.houseNumber,
           this.address.apartment,
           this.address.entry,
-          'cc11',
-          [],
-          [],
-          []
+          this.event.catalogNumber,
+          this.event.images,
+          this.event.participants,
+          this.event.speakers
         );
         return this.eventService.updateEvent(eventToAdd);
       })
     ).subscribe(newEvent => {
       this.event = newEvent;
-      form.reset();
       this.appService.presentToast('האירוע נשמר בהצלחה', true);
       this.newEventStepper.slideNext();
     }, error => {
@@ -282,7 +283,7 @@ export class EditEventPage implements OnInit {
     );
   } else {
     const eventToAdd = new Event(
-      null,
+      this.event.id,
       form.value.title,
       form.value.description,
       this.date,
@@ -297,14 +298,17 @@ export class EditEventPage implements OnInit {
       this.address.houseNumber,
       this.address.apartment,
       this.address.entry,
-      'cc11',
-      [],
-      [],
-      []
+      this.event.catalogNumber,
+      this.event.images,
+      this.event.participants,
+      this.event.speakers
     );
+    if(this.isEquals(this.event, eventToAdd)) {
+      this.newEventStepper.slideNext();
+      return;
+    }
     return this.eventService.updateEvent(eventToAdd).subscribe(newEvent => {
       this.event = newEvent;
-      form.reset();
       this.appService.presentToast('האירוע נשמר בהצלחה', true);
       this.newEventStepper.slideNext();
     }, error => {
@@ -347,12 +351,12 @@ export class EditEventPage implements OnInit {
   }
 
  onSaveAndExit() {
-   if(this.files) {
+   if(this.files.length > 0) {
     this.eventService.uploadEventPhotos(this.files).pipe(
       switchMap( images => {
         // this.event.images.push(...images);
         // return this.eventService.updateEventImages(this.event.id, images);
-        return this.eventService.updateEventImages('2', images);
+        return this.eventService.updateEventImages(this.event.id, images);
       }))
     .subscribe(() => {
       this.appService.presentToast('התמונות נוספו בהצלחה', true);
@@ -364,7 +368,13 @@ export class EditEventPage implements OnInit {
     });
    }
    this.appService.presentToast('סיימת בהצלחה את יצירת האירוע', true);
+  //  this.newEventStepper.getSwiper().then(swiper => {
+  //    swiper.destroy(true, false);
+  //  })
+      this.router.dispose();
+      // this.route = null;
       this.router.navigate(['/manage/events']);
+      // this.newEventStepper.slideTo(0);
   }
 
   getSpeakerName(speaker: Speaker) {
@@ -373,6 +383,28 @@ export class EditEventPage implements OnInit {
 
   getParticipantName(participant: Participant) {
     return  participant?.firstName + ' ' + participant?.lastName;
+  }
+
+  isEquals(event1: Event, event2: Event) {
+    if(
+      event1.title === event2.title &&
+      event1.description === event2.description &&
+      event1.date === event2.date &&
+      event1.beginsAt === event2.beginsAt &&
+      event1.endsAt === event2.endsAt &&
+      event1.thumbnail === event2.thumbnail &&
+      event1.maxCapacity === event2.maxCapacity &&
+      event1.placeName === event2.placeName &&
+      event1.country === event2.country &&
+      event1.city === event2.city &&
+      event1.street === event2.street &&
+      event1.houseNumber === event2.houseNumber &&
+      event1.apartment === event2.apartment &&
+      event1.entry === event2.entry
+    ) {
+      return true;
+    }
+    return  false;
   }
 
 

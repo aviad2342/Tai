@@ -2,8 +2,6 @@ import { Component, OnInit, Output, EventEmitter, OnDestroy, Input, ViewChild } 
 import { AddressService } from '../../address.service';
 import { Address } from '../../address.model';
 import { IonicSelectableComponent } from 'ionic-selectable';
-import { Subscription } from 'rxjs';
-import { User } from 'src/app/user/user.model';
 import { PickerController, IonInput } from '@ionic/angular';
 
 @Component({
@@ -17,6 +15,7 @@ export class AddressPickerComponent implements OnInit {
   @ViewChild('selectableCitiesComponent') citiesPickerRef: IonicSelectableComponent;
   @ViewChild('selectableStreetComponent') StreetPickerRef: IonicSelectableComponent;
   @Output() addressPicked = new EventEmitter<Address>();
+  @Output() isValid = new EventEmitter<boolean>();
   @Input() isEdit = false;
   @Input() address = new Address();
   selectedAddress: Address = new Address();
@@ -51,9 +50,6 @@ export class AddressPickerComponent implements OnInit {
 
   ngOnInit() {
 
-    // this.selectedAddress.apartment = '0';
-    // this.selectedAddress.entry = '0';
-
     this.addressService.getCountries().subscribe(countries => {
       this.countriesList = this.countries = countries;
       if (this.isEdit) {
@@ -77,6 +73,11 @@ export class AddressPickerComponent implements OnInit {
          this.entry = this.address.entry;
          this.selectedAddress = this.address;
          this.addressPicked.emit(this.selectedAddress);
+         this.isValid.emit(true);
+  } else {
+         this.selectedAddress.apartment = '0';
+         this.selectedAddress.entry = '0';
+         this.isValid.emit(false);
        }
 
   }
@@ -204,7 +205,7 @@ async openPicker(input: string) {
               case 'houseNumber':
                 this.selectedAddress.houseNumber = value.Number.value;
                 this.addressPicked.emit(this.selectedAddress);
-                console.log(value);
+                this.isValid.emit(true);
                 break;
               case 'apartment':
                 this.selectedAddress.apartment = value.Number.value;
@@ -234,10 +235,11 @@ async openPicker(input: string) {
   }
 
   disablPickers() {
+    this.isValid.emit(false);
     this.showpickers = true;
     this.selectedAddress.houseNumber = '';
-    this.selectedAddress.apartment = '';
-    this.selectedAddress.entry = '';
+    this.selectedAddress.apartment = '0';
+    this.selectedAddress.entry = '0';
   }
   enablePickers() {
     this.showpickers = false;

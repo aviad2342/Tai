@@ -46,7 +46,8 @@ export class ManageEventsPage implements OnInit, OnDestroy {
     ionViewWillEnter() {
       this.eventService.getEvents().subscribe(events => {
         if(this.selectedEventId !== null) {
-          this.selected[0] = events.find(u => u.id === this.selectedEventId);
+          const event = events.find(e => e.id === this.selectedEventId);
+          this.selected[0] = event;
         }
       });
     }
@@ -133,68 +134,6 @@ export class ManageEventsPage implements OnInit, OnDestroy {
 
   onViewLesson(id: string) {
     this.router.navigate(['manage', 'courses', 'lesson', id]);
-  }
-
-  async onEditLesson(speaker: Speaker) {
-    // const modal = await this.modalController.create({
-    //   component: EditLessonComponent,
-    //   cssClass: 'edit-lesson-modal',
-    //   animated: true,
-    //   backdropDismiss: false,
-    //   componentProps: {
-    //     lesson
-    //   }
-    // });
-    //  modal.onDidDismiss().then( data => {
-    //   if(data.data.didEdit) {
-    //     this.courseservice.getCourseLessons(this.selectedEventId).subscribe(lessons => {
-    //       // this.lessons = lessons;
-    //     });
-    //     const courseToUpdate: Course = this.selected[0];
-    //     courseToUpdate.lastEdit = new Date();
-    //     this.courseservice.updateCourse(courseToUpdate).subscribe(courses => {
-    //       this.selected[0] = courses.find(u => u.id === this.selectedEventId);
-    //       this.appservice.presentToast('השיעור עודכן בהצלחה!', true);
-    //     }, error => {
-    //       this.appservice.presentToast('חלה תקלה פעולת העדכון נכשלה!', false);
-    //     });
-    //   }
-    // });
-    // return await modal.present();
-  }
-
-  async onDeleteLesson(id: string) {
-    // const alert = await this.alertController.create({
-    //   cssClass: 'delete-lesson-alert',
-    //   header: 'אישור מחיקת שיעור',
-    //   message: `האם אתה בטוח שברצונך למחוק את השיעור לצמיתות?`,
-    //   buttons: [
-    //     {
-    //       text: 'ביטול',
-    //       role: 'cancel',
-    //       cssClass: 'delete-lesson-alert-btn-cancel',
-    //       handler: () => {
-    //       }
-    //     }, {
-    //       text: 'אישור',
-    //       handler: () => {
-    //         this.courseservice.deleteLesson(id, this.selectedEventId).subscribe(delRes => {
-    //           this.courseservice.getCourse(this.selectedEventId).subscribe(course => {
-    //             course.courseLessons = this.lessons.length;
-    //             course.lastEdit = new Date();
-    //             this.courseservice.updateCourse(course).subscribe(courses => {
-    //               this.selected[0] = courses.find(u => u.id === this.selectedEventId);
-    //             });
-    //           });
-    //           this.appservice.presentToast('השיעור נמחק בהצלחה!', true);
-    //         }, error => {
-    //           this.appservice.presentToast('חלה תקלה פעולת המחיקה נכשלה!', false);
-    //         });
-    //       }
-    //     }
-    //   ]
-    // });
-    // await alert.present();
   }
 
   onSelect({ selected }) {

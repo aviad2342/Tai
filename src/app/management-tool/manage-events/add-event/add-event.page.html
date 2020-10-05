@@ -156,7 +156,7 @@
           </ion-list>
     
           <div class="address-picker">
-            <app-address-picker (addressPicked)="onAddressPicked($event)"></app-address-picker>
+            <app-address-picker (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)"></app-address-picker>
           </div>
           
             </ion-col>   
@@ -167,7 +167,7 @@
               type="submit"
               fill="clear" 
               expand="block"
-              [disabled]="!f.valid"
+              [disabled]="!f.valid || !addressIsValid"
               >שמור והמשך <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
               <br>
             </ion-col>
@@ -180,7 +180,7 @@
 
     </ion-slide>
 <!------------------------------------------------- Speaker Slide --------------------------------------------------->
-    <ion-slide >
+    <ion-slide class="slide-step">
 
       <ion-grid>
 
@@ -236,7 +236,7 @@
 
     </ion-slide>
 <!--------------------------------------------- Participant Slide --------------------------------------------->
-    <ion-slide>
+    <ion-slide class="slide-step">
 
       <ion-grid>
 
@@ -296,7 +296,7 @@
 
     </ion-slide>
 <!--------------------------------------------- Images Slide --------------------------------------------->
-    <ion-slide>
+    <ion-slide class="slide-step">
 
       <ion-grid>
 
