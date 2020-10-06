@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonSlides, ModalController, NavController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AppService } from 'src/app/app.service';
 import { Event } from 'src/app/event/event.model';
@@ -11,6 +12,7 @@ import { Speaker } from 'src/app/event/speaker.model';
 import { Address } from 'src/app/shared/address.model';
 import { AddParticipantComponent } from '../add-participant/add-participant.component';
 import { AddSpeakerComponent } from '../add-speaker/add-speaker.component';
+import { HttpClient } from '@angular/common/http';
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';
@@ -41,12 +43,14 @@ function base64toBlob(base64Data, contentType) {
 export class EditEventPage implements OnInit {
 
   event: Event;
+  private pageparamMapSubscription: Subscription;
   id: string;
   @ViewChild('stepper') newEventStepper: IonSlides;
   @ViewChild('f', { static: true }) form: NgForm;
   files: File[] = [];
   file: File;
   address: Address = new Address();
+  images;
   // images: string[];
   // participants: Participant[];
   // speakers: Speaker[];
@@ -135,11 +139,12 @@ export class EditEventPage implements OnInit {
     private navCtrl: NavController,
     private router: Router,
     private modalController: ModalController,
-    public appService: AppService
+    public appService: AppService,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
-    this.route.paramMap.subscribe(paramMap => {
+    this.pageparamMapSubscription = this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
         this.navCtrl.navigateBack('/manage/events');
         return;
@@ -203,6 +208,12 @@ export class EditEventPage implements OnInit {
 
   onAddressIsValid(isValid: boolean) {
     this.addressIsValid = isValid;
+  }
+
+  getFile() {
+  //   this.http.get<File>('/assets/images/ArticleDefaultImage.png').subscribe(data => {
+  //     return data;
+  // });
   }
 
   async onAddSpeaker() {
@@ -326,6 +337,8 @@ export class EditEventPage implements OnInit {
     this.files.splice(this.files.indexOf(event), 1);
   }
 
+  onRemoveImage(image) {}
+
   onSaveSpeakers() {
     // if(this.speakers) {
     //   this.event.speakers.push(...this.speakers);
@@ -367,11 +380,12 @@ export class EditEventPage implements OnInit {
       this.router.navigate(['/manage/events']);
     });
    }
-   this.appService.presentToast('סיימת בהצלחה את יצירת האירוע', true);
+   this.appService.presentToast('האירוע עודכן בהצלחה', true);
   //  this.newEventStepper.getSwiper().then(swiper => {
   //    swiper.destroy(true, false);
   //  })
-      this.router.dispose();
+      this.pageparamMapSubscription.unsubscribe();
+      // this.router.dispose();
       // this.route = null;
       this.router.navigate(['/manage/events']);
       // this.newEventStepper.slideTo(0);

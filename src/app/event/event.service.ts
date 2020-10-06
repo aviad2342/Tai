@@ -5,6 +5,7 @@ import { Speaker, speakerTitle } from './speaker.model';
 import { take, map, switchMap, tap } from 'rxjs/operators';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Participant } from './participant.model';
+import { User } from '../user/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -346,6 +347,13 @@ export class EventService {Participant
         `http://localhost:3000/api/participant/participant/authorId/${eventId}`)
       .pipe(tap(participants => {
         return participants;
+      }));
+  }
+
+  getUsersListToAdd(eventId: string) {
+    return this.http.get<User[]>( `http://localhost:3000/api/participant/participant/usersList/${eventId}`)
+      .pipe(tap(users => {
+        return users;
       }));
   }
 

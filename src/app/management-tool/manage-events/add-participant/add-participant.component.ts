@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { EventService } from 'src/app/event/event.service';
 import { Participant } from 'src/app/event/participant.model';
 import { User } from 'src/app/user/user.model';
-import { UserService } from 'src/app/user/user.service';
 import { switchMap } from 'rxjs/operators';
 import { AppService } from 'src/app/app.service';
 
@@ -54,13 +53,12 @@ export class AddParticipantComponent implements OnInit {
 
   constructor(
     private eventService: EventService,
-    private userService: UserService,
     private appService: AppService,
     private modalController: ModalController
     ) { }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe(users => {
+    this.eventService.getUsersListToAdd(this.eventId).subscribe(users => {
       this.users = users;
     });
   }
