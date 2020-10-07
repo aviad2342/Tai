@@ -175,7 +175,6 @@ export class EditEventPage implements OnInit {
           this.event.houseNumber,
           this.event.apartment,
           this.event.entry);
-          // this.form.value.image = null;
       }, error => {
         this.appService.presentToast('חלה תקלה לא ניתן לבצע עריכה! אנא נסה מאוחר יותר.', false);
         this.router.navigate(['/manage/events']);
@@ -210,9 +209,9 @@ export class EditEventPage implements OnInit {
     this.addressIsValid = isValid;
   }
 
-  getFile() {
-  //   this.http.get<File>('/assets/images/ArticleDefaultImage.png').subscribe(data => {
-  //     return data;
+  getFile(image: string) {
+  //   this.eventService.getImage(image).subscribe(file => {
+  //     return file;
   // });
   }
 
@@ -337,7 +336,15 @@ export class EditEventPage implements OnInit {
     this.files.splice(this.files.indexOf(event), 1);
   }
 
-  onRemoveImage(image) {}
+  onRemoveImage(event) {
+    this.eventService.removeEventImage(this.event.id, event).subscribe(images => {
+      this.event.images.splice(this.event.images.indexOf(event), 1);
+      this.appService.presentToast('התמונה הוסרה בהצלחה', true);
+    }, error => {
+      this.appService.presentToast('חלה תקלה לא ניתן להסיר את התמונה כעת', false);
+    });
+
+  }
 
   onSaveSpeakers() {
     // if(this.speakers) {

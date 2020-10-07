@@ -128,6 +128,16 @@ export class EventService {Participant
       }));
   }
 
+  removeEventImage(id: string, image: string) {
+    return this.http.put<string[]>(`http://localhost:3000/api/event/event/image/remove/${id}`,
+    {
+      image
+    }).
+    pipe(tap(images => {
+      return images;
+    }));
+  }
+
   deleteEvent(id: string) {
     return this.http.delete(`http://localhost:3000/api/event/event/${id}`).
     pipe(
@@ -147,6 +157,22 @@ export class EventService {Participant
       map(resData => {
         return resData.response;
       }));
+  }
+
+  getImage(image: string) {
+    const imageParam = new HttpParams();
+    imageParam.set('image', image);
+    return this.http.get<File>('http://localhost:3000/api/image/download/image', {params: imageParam}).
+    pipe(tap(imageFile => {
+      return imageFile;
+    }));
+  }
+
+  getImages(id: string) {
+    return this.http.get<string[]>(`http://localhost:3000/api/event/event/images/${id}`).
+    pipe(tap(images => {
+      return images;
+    }));
   }
 
   getArticleByUser(authorId: string) {

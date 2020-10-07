@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { SegmentChangeEventDetail } from '@ionic/core';
 import { NgForm } from '@angular/forms';
-import { IonSegment, IonSlides, ModalController } from '@ionic/angular';
+import { AlertController, IonSegment, IonSlides, ModalController } from '@ionic/angular';
 import { v4 as uuidv4 } from 'uuid';
 import { EventService } from 'src/app/event/event.service';
 import { Participant } from 'src/app/event/participant.model';
@@ -54,6 +54,7 @@ export class AddParticipantComponent implements OnInit {
   constructor(
     private eventService: EventService,
     private appService: AppService,
+    private alertController: AlertController,
     private modalController: ModalController
     ) { }
 
@@ -128,7 +129,7 @@ export class AddParticipantComponent implements OnInit {
   onSubmit(form: NgForm) {
     form.value.image = this.file;
     if (!form.valid || !this.form.value.image) {
-      console.log('nop');
+      this.onEmptyExit();
       return;
     }
     this.eventService.uploadParticipantPicture(this.form.value.image, 'Participant')
@@ -154,6 +155,30 @@ export class AddParticipantComponent implements OnInit {
       this.appService.presentToast('חלה תקלה פרטי הנואם לא נשמרו', false);
       this.close(null);
     } );
+  }
+
+  async onEmptyExit() {
+    const alert = await this.alertController.create({
+      cssClass: 'delete-lesson-alert',
+      header: 'סיום ללא הוספת משתתף',
+      message: `האם ברצונך לצאת ללא הוספת משתתף?`,
+      mode: 'ios',
+      buttons: [
+        {
+          text: 'ביטול',
+          role: 'cancel',
+          cssClass: 'delete-lesson-alert-btn-cancel',
+          handler: () => {
+          }
+        }, {
+          text: 'יציאה',
+          handler: () => {
+          this.close(null);
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   async close(participants: Participant[]) {

@@ -163,7 +163,7 @@
           </ion-list>
     
           <div class="address-picker">
-            <app-address-picker [address]="address" (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)" [isEdit]="true"></app-address-picker>
+            <app-address-picker [address]="this?.address" (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)" [isEdit]="true"></app-address-picker>
           </div>
           
             </ion-col>   
@@ -351,14 +351,15 @@
           <ion-col *ngIf="!isLoading">
 
             <ngx-dropzone (change)="onFilesAdded($event)" class="dropzone" [expandable]="true">
+              <app-image-item ngProjectAs="ngx-dropzone-preview" *ngFor="let image of event.images" [image]="image" [removable]="true" (removed)="onRemoveImage(image)"></app-image-item>
+              <!-- <div class="dropzone-preview-images">
+              <div  *ngFor="let image of event.images" >
+                <app-image-item *ngFor="let image of event.images" [image]="image" [removable]="true" (removed)="onRemoveImage($event)"></app-image-item>
+              </div>
+             </div> -->
               <ngx-dropzone-label>גרור תמונות לכאן...</ngx-dropzone-label>
               <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let file of files" [file]="file" [removable]="true" (removed)="onRemove(file)">
               </ngx-dropzone-image-preview>
-              <ngx-dropzone-video-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let image of event.images" [file]="getFile()">
-              </ngx-dropzone-video-preview>
-              <!-- <div *ngFor="let imageSrc of event.images">
-                <img [src]="imageSrc" />
-              </div> -->
             </ngx-dropzone>
 
           </ion-col>
