@@ -203,16 +203,23 @@
                     {{ getSpeakerName(speaker) }}
                   </strong>
                   </ion-label>
+                  <ion-button color="danger" fill="outline" slot="end" (click)="onRemoveSpeaker(speaker.id)">
+                    <ion-icon name="person-remove-outline" ></ion-icon>&nbsp;&nbsp;
+                    <ion-label>הסר נואם </ion-label>
+                  </ion-button>
                 </ion-item>
 
               </div>
               <ion-item>
-                <div style="padding: 5px 10px">
-                  <ion-button (click)="onAddSpeaker()">
-                    <ion-icon name="add" slot="start"></ion-icon>
+                <ion-avatar size="medium" slot="start">
+                  <ion-img [src]="defaultPicture"></ion-img>
+                </ion-avatar>
+
+                  <ion-button (click)="onAddSpeaker()" slot="end">
+                    <ion-icon name="person-add-outline" slot="start"></ion-icon>
                     <ion-label>הוסף נואם</ion-label>
                   </ion-button>
-                  </div>
+                  
 
               </ion-item>
 
@@ -249,7 +256,7 @@
               <ion-label class="ion-padding-start"> <strong>משתתפים: </strong></ion-label>
             </ion-item>
     
-            <ion-list class="add-speaker-list" *ngIf="participants !== null">
+            <ion-list class="add-participants-list" *ngIf="participants !== null">
               <div *ngFor="let participant of participants">
                 <ion-item>
                   <ion-avatar size="medium" slot="start">
@@ -263,17 +270,22 @@
                       <p>{{ participant.email }}</p>
                     </ion-text>
                   </ion-label>
-                
+                  <ion-button color="danger" fill="outline" slot="end" (click)="onRemoveParticipant(participant.id)">
+                    <ion-icon name="person-remove-outline" ></ion-icon>&nbsp;&nbsp;
+                    <ion-label>הסר משתתף </ion-label>
+                  </ion-button>
                 </ion-item>
 
               </div>
               <ion-item>
-                <div style="padding: 5px 10px">
+                <ion-avatar size="medium" slot="start" slot="end">
+                  <ion-img [src]="defaultPicture"></ion-img>
+                </ion-avatar>
+
                   <ion-button (click)="onAddParticipant()">
-                    <ion-icon name="add" slot="start"></ion-icon>
+                    <ion-icon nname="person-add-outline" slot="start"></ion-icon>
                     <ion-label>הוסף משתתף</ion-label>
-                  </ion-button>
-                  </div>
+                  </ion-button>               
 
               </ion-item>
 

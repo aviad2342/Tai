@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonSlides, ModalController, NavController } from '@ionic/angular';
+import { AlertController, IonSlides, ModalController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AppService } from 'src/app/app.service';
@@ -12,7 +12,6 @@ import { Speaker } from 'src/app/event/speaker.model';
 import { Address } from 'src/app/shared/address.model';
 import { AddParticipantComponent } from '../add-participant/add-participant.component';
 import { AddSpeakerComponent } from '../add-speaker/add-speaker.component';
-import { HttpClient } from '@angular/common/http';
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';
@@ -51,9 +50,7 @@ export class EditEventPage implements OnInit {
   file: File;
   address: Address = new Address();
   images;
-  // images: string[];
-  // participants: Participant[];
-  // speakers: Speaker[];
+  defaultPicture = 'http://localhost:3000/images/user-default-image.png';
   addressIsValid = false;
   isLoading = false;
   lessonsIsLoading = false;
@@ -65,7 +62,7 @@ export class EditEventPage implements OnInit {
   slideOpts = {
     allowSlidePrev: false,
     allowTouchMove: false,
-    // autoHeight: true,
+    autoHeight: true,
     pagination: {
       el: '.swiper-pagination',
       type: 'fraction'
@@ -138,9 +135,9 @@ export class EditEventPage implements OnInit {
     private eventService: EventService,
     private navCtrl: NavController,
     private router: Router,
+    private alertController: AlertController,
     private modalController: ModalController,
-    public appService: AppService,
-    private http: HttpClient
+    public appService: AppService
   ) {}
 
   ngOnInit() {
@@ -182,6 +179,251 @@ export class EditEventPage implements OnInit {
     });
   }
 
+// -------------------------------------------------- Event Functions ------------------------------------------------------
+
+onAddressPicked(address: Address) {
+  this.address = address;
+}
+
+onAddressIsValid(isValid: boolean) {
+  this.addressIsValid = isValid;
+}
+
+onSubmit(form: NgForm) {
+  if (!form.valid) {
+    return;
+  }
+  if (form.value.image) {
+  this.eventService.uploadEventThumbnail(this.form.value.image, 'Event')
+  .pipe(
+    switchMap(uploadRes => {
+      const eventToAdd = new Event(
+        this.event.id,
+        form.value.title,
+        form.value.description,
+        this.date,
+        this.beginsAt,
+        this.endsAt,
+        uploadRes.imageUrl,
+        form.value.maxCapacity,
+        form.value.placeName,
+        this.address.country,
+        this.address.city,
+        this.address.street,
+        this.address.houseNumber,
+        this.address.apartment,
+        this.address.entry,
+        this.event.catalogNumber,
+        this.event.images,
+        this.event.participants,
+        this.event.speakers
+      );
+      return this.eventService.updateEvent(eventToAdd);
+    })
+  ).subscribe(newEvent => {
+    this.event = newEvent;
+    this.appService.presentToast('האירוע נשמר בהצלחה', true);
+    this.newEventStepper.slideNext();
+    this.newEventStepper.updateAutoHeight(200);
+  }, error => {
+    this.appService.presentToast('חלה תקלה פרטי האירוע לא נשמרו', false);
+    this.router.navigate(['/manage/events']);
+  }
+  );
+} else {
+  const eventToAdd = new Event(
+    this.event.id,
+    form.value.title,
+    form.value.description,
+    this.date,
+    this.beginsAt,
+    this.endsAt,
+    this.event.thumbnail,
+    form.value.maxCapacity,
+    form.value.placeName,
+    this.address.country,
+    this.address.city,
+    this.address.street,
+    this.address.houseNumber,
+    this.address.apartment,
+    this.address.entry,
+    this.event.catalogNumber,
+    this.event.images,
+    this.event.participants,
+    this.event.speakers
+  );
+  if(this.isEquals(this.event, eventToAdd)) {
+    this.newEventStepper.slideNext();
+    this.newEventStepper.updateAutoHeight(200);
+    return;
+  }
+  return this.eventService.updateEvent(eventToAdd).subscribe(newEvent => {
+    this.event = newEvent;
+    this.appService.presentToast('האירוע נשמר בהצלחה', true);
+    this.newEventStepper.slideNext();
+    this.newEventStepper.updateAutoHeight(200);
+  }, error => {
+    this.appService.presentToast('חלה תקלה פרטי האירוע לא נשמרו', false);
+    this.router.navigate(['/manage/events']);
+  });
+}
+}
+
+// -------------------------------------------------- Speaker Functions ----------------------------------------------------
+
+async onAddSpeaker() {
+  const modal = await this.modalController.create({
+    component: AddSpeakerComponent,
+    cssClass: 'add-speaker-modal',
+    animated: true,
+    backdropDismiss: false,
+    componentProps: {
+      eventId: this.event.id
+    }
+  });
+   modal.onDidDismiss<Speaker>().then( data => {
+    if(data.data !== null  && data.data ) {
+      this.event.speakers.push(data.data);
+    }
+  });
+  return await modal.present();
+}
+
+onSaveSpeakers() {
+  this.newEventStepper.slideNext();
+  this.newEventStepper.updateAutoHeight(200);
+}
+
+async onRemoveSpeaker(id: string) {
+  const alert = await this.alertController.create({
+    cssClass: 'remove-speaker-alert',
+    header: 'הסרת נואם',
+    message: `אתה בטוח שברצונך להסיר את הנואם?`,
+    mode: 'ios',
+    buttons: [
+      {
+        text: 'ביטול',
+        role: 'cancel',
+        cssClass: 'delete-lesson-alert-btn-cancel',
+        handler: () => {
+        }
+      }, {
+        text: 'אישור',
+        handler: () => {
+          this.eventService.deleteSpeaker(id).subscribe(() => {
+            this.event.speakers = this.event.speakers.filter(u => u.id !== id);
+            this.appService.presentToast('הנואם הוסר בהצלחה', true);
+          }, error => {
+            console.log(error);
+            this.appService.presentToast('חלה תקלה הנואם לא הוסר', false);
+          });
+        }
+      }
+    ]
+  });
+  await alert.present();
+}
+
+
+// -------------------------------------------------- Participant Functions ------------------------------------------------
+
+async onAddParticipant() {
+  const modal = await this.modalController.create({
+    component: AddParticipantComponent,
+    cssClass: 'add-participant-modal',
+    animated: true,
+    backdropDismiss: false,
+    componentProps: {
+      eventId: this.event.id
+    }
+  });
+   modal.onDidDismiss<Participant[]>().then( data => {
+    if(data.data !== null  && data.data ) {
+      this.event.participants.push(...data.data);
+    }
+  });
+  return await modal.present();
+}
+
+onSaveParticipants() {
+  this.newEventStepper.slideNext();
+  this.newEventStepper.updateAutoHeight(200);
+}
+
+async onRemoveParticipant(id: string) {
+  const alert = await this.alertController.create({
+    cssClass: 'remove-participan-alert',
+    header: 'הסרת משתתף',
+    message: `אתה בטוח שברצונך להסיר את המשתתף?`,
+    mode: 'ios',
+    buttons: [
+      {
+        text: 'ביטול',
+        role: 'cancel',
+        cssClass: 'delete-lesson-alert-btn-cancel',
+        handler: () => {
+        }
+      }, {
+        text: 'אישור',
+        handler: () => {
+          this.eventService.deleteParticipant(id).subscribe(() => {
+            this.event.participants = this.event.participants.filter(u => u.id !== id);
+            this.appService.presentToast('המשתתף הוסר בהצלחה', true);
+          }, error => {
+            console.log(error);
+            this.appService.presentToast('חלה תקלה המשתתף לא הוסר', false);
+          });
+        }
+      }
+    ]
+  });
+  await alert.present();
+}
+
+
+// -------------------------------------------------- Images Functions -----------------------------------------------------
+
+onFilesAdded(event) {
+  this.files.push(...event.addedFiles);
+}
+
+onRemove(event) {
+  this.files.splice(this.files.indexOf(event), 1);
+}
+
+onRemoveImage(event) {
+  this.eventService.removeEventImage(this.event.id, event).subscribe(images => {
+    this.event.images.splice(this.event.images.indexOf(event), 1);
+    this.appService.presentToast('התמונה הוסרה בהצלחה', true);
+  }, error => {
+    this.appService.presentToast('חלה תקלה לא ניתן להסיר את התמונה כעת', false);
+  });
+
+}
+
+onSaveAndExit() {
+  if(this.files.length > 0) {
+   this.eventService.uploadEventPhotos(this.files).pipe(
+     switchMap( images => {
+       return this.eventService.updateEventImages(this.event.id, images);
+     }))
+   .subscribe(() => {
+     this.appService.presentToast('התמונות נוספו בהצלחה', true);
+     this.router.navigate(['/manage/events']);
+   }, error => {
+     console.log(error);
+     this.appService.presentToast('חלה תקלה התמונות לא נשמרו', false);
+     this.router.navigate(['/manage/events']);
+   });
+  }
+    this.appService.presentToast('האירוע עודכן בהצלחה', true);
+    this.pageparamMapSubscription.unsubscribe();
+    this.router.navigate(['/manage/events']);
+ }
+
+
+// -------------------------------------------------- Utilities Functions --------------------------------------------------
+
   onImagePicked(imageData: string | File) {
     let imageFile;
     if (typeof imageData === 'string') {
@@ -199,203 +441,6 @@ export class EditEventPage implements OnInit {
     }
     // this.file = imageFile;
     this.form.value.image = imageFile;
-  }
-
-  onAddressPicked(address: Address) {
-    this.address = address;
-  }
-
-  onAddressIsValid(isValid: boolean) {
-    this.addressIsValid = isValid;
-  }
-
-  getFile(image: string) {
-  //   this.eventService.getImage(image).subscribe(file => {
-  //     return file;
-  // });
-  }
-
-  async onAddSpeaker() {
-    const modal = await this.modalController.create({
-      component: AddSpeakerComponent,
-      cssClass: 'add-speaker-modal',
-      animated: true,
-      backdropDismiss: false,
-      componentProps: {
-        eventId: this.event.id
-      }
-    });
-     modal.onDidDismiss<Speaker>().then( data => {
-      if(data.data !== null  && data.data ) {
-        this.event.speakers.push(data.data);
-      }
-    });
-    return await modal.present();
-  }
-
-  async onAddParticipant() {
-    const modal = await this.modalController.create({
-      component: AddParticipantComponent,
-      cssClass: 'add-participant-modal',
-      animated: true,
-      backdropDismiss: false,
-      componentProps: {
-        eventId: this.event.id
-      }
-    });
-     modal.onDidDismiss<Participant[]>().then( data => {
-      if(data.data !== null  && data.data ) {
-        this.event.participants.push(...data.data);
-      }
-    });
-    return await modal.present();
-  }
-
-  onSubmit(form: NgForm) {
-    if (!form.valid) {
-      return;
-    }
-    if (form.value.image) {
-    this.eventService.uploadEventThumbnail(this.form.value.image, 'Event')
-    .pipe(
-      switchMap(uploadRes => {
-        const eventToAdd = new Event(
-          this.event.id,
-          form.value.title,
-          form.value.description,
-          this.date,
-          this.beginsAt,
-          this.endsAt,
-          uploadRes.imageUrl,
-          form.value.maxCapacity,
-          form.value.placeName,
-          this.address.country,
-          this.address.city,
-          this.address.street,
-          this.address.houseNumber,
-          this.address.apartment,
-          this.address.entry,
-          this.event.catalogNumber,
-          this.event.images,
-          this.event.participants,
-          this.event.speakers
-        );
-        return this.eventService.updateEvent(eventToAdd);
-      })
-    ).subscribe(newEvent => {
-      this.event = newEvent;
-      this.appService.presentToast('האירוע נשמר בהצלחה', true);
-      this.newEventStepper.slideNext();
-    }, error => {
-      this.appService.presentToast('חלה תקלה פרטי האירוע לא נשמרו', false);
-      this.router.navigate(['/manage/events']);
-    }
-    );
-  } else {
-    const eventToAdd = new Event(
-      this.event.id,
-      form.value.title,
-      form.value.description,
-      this.date,
-      this.beginsAt,
-      this.endsAt,
-      this.event.thumbnail,
-      form.value.maxCapacity,
-      form.value.placeName,
-      this.address.country,
-      this.address.city,
-      this.address.street,
-      this.address.houseNumber,
-      this.address.apartment,
-      this.address.entry,
-      this.event.catalogNumber,
-      this.event.images,
-      this.event.participants,
-      this.event.speakers
-    );
-    if(this.isEquals(this.event, eventToAdd)) {
-      this.newEventStepper.slideNext();
-      return;
-    }
-    return this.eventService.updateEvent(eventToAdd).subscribe(newEvent => {
-      this.event = newEvent;
-      this.appService.presentToast('האירוע נשמר בהצלחה', true);
-      this.newEventStepper.slideNext();
-    }, error => {
-      this.appService.presentToast('חלה תקלה פרטי האירוע לא נשמרו', false);
-      this.router.navigate(['/manage/events']);
-    });
-  }
-  }
-
-  onFilesAdded(event) {
-    this.files.push(...event.addedFiles);
-  }
-
-  onRemove(event) {
-    this.files.splice(this.files.indexOf(event), 1);
-  }
-
-  onRemoveImage(event) {
-    this.eventService.removeEventImage(this.event.id, event).subscribe(images => {
-      this.event.images.splice(this.event.images.indexOf(event), 1);
-      this.appService.presentToast('התמונה הוסרה בהצלחה', true);
-    }, error => {
-      this.appService.presentToast('חלה תקלה לא ניתן להסיר את התמונה כעת', false);
-    });
-
-  }
-
-  onSaveSpeakers() {
-    // if(this.speakers) {
-    //   this.event.speakers.push(...this.speakers);
-    // }
-    this.newEventStepper.slideNext();
-  }
-
-  onSaveParticipants() {
-    // if(this.participants) {
-    //   this.event.participants.push(...this.participants);
-    // }
-    this.newEventStepper.slideNext();
-  }
-
-  onRemoveParticipant(id: string) {
-    this.eventService.deleteParticipant(id).subscribe(() => {
-      this.event.participants = this.event.participants.filter(u => u.id !== id);
-      this.appService.presentToast('המשתתף הוסר בהצלחה', true);
-    }, error => {
-      console.log(error);
-      this.appService.presentToast('חלה תקלה המשתתף לא הוסר', false);
-    });
-  }
-
- onSaveAndExit() {
-   if(this.files.length > 0) {
-    this.eventService.uploadEventPhotos(this.files).pipe(
-      switchMap( images => {
-        // this.event.images.push(...images);
-        // return this.eventService.updateEventImages(this.event.id, images);
-        return this.eventService.updateEventImages(this.event.id, images);
-      }))
-    .subscribe(() => {
-      this.appService.presentToast('התמונות נוספו בהצלחה', true);
-      this.router.navigate(['/manage/events']);
-    }, error => {
-      console.log(error);
-      this.appService.presentToast('חלה תקלה התמונות לא נשמרו', false);
-      this.router.navigate(['/manage/events']);
-    });
-   }
-   this.appService.presentToast('האירוע עודכן בהצלחה', true);
-  //  this.newEventStepper.getSwiper().then(swiper => {
-  //    swiper.destroy(true, false);
-  //  })
-      this.pageparamMapSubscription.unsubscribe();
-      // this.router.dispose();
-      // this.route = null;
-      this.router.navigate(['/manage/events']);
-      // this.newEventStepper.slideTo(0);
   }
 
   getSpeakerName(speaker: Speaker) {

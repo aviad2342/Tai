@@ -61,7 +61,7 @@ export class AddressPickerComponent implements OnInit {
        this.citiesList = this.cities = cities;
        if (this.isEdit) {
         this.city = this.address.city;
-        this.getStreetsListByCity(this.city);
+        this.getStreetsListByCity(this?.city);
         this.street = this.address.street;
       }
       });
@@ -135,6 +135,8 @@ export class AddressPickerComponent implements OnInit {
   async getStreetsListByCity(city: string) {
     this.addressService.getCityStreets(city).subscribe(streets => {
       this.streetsList = this.streets = streets;
+    }, error => {
+      console.log(error);
     });
   }
 
@@ -146,6 +148,11 @@ export class AddressPickerComponent implements OnInit {
     this.selectedAddress.street = event.value;
     this.addressPicked.emit(this.selectedAddress);
     this.enablePickers();
+  }
+
+  async onStreetSearchFailed(text: string) {
+    console.log('noob');
+    console.log(text);
   }
 
   onHouseNumberChosen(event: any) {

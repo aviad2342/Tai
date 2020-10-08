@@ -60,6 +60,11 @@ ion-datetime .picker-toolbar {
     border-top: 1px solid lightgray;
 }
 
+.add-participants-list {
+    margin-top: 9px;
+    border-top: 1px solid lightgray;
+}
+
 .dropzone {
     background: lightgray;
 }
@@ -71,4 +76,6 @@ ion-avatar {
 
 .slide-step {
     height: auto;
+    align-items: baseline;
+    min-height: 850px;
 }

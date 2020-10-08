@@ -49,11 +49,11 @@ export class AddLessonComponent implements OnInit {
     );
     this.courseService.addLesson(lessonToAdd).subscribe(lesson => {
       form.reset();
-      this.appService.presentToast('המאמר נשמר בהצלחה', true);
+      this.appService.presentToast('השיעור נשמר בהצלחה', true);
       this.close(true);
     }, error => {
       form.reset();
-      this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
+      this.appService.presentToast('חלה תקלה השיעור לא נשמר!', false);
       this.close(false);
     });
   }
