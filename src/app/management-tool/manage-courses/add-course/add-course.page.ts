@@ -52,7 +52,11 @@ export class AddCoursePage implements OnInit, OnDestroy {
 
   slideOpts = {
     allowSlidePrev: false,
-    allowTouchMove: false
+    allowTouchMove: false,
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'fraction'
+    }
   };
 
   constructor(

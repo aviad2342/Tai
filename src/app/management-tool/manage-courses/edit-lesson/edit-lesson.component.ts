@@ -55,14 +55,20 @@ export class EditLessonComponent implements OnInit {
       this.getVideoThumbnail(videoId),
       this.lesson.course,
     );
+    if(this.isEquals(this.lesson, lessonToUpdate)) {
+      form.reset();
+      this.appService.presentToast('השיעור עודכן בהצלחה', true);
+      this.close(null);
+      return;
+    }
     this.courseService.updateLesson(lessonToUpdate).subscribe(lesson => {
       form.reset();
       this.appService.presentToast('השיעור עודכן בהצלחה', true);
-      this.close(true);
+      this.close(lesson);
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי השיעור לא נשמרו!', false);
-      this.close(false);
+      this.close(null);
     });
   }
 
@@ -96,11 +102,21 @@ export class EditLessonComponent implements OnInit {
   //   }
   // }
 
-  async close(didEdit: boolean) {
-    await this.modalController.dismiss({didEdit});
+  isEquals(lesson1: Lesson, lesson2: Lesson) {
+    if(
+      lesson1.videoId === lesson2.videoId &&
+      lesson1.videoURL === lesson2.videoURL &&
+      lesson1.lessonNumber === lesson2.lessonNumber &&
+      lesson1.title === lesson2.title &&
+      lesson1.description === lesson2.description &&
+      lesson1.thumbnail === lesson2.thumbnail
+    ) {
+      return true;
+    }
+    return  false;
   }
 
-  async closeBtn() {
-    await this.modalController.dismiss();
+  async close(lesson: Lesson) {
+    await this.modalController.dismiss(lesson);
   }
 }

@@ -198,19 +198,13 @@ export class CourseService {
   }
 
   addLesson(lesson: Lesson) {
-    return this.http.post<{id: string}>('http://localhost:3000/api/lesson/lesson',
+    return this.http.post<Lesson>('http://localhost:3000/api/lesson/lesson',
     {
       ...lesson
     }).
-    pipe(
-      switchMap(resData => {
-        lesson.id = resData.id;
-        return this.lessons;
-      }),
-      take(1),
-      tap(lessons => {
-        this._lessons.next(lessons.concat(lesson));
-      }));
+    pipe(tap(resDta => {
+      return resDta;
+    }));
   }
 
   updateLesson(lesson: Lesson) {
@@ -224,17 +218,14 @@ export class CourseService {
       thumbnail: lesson.thumbnail,
       course: lesson.course
       };
-    return this.http.put(`http://localhost:3000/api/lesson/lesson/${lesson.id}`,
+    return this.http.put<Lesson>(`http://localhost:3000/api/lesson/lesson/${lesson.id}`,
     {
       ...lessonObj
     }).
-    pipe(
-      switchMap(resData => {
-        return this.getCourseLessons(lesson.course);
-      }),
-      tap(lessons => {
-        this._lessons.next(lessons);
-      }));
+    pipe(tap(resDta => {
+      this.getCourseLessons(resDta.course);
+      return resDta;
+    }));
   }
 
   reorderLessons(fromId: string, toId: string) {
@@ -256,6 +247,13 @@ export class CourseService {
       }),
       tap(lessons => {
         this._lessons.next(lessons.filter(u => u.id !== id));
+      }));
+  }
+
+  removeLesson(id: string) {
+    return this.http.delete(`http://localhost:3000/api/lesson/lesson/${id}`).
+    pipe( tap(resData => {
+        return resData;
       }));
   }
 

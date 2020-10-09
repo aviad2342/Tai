@@ -16,6 +16,7 @@ export class AddLessonComponent implements OnInit {
   @Input() lessonNumber: number;
   thumbnail = 'https://www.geirangerfjord.no/upload/images/2018_general/film-and-vid.jpg';
 
+
   constructor(
     private modalController: ModalController,
     private courseService: CourseService,
@@ -25,7 +26,6 @@ export class AddLessonComponent implements OnInit {
   ngOnInit() {}
 
   onUrlChange(event) {
-    // console.log(this.getVideoID(event.detail.value));
     if(event.detail.value && this.thumbnail !==  event.detail.value) {
       this.thumbnail = this.getVideoThumbnail(this.getVideoID(event.detail.value));
     }
@@ -50,11 +50,11 @@ export class AddLessonComponent implements OnInit {
     this.courseService.addLesson(lessonToAdd).subscribe(lesson => {
       form.reset();
       this.appService.presentToast('השיעור נשמר בהצלחה', true);
-      this.close(true);
+      this.close(lesson);
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה השיעור לא נשמר!', false);
-      this.close(false);
+      this.close(null);
     });
   }
 
@@ -74,12 +74,12 @@ export class AddLessonComponent implements OnInit {
     return `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
   }
 
-  async close(didAdd: boolean) {
-    await this.modalController.dismiss({didAdd});
-  }
+  // async close(didAdd: boolean) {
+  //   await this.modalController.dismiss({didAdd});
+  // }
 
-  async closeBtn() {
-    await this.modalController.dismiss();
+  async close(lesson: Lesson) {
+    await this.modalController.dismiss(lesson);
   }
 
 }

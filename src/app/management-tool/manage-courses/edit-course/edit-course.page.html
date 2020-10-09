@@ -57,14 +57,14 @@
           </ion-list>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="lessonsIsLoading">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-sm="8" class="ion-text-center" *ngIf="isLoading">
           <ion-spinner color="primary"></ion-spinner>
         </ion-col>
-        <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
-          <ion-list *ngIf="lessons !== null && !lessonsIsLoading">
+        <ion-col size="12" size-sm="8" class="ion-text-center" *ngIf="!isLoading">
+          <ion-list *ngIf="course?.lessons !== null">
             <ion-reorder-group id="reorder" (ionItemReorder)="onReorder($event)" disabled="false">
-            <div class="comment-item" *ngFor="let lesson of lessons">
+            <div class="comment-item" *ngFor="let lesson of course.lessons">
               <ion-item>
                 <ion-thumbnail size="medium" slot="start">
                   <ion-img [src]="lesson.thumbnail" class="lesson-thumbnail-image"></ion-img>
@@ -76,16 +76,27 @@
                     <p>{{ lesson?.date | date }}</p>
                   </ion-text>
                 </ion-label>
+                <ion-button color="warning" fill="outline" slot="end" (click)="onEditLesson(lesson)">
+                  <ion-icon name="create-outline" ></ion-icon>&nbsp;
+                  <ion-label>ערוך</ion-label>
+                </ion-button>
+                <ion-button color="danger" fill="outline" slot="end" (click)="onRemoveLesson(lesson.id)">
+                  <ion-icon name="trash-outline" ></ion-icon>&nbsp;
+                  <ion-label>הסר</ion-label>
+                </ion-button>
                 <ion-reorder slot="end"></ion-reorder>
               </ion-item>
             </div>
             <ion-item>
-              <div style="padding: 5px 10px">
-                <ion-button (click)="onAddLesson()">
-                  <ion-icon name="add" slot="start"></ion-icon>
+                <ion-thumbnail size="medium" slot="start">
+                  <ion-img class="default-thumbnail-image" [src]="defaultThumbnail"></ion-img>
+                </ion-thumbnail>
+
+                <ion-button (click)="onAddLesson()" slot="end">
+                  <ion-icon class="custom-new-video" slot="start"></ion-icon>
                   <ion-label>הוסף שיעור</ion-label>
                 </ion-button>
-                </div>
+
             </ion-item>
           </ion-reorder-group>
           </ion-list>
