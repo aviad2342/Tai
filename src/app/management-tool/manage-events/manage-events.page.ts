@@ -46,8 +46,9 @@ export class ManageEventsPage implements OnInit, OnDestroy {
     ionViewWillEnter() {
       this.eventService.getEvents().subscribe(events => {
         if(this.selectedEventId !== null) {
+          this.selected = [];
           const event = events.find(e => e.id === this.selectedEventId);
-          this.selected[0] = event;
+          this.selected.push(event);
         }
       });
     }

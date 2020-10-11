@@ -9,6 +9,7 @@ import { EditEventPageRoutingModule } from './edit-event-routing.module';
 import { EditEventPage } from './edit-event.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { EditSpeakerComponent } from '../edit-speaker/edit-speaker.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     SharedModule,
     NgxDropzoneModule
   ],
-  declarations: [EditEventPage]
+  declarations: [EditEventPage, EditSpeakerComponent]
 })
 export class EditEventPageModule {}

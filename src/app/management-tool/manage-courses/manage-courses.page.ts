@@ -50,7 +50,9 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
     ionViewWillEnter() {
       this.courseservice.getCourses().subscribe(courses => {
         if(this.selectedCourseId !== null) {
-          this.selected[0] = courses.filter(u => u.id === this.selectedCourseId);
+          this.selected = [];
+          const course = courses.find(u => u.id === this.selectedCourseId);
+          this.selected.push(course);
           this.courseservice.getCourseLessons(this.selectedCourseId).subscribe();
         }
       });
@@ -178,12 +180,8 @@ async onDeleteLesson(id: string) {
         text: 'אישור',
         handler: () => {
           this.courseservice.deleteLesson(id, this.selectedCourseId).subscribe(delRes => {
-            this.courseservice.getCourse(this.selectedCourseId).subscribe(course => {
-              course.courseLessons = this.lessons.length;
-              course.lastEdit = new Date();
-              this.courseservice.updateCourse(course).subscribe(courses => {
-                this.selected[0] = courses.find(u => u.id === this.selectedCourseId);
-              });
+            this.courseservice.getCourses().subscribe(courses => {
+              this.selected[0] = courses.find(u => u.id === this.selectedCourseId);
             });
             this.appservice.presentToast('השיעור נמחק בהצלחה!', true);
           }, error => {

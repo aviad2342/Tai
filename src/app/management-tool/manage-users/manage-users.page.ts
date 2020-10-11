@@ -51,9 +51,11 @@ export class ManageUsersPage implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
     this.userservice.getUsers().subscribe(users => {
-      if(this.selectedUserId !== null) {
-        this.selected[0] = users.find(u => u.id === this.selectedUserId);
-      }
+      // if(this.selectedUserId !== null) {
+      //   this.selected = []
+      //   const user = users.find(u => u.id === this.selectedUserId);
+      //   this.selected.push(user);
+      // }
     });
   }
 
@@ -89,11 +91,12 @@ export class ManageUsersPage implements OnInit, OnDestroy {
         id: this.selectedUserId
       }
     });
-     modal.onDidDismiss().then( data => {
-      if(data.data.didUpdate) {
-        this.selected[0] = this.users.find(u => u.id === this.selectedUserId);
-        this.isRowSelected = true;
-        // this.selectedUserId = '';
+     modal.onDidDismiss<User>().then( data => {
+      if(data.data !== null  && data.data ) {
+        this.selected = [];
+        this.selected.push(data.data);
+        // this.selected[0] = this.users.find(u => u.id === this.selectedUserId);
+        // this.isRowSelected = true;
       }
     });
     return await modal.present();

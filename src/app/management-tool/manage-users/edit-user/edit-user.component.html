@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="close(false)">
+      <ion-button (click)="close(null)">
         <ion-icon slot="icon-only" name="close-outline" class="toolbar-icon"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -123,9 +123,13 @@
               <ion-label position="floating">תאריך לידה<ion-text color="danger">*</ion-text></ion-label>
               <ion-datetime
               display-format="DD/MM/YYYY"
-              pickerFormat="DD MMM YY"
+              pickerFormat="DD MMM YYYY"
+              monthNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
+              monthShortNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
+              [value]="date"
               ngModel
               name="date"
+              [pickerOptions]="pickerOptions"
               required
               #dateCtrl="ngModel"
             ></ion-datetime>
@@ -143,7 +147,7 @@
       </ion-row>
       <ion-row class="ion-justify-content-center">
         <ion-col size="12" size="8" class="address-picker">
-          <app-address-picker [address]="address" (addressPicked)="onAddressPicked($event)" [isEdit]="true"></app-address-picker>
+          <app-address-picker [address]="address" (addressPicked)="onAddressPicked($event)" (isValid)="onAddressIsValid($event)" [isEdit]="true"></app-address-picker>
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center">
@@ -152,7 +156,7 @@
             type="submit"
             color="primary"
             expand="block"
-            [disabled]="!f.valid"
+            [disabled]="!f.valid || !this?.addressIsValid"
           >
           ערוך
           </ion-button>

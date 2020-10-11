@@ -77,6 +77,43 @@ export class EventService {Participant
   }
 
 
+  // updateEvent(event: Event) {
+  //   const eventObj = {
+  //      title:         event.title,
+  //      description:   event.description,
+  //      date:          event.date,
+  //      beginsAt:      event.beginsAt,
+  //      endsAt:        event.endsAt,
+  //      thumbnail:     event.thumbnail,
+  //      maxCapacity:   event.maxCapacity,
+  //      placeName:     event.placeName,
+  //      country:       event.country,
+  //      city:          event.city,
+  //      street:        event.street,
+  //      houseNumber:   event.houseNumber,
+  //      apartment:     event.apartment,
+  //      entry:         event.entry,
+  //      catalogNumber: event.catalogNumber,
+  //      images:        event.images,
+  //      participants:  event.participants,
+  //      speakers:      event.speakers
+  //     };
+  //   return this.http.put<Event>(`http://localhost:3000/api/event/event/${event.id}`,
+  //   {
+  //     ...eventObj
+  //   }).
+  //   pipe(
+  //     switchMap(resData => {
+  //       event = resData
+  //       return this.getEvents();
+  //     }),
+  //     take(1),
+  //     switchMap(events => {
+  //       this._events.next(events.concat(event));
+  //       return this.getEvent(event.id);
+  //     }));
+  // }
+
   updateEvent(event: Event) {
     const eventObj = {
        title:         event.title,
@@ -102,15 +139,40 @@ export class EventService {Participant
     {
       ...eventObj
     }).
-    pipe(
-      switchMap(resData => {
-        event = resData
-        return this.events;
-      }),
-      take(1),
-      switchMap(events => {
-        this._events.next(events.concat(event));
-        return this.getEvent(event.id);
+    pipe(tap(updatedEvent => {
+        this.getEvents();
+        return updatedEvent;
+      }));
+  }
+
+  updateEventAndThumbnail(event: Event) {
+    const eventObj = {
+       title:         event.title,
+       description:   event.description,
+       date:          event.date,
+       beginsAt:      event.beginsAt,
+       endsAt:        event.endsAt,
+       thumbnail:     event.thumbnail,
+       maxCapacity:   event.maxCapacity,
+       placeName:     event.placeName,
+       country:       event.country,
+       city:          event.city,
+       street:        event.street,
+       houseNumber:   event.houseNumber,
+       apartment:     event.apartment,
+       entry:         event.entry,
+       catalogNumber: event.catalogNumber,
+       images:        event.images,
+       participants:  event.participants,
+       speakers:      event.speakers
+      };
+    return this.http.put<Event>(`http://localhost:3000/api/event/event/image/${event.id}`,
+    {
+      ...eventObj
+    }).
+    pipe(tap(updatedEvent => {
+        this.getEvents();
+        return updatedEvent;
       }));
   }
 
@@ -175,14 +237,6 @@ export class EventService {Participant
     }));
   }
 
-  getArticleByUser(authorId: string) {
-    return this.http
-      .get<Event>(
-        `http://localhost:3000/api/event/event/authorId/${authorId}`)
-      .pipe(tap(event => {
-        return event;
-      }));
-  }
 
   uploadEventThumbnail(image: File, fileName: string) {
     const uploadData = new FormData();
@@ -241,18 +295,34 @@ export class EventService {Participant
       lastName:    speaker.lastName,
       description: speaker.description,
       picture:     speaker.picture,
-      eventId:     speaker.event
+      event:     speaker.event
       };
-    return this.http.put(`http://localhost:3000/api/speaker/speaker/${speaker.id}`,
+    return this.http.put<Speaker>(`http://localhost:3000/api/speaker/speaker/${speaker.id}`,
     {
       ...speakerObj
     }).
-    pipe(
-      switchMap(resData => {
-        return this.getSpeakers();
-      }),
-      tap(speakers => {
-        this._speakers.next(speakers);
+    pipe(tap(updatedSpeaker => {
+         this.getEventSpeakers(updatedSpeaker.event);
+         return updatedSpeaker;
+      }));
+  }
+
+  updateSpeakerAndImage(speaker: Speaker) {
+    const speakerObj = {
+      title:       speaker.title,
+      firstName:   speaker.firstName,
+      lastName:    speaker.lastName,
+      description: speaker.description,
+      picture:     speaker.picture,
+      event:     speaker.event
+      };
+    return this.http.put<Speaker>(`http://localhost:3000/api/speaker/speaker/image/${speaker.id}`,
+    {
+      ...speakerObj
+    }).
+    pipe(tap(updatedSpeaker => {
+         this.getEventSpeakers(updatedSpeaker.event);
+         return updatedSpeaker;
       }));
   }
 
@@ -336,16 +406,14 @@ export class EventService {Participant
       picture:     participant.picture,
       eventId:     participant.event
       };
-    return this.http.put(`http://localhost:3000/api/participant/participant/${participant.id}`,
+    return this.http.put<Participant>(`http://localhost:3000/api/participant/participant/${participant.id}`,
     {
       ...participantObj
     }).
     pipe(
-      switchMap(resData => {
-        return this.getParticipants();
-      }),
-      tap(participants => {
-        this._participants.next(participants);
+      tap(updatedParticipant => {
+        this.getEventParticipants(updatedParticipant.event);
+        return updatedParticipant
       }));
   }
 

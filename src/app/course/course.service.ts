@@ -117,16 +117,13 @@ export class CourseService {
       thumbnail: course.thumbnail,
       courseLessons: course.courseLessons
       };
-    return this.http.put(`http://localhost:3000/api/course/course/${course.id}`,
+    return this.http.put<Course>(`http://localhost:3000/api/course/course/${course.id}`,
     {
       ...courseObj
     }).
-    pipe(
-      switchMap(resData => {
-        return this.getCourses();
-      }),
-      tap(courses => {
-        this._courses.next(courses);
+    pipe(tap(updatedCourse => {
+        this.getCourses();
+        return updatedCourse;
       }));
   }
 

@@ -39,9 +39,30 @@ export class EditUserComponent implements OnInit {
   @Input() id: string;
   @ViewChild('f', { static: true }) form: NgForm;
   user: User;
+  addressIsValid = false;
   address: Address = new Address();
   updateImage = false;
+  date: Date;
 
+  pickerOptions = {
+    mode: 'ios',
+    cssClass: 'date-picker-class',
+    buttons: [
+      {
+        text: 'ביטול',
+        role: 'cancel',
+        cssClass: 'picker-cancel-btn'
+      },
+      {
+        text: 'אישור',
+        role: 'confirm',
+        cssClass: 'picker-confirm-btn',
+        handler: (value: any) => {
+          this.date = new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value);
+        }
+      }
+    ]
+  };
 
   constructor(
     private userService: UserService,
@@ -67,6 +88,7 @@ export class EditUserComponent implements OnInit {
         password: this.user.password,
         date: this.user.date,
         };
+        this.date = this.user.date;
       this.form.setValue(userObj);
     },
     error => {
@@ -78,7 +100,7 @@ export class EditUserComponent implements OnInit {
             {
               text: 'Okay',
               handler: () => {
-                this.close(false);
+                this.close(null);
               }
             }
           ]
@@ -111,6 +133,10 @@ export class EditUserComponent implements OnInit {
     this.address = address;
   }
 
+  onAddressIsValid(isValid: boolean) {
+    this.addressIsValid = isValid;
+  }
+
   onSubmit(form: NgForm) {
     if (!form.valid) {
       return;
@@ -126,7 +152,7 @@ export class EditUserComponent implements OnInit {
           form.value.password,
           form.value.phone,
           form.value.email,
-          new Date(form.value.date),
+          this.date,
           this.address.country,
           this.address.city,
           this.address.street,
@@ -137,14 +163,12 @@ export class EditUserComponent implements OnInit {
         );
         return this.userService.updateUser(userToUpdate);
       })
-    ).subscribe(() => {
-      form.reset();
+    ).subscribe(user => {
       this.appService.presentToast('המשתמש נשמר בהצלחה', true);
-      this.close(true);
+      this.close(user);
     }, error => {
-      form.reset();
       this.appService.presentToast('חלה תקלה פרטי המשתמש לא נשמרו', false);
-      this.close(false);
+      this.close(null);
     });
 
     } else {
@@ -155,7 +179,7 @@ export class EditUserComponent implements OnInit {
         form.value.password,
         form.value.phone,
         form.value.email,
-        new Date(form.value.date),
+        this.date,
         this.address.country,
         this.address.city,
         this.address.street,
@@ -164,21 +188,47 @@ export class EditUserComponent implements OnInit {
         this.address.entry,
         this.user.profilePicture
       );
-      this.userService.updateUser(userToUpdate).subscribe(() => {
-        form.reset();
+
+      if(this.isEquals(this.user, userToUpdate)) {
+        console.log('ddddd');
         this.appService.presentToast('המשתמש נשמר בהצלחה', true);
-        this.close(true);
+        this.close(null);
+        return;
+      }
+      this.userService.updateUser(userToUpdate).subscribe(user => {
+        this.appService.presentToast('המשתמש נשמר בהצלחה', true);
+        this.close(user);
       }, error => {
-        form.reset();
         this.appService.presentToast('חלה תקלה פרטי המשתמש לא נשמרו', false);
-        this.close(false);
+        this.close(null);
       });
     }
 
   }
 
-  async close(didUpdate: boolean) {
-    await this.modalController.dismiss({didUpdate});
+  async close(user: User) {
+    await this.modalController.dismiss(user);
+  }
+
+  isEquals(user1: User, user2: User) {
+    if(
+      user1.firstName   === user2.firstName &&
+      user1.lastName    === user2.lastName &&
+      user1.date        === user2.date &&
+      user1.password    === user2.password &&
+      user1.phone       === user2.phone &&
+      user1.email       === user2.email &&
+      user1.date  === user2.date && // compare dates
+      user1.country     === user2.country &&
+      user1.city        === user2.city &&
+      user1.street      === user2.street &&
+      user1.houseNumber === user2.houseNumber &&
+      user1.apartment   === user2.apartment &&
+      user1.entry       === user2.entry
+    ) {
+      return true;
+    }
+    return  false;
   }
 
 }

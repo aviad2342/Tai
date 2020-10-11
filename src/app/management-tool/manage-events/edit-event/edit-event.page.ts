@@ -12,6 +12,8 @@ import { Speaker } from 'src/app/event/speaker.model';
 import { Address } from 'src/app/shared/address.model';
 import { AddParticipantComponent } from '../add-participant/add-participant.component';
 import { AddSpeakerComponent } from '../add-speaker/add-speaker.component';
+import { EditSpeakerComponent } from '../edit-speaker/edit-speaker.component';
+
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';
@@ -218,7 +220,7 @@ onSubmit(form: NgForm) {
         this.event.participants,
         this.event.speakers
       );
-      return this.eventService.updateEvent(eventToAdd);
+      return this.eventService.updateEventAndThumbnail(eventToAdd);
     })
   ).subscribe(newEvent => {
     this.event = newEvent;
@@ -292,6 +294,25 @@ async onAddSpeaker() {
 onSaveSpeakers() {
   this.newEventStepper.slideNext();
   this.newEventStepper.updateAutoHeight(200);
+}
+
+async onEditSpeaker(speaker: Speaker) {
+  const modal = await this.modalController.create({
+    component: EditSpeakerComponent,
+    cssClass: 'edit-speaker-modal',
+    animated: true,
+    backdropDismiss: false,
+    componentProps: {
+      speaker
+    }
+  });
+   modal.onDidDismiss<Speaker>().then( data => {
+    if(data.data !== null  && data.data ) {
+      this.event.speakers = this.event.speakers.filter(s => s.id !== data.data.id);
+      this.event.speakers.push(data.data);
+    }
+  });
+  return await modal.present();
 }
 
 async onRemoveSpeaker(id: string) {

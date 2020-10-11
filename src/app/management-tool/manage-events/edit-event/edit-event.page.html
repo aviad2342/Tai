@@ -213,9 +213,13 @@
                     <p>{{ speaker?.description }}</p>
                   </ion-text>
                   </ion-label>
+                  <ion-button color="warning" fill="outline" slot="end" (click)="onEditSpeaker(speaker)">
+                    <ion-icon name="create-outline" ></ion-icon>&nbsp;&nbsp;
+                    <ion-label>ערוך </ion-label>
+                  </ion-button>
                   <ion-button color="danger" fill="outline" slot="end" (click)="onRemoveSpeaker(speaker.id)">
                     <ion-icon name="person-remove-outline" ></ion-icon>&nbsp;&nbsp;
-                    <ion-label>הסר נואם </ion-label>
+                    <ion-label>הסר </ion-label>
                   </ion-button>
                 </ion-item>
 

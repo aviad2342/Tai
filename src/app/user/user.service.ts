@@ -150,8 +150,13 @@ export class UserService {
       switchMap(resData => {
         return this.getUsers();
       }),
-      tap(users => {
+      switchMap(users => {
         this._users.next(users);
+        return users.filter(u => u.id === user.id);
+      }),
+      take(1),
+      tap(userData => {
+        return userData;
       }));
   }
 
