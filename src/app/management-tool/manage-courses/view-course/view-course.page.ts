@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
-import { CourseService } from 'src/app/course/course.service';
-import { UserService } from 'src/app/user/user.service';
-import { Course } from 'src/app/course/course.model';
-import { Lesson } from 'src/app/course/lesson.model';
+import { CourseService } from '../../../course/course.service';
+import { UserService } from '../../../user/user.service';
+import { Course } from '../../../course/course.model';
 
 @Component({
   selector: 'app-view-course',

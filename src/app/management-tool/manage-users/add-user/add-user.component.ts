@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
-import { Address } from 'src/app/shared/address.model';
-import { AppService } from 'src/app/app.service';
-import { UserService } from 'src/app/user/user.service';
-import { User } from 'src/app/user/user.model';
+import { Address } from '../../../shared/address.model';
+import { AppService } from '../../../app.service';
+import { UserService } from '../../../user/user.service';
+import { User } from '../../../user/user.model';
 
 
 

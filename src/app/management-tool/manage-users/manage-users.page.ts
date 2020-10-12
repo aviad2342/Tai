@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
 import { ColumnMode, DatatableComponent, SelectionType } from '../../../../projects/swimlane/ngx-datatable/src/public-api';
-import { UserService } from 'src/app/user/user.service';
+import { UserService } from '../../user/user.service';
 import { ModalController, AlertController } from '@ionic/angular';
 import { AddUserComponent } from './add-user/add-user.component';
 import { Subscription } from 'rxjs';
-import { User } from 'src/app/user/user.model';
+import { User } from '../../user/user.model';
 import { ViewUserComponent } from './view-user/view-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
-import { AppService } from 'src/app/app.service';
+import { AppService } from '../../app.service';
 
 
 @Component({
@@ -51,15 +51,18 @@ export class ManageUsersPage implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
     this.userservice.getUsers().subscribe(users => {
-      // if(this.selectedUserId !== null) {
-      //   this.selected = []
-      //   const user = users.find(u => u.id === this.selectedUserId);
-      //   this.selected.push(user);
-      // }
+      if(this.selectedUserId  && this.selectedUserId !== '' && this.selectedUserId !== null) {
+        this.selected = []
+        const user = users.find(u => u.id === this.selectedUserId);
+        this.selected.push(user);
+      }
     });
   }
 
   async onAddUser() {
+    this.selected = []
+    this.selectedUserId = null;
+    this.isRowSelected = false;
     const modal = await this.modalController.create({
       component: AddUserComponent,
       cssClass: 'add-user-modal',

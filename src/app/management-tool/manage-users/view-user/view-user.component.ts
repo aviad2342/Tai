@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
-import { UserService } from 'src/app/user/user.service';
-import { User } from 'src/app/user/user.model';
+import { UserService } from '../../../user/user.service';
+import { User } from '../../../user/user.model';
 
 @Component({
   selector: 'app-view-user',

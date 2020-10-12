@@ -2,13 +2,14 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ColumnMode, SelectionType, DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { ModalController, AlertController } from '@ionic/angular';
-import { AppService } from 'src/app/app.service';
-import { CourseService } from 'src/app/course/course.service';
-import { Course } from 'src/app/course/course.model';
-import { Lesson } from 'src/app/course/lesson.model';
+import { AppService } from '../../app.service';
+import { CourseService } from '../../course/course.service';
+import { Course } from '../../course/course.model';
+import { Lesson } from '../../course/lesson.model';
 import { Router } from '@angular/router';
 import { AddLessonComponent } from './add-lesson/add-lesson.component';
 import { EditLessonComponent } from './edit-lesson/edit-lesson.component';
+import { DataTableFooterComponent } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-manage-courses',
@@ -49,7 +50,7 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
 
     ionViewWillEnter() {
       this.courseservice.getCourses().subscribe(courses => {
-        if(this.selectedCourseId !== null) {
+        if(this.selectedCourseId && this.selectedCourseId !== '' && this.selectedCourseId !== null ) {
           this.selected = [];
           const course = courses.find(u => u.id === this.selectedCourseId);
           this.selected.push(course);
@@ -86,7 +87,7 @@ async onDeleteCourse() {
     const alert = await this.alertController.create({
       cssClass: 'delete-course-alert',
       header: 'אישור מחיקת קורס',
-      message: `האם אתה בטוח שברצונך למחוק את קורס ${this.selected[0].title} לצמיתות?`,
+      message: `האם אתה בטוח שברצונך למחוק את קורס לצמיתות?`,
       mode: 'ios',
       buttons: [
         {
@@ -200,8 +201,10 @@ async onDeleteLesson(id: string) {
   onSelect({ selected }) {
     if(this.selectedCourseId === selected[0].id) {
       this.selected = [];
+      selected = [];
       this.selectedCourseId = '';
       this.isRowSelected = false;
+      console.log(this.selected);
     } else {
      this.lessonSubscription = this.courseservice.getCourseLessons(selected[0].id).subscribe(lessons => {
         this.lessons = lessons;

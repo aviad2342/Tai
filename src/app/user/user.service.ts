@@ -160,6 +160,40 @@ export class UserService {
       }));
   }
 
+  updateUserAndProfilePicture(user: User) {
+    const userObj = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phone: user.phone,
+      password: user.password,
+      date: user.date,
+      country: user.country,
+      city: user.city,
+      street: user.street,
+      houseNumber: user.houseNumber,
+      apartment: user.apartment,
+      entry: user.entry,
+      profilePicture: user.profilePicture
+      };
+    return this.http.put(`http://localhost:3000/api/user/users/image/${user.id}`,
+    {
+      ...userObj
+    }).
+    pipe(
+      switchMap(resData => {
+        return this.getUsers();
+      }),
+      switchMap(users => {
+        this._users.next(users);
+        return users.filter(u => u.id === user.id);
+      }),
+      take(1),
+      tap(userData => {
+        return userData;
+      }));
+  }
+
   deleteUser(id: string) {
     return this.http.delete(`http://localhost:3000/api/user/users/${id}`).
     pipe(

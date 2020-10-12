@@ -369,4 +369,9 @@ onRemove(event) {
     return  participant?.firstName + ' ' + participant?.lastName;
   }
 
+  onCancel() {
+    this.form.reset();
+    this.router.navigate(['/manage/events']);
+  }
+
 }

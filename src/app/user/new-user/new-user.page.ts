@@ -4,8 +4,8 @@ import { NgForm } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import { User } from '../user.model';
 import { Router } from '@angular/router';
-import { Address } from 'src/app/shared/address.model';
-import { AppService } from 'src/app/app.service';
+import { Address } from '../../shared/address.model';
+import { AppService } from '../../app.service';
 
 
 function base64toBlob(base64Data, contentType) {

@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-import { CourseService } from 'src/app/course/course.service';
-import { AppService } from 'src/app/app.service';
-import { Lesson } from 'src/app/course/lesson.model';
+import { CourseService } from '../../../course/course.service';
+import { AppService } from '../../../app.service';
+import { Lesson } from '../../../course/lesson.model';
 
 @Component({
   selector: 'app-add-lesson',

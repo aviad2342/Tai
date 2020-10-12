@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
-import { User } from 'src/app/user/user.model';
+import { User } from '../../../user/user.model';
 import { ModalController, AlertController } from '@ionic/angular';
-import { AppService } from 'src/app/app.service';
-import { UserService } from 'src/app/user/user.service';
-import { Address } from 'src/app/shared/address.model';
+import { AppService } from '../../../app.service';
+import { UserService } from '../../../user/user.service';
+import { Address } from '../../../shared/address.model';
 
 
 function base64toBlob(base64Data, contentType) {
@@ -161,7 +161,7 @@ export class EditUserComponent implements OnInit {
           this.address.entry,
           uploadRes.imageUrl
         );
-        return this.userService.updateUser(userToUpdate);
+        return this.userService.updateUserAndProfilePicture(userToUpdate);
       })
     ).subscribe(user => {
       this.appService.presentToast('המשתמש נשמר בהצלחה', true);
@@ -190,7 +190,6 @@ export class EditUserComponent implements OnInit {
       );
 
       if(this.isEquals(this.user, userToUpdate)) {
-        console.log('ddddd');
         this.appService.presentToast('המשתמש נשמר בהצלחה', true);
         this.close(null);
         return;

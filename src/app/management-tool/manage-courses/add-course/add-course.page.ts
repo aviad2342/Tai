@@ -1,15 +1,15 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonSlides, ModalController, AlertController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
-import { CourseService } from 'src/app/course/course.service';
-import { AuthService } from 'src/app/auth/auth.service';
-import { AppService } from 'src/app/app.service';
+import { CourseService } from '../../../course/course.service';
+import { AuthService } from '../../../auth/auth.service';
+import { AppService } from '../../../app.service';
 import { Router } from '@angular/router';
 import { switchMap, take } from 'rxjs/operators';
-import { Course } from 'src/app/course/course.model';
-import { Lesson } from 'src/app/course/lesson.model';
+import { Course } from '../../../course/course.model';
+import { Lesson } from '../../../course/lesson.model';
 import { AddLessonComponent } from '../add-lesson/add-lesson.component';
-import { Subscription } from 'rxjs';
+
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';
@@ -37,14 +37,12 @@ function base64toBlob(base64Data, contentType) {
   templateUrl: './add-course.page.html',
   styleUrls: ['./add-course.page.scss'],
 })
-export class AddCoursePage implements OnInit, OnDestroy {
+export class AddCoursePage implements OnInit {
 
   @ViewChild('stepper') newCourseStepper: IonSlides;
   @ViewChild('f', { static: true }) form: NgForm;
   course: Course;
-  lessons: Lesson[];
   file: File;
-  private lessonsSubscription: Subscription;
   authorId: string;
   authorName: string;
   isLoading = false;
@@ -69,12 +67,10 @@ export class AddCoursePage implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
+    this.lessonsIsLoading = true;
     this.authService.getUserLogged().subscribe(author => {
       this.authorId = author.id;
       this.authorName = author.firstName + ' ' + author.lastName;
-    });
-    this.lessonsSubscription = this.courseService.lessons.subscribe( lessons => {
-      this.lessons = lessons;
     });
   }
 
@@ -118,13 +114,14 @@ export class AddCoursePage implements OnInit, OnDestroy {
           0,
           []
         );
+        this.isLoading = true;
         return this.courseService.addCourse(courseToAdd);
       })
     ).subscribe(newCourse => {
       this.course = newCourse;
-      this.courseService.getCourseLessons(newCourse.id).subscribe();
+      this.isLoading = false;
+      this.lessonsIsLoading = false;
       this.newCourseStepper.slideNext();
-      form.reset();
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי הקורס לא נשמרו', false);
@@ -144,9 +141,9 @@ export class AddCoursePage implements OnInit, OnDestroy {
         lessonNumber: this.getLessonNumber()
       }
     });
-    modal.onDidDismiss().then( data => {
-      if(data.data.didAdd) {
-        this.courseService.getCourseLessons(this.course.id).subscribe();
+    modal.onDidDismiss<Lesson>().then( data => {
+      if(data.data !== null  && data.data ) {
+        this.course.lessons.push(data.data);
       }
     });
     return await modal.present();
@@ -168,7 +165,7 @@ export class AddCoursePage implements OnInit, OnDestroy {
           text: 'אישור',
           handler: () => {
             this.courseService.deleteLesson(id, this.course.id).subscribe(lessons => {
-              this.lessons = lessons;
+              this.course.lessons = this.course.lessons.filter(c => c.id !== id);
               this.appService.presentToast('השיעור נמחק בהצלחה!', true);
             }, error => {
               this.appService.presentToast('חלה תקלה פעולת המחיקה נכשלה!', false);
@@ -181,19 +178,14 @@ export class AddCoursePage implements OnInit, OnDestroy {
   }
 
   async onSaveAndExit() {
-    if(this.lessons !== null && this.lessons && this.lessons.length > 0) {
-      this.course.courseLessons = this.lessons.length;
-      this.courseService.updateCourse(this.course).subscribe(resData => {
-        this.appService.presentToast('השיעור נשמר בהצלחה', true);
+    if(this.course.lessons !== null && this.course.lessons && this.course.lessons.length > 0) {
+      this.appService.presentToast('השיעור נשמר בהצלחה', true);
         this.router.navigate(['/manage/courses']);
-      }, error => {
-        this.appService.presentToast('חלה תקלה השיעור לא נשמר', false);
-        this.router.navigate(['/manage/courses']);
-      });
     } else {
       const alert = await this.alertController.create({
         cssClass: 'no-class-added-alert',
         header: 'לא נוספו שיעורים',
+        mode: 'ios',
         backdropDismiss: false,
         message: 'נראה שלא הוספת שיעורים לקורס זה! האם ברצונך לבטל את יצירת הקורס? לשמור את הקורס ללא שיעורים או להוסיף שיעורים?',
         buttons: [
@@ -231,16 +223,15 @@ export class AddCoursePage implements OnInit, OnDestroy {
   }
 
   getLessonNumber(){
-    if(this.lessons !== null) {
-      return this.lessons.length + 1;
+    if(this.course.lessons && this.course.lessons !== null) {
+      return this.course.lessons.length + 1;
     }
     return 1;
   }
 
-  ngOnDestroy() {
-    if (this.lessonsSubscription) {
-      this.lessonsSubscription.unsubscribe();
-    }
+  onCancel() {
+    this.form.reset();
+    this.router.navigate(['/manage/courses']);
   }
 
 }

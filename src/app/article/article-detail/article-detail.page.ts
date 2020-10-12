@@ -3,10 +3,10 @@ import { AlertController, NavController, IonContent } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { ArticleService } from '../article.service';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { Article } from '../article.model';
 import { Comment } from '../comment.model';
-import { AppService } from 'src/app/app.service';
+import { AppService } from '../../app.service';
 
 
 

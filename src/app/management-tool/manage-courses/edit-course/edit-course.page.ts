@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CourseService } from 'src/app/course/course.service';
+import { CourseService } from '../../../course/course.service';
 import { NavController, ModalController, IonReorderGroup, AlertController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
-import { Course } from 'src/app/course/course.model';
+import { Course } from '../../../course/course.model';
 import { switchMap } from 'rxjs/operators';
-import { AppService } from 'src/app/app.service';
-import { Lesson } from 'src/app/course/lesson.model';
+import { AppService } from '../../../app.service';
+import { Lesson } from '../../../course/lesson.model';
 import { AddLessonComponent } from '../add-lesson/add-lesson.component';
 import { EditLessonComponent } from '../edit-lesson/edit-lesson.component';
 

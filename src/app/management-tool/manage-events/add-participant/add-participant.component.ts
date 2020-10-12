@@ -3,11 +3,11 @@ import { SegmentChangeEventDetail } from '@ionic/core';
 import { NgForm } from '@angular/forms';
 import { AlertController, IonSegment, IonSlides, ModalController } from '@ionic/angular';
 import { v4 as uuidv4 } from 'uuid';
-import { EventService } from 'src/app/event/event.service';
-import { Participant } from 'src/app/event/participant.model';
-import { User } from 'src/app/user/user.model';
+import { EventService } from '../../../event/event.service';
+import { Participant } from '../../../event/participant.model';
+import { User } from '../../../user/user.model';
 import { switchMap } from 'rxjs/operators';
-import { AppService } from 'src/app/app.service';
+import { AppService } from '../../../app.service';
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';

@@ -8,7 +8,7 @@ import { UserService } from '../user.service';
 import { User } from '../user.model';
 import { Subscription } from 'rxjs';
 import { Address } from '../../shared/address.model';
-import { AppService } from 'src/app/app.service';
+import { AppService } from '../../app.service';
 
 
 

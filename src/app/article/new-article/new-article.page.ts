@@ -4,8 +4,8 @@ import { ArticleService } from '../article.service';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Article } from '../article.model';
-import { AuthService } from 'src/app/auth/auth.service';
-import { AppService } from 'src/app/app.service';
+import { AuthService } from '../../auth/auth.service';
+import { AppService } from '../../app.service';
 import { QuillFormat, QuillEditorBase, QuillEditorComponent } from 'ngx-quill';
 
 

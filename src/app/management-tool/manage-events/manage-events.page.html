@@ -59,6 +59,7 @@
       [rowHeight]="'auto'"
       [headerHeight]="50"
       [footerHeight]="50"
+      [messages]="{emptyMessage:'אין נתונים להצגה', totalMessage: 'total', selectedMessage: 'selected'}"
       [limit]="50"
       [columnMode]="columnMode.standard"
       [selected]="selected"
@@ -101,6 +102,14 @@
         <ng-template let-column="column" ngx-datatable-header-template><strong>כמות משתתפים</strong></ng-template>
       </ngx-datatable-column>
 
+      <ngx-datatable-footer #datatableFooter>
+        <ng-template ngx-datatable-footer-template 
+        let-rowCount="rowCount"
+        let-selectedCount="selectedCount"
+        >
+        <div>נבחר {{ selectedCount }}  מתוך {{ rowCount }} אירועים </div>
+        </ng-template>
+      </ngx-datatable-footer>
     </ngx-datatable>
 
     </ion-row>

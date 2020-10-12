@@ -59,6 +59,7 @@
       [rowHeight]="'auto'"
       [headerHeight]="50"
       [footerHeight]="50"
+      [messages]="{emptyMessage:'אין נתונים להצגה', totalMessage: 'total', selectedMessage: 'selected'}"
       [limit]="50"
       [columnMode]="columnMode.standard"
       [selected]="selected"
@@ -94,6 +95,15 @@
         <ng-template let-column="column" ngx-datatable-header-template><strong>שיעורים</strong></ng-template>
       </ngx-datatable-column>
 
+      <ngx-datatable-footer #datatableFooter>
+        <ng-template ngx-datatable-footer-template 
+        let-rowCount="rowCount"
+        let-selectedCount="selectedCount"
+        >
+        <div>נבחר {{ selectedCount }}  מתוך {{ rowCount }} קורסים </div>
+        </ng-template>
+      </ngx-datatable-footer>
+
     </ngx-datatable>
 
 <!------------------------------------------ lessons datatable -------------------------------------------------->
@@ -103,6 +113,7 @@
     [rows]="lessons"
     class="material ion-margin"
     [rowHeight]="'auto'"
+    [messages]="{emptyMessage:'אין נתונים להצגה'}"
     [headerHeight]="50"
     [footerHeight]="100"
     [limit]="50"

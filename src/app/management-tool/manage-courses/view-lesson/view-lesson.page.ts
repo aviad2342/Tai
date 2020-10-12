@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController, ViewDidEnter } from '@ionic/angular';
 import { Capacitor, Plugins } from '@capacitor/core';
-import { CourseService } from 'src/app/course/course.service';
+import { CourseService } from '../../../course/course.service';
 import { YoutubePlayerWeb } from 'capacitor-youtube-player';
-import { Lesson } from 'src/app/course/lesson.model';
+import { Lesson } from '../../../course/lesson.model';
 
 
 @Component({

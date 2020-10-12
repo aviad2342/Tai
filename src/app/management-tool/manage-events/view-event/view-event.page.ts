@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { GALLERY_CONF, GALLERY_IMAGE, NgxImageGalleryComponent } from 'ngx-image-gallery';
-import { Speaker } from 'src/app/event/speaker.model';
+import { Speaker } from '../../../event/speaker.model';
 import { Event } from '../../../event/event.model';
 import { EventService } from '../../../event/event.service';
 import { ViewParticipantComponent } from '../view-participant/view-participant.component';

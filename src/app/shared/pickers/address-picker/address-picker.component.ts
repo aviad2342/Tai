@@ -27,6 +27,7 @@ export class AddressPickerComponent implements OnInit {
   houseNumber: string;
   apartment: string;
   entry: string;
+  isLoadingStreets = false;
 
   countriesAutocomplete = '';
   citiesAutocomplete = '';
@@ -61,7 +62,9 @@ export class AddressPickerComponent implements OnInit {
        this.citiesList = this.cities = cities;
        if (this.isEdit) {
         this.city = this.address.city;
-        this.getStreetsListByCity(this?.city);
+        setTimeout(() => {
+          this.getStreetsListByCity(this.address?.city);
+        });
         this.street = this.address.street;
       }
       });
@@ -133,8 +136,10 @@ export class AddressPickerComponent implements OnInit {
   }
 
   async getStreetsListByCity(city: string) {
+    this.isLoadingStreets = true;
     this.addressService.getCityStreets(city).subscribe(streets => {
       this.streetsList = this.streets = streets;
+      this.isLoadingStreets = false;
     }, error => {
       console.log(error);
     });

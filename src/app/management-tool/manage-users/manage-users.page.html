@@ -84,6 +84,7 @@
       #usersTable
       [rows]="users"
       class="bootstrap"
+      [messages]="{emptyMessage:'אין נתונים להצגה', totalMessage: 'total', selectedMessage: 'selected'}"
       [rowHeight]="'auto'"
       [headerHeight]="50"
       [footerHeight]="50"
@@ -133,13 +134,14 @@
         </ng-template>
       </ngx-datatable-column> 
     
-      <!-- <ngx-datatable-column name="פעולות" [sortable]="false">
-        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-          <ion-button size="small" fill="outline" (click)="open(row)"
-            >Details</ion-button
-          >
+      <ngx-datatable-footer #datatableFooter>
+        <ng-template ngx-datatable-footer-template 
+        let-rowCount="rowCount"
+        let-selectedCount="selectedCount"
+        >
+        <div>נבחר {{ selectedCount }}  מתוך {{ rowCount }} משתמשים </div>
         </ng-template>
-      </ngx-datatable-column> -->
+      </ngx-datatable-footer>
     </ngx-datatable>
       <!-- <ngx-datatable 
       [selected]="selected"

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ArticleService } from '../article.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AppService } from 'src/app/app.service';
+import { AppService } from '../../app.service';
 import { NavController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';

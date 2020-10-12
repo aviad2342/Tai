@@ -62,7 +62,14 @@
           <br>
           <br>
           <ion-row class="ion-justify-content-center">
-            <ion-col size="8">
+            <ion-col size="6">
+              <ion-button 
+              fill="clear" 
+              expand="block"
+              (click)="onCancel()"
+              >ביטול <ion-icon slot="start" name="close-outline"></ion-icon></ion-button>
+            </ion-col>
+            <ion-col size="6">
               <ion-button 
               type="submit"
               fill="clear" 
@@ -79,11 +86,11 @@
 
     <ion-slide>
       <ion-grid>
-        <ion-row *ngIf="course != null">
-          <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="isLoading">
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="12" size-sm="8" class="ion-text-center" *ngIf="isLoading">
             <ion-spinner color="primary"></ion-spinner>
           </ion-col>
-          <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="!isLoading">
+          <ion-col size="12" size-sm="8" class="ion-text-center" *ngIf="!isLoading">
             <div class="course-container ion-padding">
             <ion-text>
               <h1 class="ion-no-margin">{{ course?.title }}</h1>
@@ -91,9 +98,9 @@
             <ion-text>
               <h5 class="ion-margin-top">{{ course?.description }}</h5>
             </ion-text>
-            <ion-img [src]="course.thumbnail" class="course-thumbnail"></ion-img>
+            <ion-img [src]="course?.thumbnail" class="course-thumbnail"></ion-img>
             <ion-text  class="ion-no-padding">
-              <p class="article-author-date ion-no-margin"> המרצה {{ course.authorName }}</p>
+              <p class="article-author-date ion-no-margin"> המרצה {{ course?.authorName }}</p>
             </ion-text>
             <ion-text  class="ion-no-padding">
               <p class="article-author-date"> {{ course?.date | date  }}</p>
@@ -102,10 +109,13 @@
           </ion-col>
         </ion-row>
 
-        <ion-row>
-          <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
-            <ion-list *ngIf="lessons !== null">
-              <div class="comment-item" *ngFor="let lesson of lessons">
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="12" size-sm="8" class="ion-text-center" *ngIf="lessonsIsLoading">
+            <ion-spinner color="primary"></ion-spinner>
+          </ion-col>
+          <ion-col size="12" size-sm="8" class="ion-text-center" *ngIf="!lessonsIsLoading">
+            <ion-list>
+              <div class="comment-item" *ngFor="let lesson of course?.lessons">
                 <ion-item>
                   <ion-thumbnail size="medium" slot="start">
                     <ion-img [src]="lesson.thumbnail" class="lesson-thumbnail-image"></ion-img>
@@ -144,13 +154,6 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-    </ion-slide>
-
-
-    <ion-slide>
-      <img src="https://ecat.education.gov.il/content/images/thumbs/0028074_google-slides_328.png"/>
-      <h2>Ready to Play?</h2>
-      <ion-button fill="clear">Continue <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
     </ion-slide>
 
   </ion-slides>

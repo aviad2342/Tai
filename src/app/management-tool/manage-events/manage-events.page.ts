@@ -45,7 +45,7 @@ export class ManageEventsPage implements OnInit, OnDestroy {
 
     ionViewWillEnter() {
       this.eventService.getEvents().subscribe(events => {
-        if(this.selectedEventId !== null) {
+        if(this.selectedEventId  && this.selectedEventId !== '' && this.selectedEventId !== null) {
           this.selected = [];
           const event = events.find(e => e.id === this.selectedEventId);
           this.selected.push(event);
@@ -64,35 +64,8 @@ export class ManageEventsPage implements OnInit, OnDestroy {
   async onAddEvent() {
     this.selectedEventId = null;
     this.isRowSelected = false;
+    this.selected = [];
     this.router.navigate(['manage', 'events', 'new']);
-  }
-
-  async onAddLesson() {
-    // const modal = await this.modalController.create({
-    //   component: AddLessonComponent,
-    //   cssClass: 'add-lesson-modal',
-    //   animated: true,
-    //   backdropDismiss: false,
-    //   componentProps: {
-    //     id: this.selectedEventId,
-    //     lessonNumber: this.getLessonNumber()
-    //   }
-    // });
-    //  modal.onDidDismiss().then( data => {
-    //   if(data.data.didAdd) {
-    //     this.courseservice.getCourseLessons(this.selectedEventId).subscribe();
-    //     const courseToUpdate: Course = this.selected[0];
-    //     courseToUpdate.courseLessons = this.lessons.length;
-    //     courseToUpdate.lastEdit = new Date();
-    //     this.courseservice.updateCourse(courseToUpdate).subscribe(courses => {
-    //       this.selected[0] = courses.find(u => u.id === this.selectedEventId);
-    //       this.appservice.presentToast('השיעור נוסף בהצלחה!', true);
-    //     }, error => {
-    //       this.appservice.presentToast('חלה תקלה פעולת ההוספה נכשלה!', false);
-    //     });
-    //   }
-    // });
-    // return await modal.present();
   }
 
   async onViewEvent() {

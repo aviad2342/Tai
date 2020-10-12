@@ -8,7 +8,7 @@ import { EditArticlePageRoutingModule } from './edit-article-routing.module';
 
 import { EditArticlePage } from './edit-article.page';
 import { QuillModule } from 'ngx-quill';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [

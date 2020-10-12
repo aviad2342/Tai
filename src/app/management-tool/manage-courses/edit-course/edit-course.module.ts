@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { EditCoursePageRoutingModule } from './edit-course-routing.module';
 
 import { EditCoursePage } from './edit-course.page';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from '../../../shared/shared.module';
 
 @NgModule({
   imports: [

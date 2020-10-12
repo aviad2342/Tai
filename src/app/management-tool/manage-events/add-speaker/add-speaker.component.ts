@@ -2,9 +2,9 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
-import { AppService } from 'src/app/app.service';
-import { EventService } from 'src/app/event/event.service';
-import { Speaker, speakerTitle } from 'src/app/event/speaker.model';
+import { AppService } from '../../../app.service';
+import { EventService } from '../../../event/event.service';
+import { Speaker } from '../../../event/speaker.model';
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';
