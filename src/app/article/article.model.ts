@@ -14,7 +14,6 @@ export class Article {
       public lastEdit: Date,
       public thumbnail: string,
       public views: number,
-      public numberOfComments: number,
       public comments: Comment[]
     ) {}
 

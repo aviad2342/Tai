@@ -231,6 +231,7 @@ export class AddCoursePage implements OnInit {
 
   onCancel() {
     this.form.reset();
+    this.appService.presentToast('הפעולה בוטלה', true);
     this.router.navigate(['/manage/courses']);
   }
 

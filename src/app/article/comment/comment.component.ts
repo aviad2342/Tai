@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Comment } from '../comment.model';
-import { UserService } from '../../user/user.service';
-import { User } from '../../user/user.model';
 
 @Component({
   selector: 'app-comment',
@@ -11,14 +9,9 @@ import { User } from '../../user/user.model';
 export class CommentComponent implements OnInit {
 
   @Input() comment: Comment;
-  author: User;
 
-  constructor(private userService: UserService) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.userService.getUser(this.comment.authorId).subscribe(user => {
-      this.author = user;
-    });
-  }
+  ngOnInit() {}
 
 }

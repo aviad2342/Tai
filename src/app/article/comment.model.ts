@@ -6,6 +6,7 @@ export class Comment {
       public id: string,
       public authorId: string,
       public authorName: string,
+      public authorPicture: string,
       public body: string,
       public date: Date,
       public article: string

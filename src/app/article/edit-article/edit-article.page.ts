@@ -107,8 +107,7 @@ export class EditArticlePage implements OnInit, OnDestroy {
           new Date(),
           uploadRes.imageUrl,
           this.article.views,
-          this.article.numberOfComments,
-          null
+          this.article.comments
         );
         return this.articleService.updateArticle(articleToUpdate);
       })
@@ -135,20 +134,38 @@ export class EditArticlePage implements OnInit, OnDestroy {
         new Date(),
         this.article.thumbnail,
         this.article.views,
-        this.article.numberOfComments,
-          null
+        this.article.comments
       );
+      if(this.isEquals(this.article, articleToUpdate)) {
+        this.appService.presentToast('המאמר נשמר בהצלחה', true);
+        this.router.navigate(['/tabs/article']);
+        return;
+      }
       this.articleService.updateArticle(articleToUpdate).subscribe(() => {
-        form.reset();
         this.appService.presentToast('המאמר נשמר בהצלחה', true);
         this.router.navigate(['/tabs/article']);
     }, error => {
-        form.reset();
         this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
         this.router.navigate(['/tabs/article']);
       });
     }
 
+  }
+
+  isEquals(article1: Article, article2: Article) {
+    if(
+      article1.title    === article2.title &&
+      article1.subtitle === article2.subtitle &&
+      article1.body     === article2.body
+    ) {
+      return true;
+    }
+    return  false;
+  }
+
+  onCancel() {
+    this.appService.presentToast('הפעולה בוטלה', true);
+    this.router.navigate(['/tabs/article']);
   }
 
   ngOnDestroy() {

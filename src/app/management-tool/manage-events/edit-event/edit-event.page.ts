@@ -494,5 +494,10 @@ onSaveAndExit() {
     return  false;
   }
 
+  onCancel() {
+    this.appService.presentToast('הפעולה בוטלה', true);
+     this.router.navigate(['/manage/events']);
+  }
+
 
 }

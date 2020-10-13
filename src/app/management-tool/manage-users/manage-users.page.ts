@@ -109,7 +109,8 @@ export class ManageUsersPage implements OnInit, OnDestroy {
       const alert = await this.alertController.create({
         cssClass: 'delete-user-alert',
         header: 'אישור מחיקת משתמש',
-        message: `האם אתה בטוח שברצונך למחוק את המשתמש ${this.getUserFullName()} לצמיתות?`,
+        message: `האם אתה בטוח שברצונך למחוק את המשתמש לצמיתות?`,
+        mode: 'ios',
         buttons: [
           {
             text: 'ביטול',

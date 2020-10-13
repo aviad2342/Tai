@@ -75,6 +75,7 @@ export class ArticleDetailPage implements OnInit {
         null,
         user.id,
         user.firstName + ' ' + user.lastName,
+        user.profilePicture,
         form.value.body,
         new Date(),
         this.article.id,

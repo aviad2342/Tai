@@ -80,7 +80,8 @@ export class ManageEventsPage implements OnInit, OnDestroy {
       const alert = await this.alertController.create({
         cssClass: 'delete-event-alert',
         header: 'אישור מחיקת אירוע',
-        message: `האם אתה בטוח שברצונך למחוק את האירוע ${this.selected[0].title} לצמיתות?`,
+        message: `האם אתה בטוח שברצונך למחוק את האירוע לצמיתות?`,
+        mode: 'ios',
         buttons: [
           {
             text: 'ביטול',

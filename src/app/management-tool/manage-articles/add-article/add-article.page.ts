@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ArticleService } from '../article.service';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { Article } from '../article.model';
-import { AuthService } from '../../auth/auth.service';
-import { AppService } from '../../app.service';
-import { QuillFormat, QuillEditorBase, QuillEditorComponent } from 'ngx-quill';
-
+import { Article } from '../../../article/article.model';
+import { User } from '../../../user/user.model';
+import { AppService } from '../../../app.service';
+import { ArticleService } from '../../../article/article.service';
+import { AuthService } from '../../../auth/auth.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';
@@ -31,42 +31,26 @@ function base64toBlob(base64Data, contentType) {
 }
 
 @Component({
-  selector: 'app-new-article',
-  templateUrl: './new-article.page.html',
-  styleUrls: ['./new-article.page.scss'],
+  selector: 'app-add-article',
+  templateUrl: './add-article.page.html',
+  styleUrls: ['./add-article.page.scss'],
 })
-export class NewArticlePage implements OnInit {
+export class AddArticlePage implements OnInit {
 
   @ViewChild('f', { static: true }) form: NgForm;
-  @ViewChild('#quillEditor', { static: true }) quillEditor: QuillEditorComponent;
   file: File;
-  authorId: string;
-  authorName: string;
-
-  modules = {
-    toolbar: [
-      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-      ['blockquote', 'code-block'],
-
-      [{ header: 1 }, { header: 2 }],               // custom button values
-      [{ list: 'ordered'}, { list: 'bullet' }],
-      [{ script: 'sub'}, { script: 'super' }],      // superscript/subscript
-      [{ indent: '-1'}, { indent: '+1' }],          // outdent/indent
-      [{ direction: 'rtl' }, { align: [] }],                         // text direction
-
-      [{ size: ['small', false, 'large', 'huge'] }],  // custom dropdown
-      [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-      [{ color: [] }, { background: [] }],          // dropdown with defaults from theme
-      [{ font: [] }],
-      [{ align: [] }],
-
-      ['clean'],                                         // remove formatting button
-
-      ['link', 'image', 'video']                         // link and image, video
+  author: User;
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    height: 'auto',
+    minHeight: '200px',
+    maxHeight: 'auto',
+    // uploadUrl: 'http://localhost:3000/articleBodyImages',
+    toolbarHiddenButtons: [
+      [],
+      ['insertVideo']
     ]
-  };
-
+  }
 
   constructor(
     private articleService: ArticleService,
@@ -75,24 +59,11 @@ export class NewArticlePage implements OnInit {
     public appService: AppService
     ) { }
 
-    rtl(event: Event){
-      console.log(event);
-
-    }
   ngOnInit() {
-
-    // this.quillEditor.format('direction','rtl');
     this.authService.getUserLogged().subscribe(author => {
-      this.authorId = author.id;
-      this.authorName = author.firstName + ' ' + author.lastName;
+      this.author = author;
     })
   }
-
-  // ionViewDidEnter() {
-  //   const elem = this.quillEditor.editorElem.getElementsByClassName('ql-blank')[0];
-  //   const child = elem.children[0];
-  //   child.classList.add('ql-align-right');
-  // }
 
   onImagePicked(imageData: string | File) {
     let imageFile;
@@ -123,8 +94,8 @@ export class NewArticlePage implements OnInit {
       switchMap(uploadRes => {
         const articleToAdd = new Article(
           null,
-          this.authorId,
-          this.authorName,
+          this.author.id,
+          this.author.firstName + ' ' + this.author.lastName,
           'aa11',
           form.value.title,
           form.value.subtitle,
@@ -140,12 +111,18 @@ export class NewArticlePage implements OnInit {
     ).subscribe(() => {
       form.reset();
       this.appService.presentToast('המאמר נשמר בהצלחה', true);
-      this.router.navigate(['/tabs/article']);
+      this.router.navigate(['/manage/articles']);
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
-      this.router.navigate(['/tabs/article']);
+      this.router.navigate(['/manage/articles']);
     });
+  }
+
+  onCancel() {
+    this.form.reset();
+    this.appService.presentToast('הפעולה בוטלה', true);
+    this.router.navigate(['/manage/articles']);
   }
 
 }
