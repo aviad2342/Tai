@@ -52,6 +52,7 @@ export class AddEventPage implements OnInit {
   participants: Participant[] = [];
   hideList = false;
   addressIsValid = false;
+  imageIsValid = true;
   address: Address = new Address();
   defaultPicture = 'http://localhost:3000/images/user-default-image.png';
   userImage = '../../../assets/images/user-default-image.png';
@@ -152,11 +153,17 @@ onAddressIsValid(isValid: boolean) {
   this.addressIsValid = isValid;
 }
 
+onImageIsValid(isValid: boolean) {
+  this.imageIsValid = isValid;
+}
+
 onSubmit(form: NgForm) {
-  console.log('kk');
   form.value.image = this.file;
-  if (!form.valid || !this.form.value.image) {
-    console.log('npoe');
+  if (!form.valid) {
+    return;
+  }
+  if (!this.form.value.image) {
+    this.imageIsValid = false;
     return;
   }
   this.eventService.uploadEventThumbnail(this.form.value.image, 'Event')
@@ -343,6 +350,7 @@ onRemove(event) {
  // -------------------------------------------------- Utilities Functions --------------------------------------------------
 
   onImagePicked(imageData: string | File) {
+    this.imageIsValid = true;
     let imageFile;
     if (typeof imageData === 'string') {
       try {

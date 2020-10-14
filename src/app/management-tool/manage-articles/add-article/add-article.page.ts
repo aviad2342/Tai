@@ -8,6 +8,8 @@ import { AppService } from '../../../app.service';
 import { ArticleService } from '../../../article/article.service';
 import { AuthService } from '../../../auth/auth.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+// import { PDFGenerator } from '@ionic-native/pdf-generator/ngx';
+
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';
@@ -40,23 +42,31 @@ export class AddArticlePage implements OnInit {
   @ViewChild('f', { static: true }) form: NgForm;
   file: File;
   author: User;
+  imageIsValid = true;
   editorConfig: AngularEditorConfig = {
     editable: true,
     height: 'auto',
     minHeight: '200px',
     maxHeight: 'auto',
-    // uploadUrl: 'http://localhost:3000/articleBodyImages',
+    uploadUrl: 'http://localhost:3000/articleBodyImages/',
     toolbarHiddenButtons: [
-      [],
-      ['insertVideo']
+      ['redo'],
+      ['insertImage', 'insertVideo']
     ]
   }
+
+  // pdfOptions: any = {
+  //   documentSize: 'A4',
+  //   type: 'base64',
+  //   fileName: 'myFile.pdf'
+  // }
 
   constructor(
     private articleService: ArticleService,
     private router: Router,
     private authService: AuthService,
     public appService: AppService
+    // private pdfGenerator: PDFGenerator
     ) { }
 
   ngOnInit() {
@@ -66,6 +76,7 @@ export class AddArticlePage implements OnInit {
   }
 
   onImagePicked(imageData: string | File) {
+    this.imageIsValid = true;
     let imageFile;
     if (typeof imageData === 'string') {
       try {
@@ -86,7 +97,11 @@ export class AddArticlePage implements OnInit {
 
   onSubmit(form: NgForm) {
     form.value.image = this.file;
-    if (!form.valid || !this.form.value.image) {
+    if (!form.valid) {
+      return;
+    }
+    if (!this.form.value.image) {
+      this.imageIsValid = false;
       return;
     }
     this.articleService.uploadArticleThumbnail(this.form.value.image, 'article')
@@ -106,6 +121,15 @@ export class AddArticlePage implements OnInit {
           0,
           []
         );
+        // this.pdfGenerator.fromData(form.value.body, this.pdfOptions)
+        // .then(base64=> {
+        //   let pdfFile;
+        //   pdfFile = base64toBlob(base64, 'application/pdf');
+        //   this.articleService.addArticlePdf(pdfFile, 'articlePdf').subscribe(resData => {
+        //     console.log(resData.fileUrl);
+        //   });
+        // })
+        // .catch((err)=>console.log(err));
         return this.articleService.addArticle(articleToAdd);
       })
     ).subscribe(() => {

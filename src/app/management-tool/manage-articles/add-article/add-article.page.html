@@ -8,92 +8,103 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="7">
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)">
 
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-
-    <ion-grid>
-
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="4" size-md="4">
-          <app-image-picker 
-          [showPreview]="this.file" 
-          (imagePick)="onImagePicked($event)" 
-          class="ion-padding">
-        </app-image-picker>
-        </ion-col>
-      </ion-row>
-
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="5" size-md="4">
-          <ion-list>
-
-            <ion-item class="ion-text-center">
-              <ion-label position="floating"> כותרת <ion-text color="danger">*</ion-text></ion-label>
-              <ion-input
-                type="text"
-                ngModel
-                name="title"
+          <ion-grid>
+      
+            <ion-row class="ion-justify-content-center">
+              <ion-col size="4" size-lg="4" size-md="6" size-sm="6">
+                <app-image-picker 
+                [showPreview]="this.file" 
+                (imagePick)="onImagePicked($event)" 
+                class="ion-padding">
+              </app-image-picker>
+              <ion-label *ngIf="!imageIsValid" color="danger">
+                <small>לא נבחרה תמונה!</small>
+              </ion-label>
+              </ion-col>
+            </ion-row>
+      
+            <ion-row class="ion-justify-content-center">
+              <ion-col size="6" size-md="6">
+                <ion-list>
+      
+                  <ion-item class="ion-text-center">
+                    <ion-label position="floating"> כותרת <ion-text color="danger">*</ion-text></ion-label>
+                    <ion-input
+                      type="text"
+                      ngModel
+                      name="title"
+                      required
+                      #titleNameCtrl="ngModel"
+                    ></ion-input>
+                  </ion-item>
+                <ion-label *ngIf="!titleNameCtrl.valid && titleNameCtrl.touched" color="danger">
+                  <small>זהו שדה חובה!</small>
+                </ion-label>
+      
+                  <ion-item class="ion-text-center">
+                    <ion-label position="floating"> תת כותרת <ion-text color="danger">*</ion-text></ion-label>
+                    <ion-input
+                      type="text"
+                      ngModel
+                      name="subtitle"
+                      required
+                      #subtitleCtrl="ngModel"
+                    ></ion-input>
+                  </ion-item>
+                  <ion-label *ngIf="!subtitleCtrl.valid && subtitleCtrl.touched" color="danger">
+                    <small>זהו שדה חובה!</small>
+                  </ion-label>
+      
+                </ion-list>
+      
+              </ion-col>
+      
+            </ion-row>
+      
+            <ion-row class="ion-justify-content-center">
+              <ion-col size="10" size-md="10">
+                <angular-editor 
+                [config]="editorConfig"
                 required
-                #titleNameCtrl="ngModel"
-              ></ion-input>
-            </ion-item>
-          <ion-label *ngIf="!titleNameCtrl.valid && titleNameCtrl.touched" color="danger">
-            <small>זהו שדה חובה!</small>
-          </ion-label>
+                [placeholder]="'גוף המאמר'"
+                ngModel 
+                name="body"
+                ></angular-editor>
+              </ion-col>
+            </ion-row>
+            <br>
+            <br>
+            <ion-row class="ion-justify-content-center">
+              <ion-col size="2" size-md="3">
+                <ion-button 
+                color="primary" 
+                expand="block"
+                (click)="onCancel()"
+                >ביטול </ion-button>
+              </ion-col>
+              <ion-col size="2" size-md="3">
+                <ion-button
+                  type="submit"
+                  color="primary"
+                  expand="block"
+                  [disabled]="!f.valid"
+                >הוסף</ion-button>
+              </ion-col>
+            </ion-row>
+      
+          </ion-grid>
+      
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-            <ion-item class="ion-text-center">
-              <ion-label position="floating"> תת כותרת <ion-text color="danger">*</ion-text></ion-label>
-              <ion-input
-                type="text"
-                ngModel
-                name="subtitle"
-                required
-                #subtitleCtrl="ngModel"
-              ></ion-input>
-            </ion-item>
-            <ion-label *ngIf="!subtitleCtrl.valid && subtitleCtrl.touched" color="danger">
-              <small>זהו שדה חובה!</small>
-            </ion-label>
 
-          </ion-list>
-
-        </ion-col>
-
-      </ion-row>
-
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="8" size-md="8">
-          <angular-editor 
-          [config]="editorConfig"
-          [placeholder]="'גוף המאמר'"
-          ngModel 
-          name="body"
-          ></angular-editor>
-        </ion-col>
-      </ion-row>
-      <br>
-      <br>
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="2" size-md="3">
-          <ion-button 
-          color="primary" 
-          expand="block"
-          (click)="onCancel()"
-          >ביטול </ion-button>
-        </ion-col>
-        <ion-col size="2" size-md="3">
-          <ion-button
-            type="submit"
-            color="primary"
-            expand="block"
-            [disabled]="!f.valid"
-          >הוסף</ion-button>
-        </ion-col>
-      </ion-row>
-
-    </ion-grid>
-
-  </form>
 
 </ion-content>
 

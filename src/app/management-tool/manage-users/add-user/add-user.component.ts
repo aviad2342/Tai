@@ -45,6 +45,8 @@ export class AddUserComponent implements OnInit {
   address: Address = new Address();
   userImage = '../../../assets/images/user-default-image.png';
   file: File;
+  addressIsValid = false;
+  imageIsValid = true;
   date = new Date();
   pickerOptions = {
     // cssClass: 'ion-justify-content-start',
@@ -77,6 +79,7 @@ export class AddUserComponent implements OnInit {
   }
 
   onImagePicked(imageData: string | File) {
+    this.imageIsValid = true;
     let imageFile;
     if (typeof imageData === 'string') {
       try {
@@ -100,9 +103,17 @@ export class AddUserComponent implements OnInit {
     this.address = address;
   }
 
+  onAddressIsValid(isValid: boolean) {
+    this.addressIsValid = isValid;
+  }
+
   onSubmit(form: NgForm) {
     form.value.image = this.file;
-    if (!form.valid || !this.form.value.image) {
+    if (!form.valid) {
+      return;
+    }
+    if (!this.form.value.image) {
+      this.imageIsValid = false;
       return;
     }
     this.userService.uploadImage(this.form.value.image, form.value.email)

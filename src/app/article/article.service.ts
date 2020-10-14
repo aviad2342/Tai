@@ -115,6 +115,15 @@ export class ArticleService {
       );
     }
 
+    addArticlePdf(pdf: File, fileName: string) {
+      const uploadData = new FormData();
+      uploadData.append('file', pdf, fileName);
+      return this.http.post<{ fileUrl: string}>(
+        'http://localhost:3000/api/article/article/pdf',
+        uploadData
+      );
+    }
+
  // ------------------------------------ Comment Services -----------------------------------
 
     getComments() {

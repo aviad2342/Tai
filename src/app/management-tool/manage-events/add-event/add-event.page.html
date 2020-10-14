@@ -18,6 +18,9 @@
               (imagePick)="onImagePicked($event)" 
               class="ion-padding">
               </app-image-picker>
+              <ion-label *ngIf="!imageIsValid" color="danger">
+                <small>לא נבחרה תמונה!</small>
+              </ion-label>
           </ion-col>
         </ion-row>
 
