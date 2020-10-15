@@ -9,6 +9,9 @@ import { ArticleService } from '../../../article/article.service';
 import { AuthService } from '../../../auth/auth.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 // import { PDFGenerator } from '@ionic-native/pdf-generator/ngx';
+// import * as jsPDF from 'jspdf'
+// import * as Davidd from '../../../../assets/JavaScript/david.js'
+import { jsPDF } from 'jspdf';
 
 
 function base64toBlob(base64Data, contentType) {
@@ -42,12 +45,23 @@ export class AddArticlePage implements OnInit {
   @ViewChild('f', { static: true }) form: NgForm;
   file: File;
   author: User;
+  htmlContent = '';
   imageIsValid = true;
   editorConfig: AngularEditorConfig = {
     editable: true,
     height: 'auto',
     minHeight: '200px',
     maxHeight: 'auto',
+    defaultFontName: 'David',
+    fonts: [
+      {class: 'arial', name: 'Arial'},
+      {class: 'times-new-roman', name: 'Times New Roman'},
+      {class: 'calibri', name: 'Calibri'},
+      {class: 'DavidLibre', name: 'David'},
+      {class: 'dragon', name: 'Dragon'},
+      {class: 'aharoni', name: 'Aharoni'},
+      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+    ],
     uploadUrl: 'http://localhost:3000/articleBodyImages/',
     toolbarHiddenButtons: [
       ['redo'],
@@ -93,6 +107,17 @@ export class AddArticlePage implements OnInit {
     }
     this.file = imageFile;
     this.form.value.image = imageFile;
+  }
+
+  readHtml() {
+    // const David = '';
+      const doc = new jsPDF();
+      // doc.addFileToVFS('DavidLibre-Medium.ttf', David);
+      // doc.addFont('DavidLibre-Medium.ttf', 'David', 'normal')
+      // doc.setFont('David');
+      // doc.setFontSize(10);
+      doc.text('קורה זונות', 10, 10);
+      doc.save('ddd.pdf');
   }
 
   onSubmit(form: NgForm) {

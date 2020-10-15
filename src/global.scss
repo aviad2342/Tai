@@ -1,3 +1,4 @@
+@charset "utf-8";
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -35,6 +36,26 @@
 @import '~@swimlane/ngx-datatable/themes/bootstrap.scss';
 @import '~@swimlane/ngx-datatable/assets/icons.css';
 
+@font-face {
+  font-family: 'DavidLibre';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/DavidLibre-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'dragon';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/dragon-webfont.ttf');
+}
+
+@font-face {
+  font-family: 'aharoni';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/aharoniclm-book-webfont.ttf');
+}
 
 ion-toolbar {
     --background: var(--ion-color-primary);
