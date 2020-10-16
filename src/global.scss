@@ -57,6 +57,16 @@
   src: url('./assets/fonts/aharoniclm-book-webfont.ttf');
 }
 
+
+@font-face {
+  font-family: 'david_libremedium';
+  src: url('./assets/fonts/davidlibre-medium-webfont.woff2') format('woff2'),
+       url('./assets/fonts/davidlibre-medium-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
 ion-toolbar {
     --background: var(--ion-color-primary);
     --color: var(--ion-color-dark);

@@ -77,8 +77,9 @@
                 name="body"
                 ></angular-editor>
                 <h5 class="html-header">HTML Output</h5>
-                <p [innerHTML]="htmlContent"></p>
-                
+                <!-- <p [innerHTML]="htmlContent"></p> -->
+                <p [innerHTML]="f.value.body"></p>
+                <div> {{ htmlContent }} </div>
               </ion-col>
             </ion-row>
             <br>

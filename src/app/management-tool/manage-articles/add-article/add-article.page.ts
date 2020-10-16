@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
@@ -10,7 +10,8 @@ import { AuthService } from '../../../auth/auth.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 // import { PDFGenerator } from '@ionic-native/pdf-generator/ngx';
 // import * as jsPDF from 'jspdf'
-// import * as Davidd from '../../../../assets/JavaScript/david.js'
+// import * as Davidd from '../../../../assets/JavaScript/DavidLibre-Regular-normal.js'
+import '../../../../assets/JavaScript/DavidLibre-Regular-normal.js';
 import { jsPDF } from 'jspdf';
 
 
@@ -46,12 +47,14 @@ export class AddArticlePage implements OnInit {
   file: File;
   author: User;
   htmlContent = '';
+  font: any;
   imageIsValid = true;
   editorConfig: AngularEditorConfig = {
     editable: true,
     height: 'auto',
     minHeight: '200px',
     maxHeight: 'auto',
+    // defaultParagraphSeparator: 'tr',
     defaultFontName: 'David',
     fonts: [
       {class: 'arial', name: 'Arial'},
@@ -80,13 +83,12 @@ export class AddArticlePage implements OnInit {
     private router: Router,
     private authService: AuthService,
     public appService: AppService
-    // private pdfGenerator: PDFGenerator
     ) { }
 
   ngOnInit() {
     this.authService.getUserLogged().subscribe(author => {
       this.author = author;
-    })
+    });
   }
 
   onImagePicked(imageData: string | File) {
@@ -110,14 +112,37 @@ export class AddArticlePage implements OnInit {
   }
 
   readHtml() {
-    // const David = '';
+    console.log(this.htmlContent);
+      const title = this.form.value.title;
+      const subject = this.form.value.subtitle;
+      const author = this.author.firstName + ' ' + this.author.lastName;
       const doc = new jsPDF();
-      // doc.addFileToVFS('DavidLibre-Medium.ttf', David);
-      // doc.addFont('DavidLibre-Medium.ttf', 'David', 'normal')
-      // doc.setFont('David');
-      // doc.setFontSize(10);
-      doc.text('קורה זונות', 10, 10);
-      doc.save('ddd.pdf');
+      doc.setFont('David');
+      const text = ' יודע באיזו עמדה להציב אותו בנבחרת, ואמר: כל אחד רשאי להגיד מה שהוא רוצה. אין לי בעיה עם אנטואן, אבל אני המאמן ואני חושב על טובת הקבוצה. אי אפשר לשנים. חוץ מזה, מדובר בשחקן שנהיההוא ווינר ותמריך חזרה';
+      doc.setR2L(true);
+      const lines = doc.splitTextToSize(text, 100, {A4: true});
+      doc.text(lines, 100, 10, {align:'center'});
+      doc.addMetadata('<meta charset="utf-8" />');
+      doc.setLanguage('he');
+      // doc.html(this.htmlContent).then(bla => {
+      //   bla.
+      // });
+      // doc.text([...text].reverse().join(''), 200, 20);
+      doc.setProperties({
+        title,
+        subject,
+        author
+      });
+      let pdfFile;
+          pdfFile = doc.output('blob');
+          console.log(pdfFile);
+          this.articleService.addArticlePdf(pdfFile, 'article').subscribe(resData => {
+            console.log(resData.fileUrl);
+          }, error => {
+            console.log(error);
+          });
+
+      doc.save('ddgcd.pdf');
   }
 
   onSubmit(form: NgForm) {
