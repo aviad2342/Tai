@@ -44,6 +44,7 @@ function base64toBlob(base64Data, contentType) {
 export class AddArticlePage implements OnInit {
 
   @ViewChild('f', { static: true }) form: NgForm;
+  htmlText = '';
   file: File;
   author: User;
   htmlContent = '';
@@ -54,8 +55,9 @@ export class AddArticlePage implements OnInit {
     height: 'auto',
     minHeight: '200px',
     maxHeight: 'auto',
-    // defaultParagraphSeparator: 'tr',
+    defaultParagraphSeparator: '',
     defaultFontName: 'David',
+    defaultFontSize: '4',
     fonts: [
       {class: 'arial', name: 'Arial'},
       {class: 'times-new-roman', name: 'Times New Roman'},
@@ -111,19 +113,29 @@ export class AddArticlePage implements OnInit {
     this.form.value.image = imageFile;
   }
 
+  getInput(event) {
+    this.htmlText = event.target.innerText;
+  }
+
   readHtml() {
-    console.log(this.htmlContent);
+
+     console.log(this.htmlText);
       const title = this.form.value.title;
       const subject = this.form.value.subtitle;
       const author = this.author.firstName + ' ' + this.author.lastName;
       const doc = new jsPDF();
       doc.setFont('David');
-      const text = ' יודע באיזו עמדה להציב אותו בנבחרת, ואמר: כל אחד רשאי להגיד מה שהוא רוצה. אין לי בעיה עם אנטואן, אבל אני המאמן ואני חושב על טובת הקבוצה. אי אפשר לשנים. חוץ מזה, מדובר בשחקן שנהיההוא ווינר ותמריך חזרה';
       doc.setR2L(true);
-      const lines = doc.splitTextToSize(text, 100, {A4: true});
+      let pdfText: string;
+      pdfText = title + '\n\n' + subject + '\n\n\n' + this.htmlText;
+      const lines = doc.splitTextToSize(pdfText, 150, {A4: true});
       doc.text(lines, 100, 10, {align:'center'});
       doc.addMetadata('<meta charset="utf-8" />');
       doc.setLanguage('he');
+      // doc.html(txt, {callback: pdf => {
+      //   pdf.setFontSize(10);
+      //   pdf.save(title);
+      // }, x: 10, y: 10 } );
       // doc.html(this.htmlContent).then(bla => {
       //   bla.
       // });
@@ -133,16 +145,16 @@ export class AddArticlePage implements OnInit {
         subject,
         author
       });
-      let pdfFile;
-          pdfFile = doc.output('blob');
-          console.log(pdfFile);
-          this.articleService.addArticlePdf(pdfFile, 'article').subscribe(resData => {
-            console.log(resData.fileUrl);
-          }, error => {
-            console.log(error);
-          });
+      // let pdfFile;
+      //     pdfFile = doc.output('blob');
+      //     console.log(pdfFile);
+      //     this.articleService.addArticlePdf(pdfFile, 'article').subscribe(resData => {
+      //       console.log(resData.fileUrl);
+      //     }, error => {
+      //       console.log(error);
+      //     });
 
-      doc.save('ddgcd.pdf');
+      doc.save(title);
   }
 
   onSubmit(form: NgForm) {
@@ -168,20 +180,12 @@ export class AddArticlePage implements OnInit {
           new Date(),
           new Date(),
           uploadRes.imageUrl,
+          'PDF',
           0,
           []
         );
-        // this.pdfGenerator.fromData(form.value.body, this.pdfOptions)
-        // .then(base64=> {
-        //   let pdfFile;
-        //   pdfFile = base64toBlob(base64, 'application/pdf');
-        //   this.articleService.addArticlePdf(pdfFile, 'articlePdf').subscribe(resData => {
-        //     console.log(resData.fileUrl);
-        //   });
-        // })
-        // .catch((err)=>console.log(err));
         return this.articleService.addArticle(articleToAdd);
-      })
+      }),
     ).subscribe(() => {
       form.reset();
       this.appService.presentToast('המאמר נשמר בהצלחה', true);

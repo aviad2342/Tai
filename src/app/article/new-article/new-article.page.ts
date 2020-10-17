@@ -132,6 +132,7 @@ export class NewArticlePage implements OnInit {
           new Date(),
           new Date(),
           uploadRes.imageUrl,
+          'PDF',
           0,
           []
         );

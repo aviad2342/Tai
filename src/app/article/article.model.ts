@@ -13,6 +13,7 @@ export class Article {
       public date: Date,
       public lastEdit: Date,
       public thumbnail: string,
+      public pdf: string,
       public views: number,
       public comments: Comment[]
     ) {}

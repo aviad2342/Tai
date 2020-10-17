@@ -106,6 +106,7 @@ export class EditArticlePage implements OnInit, OnDestroy {
           this.article.date,
           new Date(),
           uploadRes.imageUrl,
+          'PDF',
           this.article.views,
           this.article.comments
         );
@@ -133,6 +134,7 @@ export class EditArticlePage implements OnInit, OnDestroy {
         this.article.date,
         new Date(),
         this.article.thumbnail,
+        'PDF',
         this.article.views,
         this.article.comments
       );

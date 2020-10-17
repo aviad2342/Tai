@@ -67,17 +67,18 @@
             </ion-row>
       
             <ion-row class="ion-justify-content-center">
-              <ion-col size="10" size-md="10">
+              <ion-col size="10" size-md="12">
                 <angular-editor 
                 [config]="editorConfig"
                 required
+                (input)="getInput($event)"
                 [(ngModel)]="htmlContent"
                 [placeholder]="'גוף המאמר'"
                 ngModel 
                 name="body"
                 ></angular-editor>
                 <h5 class="html-header">HTML Output</h5>
-                <!-- <p [innerHTML]="htmlContent"></p> -->
+                <div [innerHTML]="f.value.body"></div>
                 <p [innerHTML]="f.value.body"></p>
                 <div> {{ htmlContent }} </div>
               </ion-col>
