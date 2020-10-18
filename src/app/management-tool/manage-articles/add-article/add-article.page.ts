@@ -13,6 +13,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 // import * as Davidd from '../../../../assets/JavaScript/DavidLibre-Regular-normal.js'
 import '../../../../assets/JavaScript/DavidLibre-Regular-normal.js';
 import { jsPDF } from 'jspdf';
+import { forkJoin } from 'rxjs';
 
 
 function base64toBlob(base64Data, contentType) {
@@ -118,43 +119,65 @@ export class AddArticlePage implements OnInit {
   }
 
   readHtml() {
+    //  console.log(this.htmlText);
+    //   const title = this.form.value.title;
+    //   const subject = this.form.value.subtitle;
+    //   const author = this.author.firstName + ' ' + this.author.lastName;
+    //   const doc = new jsPDF();
+    //   doc.setFont('David');
+    //   doc.setR2L(true);
+    //   let pdfText: string;
+    //   pdfText = title + '\n\n' + subject + '\n\n\n' + this.htmlText;
+    //   const lines = doc.splitTextToSize(pdfText, 150, {A4: true});
+    //   doc.text(lines, 100, 10, {align:'center'});
+    //   doc.addMetadata('<meta charset="utf-8" />');
+    //   doc.setLanguage('he');
+    //   // doc.html(txt, {callback: pdf => {
+    //   //   pdf.setFontSize(10);
+    //   //   pdf.save(title);
+    //   // }, x: 10, y: 10 } );
+    //   // doc.html(this.htmlContent).then(bla => {
+    //   //   bla.
+    //   // });
+    //   // doc.text([...text].reverse().join(''), 200, 20);
+    //   doc.setProperties({
+    //     title,
+    //     subject,
+    //     author
+    //   });
+    //   let pdfFile;
+    //       pdfFile = doc.output('blob');
+    //       console.log(pdfFile);
+    //       this.articleService.addArticlePdf(pdfFile, 'article').subscribe(resData => {
+    //         console.log(resData.fileUrl);
+    //       }, error => {
+    //         console.log(error);
+    //       });
 
-     console.log(this.htmlText);
-      const title = this.form.value.title;
-      const subject = this.form.value.subtitle;
-      const author = this.author.firstName + ' ' + this.author.lastName;
-      const doc = new jsPDF();
-      doc.setFont('David');
-      doc.setR2L(true);
-      let pdfText: string;
-      pdfText = title + '\n\n' + subject + '\n\n\n' + this.htmlText;
-      const lines = doc.splitTextToSize(pdfText, 150, {A4: true});
-      doc.text(lines, 100, 10, {align:'center'});
-      doc.addMetadata('<meta charset="utf-8" />');
-      doc.setLanguage('he');
-      // doc.html(txt, {callback: pdf => {
-      //   pdf.setFontSize(10);
-      //   pdf.save(title);
-      // }, x: 10, y: 10 } );
-      // doc.html(this.htmlContent).then(bla => {
-      //   bla.
-      // });
-      // doc.text([...text].reverse().join(''), 200, 20);
-      doc.setProperties({
-        title,
-        subject,
-        author
-      });
-      // let pdfFile;
-      //     pdfFile = doc.output('blob');
-      //     console.log(pdfFile);
-      //     this.articleService.addArticlePdf(pdfFile, 'article').subscribe(resData => {
-      //       console.log(resData.fileUrl);
-      //     }, error => {
-      //       console.log(error);
-      //     });
+    //   doc.save(title);
+  }
 
-      doc.save(title);
+  generateArticlePdf() {
+    const title = this.form.value.title;
+    const subject = this.form.value.subtitle;
+    const author = this.author.firstName + ' ' + this.author.lastName;
+    const doc = new jsPDF();
+    doc.setFont('David');
+    doc.setR2L(true);
+    let pdfText: string;
+    pdfText = title + '\n\n' + subject + '\n\n\n' + this.htmlText;
+    const lines = doc.splitTextToSize(pdfText, 150, {A4: true});
+    doc.text(lines, 100, 10, {align:'center'});
+    doc.addMetadata('<meta charset="utf-8" />');
+    doc.setLanguage('he');
+    doc.setProperties({
+      title,
+      subject,
+      author
+    });
+    let pdfFile;
+    pdfFile = doc.output('blob');
+    return pdfFile;
   }
 
   onSubmit(form: NgForm) {
@@ -166,27 +189,27 @@ export class AddArticlePage implements OnInit {
       this.imageIsValid = false;
       return;
     }
-    this.articleService.uploadArticleThumbnail(this.form.value.image, 'article')
-    .pipe(
-      switchMap(uploadRes => {
-        const articleToAdd = new Article(
-          null,
-          this.author.id,
-          this.author.firstName + ' ' + this.author.lastName,
-          'aa11',
-          form.value.title,
-          form.value.subtitle,
-          form.value.body,
-          new Date(),
-          new Date(),
-          uploadRes.imageUrl,
-          'PDF',
-          0,
-          []
-        );
-        return this.articleService.addArticle(articleToAdd);
-      }),
-    ).subscribe(() => {
+    const thumbnail = this.articleService.uploadArticleThumbnail(this.form.value.image, 'article');
+    const pdf = this.articleService.addArticlePdf(this.generateArticlePdf(), 'articlePdf');
+    forkJoin([thumbnail, pdf]).pipe(switchMap(results => {
+      const articleToAdd = new Article(
+        null,
+        this.author.id,
+        this.author.firstName + ' ' + this.author.lastName,
+        'aa11',
+        form.value.title,
+        form.value.subtitle,
+        this.htmlText,
+        new Date(),
+        new Date(),
+        results[0].imageUrl,
+        results[1].fileUrl,
+        0,
+        []
+      );
+      return this.articleService.addArticle(articleToAdd);
+
+    })).subscribe(() => {
       form.reset();
       this.appService.presentToast('המאמר נשמר בהצלחה', true);
       this.router.navigate(['/manage/articles']);
@@ -195,6 +218,37 @@ export class AddArticlePage implements OnInit {
       this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
       this.router.navigate(['/manage/articles']);
     });
+
+
+    // this.articleService.uploadArticleThumbnail(this.form.value.image, 'article')
+    // .pipe(
+    //   switchMap(uploadRes => {
+    //     const articleToAdd = new Article(
+    //       null,
+    //       this.author.id,
+    //       this.author.firstName + ' ' + this.author.lastName,
+    //       'aa11',
+    //       form.value.title,
+    //       form.value.subtitle,
+    //       form.value.body,
+    //       new Date(),
+    //       new Date(),
+    //       uploadRes.imageUrl,
+    //       'PDF',
+    //       0,
+    //       []
+    //     );
+    //     return this.articleService.addArticle(articleToAdd);
+    //   }),
+    // ).subscribe(() => {
+    //   form.reset();
+    //   this.appService.presentToast('המאמר נשמר בהצלחה', true);
+    //   this.router.navigate(['/manage/articles']);
+    // }, error => {
+    //   form.reset();
+    //   this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
+    //   this.router.navigate(['/manage/articles']);
+    // });
   }
 
   onCancel() {

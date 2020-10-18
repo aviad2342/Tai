@@ -76,7 +76,7 @@ export class ManageArticlesPage implements OnInit, OnDestroy {
   async onDeleteArticle() {
       const alert = await this.alertController.create({
         cssClass: 'delete-article-alert',
-        header: 'אישור מחיקת אירוע',
+        header: 'אישור מחיקת מאמר',
         message: `האם אתה בטוח שברצונך למחוק את המאמר לצמיתות?`,
         mode: 'ios',
         buttons: [

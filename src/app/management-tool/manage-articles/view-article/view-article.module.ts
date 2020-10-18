@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ViewArticlePageRoutingModule } from './view-article-routing.module';
 
 import { ViewArticlePage } from './view-article.page';
+import { ArticleSharedModule } from '../../../article/article-shared/article-shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ViewArticlePageRoutingModule
+    ViewArticlePageRoutingModule,
+    ArticleSharedModule
   ],
   declarations: [ViewArticlePage]
 })

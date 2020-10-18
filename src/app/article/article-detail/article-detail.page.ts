@@ -40,7 +40,7 @@ export class ArticleDetailPage implements OnInit {
         this.navController.navigateBack('/tabs/article');
         return;
       }
-      this.articleService.getArticle(paramMap.get('id')).subscribe(article => {
+      this.articleService.viewArticle(paramMap.get('id')).subscribe(article => {
         this.article = article;
         this.articleIsLoading = false;
       },

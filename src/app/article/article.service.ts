@@ -44,6 +44,13 @@ export class ArticleService {
       }));
     }
 
+    viewArticle(id: string) {
+      return this.http.get<Article>(`http://localhost:3000/api/article/view/${id}`)
+      .pipe(tap(resDta => {
+        return resDta;
+      }));
+    }
+
     addArticle(article: Article) {
       return this.http.post<{id: string}>('http://localhost:3000/api/article/article',
       {
@@ -81,8 +88,44 @@ export class ArticleService {
         switchMap(resData => {
           return this.getArticles();
         }),
-        tap(articles => {
+        switchMap(articles => {
           this._articles.next(articles);
+          return articles.filter(a => a.id === article.id);
+        }),
+        take(1),
+        tap(articleData => {
+          return articleData;
+        }));
+    }
+
+    updateArticleThumbnail(article: Article) {
+      const articleObj = {
+         authorId: article.authorId,
+         catalogNumber: article.catalogNumber,
+         title: article.title,
+         subtitle: article.subtitle,
+         body: article.body,
+         date: article.date,
+         lastEdit: article.lastEdit,
+         thumbnail: article.thumbnail,
+         views: article.views,
+         comments: article.comments
+        };
+      return this.http.put(`http://localhost:3000/api/article/article/image/${article.id}`,
+      {
+        ...articleObj
+      }).
+      pipe(
+        switchMap(resData => {
+          return this.getArticles();
+        }),
+        switchMap(articles => {
+          this._articles.next(articles);
+          return articles.filter(a => a.id === article.id);
+        }),
+        take(1),
+        tap(articleData => {
+          return articleData;
         }));
     }
 

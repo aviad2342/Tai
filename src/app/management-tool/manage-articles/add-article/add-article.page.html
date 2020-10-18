@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/article"></ion-back-button>
+      <ion-back-button defaultHref="/manage/articles"></ion-back-button>
     </ion-buttons>
     <ion-title class="ion-no-padding">מאמר חדש</ion-title>
   </ion-toolbar>
@@ -77,22 +77,22 @@
                 ngModel 
                 name="body"
                 ></angular-editor>
-                <h5 class="html-header">HTML Output</h5>
+                <!-- <h5 class="html-header">HTML Output</h5>
                 <div [innerHTML]="f.value.body"></div>
                 <p [innerHTML]="f.value.body"></p>
-                <div> {{ htmlContent }} </div>
+                <div> {{ htmlContent }} </div> -->
               </ion-col>
             </ion-row>
             <br>
             <br>
             <ion-row class="ion-justify-content-center">
-              <ion-col size="2" size-md="3">
+              <!-- <ion-col size="2" size-md="3">
                 <ion-button 
                 color="primary" 
                 expand="block"
                 (click)="readHtml()"
                 >read </ion-button>
-              </ion-col>
+              </ion-col> -->
               <ion-col size="2" size-md="3">
                 <ion-button 
                 color="primary" 

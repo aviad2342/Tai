@@ -7,15 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { ArticleDetailPageRoutingModule } from './article-detail-routing.module';
 
 import { ArticleDetailPage } from './article-detail.page';
-import { CommentComponent } from '../comment/comment.component';
+import { ArticleSharedModule } from '../article-shared/article-shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ArticleDetailPageRoutingModule
+    ArticleDetailPageRoutingModule,
+    ArticleSharedModule
   ],
-  declarations: [ArticleDetailPage, CommentComponent]
+  declarations: [ArticleDetailPage]
 })
 export class ArticleDetailPageModule {}

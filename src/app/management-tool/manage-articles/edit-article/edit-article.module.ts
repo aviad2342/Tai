@@ -7,13 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { EditArticlePageRoutingModule } from './edit-article-routing.module';
 
 import { EditArticlePage } from './edit-article.page';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    EditArticlePageRoutingModule
+    EditArticlePageRoutingModule,
+    SharedModule,
+    AngularEditorModule
   ],
   declarations: [EditArticlePage]
 })
