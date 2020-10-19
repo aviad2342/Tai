@@ -9,6 +9,10 @@ import { switchMap } from 'rxjs/operators';
 import { AppService } from '../../../app.service';
 import { Article } from '../../../article/article.model';
 import { ArticleService } from '../../../article/article.service';
+import '../../../../assets/JavaScript/DavidLibre-Regular-normal.js';
+import '../../../../assets/JavaScript/aharoniclm-book-webfont-normal.js';
+import '../../../../assets/JavaScript/Alef-Regular-normal.js';
+import '../../../../assets/JavaScript/FrankRuhlLibre-Regular-normal.js';
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';
@@ -43,7 +47,7 @@ export class EditArticlePage implements OnInit {
   isLoading = false;
   htmlContent = '';
   htmlText = '';
-  bodyText = '';
+  articleImage;
   articleIsLoading = false;
   imageIsValid = true;
   editorConfig: AngularEditorConfig = {
@@ -55,13 +59,10 @@ export class EditArticlePage implements OnInit {
     defaultFontName: 'David',
     defaultFontSize: '4',
     fonts: [
-      {class: 'arial', name: 'Arial'},
-      {class: 'times-new-roman', name: 'Times New Roman'},
-      {class: 'calibri', name: 'Calibri'},
       {class: 'DavidLibre', name: 'David'},
-      {class: 'dragon', name: 'Dragon'},
+      {class: 'FrankRuhlLibre', name: 'Frank'},
       {class: 'aharoni', name: 'Aharoni'},
-      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+      {class: 'Alef-Regular', name: 'Alef'}
     ],
     uploadUrl: 'http://localhost:3000/articleBodyImages/',
     toolbarHiddenButtons: [
@@ -133,7 +134,7 @@ export class EditArticlePage implements OnInit {
     } else {
       imageFile = imageData;
     }
-    this.form.value.image = imageFile;
+    this.articleImage = imageFile;
   }
 
   getInput(event) {
@@ -149,7 +150,6 @@ export class EditArticlePage implements OnInit {
     doc.setR2L(true);
     let pdfText: string;
     pdfText = title + '\n\n' + subject + '\n\n\n' + this.htmlText;
-    this.bodyText = pdfText;
     const lines = doc.splitTextToSize(pdfText, 150, {A4: true});
     doc.text(lines, 100, 10, {align:'center'});
     doc.addMetadata('<meta charset="utf-8" />');
@@ -169,8 +169,8 @@ export class EditArticlePage implements OnInit {
       return;
     }
 // ------------------------------------------- Thumbnail And PDF Property update -------------------------------------------------
-    if (this.form.value.image && this.didEditPdf()) {
-    const thumbnail = this.articleService.uploadArticleThumbnail(this.form.value.image, 'article');
+    if (this.articleImage && this.didEditPdf()) {
+    const thumbnail = this.articleService.uploadArticleThumbnail(this.articleImage, 'article');
     const pdf = this.articleService.addArticlePdf(this.generateArticlePdf(), 'articlePdf');
     forkJoin([thumbnail, pdf]).pipe(switchMap(results => {
       const articleToupdate = new Article(
@@ -188,18 +188,21 @@ export class EditArticlePage implements OnInit {
         this.article.views,
         this.article.comments
       );
-      return this.articleService.updateArticleThumbnail(articleToupdate);
+      return this.articleService.updateArticle(articleToupdate);
 
     })).subscribe(() => {
+      console.log('Thumbnail And PDF Property update');
       this.appService.presentToast('המאמר עוכן בהצלחה', true);
+      this.form.reset();
       this.router.navigate(['/manage/articles']);
     }, error => {
       this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
+      this.form.reset();
       this.router.navigate(['/manage/articles']);
     });
 // --------------------------------------------- Thumbnail Property update ------------------------------------------------
-  } else if(this.form.value.image && this.didEditPdf() === false) {
-        this.articleService.uploadArticleThumbnail(this.form.value.image, 'article')
+  } else if(this.articleImage && !this.didEditPdf()) {
+        this.articleService.uploadArticleThumbnail(this.articleImage, 'article')
       .pipe(
         switchMap(uploadRes => {
         const articleToupdate = new Article(
@@ -217,17 +220,20 @@ export class EditArticlePage implements OnInit {
           this.article.views,
           this.article.comments
         );
-        return this.articleService.updateArticleThumbnail(articleToupdate);
+        return this.articleService.updateArticle(articleToupdate);
       }),
     ).subscribe(() => {
+      console.log('Thumbnail Property update');
       this.appService.presentToast('המאמר עוכן בהצלחה', true);
+      this.form.reset();
       this.router.navigate(['/manage/articles']);
     }, error => {
       this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
+      this.form.reset();
       this.router.navigate(['/manage/articles']);
     });
-// -------------------------------------------------- Thumbnail Property update ------------------------------------------------------
-  }  else if(!this.form.value.image && this.didEditPdf()) {
+// -------------------------------------------------- PDF Property update ------------------------------------------------------
+  }  else if(!this.articleImage && this.didEditPdf()) {
           this.articleService.addArticlePdf(this.generateArticlePdf(), 'articlePdf')
           .pipe(
             switchMap(uploadRes => {
@@ -249,41 +255,21 @@ export class EditArticlePage implements OnInit {
             return this.articleService.updateArticle(articleToupdate);
           }),
         ).subscribe(() => {
+          console.log('PDF Property update');
           this.appService.presentToast('המאמר עוכן בהצלחה', true);
+          this.form.reset();
           this.router.navigate(['/manage/articles']);
         }, error => {
+          this.form.reset();
           this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
           this.router.navigate(['/manage/articles']);
         });
 // -------------------------------------------------- No Property update ------------------------------------------------------
     } else {
-      const articleToupdate = new Article(
-        this.article.id,
-        this.article.authorId,
-        this.article.authorName,
-        this.article.catalogNumber,
-        form.value.title,
-        form.value.subtitle,
-        this.article.body,
-        this.article.date,
-        new Date(),
-        this.article.thumbnail,
-        this.article.pdf,
-        this.article.views,
-        this.article.comments
-      );
-
-      if(this.isEquals(this.article, articleToupdate)) {
-        this.appService.presentToast('המאמר עוכן בהצלחה', true);
+      console.log('No Property update');
+      this.appService.presentToast('המאמר עוכן בהצלחה', true);
+      this.form.reset();
         this.router.navigate(['/manage/articles']);
-      }
-      this.articleService.updateArticle(articleToupdate).subscribe(() => {
-        this.appService.presentToast('המאמר עוכן בהצלחה', true);
-        this.router.navigate(['/manage/articles']);
-      }, error => {
-        this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
-        this.router.navigate(['/manage/articles']);
-      });
     }
 
 

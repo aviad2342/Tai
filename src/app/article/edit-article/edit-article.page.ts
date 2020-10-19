@@ -40,6 +40,7 @@ export class EditArticlePage implements OnInit, OnDestroy {
   id: string;
   @ViewChild('f', { static: true }) form: NgForm;
   private articleSubscription: Subscription;
+  updateImage;
 
   constructor(
     private route: ActivatedRoute,
@@ -84,15 +85,15 @@ export class EditArticlePage implements OnInit, OnDestroy {
     } else {
       imageFile = imageData;
     }
-    this.form.value.image = imageFile;
+    this.updateImage = imageFile;
   }
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
       return;
     }
-    if (form.value.image) {
-      this.articleService.uploadArticleThumbnail(this.form.value.image, 'article')
+    if (this.updateImage) {
+      this.articleService.uploadArticleThumbnail(this.updateImage, 'article')
     .pipe(
       switchMap(uploadRes => {
         const articleToUpdate = new Article(

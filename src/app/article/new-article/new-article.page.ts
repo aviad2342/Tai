@@ -6,7 +6,8 @@ import { switchMap } from 'rxjs/operators';
 import { Article } from '../article.model';
 import { AuthService } from '../../auth/auth.service';
 import { AppService } from '../../app.service';
-import { QuillFormat, QuillEditorBase, QuillEditorComponent } from 'ngx-quill';
+import * as Quill from 'quill';
+import { QuillFormat, QuillEditorBase, QuillEditorComponent, QuillModules, QuillConfig, QuillService } from 'ngx-quill';
 
 
 function base64toBlob(base64Data, contentType) {
@@ -38,12 +39,18 @@ function base64toBlob(base64Data, contentType) {
 export class NewArticlePage implements OnInit {
 
   @ViewChild('f', { static: true }) form: NgForm;
-  @ViewChild('#quillEditor', { static: true }) quillEditor: QuillEditorComponent;
+  @ViewChild('quillEditor') quillEditor: QuillEditorComponent;
   file: File;
   authorId: string;
   authorName: string;
-
-  modules = {
+  htmlTextContent;
+  opt: QuillConfig = {
+    customModules: [],
+    customOptions: [],
+    formats: [],
+  }
+  // quill;
+  modules: QuillModules = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
       ['blockquote', 'code-block'],
@@ -52,7 +59,7 @@ export class NewArticlePage implements OnInit {
       [{ list: 'ordered'}, { list: 'bullet' }],
       [{ script: 'sub'}, { script: 'super' }],      // superscript/subscript
       [{ indent: '-1'}, { indent: '+1' }],          // outdent/indent
-      [{ direction: 'rtl' }, { align: [] }],                         // text direction
+      [{ direction: 'rtl' }, { align: 'right' }],           // text direction
 
       [{ size: ['small', false, 'large', 'huge'] }],  // custom dropdown
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -76,11 +83,14 @@ export class NewArticlePage implements OnInit {
     ) { }
 
     rtl(event: Event){
-      console.log(event);
+      console.log(this.form.value.body);
 
     }
   ngOnInit() {
-
+    // this.quill = new Quill('#quill', this.modules);
+    // const font = Quill.import('../../../assets/fonts/DavidLibre-Medium.ttf');
+    // this.quillEditor.customOptions.push();
+    // this.quillEditor.format('align', 'right');
     // this.quillEditor.format('direction','rtl');
     this.authService.getUserLogged().subscribe(author => {
       this.authorId = author.id;

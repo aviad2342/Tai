@@ -1,3 +1,11 @@
 quill-editor {
     direction: ltr;
 }
+
+#toolbar-container .ql-font span[data-label="David"]::before {
+    font-family: "David";
+  }
+
+  .ql-font-arial {
+    font-family: "David";
+  }

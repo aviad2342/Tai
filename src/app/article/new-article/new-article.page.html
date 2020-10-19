@@ -62,9 +62,11 @@
       <ion-row>
         <ion-col size="12" size-sm="6" offset-sm="3">
           <quill-editor #quillEditor (onFocus)="rtl($event)"
+          id="quill"
           [modules]="modules" 
-          formats="{direction: 'rtl'}"
-          ngModel 
+          formats="[{direction: 'rtl'}]"
+          format="text"
+          ngModel
           name="body"
           placeholder="גוף המאמר"
           ></quill-editor>

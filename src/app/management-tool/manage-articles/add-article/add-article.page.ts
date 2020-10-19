@@ -12,6 +12,9 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 // import * as jsPDF from 'jspdf'
 // import * as Davidd from '../../../../assets/JavaScript/DavidLibre-Regular-normal.js'
 import '../../../../assets/JavaScript/DavidLibre-Regular-normal.js';
+import '../../../../assets/JavaScript/aharoniclm-book-webfont-normal.js';
+import '../../../../assets/JavaScript/Alef-Regular-normal.js';
+import '../../../../assets/JavaScript/FrankRuhlLibre-Regular-normal.js';
 import { jsPDF } from 'jspdf';
 import { forkJoin } from 'rxjs';
 
@@ -60,13 +63,10 @@ export class AddArticlePage implements OnInit {
     defaultFontName: 'David',
     defaultFontSize: '4',
     fonts: [
-      {class: 'arial', name: 'Arial'},
-      {class: 'times-new-roman', name: 'Times New Roman'},
-      {class: 'calibri', name: 'Calibri'},
       {class: 'DavidLibre', name: 'David'},
-      {class: 'dragon', name: 'Dragon'},
+      {class: 'FrankRuhlLibre', name: 'Frank'},
       {class: 'aharoni', name: 'Aharoni'},
-      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+      {class: 'Alef-Regular', name: 'Alef'}
     ],
     uploadUrl: 'http://localhost:3000/articleBodyImages/',
     toolbarHiddenButtons: [

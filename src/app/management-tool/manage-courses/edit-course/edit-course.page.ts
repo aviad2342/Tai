@@ -42,7 +42,7 @@ export class EditCoursePage implements OnInit {
   lessons: Lesson[];
   @ViewChild('f', { static: true }) form: NgForm;
   @ViewChild(IonReorderGroup) reorderGroup: IonReorderGroup;
-  file: File;
+  updateImage;
   isLoading = false;
   defaultThumbnail = 'http://localhost:3000/images/filmDefaultImage.jpg';
 
@@ -83,8 +83,8 @@ export class EditCoursePage implements OnInit {
     if (!form.valid) {
       return;
     }
-    if (form.value.image) {
-    this.courseService.uploadCourseThumbnail(form.value.image, 'course')
+    if (this.updateImage) {
+    this.courseService.uploadCourseThumbnail(this.updateImage, 'course')
     .pipe(
       switchMap(uploadRes => {
         const courseToUpdate = new Course(
@@ -243,8 +243,7 @@ export class EditCoursePage implements OnInit {
     } else {
       imageFile = imageData;
     }
-    // this.file = imageFile;
-    this.form.value.image = imageFile;
+    this.updateImage = imageFile;
   }
 
   getLessonNumber(){

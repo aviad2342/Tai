@@ -57,6 +57,7 @@ export class EditEventPage implements OnInit {
   isLoading = false;
   lessonsIsLoading = false;
   now = new Date().toISOString();
+  updateImage;
   date: Date;
   beginsAt: Date;
   endsAt: Date;
@@ -195,8 +196,8 @@ onSubmit(form: NgForm) {
   if (!form.valid) {
     return;
   }
-  if (form.value.image) {
-  this.eventService.uploadEventThumbnail(this.form.value.image, 'Event')
+  if (this.updateImage) {
+  this.eventService.uploadEventThumbnail(this.updateImage, 'Event')
   .pipe(
     switchMap(uploadRes => {
       const eventToAdd = new Event(
@@ -460,8 +461,7 @@ onSaveAndExit() {
     } else {
       imageFile = imageData;
     }
-    // this.file = imageFile;
-    this.form.value.image = imageFile;
+    this.updateImage = imageFile;
   }
 
   getSpeakerName(speaker: Speaker) {

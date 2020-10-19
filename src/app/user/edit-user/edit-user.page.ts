@@ -45,7 +45,7 @@ export class EditUserPage implements OnInit, OnDestroy {
   @ViewChild('f', { static: true }) form: NgForm;
   private userSubscription: Subscription;
   address: Address = new Address();
-  updateImage = false;
+  updateImage;
 
   constructor(
     private route: ActivatedRoute,
@@ -85,7 +85,6 @@ export class EditUserPage implements OnInit, OnDestroy {
   }
 
   onImagePicked(imageData: string | File) {
-    this.updateImage = true;
     let imageFile;
     if (typeof imageData === 'string') {
       try {
@@ -100,7 +99,7 @@ export class EditUserPage implements OnInit, OnDestroy {
     } else {
       imageFile = imageData;
     }
-    this.form.value.image = imageFile;
+    this.updateImage = imageFile;
   }
 
   onAddressPicked(address: Address) {
@@ -111,8 +110,8 @@ export class EditUserPage implements OnInit, OnDestroy {
     if (!form.valid) {
       return;
     }
-    if (form.value.image) {
-      this.userService.uploadImage(form.value.image, form.value.email)
+    if (this.updateImage) {
+      this.userService.uploadImage(this.updateImage, form.value.email)
     .pipe(
       switchMap(uploadRes => {
         const userToUpdate = new User(

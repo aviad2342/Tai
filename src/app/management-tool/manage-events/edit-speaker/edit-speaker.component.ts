@@ -37,6 +37,7 @@ export class EditSpeakerComponent implements OnInit {
 
   @Input() speaker: Speaker;
   @ViewChild('f', { static: true }) form: NgForm;
+  updateImage;
   titles = [
     'מר',
      'גב\'',
@@ -82,15 +83,15 @@ export class EditSpeakerComponent implements OnInit {
     } else {
       imageFile = imageData;
     }
-    this.form.value.image = imageFile;
+    this.updateImage = imageFile;
   }
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
       return;
     }
-    if (form.value.image) {
-    this.eventService.uploadSpeakerPicture(this.form.value.image, 'Speaker')
+    if (this.updateImage) {
+    this.eventService.uploadSpeakerPicture(this.updateImage, 'Speaker')
     .pipe(
       switchMap(uploadRes => {
         const speakerToAdd = new Speaker(

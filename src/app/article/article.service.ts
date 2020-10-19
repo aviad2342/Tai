@@ -77,41 +77,11 @@ export class ArticleService {
          date: article.date,
          lastEdit: article.lastEdit,
          thumbnail: article.thumbnail,
+         pdf: article.pdf,
          views: article.views,
          comments: article.comments
         };
       return this.http.put(`http://localhost:3000/api/article/article/${article.id}`,
-      {
-        ...articleObj
-      }).
-      pipe(
-        switchMap(resData => {
-          return this.getArticles();
-        }),
-        switchMap(articles => {
-          this._articles.next(articles);
-          return articles.filter(a => a.id === article.id);
-        }),
-        take(1),
-        tap(articleData => {
-          return articleData;
-        }));
-    }
-
-    updateArticleThumbnail(article: Article) {
-      const articleObj = {
-         authorId: article.authorId,
-         catalogNumber: article.catalogNumber,
-         title: article.title,
-         subtitle: article.subtitle,
-         body: article.body,
-         date: article.date,
-         lastEdit: article.lastEdit,
-         thumbnail: article.thumbnail,
-         views: article.views,
-         comments: article.comments
-        };
-      return this.http.put(`http://localhost:3000/api/article/article/image/${article.id}`,
       {
         ...articleObj
       }).
