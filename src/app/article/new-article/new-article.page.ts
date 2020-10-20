@@ -6,6 +6,7 @@ import { switchMap } from 'rxjs/operators';
 import { Article } from '../article.model';
 import { AuthService } from '../../auth/auth.service';
 import { AppService } from '../../app.service';
+// import * as Quill from 'quill';
 import * as Quill from 'quill';
 import { QuillFormat, QuillEditorBase, QuillEditorComponent, QuillModules, QuillConfig, QuillService } from 'ngx-quill';
 
@@ -44,12 +45,14 @@ export class NewArticlePage implements OnInit {
   authorId: string;
   authorName: string;
   htmlTextContent;
+  editor: Quill.Quill;
   opt: QuillConfig = {
     customModules: [],
     customOptions: [],
     formats: [],
   }
-  // quill;
+
+  quill;
   modules: QuillModules = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -82,12 +85,27 @@ export class NewArticlePage implements OnInit {
     public appService: AppService
     ) { }
 
-    rtl(event: Event){
-      console.log(this.form.value.body);
+    // rtl(event: Event){
+    //   console.log(this.form.value.body);
+
+    // }
+    getContent(content: string) {
+      // const con = this.textditor.getContent();
+      //   console.log(con);
+    }
+
+    rtl(){
+      console.log();
 
     }
   ngOnInit() {
-    // this.quill = new Quill('#quill', this.modules);
+    // const fontAttributor = Quill.import('../../../assets/fonts/DavidLibre-Medium.ttf');
+    // fontAttributor.whitelist = [
+    // 'sofia', 'slabo', 'roboto', 'inconsolata', 'ubuntu'];
+    // Quill.register(fontAttributor, true);
+    // this.editor = new Quill('#quill', this.modules);
+    // this.editor.
+    // this.quill = new Quill.Quill('#quill', this.modules);
     // const font = Quill.import('../../../assets/fonts/DavidLibre-Medium.ttf');
     // this.quillEditor.customOptions.push();
     // this.quillEditor.format('align', 'right');

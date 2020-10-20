@@ -10,8 +10,8 @@
 <ion-content class="ion-padding">
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>
-      <ion-row>
-        <ion-col size="12" size-sm="4" offset-sm="4">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-sm="4">
           <app-image-picker 
           [showPreview]="this.file" 
           (imagePick)="onImagePicked($event)" 
@@ -19,8 +19,8 @@
         </app-image-picker>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col size="12" size-sm="4" offset-sm="4">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-sm="4">
           <ion-list>
             <ion-item class="ion-text-center">
               <ion-label position="floating"> כותרת <ion-text color="danger">*</ion-text></ion-label>
@@ -46,6 +46,7 @@
                 ngModel
                 name="subtitle"
                 required
+                (ionFocus)="rtl()"
                 #subtitleCtrl="ngModel"
               ></ion-input>
             </ion-item>
@@ -59,9 +60,16 @@
           </ion-list>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col size="12" size-sm="6" offset-sm="3">
-          <quill-editor #quillEditor (onFocus)="rtl($event)"
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-sm="6">
+          <!-- <quill-editor #quillEditor (onFocus)="rtl($event)"
+          id="quill"
+          format="text"
+          ngModel
+          name="body"
+          placeholder="גוף המאמר"
+          ></quill-editor> -->
+          <!-- <quill-editor #quillEditor (onFocus)="rtl($event)"
           id="quill"
           [modules]="modules" 
           formats="[{direction: 'rtl'}]"
@@ -69,11 +77,13 @@
           ngModel
           name="body"
           placeholder="גוף המאמר"
-          ></quill-editor>
+          ></quill-editor> -->
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col size="12" size-sm="4" offset-sm="4">
+      <br>
+      <br>
+      <ion-row class="ion-justify-content-center"> 
+        <ion-col size="12" size-sm="4">
           <ion-button
             type="submit"
             color="primary"
