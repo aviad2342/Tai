@@ -336,7 +336,6 @@ async onRemoveSpeaker(id: string) {
             this.event.speakers = this.event.speakers.filter(u => u.id !== id);
             this.appService.presentToast('הנואם הוסר בהצלחה', true);
           }, error => {
-            console.log(error);
             this.appService.presentToast('חלה תקלה הנואם לא הוסר', false);
           });
         }
@@ -392,7 +391,6 @@ async onRemoveParticipant(id: string) {
             this.event.participants = this.event.participants.filter(u => u.id !== id);
             this.appService.presentToast('המשתתף הוסר בהצלחה', true);
           }, error => {
-            console.log(error);
             this.appService.presentToast('חלה תקלה המשתתף לא הוסר', false);
           });
         }
@@ -433,7 +431,6 @@ onSaveAndExit() {
      this.appService.presentToast('התמונות נוספו בהצלחה', true);
      this.router.navigate(['/manage/events']);
    }, error => {
-     console.log(error);
      this.appService.presentToast('חלה תקלה התמונות לא נשמרו', false);
      this.router.navigate(['/manage/events']);
    });
@@ -455,7 +452,7 @@ onSaveAndExit() {
           'image/jpeg'
         );
       } catch (error) {
-        console.log(error);
+        this.appService.presentToast('חלה תקלה לא ניתן לשמור את התמונה!', false);
         return;
       }
     } else {

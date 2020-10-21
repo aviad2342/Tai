@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="['/', 'course', lesson?.course]"></ion-back-button>
+      <ion-back-button [routerLink]="['/', 'course', lesson?.course]" [defaultHref]="['/', 'course', lesson?.course]"></ion-back-button>
     </ion-buttons>
     <ion-title class="ion-no-padding">שיעור</ion-title>
   </ion-toolbar>

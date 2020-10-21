@@ -20,3 +20,7 @@ ion-img::part(image) {
     border-radius: 5px;
     image-rendering: pixelated;
 }
+
+ion-item::part(native){
+    --inner-padding-end: 0;
+}

@@ -204,7 +204,6 @@ async onDeleteLesson(id: string) {
       selected = [];
       this.selectedCourseId = '';
       this.isRowSelected = false;
-      console.log(this.selected);
     } else {
      this.lessonSubscription = this.courseservice.getCourseLessons(selected[0].id).subscribe(lessons => {
         this.lessons = lessons;

@@ -221,7 +221,6 @@ onSubmit(form: NgForm) {
    modal.onDidDismiss<Speaker>().then( data => {
     if(data.data !== null  && data.data ) {
       this.speakers.push(data.data);
-      console.log(this.speakers);
     }
   });
   return await modal.present();
@@ -252,7 +251,6 @@ async onRemoveSpeaker(id: string) {
             this.event.speakers = this.event.speakers.filter(u => u.id !== id);
             this.appService.presentToast('הנואם הוסר בהצלחה', true);
           }, error => {
-            console.log(error);
             this.appService.presentToast('חלה תקלה הנואם לא הוסר', false);
           });
         }
@@ -307,7 +305,6 @@ async onRemoveParticipant(id: string) {
             this.event.participants = this.event.participants.filter(u => u.id !== id);
             this.appService.presentToast('המשתתף הוסר בהצלחה', true);
           }, error => {
-            console.log(error);
             this.appService.presentToast('חלה תקלה המשתתף לא הוסר', false);
           });
         }
@@ -338,7 +335,6 @@ onRemove(event) {
      this.appService.presentToast('התמונות נוספו בהצלחה', true);
      this.router.navigate(['/manage/events']);
    }, error => {
-     console.log(error);
      this.appService.presentToast('חלה תקלה התמונות לא נשמרו', false);
      this.router.navigate(['/manage/events']);
    });
@@ -359,7 +355,7 @@ onRemove(event) {
           'image/jpeg'
         );
       } catch (error) {
-        console.log(error);
+        this.appService.presentToast('חלה תקלה לא ניתן לשמור את התמונה!', false);
         return;
       }
     } else {

@@ -33,7 +33,6 @@ export class ViewCoursePage implements OnInit {
       }
       this.courseService.getCourse(paramMap.get('id')).subscribe(course => {
             this.course = course;
-            console.log(this.course);
             this.isLoading = false;
           },
           error => {

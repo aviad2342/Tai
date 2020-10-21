@@ -21,6 +21,8 @@ export class ArticleDetailPage implements OnInit {
   @ViewChild(IonContent) content: IonContent;
   addComment = false;
   isLoading = false;
+  enterTimestamp: number;
+  leaveTimestamp: number;
   articleIsLoading = false;
 
   constructor(
@@ -65,6 +67,10 @@ export class ArticleDetailPage implements OnInit {
 
   }
 
+  ionViewDidEnter() {
+    this.enterTimestamp = Date.now()/1000;
+  }
+
   onSubmit(form: NgForm) {
     if (!form.valid) {
       return;
@@ -102,6 +108,12 @@ export class ArticleDetailPage implements OnInit {
   }
   showForm() {
     this.addComment = true;
+  }
+
+  ionViewDidLeave() {
+    this.leaveTimestamp = Date.now()/1000;
+    console.log(this.leaveTimestamp - this.enterTimestamp);
+    console.log((this.leaveTimestamp - this.enterTimestamp)/60);
   }
 
 }

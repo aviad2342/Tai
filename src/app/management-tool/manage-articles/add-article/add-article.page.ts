@@ -104,7 +104,7 @@ export class AddArticlePage implements OnInit {
           'image/jpeg'
         );
       } catch (error) {
-        console.log(error);
+        this.appService.presentToast('חלה תקלה לא ניתן לשמור את התמונה!', false);
         return;
       }
     } else {

@@ -134,9 +134,7 @@ export class ManageUsersPage implements OnInit, OnDestroy {
   }
 
 
-  ionModalDidDismiss() {
-    console.log('dis');
-  }
+  ionModalDidDismiss() {}
   dismiss() {
     this.modalController.dismiss({
       dismissed: true

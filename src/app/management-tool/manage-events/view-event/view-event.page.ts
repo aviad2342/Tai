@@ -46,7 +46,6 @@ export class ViewEventPage implements OnInit {
       }
       this.eventService.getEvent(paramMap.get('id')).subscribe(event => {
             this.event = event;
-            console.log(event);
             this.isLoading = false;
             if(this.event.images) {
               this.galleryImages.push(...this.setGalleryImages(this.event.images))

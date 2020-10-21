@@ -13,6 +13,7 @@ export class ParticipantsListPage implements OnInit {
 
   participants: Participant[];
   isLoading = false;
+  eventId = '';
   temp = [];
 
   constructor(
@@ -32,6 +33,7 @@ export class ParticipantsListPage implements OnInit {
       this.isLoading = true;
       this.eventService.getEventParticipants(paramMap.get('eventId')).subscribe(participants => {
             this.participants = participants;
+            this.eventId = paramMap.get('eventId');
             this.isLoading = false;
             this.temp = [...this.participants];
           },

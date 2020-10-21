@@ -1,46 +1,48 @@
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>{{ item.name }}</ion-card-title>
-  </ion-card-header>
-  <!-- <ion-slides pager="true" [options]="slideOptsOne" #slideWithNav
-          (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">
-          <ion-slide *ngFor="let s of sliderOne.slidesItems">
-            <ion-img [src]="s"></ion-img>
-          </ion-slide>
-        </ion-slides> -->
-  <ion-thumbnail>
-    <ion-img [src]="item.thumbnail"></ion-img>
-  </ion-thumbnail>
-  <ion-card-content>
-    <ion-card-subtitle>{{ item.price | currency:'ILS' }}</ion-card-subtitle>
-    <p>{{ item.description }}</p>
-  </ion-card-content>
-  <div>
-    <ion-button
-      fill="clear"
-      color="primary"
-      [routerLink]="[
-        '/',
-        'tabs',
-        'discover',
-        item.id
-      ]"
-    >
-    <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
-    <ion-label>הוסף לסל</ion-label>
-    </ion-button>
-    <ion-button
-      fill="clear"
-      color="primary"
-      [routerLink]="[
-        '/',
-        'tabs',
-        'discover',
-        item.id
-      ]"
-    >
-    <ion-icon name="receipt-outline" slot="start"></ion-icon>
-    <ion-label>פרטים</ion-label>
-    </ion-button>
-  </div>
-</ion-card>
+<ion-item lines="none">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ item.name }}</ion-card-title>
+    </ion-card-header>
+    <!-- <ion-slides pager="true" [options]="slideOptsOne" #slideWithNav
+            (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">
+            <ion-slide *ngFor="let s of sliderOne.slidesItems">
+              <ion-img [src]="s"></ion-img>
+            </ion-slide>
+          </ion-slides> -->
+    <ion-thumbnail>
+      <ion-img [src]="item.thumbnail"></ion-img>
+    </ion-thumbnail>
+    <ion-card-content>
+      <ion-card-subtitle>{{ item.price | currency:'ILS' }}</ion-card-subtitle>
+      <p>{{ item.description }}</p>
+    </ion-card-content>
+    <div>
+      <ion-button
+        fill="clear"
+        color="primary"
+        [routerLink]="[
+          '/',
+          'tabs',
+          'discover',
+          item.id
+        ]"
+      >
+      <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
+      <ion-label>הוסף לסל</ion-label>
+      </ion-button>
+      <ion-button
+        fill="clear"
+        color="primary"
+        [routerLink]="[
+          '/',
+          'tabs',
+          'discover',
+          item.id
+        ]"
+      >
+      <ion-icon name="receipt-outline" slot="start"></ion-icon>
+      <ion-label>פרטים</ion-label>
+      </ion-button>
+    </div>
+  </ion-card>
+</ion-item>

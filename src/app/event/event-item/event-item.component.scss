@@ -4,3 +4,7 @@
     border: 1px solid black;
     background: rgb(248, 244, 244);
 }
+
+ion-item::part(native){
+    --inner-padding-end: 0;
+}

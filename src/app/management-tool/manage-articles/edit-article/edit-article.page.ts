@@ -128,7 +128,7 @@ export class EditArticlePage implements OnInit {
           'image/jpeg'
         );
       } catch (error) {
-        console.log(error);
+        this.appService.presentToast('חלה תקלה לא ניתן לשמור את התמונה!', false);
         return;
       }
     } else {
@@ -191,7 +191,6 @@ export class EditArticlePage implements OnInit {
       return this.articleService.updateArticle(articleToupdate);
 
     })).subscribe(() => {
-      console.log('Thumbnail And PDF Property update');
       this.appService.presentToast('המאמר עוכן בהצלחה', true);
       this.form.reset();
       this.router.navigate(['/manage/articles']);
@@ -223,7 +222,6 @@ export class EditArticlePage implements OnInit {
         return this.articleService.updateArticle(articleToupdate);
       }),
     ).subscribe(() => {
-      console.log('Thumbnail Property update');
       this.appService.presentToast('המאמר עוכן בהצלחה', true);
       this.form.reset();
       this.router.navigate(['/manage/articles']);
@@ -255,7 +253,6 @@ export class EditArticlePage implements OnInit {
             return this.articleService.updateArticle(articleToupdate);
           }),
         ).subscribe(() => {
-          console.log('PDF Property update');
           this.appService.presentToast('המאמר עוכן בהצלחה', true);
           this.form.reset();
           this.router.navigate(['/manage/articles']);
@@ -266,7 +263,6 @@ export class EditArticlePage implements OnInit {
         });
 // -------------------------------------------------- No Property update ------------------------------------------------------
     } else {
-      console.log('No Property update');
       this.appService.presentToast('המאמר עוכן בהצלחה', true);
       this.form.reset();
         this.router.navigate(['/manage/articles']);

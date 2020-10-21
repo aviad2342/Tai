@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/event"></ion-back-button>
+      <ion-back-button [routerLink]="['/', 'event', eventId]" defaultHref="/tabs/event"></ion-back-button>
     </ion-buttons>
     <ion-title>רשימת משתתפים</ion-title>
   </ion-toolbar>
