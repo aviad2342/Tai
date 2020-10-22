@@ -1,4 +1,4 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, DEFAULT_CURRENCY_CODE } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
@@ -33,7 +33,8 @@ registerLocaleData(localeHe, 'he-HE');
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: LOCALE_ID, useValue: 'he-HE' } ,
+    { provide: LOCALE_ID, useValue: 'he-HE' },
+    {provide: DEFAULT_CURRENCY_CODE, useValue: 'he-HE'},
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

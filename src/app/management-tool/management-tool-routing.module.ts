@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'articles',
     loadChildren: () => import('./manage-articles/manage-articles.module').then( m => m.ManageArticlesPageModule)
+  },
+  {
+    path: 'items',
+    loadChildren: () => import('./manage-items/manage-items.module').then( m => m.ManageItemsPageModule)
   }
 ];
 
