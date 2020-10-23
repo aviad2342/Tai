@@ -4,9 +4,9 @@
   </ion-toolbar>
   <ion-segment #categorySegment (ionChange)="onCategoryChosen($event)" [value]="categories.BOOKS" class="add-participant-segment">
     <ion-segment-button [value]="categories.BOOKS">{{ categories.BOOKS }}</ion-segment-button>
-    <ion-segment-button [value]="categories.LECTURES">{{ categories.LECTURES }}</ion-segment-button>
     <ion-segment-button [value]="categories.TREATMENTS">{{ categories.TREATMENTS }}</ion-segment-button>
     <ion-segment-button [value]="categories.CONFERENCES">{{ categories.CONFERENCES }}</ion-segment-button>
+    <ion-segment-button [value]="categories.COURSES">{{ categories.COURSES }}</ion-segment-button>
     <ion-segment-button [value]="categories.ARTICLES">{{ categories.ARTICLES }}</ion-segment-button>
     <ion-segment-button [value]="categories.ACCESSORIES">{{ categories.ACCESSORIES }}</ion-segment-button>
     <ion-segment-button [value]="categories.OTHER">{{ categories.OTHER }}</ion-segment-button>
@@ -16,14 +16,15 @@
 <ion-content>
   <ion-slides #addItemSlides [options]="slideOpts">
         <!------------------------------------- Add New Form Slide ----------------------------------------------->
-        <ion-slide>
+        <ion-slide class="slide-step slide-step-resize">
           <form #f="ngForm" (ngSubmit)="onSubmit(f)">
             <ion-grid>
     
               <ion-row class="ion-justify-content-center">
                 <ion-col size="12" size-sm="10">
                   <app-image-picker 
-                  [showPreview]="this.file" 
+                  [selectedImage]="this?.selectedThumbnail"
+                  [showPreview]="isImageselected" 
                   (imagePick)="onImagePicked($event)" 
                   class="ion-padding">
                 </app-image-picker>
@@ -39,14 +40,14 @@
                       <ion-input
                         type="text"
                         ngModel
-                        name="firstName"
+                        name="name"
                         required
-                        #firstNameCtrl="ngModel"
+                        #nameCtrl="ngModel"
                       ></ion-input>
                       <ion-icon name="text-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
                     </ion-item>
                     <ion-item
-                    *ngIf="!firstNameCtrl.valid && firstNameCtrl.touched"
+                    *ngIf="!nameCtrl.valid && nameCtrl.touched"
                     lines="none">
                     <ion-label color="danger">
                       זהו שדה חובה!
@@ -58,14 +59,14 @@
                       <ion-input
                         type="text"
                         ngModel
-                        name="lastName"
+                        name="description"
                         required
-                        #lastNameCtrl="ngModel"
+                        #descriptionCtrl="ngModel"
                       ></ion-input>
-                      <ion-icon name="text-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+                      <ion-icon  slot="end" position="floating" class="custom-product-description"></ion-icon>
                     </ion-item>
                     <ion-item
-                    *ngIf="!lastNameCtrl.valid && lastNameCtrl.touched"
+                    *ngIf="!descriptionCtrl.valid && descriptionCtrl.touched"
                     lines="none">
                     <ion-label color="danger">
                       זהו שדה חובה!
@@ -75,14 +76,19 @@
                     <ion-item>
                       <ion-label position="floating"> מחיר <ion-text color="danger">*</ion-text></ion-label>
                       <ion-input
+                        #price
                         type="number"
                         inputmode="numeric"
-                        ngModel
+                        [ngModel]='amount'
+                        (ionBlur)="getPrice(price)"
+                        (ionFocus)="setPrice(price)"
                         name="price"
+                        value="string"
+                        [placeholder]="getCurrency(0)"
                         required
                         #priceCtrl="ngModel"
                       ></ion-input>
-                      <ion-icon name="at" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+                      <ion-icon name="cash-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
                     </ion-item>
                     <ion-item
                       *ngIf="!priceCtrl.valid && priceCtrl.touched"
@@ -99,10 +105,9 @@
                         ngModel
                         name="quantity"
                         required
-                        placeholder="getCurrency(0)"
                         #quantityCtrl="ngModel"
                       ></ion-input>
-                      <ion-icon name="call-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+                      <ion-icon slot="end" position="floating" class="custom-packages"></ion-icon>
                     </ion-item>
                     <ion-item
                       *ngIf="!quantityCtrl.valid && quantityCtrl.touched"
@@ -118,37 +123,129 @@
             </ion-grid>
           </form>
         </ion-slide>
-    <!------------------------------------- Add From List Slide ----------------------------------------------->
-        <ion-slide>
-          <!-- <ion-grid>
+            <!------------------------------------- Add TREATMENTS List Slide ----------------------------------------------->
+            <ion-slide class="slide-step">
+              <!-- <ion-grid>
+              <ion-row class="ion-justify-content-center">
+                <ion-col size="12" size-sm="10" *ngIf=isEvent>
+                  <ion-virtual-scroll
+                  [items]="events"
+                  approxItemHeight="60px"
+                >
+                <ion-item class="ion-text-center ion-no-padding" *virtualItem="let event" (click)="onAddEventItem(event)">
+                    <ion-card class="event-card">
+                      <ion-img [src]="event.thumbnail"></ion-img>
+                      <ion-card-header>
+                        <ion-card-title>{{ event.title }}</ion-card-title>
+                        <ion-card-subtitle>{{ event.date | date }} - {{ event.placeName }}</ion-card-subtitle>
+                      </ion-card-header>
+                      <ion-card-content>
+                        <p>{{ event.description }}</p>
+                      </ion-card-content>
+                    </ion-card>
+                </ion-item>
+                </ion-virtual-scroll>
+                </ion-col>
+              </ion-row>
+            </ion-grid> -->
+            </ion-slide>
+    <!------------------------------------- Add event List Slide ----------------------------------------------->
+        <ion-slide class="slide-step">
+          <ion-grid>
           <ion-row class="ion-justify-content-center">
-            <ion-col size="12" size-sm="10">
+            <ion-col size="12" size-md="6" *ngIf="isEvent">
               <ion-virtual-scroll
-              [items]="users"
-              approxItemHeight="60px"
+              [items]="events"
+              approxItemHeight="200px"
             >
-            <ion-item *virtualItem="let user">
-              <ion-avatar size="medium" slot="start">
-                <ion-img [src]="user.profilePicture"></ion-img>
-              </ion-avatar>
-              <ion-label>
-                <h2>{{ getUserFullName(user) }}</h2>
-                <ion-text color="medium">
-                  <p>{{ user.email }}</p>
-                </ion-text>
-              </ion-label>
-              <ion-button color="primary" fill="outline" slot="end" (click)="onAddParticipant(user)">
-                <ion-icon name="person-add-outline" ></ion-icon>
-                <ion-label>הוסף משתתף</ion-label>
-              </ion-button>
+            <ion-item class="ion-text-center ion-no-padding" *virtualItem="let event" (click)="onAddEventItem(event)">
+                <ion-card class="event-card">
+                  <ion-img [src]="event.thumbnail" class="event-thumbnail"></ion-img>
+                  <ion-card-header>
+                    <ion-card-title>{{ event.title }}</ion-card-title>
+                    <ion-card-subtitle>{{ event.date | date }} - {{ event.placeName }}</ion-card-subtitle>
+                  </ion-card-header>
+                  <ion-card-content>
+                    <p>{{ event.description }}</p>
+                  </ion-card-content>
+                </ion-card>
             </ion-item>
             </ion-virtual-scroll>
             </ion-col>
           </ion-row>
-        </ion-grid> -->
+        </ion-grid>
         </ion-slide>
-
+    <!------------------------------------- Add course List Slide ----------------------------------------------->
+    <ion-slide class="slide-step">
+      <ion-grid>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="12" size-md="4" *ngIf="isCourse">
+            <ion-virtual-scroll
+            [items]="courses"
+            approxItemHeight="100px"
+          >
+          <ion-item class="ion-text-center ion-no-padding" *virtualItem="let course" (click)="onAddCourseItem(course)">
+            <ion-card class="course-card">
+              <ion-card-header>
+                <ion-card-title>{{ course.title}}</ion-card-title>
+                <ion-card-subtitle>{{ course.description }}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-img [src]="course.thumbnail" class="course-thumbnail"></ion-img>
+              <ion-card-content>
+                <ion-label>מחבר: {{ course.authorName }}</ion-label>
+                <p>נוסף בתאריך: {{ course.date | date }}</p>
+                <p>מספר שיעורים: {{ course.courseLessons }}</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-item>
+          </ion-virtual-scroll>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+        <!------------------------------------- Add article List Slide ----------------------------------------------->
+        <ion-slide class="slide-step">
+          <ion-grid>
+            <ion-row class="ion-justify-content-center">
+              <ion-col size="12" size-md="6" *ngIf="isArticle">
+                <ion-virtual-scroll
+                [items]="articles"
+                approxItemHeight="100px"
+              >
+              <ion-item class="ion-text-center ion-no-padding" *virtualItem="let article" (click)="onAddArticleItem(article)">
+                <ion-card class="article-card">
+                  <ion-card-header>
+                    <ion-card-title>{{ article.title}}</ion-card-title>
+                    <ion-card-subtitle>{{ article.subtitle }}</ion-card-subtitle>
+                  </ion-card-header>
+                  <ion-card-content>
+                    <ion-img [src]="article.thumbnail" class="article-thumbnail"></ion-img>
+                    <p>נוסף בתאריך: {{ article.date | date }}</p>
+                    <ion-label>מחבר: {{ article.authorName }}</ion-label>
+                  </ion-card-content>
+                </ion-card>
+              </ion-item>
+              </ion-virtual-scroll>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-slide>
     
       </ion-slides>
     
 </ion-content>
+
+<ion-footer class="add-item-footer">
+  <ion-row class="ion-justify-content-center">
+    <ion-col size-sm="2" class="ion-text-center">
+      <ion-button color="primary" fill="outline" (click)="onCancel()">
+        <ion-label>ביטול</ion-label>
+      </ion-button>
+    </ion-col>
+    <ion-col size-sm="2" class="ion-text-center">
+      <ion-button color="primary" fill="outline" (click)="onDoneAdding()">
+        <ion-label>שמור</ion-label>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

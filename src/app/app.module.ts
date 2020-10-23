@@ -10,6 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { QuillModule } from 'ngx-quill';
 import localeHe from '@angular/common/locales/he';
 import { TooltipsModule } from 'ionic-tooltips';
+import {CurrencyPipe} from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,6 +34,7 @@ registerLocaleData(localeHe, 'he-HE');
   providers: [
     StatusBar,
     SplashScreen,
+    CurrencyPipe,
     { provide: LOCALE_ID, useValue: 'he-HE' },
     {provide: DEFAULT_CURRENCY_CODE, useValue: 'he-HE'},
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

@@ -1,7 +1,64 @@
 
-// ion-segment-button {
-//     --background-checked: var(--ion-color-primary);
-//     font-size: large;
-//     font-weight: bold;
-//     --background-hover: var(--ion-color-light-gray);
+ion-segment-button {
+    font-size: large;
+    font-weight: bold;
+}
+
+.add-item-footer {
+    background-color: lightgrey;
+}
+
+.event-card {
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid black;
+    background: rgb(248, 244, 244);
+}
+
+.event-thumbnail {
+    width: 300px;
+    height: 200px;
+    object-fit: fill;
+    padding-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.course-thumbnail {
+    height: 200px;
+    object-fit: fill;
+    padding: 5px;
+}
+
+.course-card {
+    border: 1px solid black;
+}
+
+.article-thumbnail {
+    width: 300px;
+    height: 200px;
+    object-fit: fill;
+    padding-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.article-card {
+    background-color: #e8e8e8;
+    width: -webkit-fill-available;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ion-item::part(native){
+    --inner-padding-end: 0;
+}
+
+.slide-step-resize {
+    height: auto;
+}
+// .slide-step {
+//     height: auto;
+//     align-items: baseline;
+//     min-height: 850px;
 // }

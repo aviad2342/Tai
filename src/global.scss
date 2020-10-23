@@ -290,5 +290,21 @@ ion-icon {
     &[class*="toolbar-icon-new-video"] {
       mask-image: url(./assets/icon/addVideo.svg);
     }
+
+    &[class*="custom-packages"] {
+      mask-image: url(./assets/icon/supplies.svg);
+    }
+
+    &[class*="toolbar-icon-packages"] {
+      mask-image: url(./assets/icon/supplies.svg);
+    }
+
+    &[class*="custom-product-description"] {
+      mask-image: url(./assets/icon/product-description.svg);
+    }
+
+    &[class*="toolbar-icon-product-description"] {
+      mask-image: url(./assets/icon/product-description.svg);
+    }
   
   }

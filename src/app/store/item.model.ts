@@ -1,8 +1,8 @@
 export enum Category {
   BOOKS = 'ספרים',
-  LECTURES = 'הרצאות',
   TREATMENTS = 'טיפולים',
   CONFERENCES = 'כנסים',
+  COURSES = 'קורסים',
   ARTICLES = 'מאמרים',
   ACCESSORIES = 'אביזרים',
   OTHER = 'אחר'
