@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'view/:id',
-    loadChildren: () => import('./view-items/view-items.module').then( m => m.ViewItemsPageModule)
+    loadChildren: () => import('./view-item/view-item.module').then( m => m.ViewItemsPageModule)
   },
   {
     path: 'new',

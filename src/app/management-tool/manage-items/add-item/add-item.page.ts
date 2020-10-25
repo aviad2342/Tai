@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SegmentChangeEventDetail } from '@ionic/core';
 import { AlertController, IonInput, IonSegment, IonSlides, ModalController } from '@ionic/angular';
@@ -17,6 +17,7 @@ import { Course } from '../../../course/course.model';
 import { CourseService } from '../../../course/course.service';
 import { Article } from '../../../article/article.model';
 import { ArticleService } from '../../../article/article.service';
+import Swiper from 'swiper';
 
 
 
@@ -48,7 +49,7 @@ function base64toBlob(base64Data, contentType) {
   templateUrl: './add-item.page.html',
   styleUrls: ['./add-item.page.scss'],
 })
-export class AddItemPage implements OnInit {
+export class AddItemPage implements OnInit, AfterViewInit {
 
   item: Item;
   events: Event[];
@@ -59,6 +60,9 @@ export class AddItemPage implements OnInit {
   isCourse = false;
   isImageselected = false;
   selectedThumbnail = '';
+  productId = '';
+  price = '';
+  swiper: Swiper;
   category: Category;
   @ViewChild('addItemSlides') addItemSlides: IonSlides;
   @ViewChild('categorySegment') categorySegment: IonSegment;
@@ -69,7 +73,8 @@ export class AddItemPage implements OnInit {
   prevAmount = '';
   slideOpts = {
     allowSlidePrev: true,
-    allowTouchMove: false
+    allowTouchMove: false,
+    autoHeight: true
   };
 
   categories = {
@@ -95,17 +100,29 @@ export class AddItemPage implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.selectedCategory = this.categories.BOOKS;
   }
 
+  onSlideChange(ItemSlides: IonSlides) {
+    // ItemSlides.updateAutoHeight();
+    ItemSlides.update();
+  }
+
+  async ngAfterViewInit() {
+    // this.addItemSlides.options = this.slideOpts;
+    this.swiper = await this.addItemSlides.getSwiper();
+    this.swiper.updateAutoHeight();
+}
   onCategoryChosen(event: CustomEvent<SegmentChangeEventDetail>) {
     this.selectedCategory = event.detail.value;
     switch (event.detail.value) {
       case this.categories.BOOKS:
         this.form.reset();
         this.selectedThumbnail = '';
+        this.productId = '';
         this.isImageselected = false;
         this.addItemSlides.slideTo(0);
-        // this.addItemSlides.updateAutoHeight(200);
+        // // this.addItemSlides.updateAutoHeight();
         break;
     case this.categories.TREATMENTS:
         this.addItemSlides.slideTo(1);
@@ -115,13 +132,14 @@ export class AddItemPage implements OnInit {
         this.eventService.getEvents().subscribe(events => {
           this.events = events;
           this.isEvent = true;
-          this.addItemSlides.slideTo(2);
+          this.addItemSlides.slideTo(2, 200);
+          // // this.addItemSlides.updateAutoHeight();
         });
       } else {
         this.addItemSlides.slideTo(2);
-        // this.addItemSlides.updateAutoHeight(200);
+        // // this.addItemSlides.updateAutoHeight();
       }
-      // // this.addItemSlides.updateAutoHeight(200);
+      // this.addItemSlides.updateAutoHeight(200);
         break;
     case this.categories.COURSES:
       if(!this.courses) {
@@ -129,9 +147,11 @@ export class AddItemPage implements OnInit {
           this.courses = courses;
           this.isCourse = true;
           this.addItemSlides.slideTo(3);
+          // this.addItemSlides.updateAutoHeight();
         });
       } else {
         this.addItemSlides.slideTo(3);
+        // // this.addItemSlides.updateAutoHeight();
         // this.addItemSlides.updateAutoHeight(200);
       }
       break;
@@ -141,21 +161,25 @@ export class AddItemPage implements OnInit {
           this.articles = articles;
           this.isArticle = true;
           this.addItemSlides.slideTo(4);
+          // // this.addItemSlides.updateAutoHeight();
         });
        } else {
         this.addItemSlides.slideTo(4);
+        // // this.addItemSlides.updateAutoHeight();
         // this.addItemSlides.updateAutoHeight(200);
       }
         break;
     case this.categories.ACCESSORIES:
         this.form.reset();
         this.selectedThumbnail = '';
+        this.productId = '';
         this.isImageselected = false;
         this.addItemSlides.slideTo(0);
         break;
      case this.categories.OTHER:
         this.form.reset();
         this.selectedThumbnail = '';
+        this.productId = '';
         this.isImageselected = false;
         this.addItemSlides.slideTo(0);
         break;
@@ -172,10 +196,11 @@ export class AddItemPage implements OnInit {
   onAddEventItem(event: Event) {
     this.form.reset();
     this.selectedThumbnail = event.thumbnail;
+    this.productId = event.id;
     const eventObj = {
       name:        event.title,
       description: event.description,
-      price:       0,
+      price:       '',
       quantity:    event.maxCapacity,
       };
     this.form.setValue(eventObj);
@@ -186,10 +211,11 @@ export class AddItemPage implements OnInit {
   onAddCourseItem(course: Course) {
     this.form.reset();
     this.selectedThumbnail = course.thumbnail;
+    this.productId = course.id;
     const courseObj = {
       name:        course.title,
       description: course.description,
-      price:       0,
+      price:       '',
       quantity:    1000,
       };
     this.form.setValue(courseObj);
@@ -200,10 +226,11 @@ export class AddItemPage implements OnInit {
   onAddArticleItem(article: Article) {
     this.form.reset();
     this.selectedThumbnail = article.thumbnail;
+    this.productId = article.id;
     const articleObj = {
       name:        article.title,
       description: article.subtitle,
-      price:       0,
+      price:       '',
       quantity:    1000,
       };
     this.form.setValue(articleObj);
@@ -238,12 +265,15 @@ export class AddItemPage implements OnInit {
       this.itemService.uploadItemThumbnail(this.selectedImage, 'Item')
       .pipe(
         switchMap(uploadRes => {
+          if(this.productId === '') {
+            this.productId = uuidv4();
+          }
         const itemToAdd = new Item(
           null,
-          uuidv4(),
+          this.productId,
           form.value.name,
           form.value.description,
-          form.value.price,
+          +this.prevAmount,
           uploadRes.imageUrl,
           'asd12',
           form.value.quantity,
@@ -255,17 +285,21 @@ export class AddItemPage implements OnInit {
         this.appService.presentToast('המוצר נשמר בהצלחה', true);
         this.router.navigate(['/manage/items']);
       }, error => {
+        console.log(error);
         form.reset();
         this.appService.presentToast('חלה תקלה פרטי המוצר לא נשמרו', false);
         this.router.navigate(['/manage/items']);
       });
     } else {
+      if(this.productId === '') {
+        this.productId = uuidv4();
+      }
       const itemToAdd = new Item(
         null,
-        uuidv4(),
+        this.productId,
         form.value.name,
         form.value.description,
-        form.value.price,
+        +this.prevAmount,
         this.selectedThumbnail,
         'asd12',
         form.value.quantity,
@@ -276,6 +310,7 @@ export class AddItemPage implements OnInit {
       this.appService.presentToast('המוצר נשמר בהצלחה', true);
       this.router.navigate(['/manage/items']);
     }, error => {
+      console.log(error);
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי המוצר לא נשמרו', false);
       this.router.navigate(['/manage/items']);

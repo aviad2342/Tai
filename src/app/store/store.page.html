@@ -19,12 +19,12 @@
 </ion-header>
 
 <ion-content>
-  <div *ngFor="let cat of categories" class="category-block">
-    <ion-row class="category-banner ion-no-padding ion-justify-content-center">
-      <ion-col class="button tappable ion-text-right align-self-center category-title">{{ cat }}</ion-col>
+  <div *ngFor="let category of categories" class="category-block">
+    <ion-row class="category-banner ion-no-padding ion-justify-content-center" *ngIf="getItemByCategory(category).length > 0">
+      <ion-col class="button tappable ion-text-right align-self-center category-title">{{ category }}</ion-col>
     </ion-row>
     <ion-slides [options]="sliderConfig">
-      <ion-slide class="item-slide" *ngFor="let item of getItemByCategory(cat)">
+      <ion-slide class="item-slide" *ngFor="let item of getItemByCategory(category)">
           <app-store-item [item]="item" class="store-item"></app-store-item>
       </ion-slide>
     </ion-slides>

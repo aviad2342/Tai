@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ViewItemsPageRoutingModule } from './view-items-routing.module';
+import { ViewItemPageRoutingModule } from './view-item-routing.module';
 
-import { ViewItemsPage } from './view-items.page';
+import { ViewItemPage } from './view-item.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ViewItemsPageRoutingModule
+    ViewItemPageRoutingModule
   ],
-  declarations: [ViewItemsPage]
+  declarations: [ViewItemPage]
 })
 export class ViewItemsPageModule {}

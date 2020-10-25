@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { StoreService } from './store.service';
 import { Item } from './item.model';
 import { AppService } from '../app.service';
+import { ItemService } from './item.service';
 
 
 @Component({
@@ -16,7 +17,16 @@ export class StorePage implements OnInit, OnDestroy {
   isLoading = false;
   private itemsSubscription: Subscription;
   isDesktop: boolean;
-  categories = ['ספרים', 'הרצאות', 'אביזרים', 'אחר'];
+  // categories = ['ספרים', 'הרצאות', 'אביזרים', 'אחר'];
+  categories = [
+    'ספרים',
+    'טיפולים',
+    'כנסים',
+    'קורסים',
+    'מאמרים',
+    'אביזרים',
+    'אחר'
+  ];
 
   sliderConfig = {
     slidesPerView: 1.6,
@@ -63,17 +73,21 @@ export class StorePage implements OnInit, OnDestroy {
     }
   };
 
-  constructor( private storeService: StoreService, private appService: AppService) { }
+  constructor(
+    private storeService: StoreService,
+    private appService: AppService,
+    private itemService: ItemService
+    ) { }
 
   ngOnInit() {
-    this.itemsSubscription = this.storeService.items.subscribe(items => {
+    this.itemsSubscription = this.itemService.items.subscribe(items => {
       this.items = items;
     });
   }
 
   ionViewWillEnter() {
     this.isDesktop = this.appService.isDesktop();
-    this.storeService.getItems().subscribe();
+    this.itemService.getItems().subscribe();
   }
   getItemByCategory(category: string) {
     const items = this.items.filter(p => p.category === category).slice();

@@ -82,7 +82,7 @@
       <ngx-datatable-column name="price" [sortable]="true" [width]="120">
         <ng-template let-column="column" ngx-datatable-header-template><strong>מחיר</strong></ng-template>
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-          {{ row['date'] | currency:'ILS' }}
+          {{ row['price'] | currency:'ILS' }}
         </ng-template>
       </ngx-datatable-column> 
 

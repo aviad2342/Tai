@@ -14,9 +14,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides #addItemSlides [options]="slideOpts">
+  <div id="wrapper">
+  <ion-slides #addItemSlides [options]="slideOpts" (ionSlideDidChange)="onSlideChange(addItemSlides)">
         <!------------------------------------- Add New Form Slide ----------------------------------------------->
-        <ion-slide class="slide-step slide-step-resize">
+        <ion-slide class="slide-step form-slide">
           <form #f="ngForm" (ngSubmit)="onSubmit(f)">
             <ion-grid>
     
@@ -153,7 +154,7 @@
         <ion-slide class="slide-step">
           <ion-grid>
           <ion-row class="ion-justify-content-center">
-            <ion-col size="12" size-md="6" *ngIf="isEvent">
+            <ion-col size="12" size-md="4" *ngIf="isEvent">
               <ion-virtual-scroll
               [items]="events"
               approxItemHeight="200px"
@@ -207,7 +208,7 @@
         <ion-slide class="slide-step">
           <ion-grid>
             <ion-row class="ion-justify-content-center">
-              <ion-col size="12" size-md="6" *ngIf="isArticle">
+              <ion-col size="12" size-md="4" *ngIf="isArticle">
                 <ion-virtual-scroll
                 [items]="articles"
                 approxItemHeight="100px"
@@ -232,7 +233,7 @@
         </ion-slide>
     
       </ion-slides>
-    
+    </div>
 </ion-content>
 
 <ion-footer class="add-item-footer">
