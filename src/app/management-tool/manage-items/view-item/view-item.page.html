@@ -10,23 +10,25 @@
 <ion-content>
   <ion-grid>
     <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-sm="8" class="ion-text-center" *ngIf="isLoading">
+      <ion-col size="12" size-sm="6" class="ion-text-center" *ngIf="isLoading">
         <ion-spinner color="primary"></ion-spinner>
       </ion-col>
-      <ion-col size="12" size-sm="8"  class="ion-text-center" *ngIf="!isLoading">
+      <ion-col size="12" size-sm="6"  class="ion-text-center" *ngIf="!isLoading">
         <div class="course-container ion-padding">
         <ion-text>
-          <h1 class="ion-no-margin">{{ item?.name }}</h1>
+          <h1 class="item-title">{{ item?.name }}</h1>
         </ion-text>
+        <div class="ion-padding">
+        <ion-img [src]="item?.thumbnail" class="item-thumbnail"></ion-img>
+        </div>
         <ion-text>
           <h5 class="ion-margin-top">{{ item?.description }}</h5>
         </ion-text>
-        <ion-img [src]="item?.thumbnail" class="item-thumbnail"></ion-img>
         <ion-text  class="ion-no-padding">
-          <p class="course-author-date"> {{ item?.price | currency:'ILS' }}</p>
+          <p><strong>מחיר:</strong> {{ item?.price | currency:'ILS' }}</p>
         </ion-text>
         <ion-text  class="ion-no-padding">
-          <p class="course-author-date"> {{ item?.quantity }}</p>
+          <p><strong>כמות:</strong> {{ item?.quantity }}</p>
         </ion-text>
       </div>
       </ion-col>

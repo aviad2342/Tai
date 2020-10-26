@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 import { ColumnMode, DatatableComponent, SelectionType } from '../../../../projects/swimlane/ngx-datatable/src/public-api';
 import { Subscription } from 'rxjs';
 import { AppService } from '../../../app/app.service';
@@ -24,10 +24,19 @@ export class ManageItemsPage implements OnInit, OnDestroy {
   temp = [];
   selected = [];
 
+  categories = {
+    BOOKS: 'ספרים',
+    TREATMENTS: 'טיפולים',
+    CONFERENCES: 'כנסים',
+    COURSES: 'קורסים',
+    ARTICLES: 'מאמרים',
+    ACCESSORIES: 'אביזרים',
+    OTHER: 'אחר'
+  };
+
 
   constructor(
     private itemService: ItemService,
-    private modalController: ModalController,
     private alertController: AlertController,
     private router: Router,
     private appservice: AppService
@@ -50,13 +59,21 @@ export class ManageItemsPage implements OnInit, OnDestroy {
       });
     }
 
-   filterItems(event) {
+   onFilterCategories(event) {
     const val = event.target.value.toLowerCase();
     const temp = this.temp.filter((d)=> {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.category.toLowerCase().indexOf(val) !== -1 || !val;
      });
    this.items = temp;
     }
+
+    filterItems(event) {
+      const val = event.target.value.toLowerCase();
+      const temp = this.temp.filter((d)=> {
+        return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+       });
+     this.items = temp;
+      }
 
   async onAddItem() {
     this.selectedItemId = null;
@@ -123,9 +140,6 @@ export class ManageItemsPage implements OnInit, OnDestroy {
     if (this.itemSubscription) {
       this.itemSubscription.unsubscribe();
     }
-    // if (this.lessonSubscription) {
-    //   this.lessonSubscription.unsubscribe();
-    // }
   }
 
 }

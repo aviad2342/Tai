@@ -48,6 +48,21 @@
         </ion-item>
       </ion-col>
 
+      <ion-col size="4" class="ion-padding-end">
+        <ion-item>
+          <ion-select interface="popover" mode="ios" value=" " placeholder="סנן לפי קטגוריה" (ionChange)="onFilterCategories($event)">
+            <ion-select-option value="">הצג הכל</ion-select-option>
+            <ion-select-option [value]="categories.BOOKS">{{ categories.BOOKS }}</ion-select-option>
+            <ion-select-option [value]="categories.TREATMENTS">{{ categories.TREATMENTS }}</ion-select-option>
+            <ion-select-option [value]="categories.CONFERENCES">{{ categories.CONFERENCES }}</ion-select-option>
+            <ion-select-option [value]="categories.COURSES">{{ categories.COURSES }}</ion-select-option>
+            <ion-select-option [value]="categories.ARTICLES">{{ categories.ARTICLES }}</ion-select-option>
+            <ion-select-option [value]="categories.ACCESSORIES">{{ categories.ACCESSORIES }}</ion-select-option>
+            <ion-select-option [value]="categories.OTHER">{{ categories.OTHER }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
     </ion-row>
 <!------------------------------------------ courses datatable -------------------------------------------------->
     <ion-row>
@@ -64,6 +79,7 @@
       [columnMode]="columnMode.standard"
       [selected]="selected"
       [selectionType]="SelectionType.single"
+      [sorts]="[{ prop: 'category', dir: 'aesc' }]"
       (activate)="onActivate($event)"
       (select)="onSelect($event)"
     >

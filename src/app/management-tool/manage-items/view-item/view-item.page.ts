@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
-import { Item } from 'src/app/store/item.model';
-import { ItemService } from 'src/app/store/item.service';
+import { Item } from '../../../store/item.model';
+import { ItemService } from '../../../store/item.service';
 
 @Component({
   selector: 'app-view-item',

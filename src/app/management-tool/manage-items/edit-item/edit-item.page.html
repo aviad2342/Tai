@@ -1,9 +1,131 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>edit-item</ion-title>
+    <ion-title>עריכת מוצר</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-grid>
 
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-md="4" size-sm="6">
+          <app-image-picker 
+          [selectedImage]="item?.thumbnail"
+          [showPreview]="true" 
+          (imagePick)="onImagePicked($event)" 
+          class="ion-padding">
+        </app-image-picker>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-md="4" size-sm="6">
+          <ion-list>
+
+            <ion-item>
+              <ion-label position="floating"> שם המוצר <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="text"
+                ngModel
+                name="name"
+                required
+                #nameCtrl="ngModel"
+              ></ion-input>
+              <ion-icon name="text-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-item
+            *ngIf="!nameCtrl.valid && nameCtrl.touched"
+            lines="none">
+            <ion-label color="danger">
+              זהו שדה חובה!
+            </ion-label>
+          </ion-item>
+
+            <ion-item>
+              <ion-label position="floating"> תיאור המוצר <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="text"
+                ngModel
+                name="description"
+                required
+                #descriptionCtrl="ngModel"
+              ></ion-input>
+              <ion-icon  slot="end" position="floating" class="custom-product-description"></ion-icon>
+            </ion-item>
+            <ion-item
+            *ngIf="!descriptionCtrl.valid && descriptionCtrl.touched"
+            lines="none">
+            <ion-label color="danger">
+              זהו שדה חובה!
+            </ion-label>
+          </ion-item>
+
+            <ion-item>
+              <ion-label position="floating"> מחיר <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                #price
+                type="text"
+                inputmode="numeric"
+                [ngModel]='amount'
+                (ionBlur)="getPrice(price)"
+                (ionFocus)="setPrice(price)"
+                name="price"
+                value="string"
+                [placeholder]="getCurrency(0)"
+                required
+                #priceCtrl="ngModel"
+              ></ion-input>
+              <ion-icon name="cash-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-item
+              *ngIf="!priceCtrl.valid && priceCtrl.touched"
+              lines="none">
+              <ion-label color="danger">
+                זהו שדה חובה!
+              </ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating"> כמות <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="number"
+                ngModel
+                name="quantity"
+                required
+                #quantityCtrl="ngModel"
+              ></ion-input>
+              <ion-icon slot="end" position="floating" class="custom-packages"></ion-icon>
+            </ion-item>
+            <ion-item
+              *ngIf="!quantityCtrl.valid && quantityCtrl.touched"
+              lines="none">
+              <ion-label color="danger">
+                זהו שדה חובה!
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <br>
+      <br>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="2" size-md="2">
+          <ion-button 
+          color="primary" 
+          expand="block"
+          (click)="onCancel()"
+          >ביטול </ion-button>
+        </ion-col>
+        <ion-col size="2" size-md="2">
+          <ion-button
+            type="submit"
+            color="primary"
+            expand="block"
+            [disabled]="!f.valid"
+          >עדכן</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>

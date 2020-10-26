@@ -23,6 +23,7 @@ export class AppService {
       color,
       cssClass: 'toast-scheme',
       message,
+      mode: 'ios',
       animated: true,
       duration: 2000,
       buttons: [
