@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>הוספת מוצר</ion-title>
   </ion-toolbar>
-  <ion-segment #categorySegment (ionChange)="onCategoryChosen($event)" [value]="categories.BOOKS" class="add-participant-segment">
+  <ion-segment #categorySegment [scrollable]="true" (ionChange)="onCategoryChosen($event)" [value]="categories.BOOKS" class="add-participant-segment">
     <ion-segment-button [value]="categories.BOOKS">{{ categories.BOOKS }}</ion-segment-button>
     <ion-segment-button [value]="categories.TREATMENTS">{{ categories.TREATMENTS }}</ion-segment-button>
     <ion-segment-button [value]="categories.CONFERENCES">{{ categories.CONFERENCES }}</ion-segment-button>
@@ -19,10 +19,10 @@
         <!------------------------------------- Add New Form Slide ----------------------------------------------->
         <ion-slide class="slide-step form-slide">
           <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-            <ion-grid>
+            <ion-grid [fixed]="true">
     
               <ion-row class="ion-justify-content-center">
-                <ion-col size="12" size-sm="10">
+                <ion-col size="12" size-xl="4" size-lg="4" size-md="6" size-sm="6" size-xs="7">
                   <app-image-picker 
                   [selectedImage]="this?.selectedThumbnail"
                   [showPreview]="isImageselected" 
@@ -33,7 +33,7 @@
               </ion-row>
     
               <ion-row class="ion-justify-content-center">
-                <ion-col size="12" size-sm="10">
+                <ion-col size="12" size-xl="6" size-lg="4" size-md="6" size-sm="6" size-xs="8">
                   <ion-list>
     
                     <ion-item>
@@ -157,7 +157,7 @@
             <ion-col size="12" size-md="4" *ngIf="isEvent">
               <ion-virtual-scroll
               [items]="events"
-              approxItemHeight="200px"
+              approxItemHeight="500px"
             >
             <ion-item class="ion-text-center ion-no-padding" *virtualItem="let event" (click)="onAddEventItem(event)">
                 <ion-card class="event-card">
@@ -183,7 +183,7 @@
           <ion-col size="12" size-md="4" *ngIf="isCourse">
             <ion-virtual-scroll
             [items]="courses"
-            approxItemHeight="100px"
+            approxItemHeight="500px"
           >
           <ion-item class="ion-text-center ion-no-padding" *virtualItem="let course" (click)="onAddCourseItem(course)">
             <ion-card class="course-card">
@@ -211,7 +211,7 @@
               <ion-col size="12" size-md="4" *ngIf="isArticle">
                 <ion-virtual-scroll
                 [items]="articles"
-                approxItemHeight="100px"
+                approxItemHeight="500px"
               >
               <ion-item class="ion-text-center ion-no-padding" *virtualItem="let article" (click)="onAddArticleItem(article)">
                 <ion-card class="article-card">
@@ -238,12 +238,12 @@
 
 <ion-footer class="add-item-footer">
   <ion-row class="ion-justify-content-center">
-    <ion-col size-sm="2" class="ion-text-center">
+    <ion-col size-sm="2" size-xs="5" class="ion-text-center">
       <ion-button color="primary" fill="outline" (click)="onCancel()">
         <ion-label>ביטול</ion-label>
       </ion-button>
     </ion-col>
-    <ion-col size-sm="2" class="ion-text-center">
+    <ion-col size-sm="2" size-xs="5" class="ion-text-center">
       <ion-button color="primary" fill="outline" (click)="onDoneAdding()">
         <ion-label>שמור</ion-label>
       </ion-button>

@@ -34,6 +34,14 @@ const routes: Routes = [
   {
     path: 'manage',
     loadChildren: () => import('./management-tool/management-tool.module').then( m => m.ManagementToolPageModule), canLoad: [AuthGuard]
+  },
+  {
+    path: 'therapist',
+    loadChildren: () => import('./therapist/therapist.module').then( m => m.TherapistPageModule)
+  },
+  {
+    path: 'treatment',
+    loadChildren: () => import('./treatment/treatment.module').then( m => m.TreatmentPageModule)
   }
 ];
 @NgModule({

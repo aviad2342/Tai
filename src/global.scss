@@ -314,5 +314,13 @@ ion-icon {
     &[class*="toolbar-icon-product-description"] {
       mask-image: url(./assets/icon/product-description.svg);
     }
+
+    &[class*="custom-therapy"] {
+      mask-image: url(./assets/icon/therapy.svg);
+    }
+
+    &[class*="toolbar-icon-therapy"] {
+      mask-image: url(./assets/icon/therapy.svg);
+    }
   
   }

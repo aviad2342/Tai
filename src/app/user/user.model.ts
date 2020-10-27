@@ -14,7 +14,7 @@ export class User {
       public houseNumber: string,
       public apartment: string,
       public entry: string,
-      public profilePicture: string,
+      public profilePicture: string
     ) {}
 
   }

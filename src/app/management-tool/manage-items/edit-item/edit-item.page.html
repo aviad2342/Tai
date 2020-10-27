@@ -6,10 +6,10 @@
 
 <ion-content>
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-    <ion-grid>
+    <ion-grid [fixed]="true">
 
       <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size-md="4" size-sm="6">
+        <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2"  class="ion-text-center">
           <app-image-picker 
           [selectedImage]="item?.thumbnail"
           [showPreview]="true" 
@@ -20,7 +20,7 @@
       </ion-row>
 
       <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size-md="4" size-sm="6">
+        <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2" class="ion-text-center">
           <ion-list>
 
             <ion-item>
@@ -110,14 +110,14 @@
       <br>
       <br>
       <ion-row class="ion-justify-content-center">
-        <ion-col size="2" size-md="2">
+        <ion-col size="12" size-xl="3" size-lg="3" size-md="3" size-sm="4" size-xs="6" class="ion-text-center">
           <ion-button 
           color="primary" 
           expand="block"
           (click)="onCancel()"
           >ביטול </ion-button>
         </ion-col>
-        <ion-col size="2" size-md="2">
+        <ion-col size="12" size-xl="3" size-lg="3" size-md="3" size-sm="4" size-xs="6" class="ion-text-center">
           <ion-button
             type="submit"
             color="primary"

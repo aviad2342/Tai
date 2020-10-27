@@ -104,12 +104,10 @@ export class AddItemPage implements OnInit, AfterViewInit {
   }
 
   onSlideChange(ItemSlides: IonSlides) {
-    // ItemSlides.updateAutoHeight();
     ItemSlides.update();
   }
 
   async ngAfterViewInit() {
-    // this.addItemSlides.options = this.slideOpts;
     this.swiper = await this.addItemSlides.getSwiper();
     this.swiper.updateAutoHeight();
 }
@@ -122,7 +120,6 @@ export class AddItemPage implements OnInit, AfterViewInit {
         this.productId = '';
         this.isImageselected = false;
         this.addItemSlides.slideTo(0);
-        // // this.addItemSlides.updateAutoHeight();
         break;
     case this.categories.TREATMENTS:
         this.addItemSlides.slideTo(1);
@@ -132,27 +129,21 @@ export class AddItemPage implements OnInit, AfterViewInit {
         this.eventService.getEvents().subscribe(events => {
           this.events = events;
           this.isEvent = true;
-          this.addItemSlides.slideTo(2, 200);
-          // // this.addItemSlides.updateAutoHeight();
+          this.addItemSlides.slideTo(2, 500);
         });
       } else {
         this.addItemSlides.slideTo(2);
-        // // this.addItemSlides.updateAutoHeight();
       }
-      // this.addItemSlides.updateAutoHeight(200);
         break;
     case this.categories.COURSES:
       if(!this.courses) {
         this.courseService.getCourses().subscribe(courses => {
           this.courses = courses;
           this.isCourse = true;
-          this.addItemSlides.slideTo(3);
-          // this.addItemSlides.updateAutoHeight();
+          this.addItemSlides.slideTo(3, 500);
         });
       } else {
         this.addItemSlides.slideTo(3);
-        // // this.addItemSlides.updateAutoHeight();
-        // this.addItemSlides.updateAutoHeight(200);
       }
       break;
      case this.categories.ARTICLES:
@@ -160,13 +151,10 @@ export class AddItemPage implements OnInit, AfterViewInit {
         this.articleService.getArticles().subscribe(articles => {
           this.articles = articles;
           this.isArticle = true;
-          this.addItemSlides.slideTo(4);
-          // // this.addItemSlides.updateAutoHeight();
+          this.addItemSlides.slideTo(4, 500);
         });
        } else {
         this.addItemSlides.slideTo(4);
-        // // this.addItemSlides.updateAutoHeight();
-        // this.addItemSlides.updateAutoHeight(200);
       }
         break;
     case this.categories.ACCESSORIES:

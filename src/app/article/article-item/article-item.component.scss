@@ -12,8 +12,8 @@
 // }
 
 .article-card {
-    background-color: #e8e8e8;
-    width: -webkit-fill-available;
+    border: 1px solid black;
+    --background: #e0e1e4;
     margin-left: auto;
     margin-right: auto;
 }
