@@ -49,23 +49,24 @@ export class AddUserComponent implements OnInit {
   imageIsValid = true;
   date = new Date();
   pickerOptions = {
-    // cssClass: 'ion-justify-content-start',
-    // buttons: [
-    //   {
-    //     text: 'ביטול',
-    //     role: 'cancel',
-    //     cssClass: 'ion-justify-content-start'
-    //   },
-    //   {
-    //     text: 'אישור',
-    //     role: 'confirm',
-    //     cssClass: 'ion-justify-content-start',
-    //     handler: (value: any) => {
-    //       console.log(value);
-    //       this.date = value;
-    //     }
-    //   }
-    // ]
+    mode: 'ios',
+    cssClass: 'date-picker-class',
+    backdropDismiss: false,
+    buttons: [
+      {
+        text: 'ביטול',
+        role: 'cancel',
+        cssClass: 'picker-cancel-btn'
+      },
+      {
+        text: 'אישור',
+        role: 'confirm',
+        cssClass: 'picker-confirm-btn',
+        handler: (value: any) => {
+          // this.date = new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value);
+        }
+      }
+    ]
   };
 
 

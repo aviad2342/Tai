@@ -17,26 +17,38 @@
         </ion-tab-button>
     </ion-col>
     <ion-col class="ion-text-center ion-margin manage-tool-tab">
-        <ion-tab-button routerLink="courses">
-          <ion-icon class="custom-online-course"></ion-icon>
-          <ion-label class="manage-tool-tab-label">קורסים</ion-label>
-        </ion-tab-button>
-    </ion-col>
-    <ion-col class="ion-text-center ion-margin manage-tool-tab">
-        <ion-tab-button>
-          <ion-icon class="custom-therapy"></ion-icon>
-          <ion-label class="manage-tool-tab-label">טיפולים</ion-label>
-        </ion-tab-button>
-    </ion-col>
-    <ion-col class="ion-text-center ion-margin manage-tool-tab">
-        <ion-tab-button routerLink="articles">
-          <ion-icon name="newspaper-outline"></ion-icon>
-          <ion-label class="manage-tool-tab-label">מאמרים</ion-label>
-        </ion-tab-button>
-    </ion-col>
+      <ion-tab-button routerLink="therapists">
+        <ion-icon class="custom-therapist"></ion-icon>
+        <ion-label class="manage-tool-tab-label">מטפלים</ion-label>
+      </ion-tab-button>
+  </ion-col>
+  <ion-col class="ion-text-center ion-margin manage-tool-tab">
+      <ion-tab-button>
+        <ion-icon class="custom-customers"></ion-icon>
+        <ion-label class="manage-tool-tab-label">לקוחות</ion-label>
+      </ion-tab-button>
+  </ion-col>
+  <ion-col class="ion-text-center ion-margin manage-tool-tab">
+    <ion-tab-button routerLink="items">
+      <ion-icon class="custom-speaker"></ion-icon>
+      <ion-label class="manage-tool-tab-label">עדויות</ion-label>
+    </ion-tab-button>
+  </ion-col>
   </ion-row>
   <!--------------------------------------------------- row 2 --------------------------------------------------->
   <ion-row class="ion-justify-content-center">
+    <ion-col class="ion-text-center ion-margin manage-tool-tab">
+      <ion-tab-button routerLink="courses">
+        <ion-icon class="custom-online-course"></ion-icon>
+        <ion-label class="manage-tool-tab-label">קורסים</ion-label>
+      </ion-tab-button>
+    </ion-col>
+    <ion-col class="ion-text-center ion-margin manage-tool-tab">
+      <ion-tab-button routerLink="articles">
+        <ion-icon name="newspaper-outline"></ion-icon>
+        <ion-label class="manage-tool-tab-label">מאמרים</ion-label>
+      </ion-tab-button>
+    </ion-col>
     <ion-col class="ion-text-center ion-margin manage-tool-tab">
         <ion-tab-button routerLink="events">
           <ion-icon class="custom-calendar-event"></ion-icon>
@@ -44,6 +56,15 @@
         </ion-tab-button>
     </ion-col>
     <ion-col class="ion-text-center ion-margin manage-tool-tab">
+      <ion-tab-button>
+        <ion-icon class="custom-therapy"></ion-icon>
+        <ion-label class="manage-tool-tab-label">טיפולים</ion-label>
+      </ion-tab-button>
+    </ion-col>
+  </ion-row>
+    <!--------------------------------------------------- row 3 --------------------------------------------------->
+    <ion-row class="ion-justify-content-center">
+      <ion-col class="ion-text-center ion-margin manage-tool-tab">
         <ion-tab-button>
           <ion-icon class="custom-shopping-cart"></ion-icon>
           <ion-label class="manage-tool-tab-label">חנות</ion-label>
@@ -61,6 +82,12 @@
           <ion-label class="manage-tool-tab-label">דוחות</ion-label>
         </ion-tab-button>
     </ion-col>
-  </ion-row>
+      <ion-col class="ion-text-center ion-margin manage-tool-tab">
+          <ion-tab-button>
+            <ion-icon class="custom-statistics"></ion-icon>
+            <ion-label class="manage-tool-tab-label">סטטיסטיקה</ion-label>
+          </ion-tab-button>
+      </ion-col>
+    </ion-row>
 </ion-grid>
 </ion-content>

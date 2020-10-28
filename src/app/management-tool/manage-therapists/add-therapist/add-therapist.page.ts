@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UserService } from '../user.service';
 import { NgForm } from '@angular/forms';
+import { SegmentChangeEventDetail } from '@ionic/core';
+import { AlertController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
-import { User } from '../user.model';
+import { Therapist } from '../../../therapist/therapist.model';
+import { AppService } from '../../../app.service';
+import { Address } from '../../../shared/address.model';
+import { TherapistService } from '../../../therapist/therapist.service';
 import { Router } from '@angular/router';
-import { Address } from '../../shared/address.model';
-import { AppService } from '../../app.service';
-
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || '';
@@ -30,21 +31,31 @@ function base64toBlob(base64Data, contentType) {
 }
 
 @Component({
-  selector: 'app-new-user',
-  templateUrl: './new-user.page.html',
-  styleUrls: ['./new-user.page.scss'],
+  selector: 'app-add-therapist',
+  templateUrl: './add-therapist.page.html',
+  styleUrls: ['./add-therapist.page.scss'],
 })
-export class NewUserPage implements OnInit {
+export class AddTherapistPage implements OnInit {
 
   @ViewChild('f', { static: true }) form: NgForm;
 
   countries: string[] = [];
   selectCountry: string;
   hideList = false;
+  treatmentsTypesValid = false;
   address: Address = new Address();
   userImage = '../../../assets/images/user-default-image.png';
   file: File;
+  addressIsValid = false;
+  imageIsValid = true;
   date = new Date();
+  treatmentsTypes: string[] = [];
+  treatmentsTypesSelectOptions = {
+    backdropDismiss: false,
+    cssClass: 'select-types-alert',
+    header: 'בחר סוגי טיפול מהרשימה'
+  };
+
   pickerOptions = {
     mode: 'ios',
     cssClass: 'date-picker-class',
@@ -60,22 +71,34 @@ export class NewUserPage implements OnInit {
         role: 'confirm',
         cssClass: 'picker-confirm-btn',
         handler: (value: any) => {
-          // this.date = new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value);
+          this.date = new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value);
         }
       }
     ]
   };
 
+  typesOfTreatments = {
+    BOOKS: 'ספרים',
+    TREATMENTS: 'טיפולים',
+    CONFERENCES: 'כנסים',
+    COURSES: 'קורסים',
+    ARTICLES: 'מאמרים',
+    ACCESSORIES: 'אביזרים',
+    OTHER: 'אחר'
+  };
+
   constructor(
+    private therapistService: TherapistService,
+    private alertController: AlertController,
     private router: Router,
-    private userService: UserService,
-    public appService: AppService
+    private appService: AppService
     ) { }
 
   ngOnInit() {
   }
 
   onImagePicked(imageData: string | File) {
+    this.imageIsValid = true;
     let imageFile;
     if (typeof imageData === 'string') {
       try {
@@ -84,7 +107,7 @@ export class NewUserPage implements OnInit {
           'image/jpeg'
         );
       } catch (error) {
-        console.log(error);
+        this.appService.presentToast('חלה תקלה לא ניתן לשמור את התמונה!', false);
         return;
       }
     } else {
@@ -95,19 +118,37 @@ export class NewUserPage implements OnInit {
 
   }
 
+  onTreatmentsChosen(event: CustomEvent<SegmentChangeEventDetail>) {
+    this.treatmentsTypesValid = false;
+    this.treatmentsTypes = [...event.detail.value];
+    console.log(this.treatmentsTypes);
+  }
+
+  onTreatmentsCancel() {
+    this.treatmentsTypesValid = true;
+  }
+
   onAddressPicked(address: Address) {
     this.address = address;
   }
 
+  onAddressIsValid(isValid: boolean) {
+    this.addressIsValid = isValid;
+  }
+
   onSubmit(form: NgForm) {
     form.value.image = this.file;
-    if (!form.valid || !this.form.value.image) {
+    if (!form.valid) {
       return;
     }
-    this.userService.uploadImage(this.form.value.image, form.value.email)
+    if (!this.form.value.image) {
+      this.imageIsValid = false;
+      return;
+    }
+    this.therapistService.uploadImage(this.form.value.image, form.value.email)
     .pipe(
       switchMap(uploadRes => {
-        const userToAdd = new User(
+        const therapistToAdd = new Therapist(
           null,
           form.value.firstName,
           form.value.lastName,
@@ -121,20 +162,29 @@ export class NewUserPage implements OnInit {
           this.address.houseNumber,
           this.address.apartment,
           this.address.entry,
-          uploadRes.imageUrl
+          uploadRes.imageUrl,
+          this.treatmentsTypes,
+          form.value.resume,
+          false
         );
-        return this.userService.addUser(userToAdd);
+        return this.therapistService.addTherapist(therapistToAdd);
       })
     ).subscribe(() => {
       form.reset();
       this.appService.presentToast('המשתמש נשמר בהצלחה', true);
-      this.router.navigate(['/tabs/user']);
+      this.router.navigate(['/manage/therapists']);
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי המשתמש לא נשמרו', false);
-      this.router.navigate(['/tabs/user']);
+      this.router.navigate(['/manage/therapists']);
     }
     );
+  }
+
+  onCancel() {
+    this.form.reset();
+    this.appService.presentToast('הפעולה בוטלה', true);
+    this.router.navigate(['/manage/therapists']);
   }
 
 }

@@ -322,5 +322,54 @@ ion-icon {
     &[class*="toolbar-icon-therapy"] {
       mask-image: url(./assets/icon/therapy.svg);
     }
+
+    &[class*="custom-therapist"] {
+      mask-image: url(./assets/icon/therapist.svg);
+    }
+
+    &[class*="toolbar-icon-therapist"] {
+      mask-image: url(./assets/icon/therapist.svg);
+    }
+
+    &[class*="custom-statistics"] {
+      mask-image: url(./assets/icon/statistics.svg);
+    }
+
+    &[class*="toolbar-icon-statistics"] {
+      mask-image: url(./assets/icon/statistics.svg);
+    }
+
+    &[class*="custom-customers"] {
+      mask-image: url(./assets/icon/customers.svg);
+    }
+
+    &[class*="toolbar-icon-customers"] {
+      mask-image: url(./assets/icon/customers.svg);
+    }
+
+    &[class*="custom-speaker"] {
+      mask-image: url(./assets/icon/speaker.svg);
+    }
+
+    &[class*="toolbar-icon-speaker"] {
+      mask-image: url(./assets/icon/speaker.svg);
+    }
+    
+    &[class*="custom-firstName"] {
+      mask-image: url(./assets/icon/firstName.svg);
+    }
+
+    &[class*="toolbar-icon-firstName"] {
+      mask-image: url(./assets/icon/firstName.svg);
+    }
+
+    &[class*="custom-lastName"] {
+      mask-image: url(./assets/icon/lastName.svg);
+    }
+
+    &[class*="toolbar-icon-lastName"] {
+      mask-image: url(./assets/icon/lastName.svg);
+    }
+  
   
   }

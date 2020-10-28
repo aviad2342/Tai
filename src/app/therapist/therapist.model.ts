@@ -17,6 +17,9 @@ export class Therapist extends User {
       public apartment: string,
       public entry: string,
       public profilePicture: string,
+      public treatmentTypes: string[],
+      public resume: string,
+      public admin: boolean,
     ) {
         super(
             id,

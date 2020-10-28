@@ -29,14 +29,8 @@ export class ManageUsersPage implements OnInit, OnDestroy {
   temp = [];
   selected = [];
 
-  // rows = [
-  //   { name: 'Austin', gender: 'Male', company: 'Swimlane' },
-  //   { name: 'Dany', gender: 'Male', company: 'KFC' },
-  //   { name: 'Molly', gender: 'Female', company: 'Burger King' }
-  // ];
-  // columns = [{ prop: 'מספר מזהה' }, { name: 'שם' }, { name: 'שם משפחה' }];
-
-  constructor( private userservice: UserService,
+  constructor(
+    private userservice: UserService,
     private modalController: ModalController,
     private alertController: AlertController,
     private appservice: AppService
