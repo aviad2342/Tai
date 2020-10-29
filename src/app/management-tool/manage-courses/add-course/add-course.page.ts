@@ -9,28 +9,7 @@ import { switchMap, take } from 'rxjs/operators';
 import { Course } from '../../../course/course.model';
 import { Lesson } from '../../../course/lesson.model';
 import { AddLessonComponent } from '../add-lesson/add-lesson.component';
-
-
-function base64toBlob(base64Data, contentType) {
-  contentType = contentType || '';
-  const sliceSize = 1024;
-  const byteCharacters = window.atob(base64Data);
-  const bytesLength = byteCharacters.length;
-  const slicesCount = Math.ceil(bytesLength / sliceSize);
-  const byteArrays = new Array(slicesCount);
-
-  for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
-    const begin = sliceIndex * sliceSize;
-    const end = Math.min(begin + sliceSize, bytesLength);
-
-    const bytes = new Array(end - begin);
-    for (let offset = begin, i = 0; offset < end; ++i, ++offset) {
-      bytes[i] = byteCharacters[offset].charCodeAt(0);
-    }
-    byteArrays[sliceIndex] = new Uint8Array(bytes);
-  }
-  return new Blob(byteArrays, { type: contentType });
-}
+import * as utility from '../../../utilities/functions';
 
 @Component({
   selector: 'app-add-course',
@@ -43,6 +22,7 @@ export class AddCoursePage implements OnInit {
   @ViewChild('f', { static: true }) form: NgForm;
   course: Course;
   file: File;
+  imageFile;
   authorId: string;
   authorName: string;
   isLoading = false;
@@ -74,31 +54,34 @@ export class AddCoursePage implements OnInit {
     });
   }
 
+  // onImagePicked(imageData: string | File) {
+  //   let imageFile;
+  //   if (typeof imageData === 'string') {
+  //     try {
+  //       imageFile = utility.base64toBlob(
+  //         imageData.replace('data:image/jpeg;base64,', ''),
+  //         'image/jpeg'
+  //       );
+  //     } catch (error) {
+  //       this.appService.presentToast('חלה תקלה לא ניתן לשמור את התמונה!', false);
+  //       return;
+  //     }
+  //   } else {
+  //     imageFile = imageData;
+  //   }
+  //   this.file = imageFile;
+  //   this.form.value.image = imageFile;
+  // }
+
   onImagePicked(imageData: string | File) {
-    let imageFile;
-    if (typeof imageData === 'string') {
-      try {
-        imageFile = base64toBlob(
-          imageData.replace('data:image/jpeg;base64,', ''),
-          'image/jpeg'
-        );
-      } catch (error) {
-        this.appService.presentToast('חלה תקלה לא ניתן לשמור את התמונה!', false);
-        return;
-      }
-    } else {
-      imageFile = imageData;
-    }
-    this.file = imageFile;
-    this.form.value.image = imageFile;
+    this.imageFile = utility.onImageChosen(imageData);
   }
 
   onSubmit(form: NgForm) {
-    form.value.image = this.file;
-    if (!form.valid || !form.value.image) {
+    if (!form.valid || !this.imageFile) {
       return;
     }
-    this.courseService.uploadCourseThumbnail(form.value.image, 'course')
+    this.courseService.uploadCourseThumbnail(this.imageFile, 'course')
     .pipe(
       switchMap(uploadRes => {
         const courseToAdd = new Course(

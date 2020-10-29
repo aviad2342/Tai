@@ -8,27 +8,7 @@ import { AppService } from '../../../app.service';
 import { Address } from '../../../shared/address.model';
 import { TherapistService } from '../../../therapist/therapist.service';
 import { Router } from '@angular/router';
-
-function base64toBlob(base64Data, contentType) {
-  contentType = contentType || '';
-  const sliceSize = 1024;
-  const byteCharacters = window.atob(base64Data);
-  const bytesLength = byteCharacters.length;
-  const slicesCount = Math.ceil(bytesLength / sliceSize);
-  const byteArrays = new Array(slicesCount);
-
-  for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
-    const begin = sliceIndex * sliceSize;
-    const end = Math.min(begin + sliceSize, bytesLength);
-
-    const bytes = new Array(end - begin);
-    for (let offset = begin, i = 0; offset < end; ++i, ++offset) {
-      bytes[i] = byteCharacters[offset].charCodeAt(0);
-    }
-    byteArrays[sliceIndex] = new Uint8Array(bytes);
-  }
-  return new Blob(byteArrays, { type: contentType });
-}
+import * as utility from '../../../utilities/functions';
 
 @Component({
   selector: 'app-add-therapist',
@@ -39,12 +19,9 @@ export class AddTherapistPage implements OnInit {
 
   @ViewChild('f', { static: true }) form: NgForm;
 
-  countries: string[] = [];
-  selectCountry: string;
-  hideList = false;
   treatmentsTypesValid = false;
+  admin = false;
   address: Address = new Address();
-  userImage = '../../../assets/images/user-default-image.png';
   file: File;
   addressIsValid = false;
   imageIsValid = true;
@@ -76,16 +53,17 @@ export class AddTherapistPage implements OnInit {
       }
     ]
   };
+  typesOfTreatments = utility.typesOfTreatments;
 
-  typesOfTreatments = {
-    BOOKS: 'ספרים',
-    TREATMENTS: 'טיפולים',
-    CONFERENCES: 'כנסים',
-    COURSES: 'קורסים',
-    ARTICLES: 'מאמרים',
-    ACCESSORIES: 'אביזרים',
-    OTHER: 'אחר'
-  };
+  // typesOfTreatments = {
+  //   BOOKS: 'ספרים',
+  //   TREATMENTS: 'טיפולים',
+  //   CONFERENCES: 'כנסים',
+  //   COURSES: 'קורסים',
+  //   ARTICLES: 'מאמרים',
+  //   ACCESSORIES: 'אביזרים',
+  //   OTHER: 'אחר'
+  // };
 
   constructor(
     private therapistService: TherapistService,
@@ -102,7 +80,7 @@ export class AddTherapistPage implements OnInit {
     let imageFile;
     if (typeof imageData === 'string') {
       try {
-        imageFile = base64toBlob(
+        imageFile = utility.base64toBlob(
           imageData.replace('data:image/jpeg;base64,', ''),
           'image/jpeg'
         );
@@ -121,7 +99,7 @@ export class AddTherapistPage implements OnInit {
   onTreatmentsChosen(event: CustomEvent<SegmentChangeEventDetail>) {
     this.treatmentsTypesValid = false;
     this.treatmentsTypes = [...event.detail.value];
-    console.log(this.treatmentsTypes);
+    console.log(this.form.value.admin);
   }
 
   onTreatmentsCancel() {
@@ -155,7 +133,7 @@ export class AddTherapistPage implements OnInit {
           form.value.password,
           form.value.phone,
           form.value.email,
-          new Date(form.value.dateOfBirth),
+          this.date,
           this.address.country,
           this.address.city,
           this.address.street,
@@ -165,17 +143,17 @@ export class AddTherapistPage implements OnInit {
           uploadRes.imageUrl,
           this.treatmentsTypes,
           form.value.resume,
-          false
+          this.form.value.admin
         );
         return this.therapistService.addTherapist(therapistToAdd);
       })
     ).subscribe(() => {
       form.reset();
-      this.appService.presentToast('המשתמש נשמר בהצלחה', true);
+      this.appService.presentToast('המטפל נשמר בהצלחה', true);
       this.router.navigate(['/manage/therapists']);
     }, error => {
       form.reset();
-      this.appService.presentToast('חלה תקלה פרטי המשתמש לא נשמרו', false);
+      this.appService.presentToast('חלה תקלה פרטי המטפל לא נשמרו', false);
       this.router.navigate(['/manage/therapists']);
     }
     );

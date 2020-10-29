@@ -117,7 +117,6 @@ export class AddressPickerComponent implements OnInit {
     component: IonicSelectableComponent,
     value: any
   }) {
-    // this.selectedAddress.country = this.selectCountry = event.value;
     this.selectedAddress.country = event.value;
     this.addressPicked.emit(this.selectedAddress);
   }

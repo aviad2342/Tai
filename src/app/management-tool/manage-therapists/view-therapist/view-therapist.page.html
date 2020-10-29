@@ -1,9 +1,69 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>view-therapist</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button routerLink="/manage/therapists" defaultHref="/manage/therapists"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-no-padding">מוצר</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="light-gray">
+  <ion-grid [fixed]="true">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-xl="5" size-lg="3" size-md="3" size-sm="3" class="ion-text-center" *ngIf="isLoading">
+        <ion-spinner color="primary"></ion-spinner>
+      </ion-col>
+      <ion-col size="12" size-xl="5" size-lg="3" size-md="3" size-sm="3" class="main-col ion-no-padding" *ngIf="!isLoading">
+        <ion-card class="ion-text-center user-detail-card">
+          <ion-img [src]="this.therapist?.profilePicture"></ion-img>
+          <!-- <img [src]="this.therapist?.profilePicture" class="profile-image"/> -->
+          <ion-card-header>
+            <ion-card-title size="larg">{{ getTherapistFullName() }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content class="ion-no-padding">
 
+            <ion-item>
+              <ion-icon size="medium" name="at-outline"></ion-icon>
+              <ion-label class="ion-padding-start">{{ therapist?.email }}</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-icon size="medium" name="call-outline"></ion-icon>
+              <ion-label class="ion-padding-start">{{ therapist?.phone }}</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-icon size="medium" name="home-outline"></ion-icon>
+              <ion-label class="ion-padding-start"><a target="_blank" href="https://www.google.com/maps/place/{{getTherapistAddress()}}">{{ getTherapistAddress() }}</a></ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-icon size="medium" name="calendar-outline"></ion-icon>
+              <ion-label class="ion-padding-start">{{ getTherapistAge()}}</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-icon size="medium" class="custom-resume ion-align-self-center"></ion-icon>
+              <ion-label class="ion-padding-start"> <strong>נסיון: </strong> {{ therapist?.resume }}</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-icon size="medium" name="mic-outline" class="ion-align-self-center"></ion-icon>
+              <ion-label class="ion-padding-start"> <strong>סוגי טיפול: </strong></ion-label>
+            </ion-item>
+  
+          <ion-list class="ion-no-margin">
+            <div *ngFor="let type of therapist?.treatmentTypes">
+              <ion-item>
+                <!-- <a target="_blank" href="https://www.google.co.il/search?&q={{type}}&oq={{type}}">{{ type }}</a> -->
+                <ion-label class="ion-padding-start">{{ type }}</ion-label>
+              </ion-item>
+            </div>
+          </ion-list>
+
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

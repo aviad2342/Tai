@@ -115,7 +115,6 @@
               ngModel
               name="date"
               [value]="date"
-              name="dateOfBirth"
               [pickerOptions]="pickerOptions"
               required
               #dateOfBirthCtrl="ngModel"
@@ -152,6 +151,7 @@
                 required
                 #resumeCtrl="ngModel"
               ></ion-textarea>
+              <ion-icon slot="end" position="floating" class="custom-resume ion-align-self-center"></ion-icon>
             </ion-item>
             <ion-label *ngIf="!resumeCtrl.valid && resumeCtrl.touched" color="danger">
               <small>זהו שדה חובה!</small>
@@ -159,7 +159,7 @@
 
             <ion-item>
               <ion-label>הרשאת מנהל?</ion-label>
-              <ion-checkbox mode="ios" value="false" slot="end" ngModel name="admin" #adminCtrl="ngModel"></ion-checkbox>
+              <ion-checkbox mode="ios" value="false" slot="end" ngModel name="admin" [(ngModel)]="admin" #adminCtrl="ngModel"></ion-checkbox>
             </ion-item>
 
           </ion-list>

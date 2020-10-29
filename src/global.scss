@@ -370,6 +370,14 @@ ion-icon {
     &[class*="toolbar-icon-lastName"] {
       mask-image: url(./assets/icon/lastName.svg);
     }
+
+    &[class*="custom-resume"] {
+      mask-image: url(./assets/icon/resume.svg);
+    }
+
+    &[class*="toolbar-icon-resume"] {
+      mask-image: url(./assets/icon/resume.svg);
+    }
   
   
   }

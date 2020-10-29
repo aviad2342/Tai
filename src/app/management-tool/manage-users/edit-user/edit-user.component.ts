@@ -2,32 +2,11 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import { User } from '../../../user/user.model';
-import { ModalController, AlertController } from '@ionic/angular';
+import { ModalController, AlertController, IonInput, IonIcon } from '@ionic/angular';
 import { AppService } from '../../../app.service';
 import { UserService } from '../../../user/user.service';
 import { Address } from '../../../shared/address.model';
-
-
-function base64toBlob(base64Data, contentType) {
-  contentType = contentType || '';
-  const sliceSize = 1024;
-  const byteCharacters = window.atob(base64Data);
-  const bytesLength = byteCharacters.length;
-  const slicesCount = Math.ceil(bytesLength / sliceSize);
-  const byteArrays = new Array(slicesCount);
-
-  for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
-    const begin = sliceIndex * sliceSize;
-    const end = Math.min(begin + sliceSize, bytesLength);
-
-    const bytes = new Array(end - begin);
-    for (let offset = begin, i = 0; offset < end; ++i, ++offset) {
-      bytes[i] = byteCharacters[offset].charCodeAt(0);
-    }
-    byteArrays[sliceIndex] = new Uint8Array(bytes);
-  }
-  return new Blob(byteArrays, { type: contentType });
-}
+import * as utility from '../../../utilities/functions';
 
 @Component({
   selector: 'app-edit-user',
@@ -114,7 +93,7 @@ export class EditUserComponent implements OnInit {
     let imageFile;
     if (typeof imageData === 'string') {
       try {
-        imageFile = base64toBlob(
+        imageFile = utility.base64toBlob(
           imageData.replace('data:image/jpeg;base64,', ''),
           'image/jpeg'
         );
@@ -134,6 +113,16 @@ export class EditUserComponent implements OnInit {
 
   onAddressIsValid(isValid: boolean) {
     this.addressIsValid = isValid;
+  }
+
+  togglePasswordVisibility(input: IonInput, icon: IonIcon) {
+    if(input.type === 'password') {
+      input.type = 'text';
+      icon.name = 'eye-outline';
+    } else {
+      input.type = 'password';
+      icon.name = 'eye-off-outline'
+    }
   }
 
   onSubmit(form: NgForm) {
