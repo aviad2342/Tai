@@ -13,7 +13,7 @@
     
   </ion-row>  -->
 
-  <ion-slides #stepper class="event-stepper" pager="true" [options]="slideOpts">
+  <ion-slides #stepper class="event-stepper" pager="true" (ionSlideDidChange)="onSlideChange(stepper)" [options]="slideOpts">
 <!-------------------------------------------------- Event Slide ------------------------------------------------------->
     <ion-slide class="slide-step">
 
@@ -74,8 +74,9 @@
                   ngModel
                   max="2025-12-29"
                   [min]="now"
-                  [value]="date"
-                  [pickerOptions]="pickerOptions"
+                  doneText="אישור"
+                  cancelText="ביטול"
+                  mode="ios"
                   name="date"
                   required
                   #dateCtrl="ngModel"
@@ -91,12 +92,14 @@
                 <ion-item>
                   <ion-label position="floating">שעת התחלה<ion-text color="danger">*</ion-text></ion-label>
                     <ion-datetime
+                     #beginsAt
                       display-format="HH:mm"
                       pickerFormat="HH:mm"
                       ngModel
                       [min]="now"
-                      [value]="beginsAt"
-                      [pickerOptions]="beginsAtpickerOptions"
+                      doneText="אישור"
+                      cancelText="ביטול"
+                      mode="ios"
                       name="beginsAt"
                       required
                       #beginsAtCtrl="ngModel"
@@ -109,11 +112,14 @@
                 <ion-item>
                   <ion-label position="floating">שעת סיום<ion-text color="danger">*</ion-text></ion-label>
                     <ion-datetime
+                     #endsAt
                       display-format="HH:mm"
                       pickerFormat="HH:mm"
                       ngModel
-                      [value]="endsAt"
-                      [pickerOptions]="endsAtpickerOptions"
+                      [min]="beginsAt.value"
+                      doneText="אישור"
+                      cancelText="ביטול"
+                      mode="ios"
                       name="endsAt"
                       required
                       #endsAtCtrl="ngModel"
@@ -124,9 +130,9 @@
                 <ion-label *ngIf="!endsAtCtrl.valid && endsAtCtrl.touched || !beginsAtCtrl.valid && beginsAtCtrl.touched" color="danger">
                   <small>זהו שדה חובה!</small>
                 </ion-label>
-                <ion-label *ngIf="endsAt && endsAtCtrl.touched && (beginsAt.getTime() - endsAt.getTime()) > 0" color="danger">
+                <!-- <ion-label *ngIf="endsAt && endsAtCtrl.touched && (new Date(beginsAt.value).getTime() - new Date(endsAt.value).getTime() ) > 0" color="danger">
                     <small>על שעת הסיום להיות מאוחרת משעת ההתחלה!</small>
-                </ion-label>
+                </ion-label> -->
             </ion-row>
     
             <ion-item>

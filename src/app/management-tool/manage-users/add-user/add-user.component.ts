@@ -25,27 +25,6 @@ export class AddUserComponent implements OnInit {
   file: File;
   addressIsValid = false;
   imageIsValid = true;
-  date = new Date();
-  pickerOptions = {
-    mode: 'ios',
-    cssClass: 'date-picker-class',
-    backdropDismiss: false,
-    buttons: [
-      {
-        text: 'ביטול',
-        role: 'cancel',
-        cssClass: 'picker-cancel-btn'
-      },
-      {
-        text: 'אישור',
-        role: 'confirm',
-        cssClass: 'picker-confirm-btn',
-        handler: (value: any) => {
-          // this.date = new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value);
-        }
-      }
-    ]
-  };
 
 
   constructor(
@@ -115,7 +94,7 @@ export class AddUserComponent implements OnInit {
           form.value.password,
           form.value.phone,
           form.value.email,
-          new Date(form.value.dateOfBirth),
+          form.value.date,
           this.address.country,
           this.address.city,
           this.address.street,

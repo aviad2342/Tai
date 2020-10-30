@@ -21,27 +21,6 @@ export class EditUserComponent implements OnInit {
   addressIsValid = false;
   address: Address = new Address();
   updateImage;
-  date: Date;
-
-  pickerOptions = {
-    mode: 'ios',
-    cssClass: 'date-picker-class',
-    buttons: [
-      {
-        text: 'ביטול',
-        role: 'cancel',
-        cssClass: 'picker-cancel-btn'
-      },
-      {
-        text: 'אישור',
-        role: 'confirm',
-        cssClass: 'picker-confirm-btn',
-        handler: (value: any) => {
-          this.date = new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value);
-        }
-      }
-    ]
-  };
 
   constructor(
     private userService: UserService,
@@ -67,7 +46,6 @@ export class EditUserComponent implements OnInit {
         password: this.user.password,
         date: this.user.date,
         };
-        this.date = this.user.date;
       this.form.setValue(userObj);
     },
     error => {
@@ -140,7 +118,7 @@ export class EditUserComponent implements OnInit {
           form.value.password,
           form.value.phone,
           form.value.email,
-          this.date,
+          form.value.date,
           this.address.country,
           this.address.city,
           this.address.street,
@@ -167,7 +145,7 @@ export class EditUserComponent implements OnInit {
         form.value.password,
         form.value.phone,
         form.value.email,
-        this.date,
+        form.value.date,
         this.address.country,
         this.address.city,
         this.address.street,

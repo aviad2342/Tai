@@ -93,6 +93,7 @@
             <ion-item>
               <ion-label position="floating">סיסמה<ion-text color="danger">*</ion-text></ion-label>
               <ion-input
+                #password
                 type="password"
                 ngModel
                 name="password"
@@ -100,7 +101,7 @@
                 minlength="6"
                 #passwordCtrl="ngModel"
               ></ion-input>
-              <ion-icon name="eye-off-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+              <ion-icon #passwordIcon (click)="togglePasswordVisibility(password, passwordIcon)" name="eye-off-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
             </ion-item>
             <ion-label *ngIf="!passwordCtrl.valid && passwordCtrl.touched" color="danger">
               <small> זהו שדה חובה!</small>
@@ -114,9 +115,10 @@
               monthNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
               monthShortNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
               ngModel
+              doneText="אישור"
+              cancelText="ביטול"
+              mode="ios"
               name="date"
-              [value]="date"
-              [pickerOptions]="pickerOptions"
               required
               #dateOfBirthCtrl="ngModel"
             ></ion-datetime>
@@ -137,7 +139,7 @@
                 <ion-select-option [value]="typesOfTreatments.ACCESSORIES">{{ typesOfTreatments.ACCESSORIES }}</ion-select-option>
                 <ion-select-option [value]="typesOfTreatments.OTHER">{{ typesOfTreatments.OTHER }}</ion-select-option>
               </ion-select>
-              <ion-icon name="eye-off-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+              <ion-icon slot="end" position="floating" class="custom-brain-treatment ion-align-self-center"></ion-icon>
             </ion-item>
             <ion-label *ngIf="treatmentsTypesValid" color="danger">
               <small> זהו שדה חובה!</small>

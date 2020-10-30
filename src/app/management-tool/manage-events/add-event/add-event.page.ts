@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, IonSlides, ModalController } from '@ionic/angular';
@@ -13,13 +13,14 @@ import { EventService } from '../../../event/event.service';
 import { Speaker } from '../../../event/speaker.model';
 import { Address } from '../../../shared/address.model';
 import * as utility from '../../../utilities/functions';
+import Swiper from 'swiper';
 
 @Component({
   selector: 'app-add-event',
   templateUrl: './add-event.page.html',
   styleUrls: ['./add-event.page.scss'],
 })
-export class AddEventPage implements OnInit {
+export class AddEventPage implements OnInit, AfterViewInit {
 
   @ViewChild('stepper') newEventStepper: IonSlides;
   @ViewChild('f', { static: true }) form: NgForm;
@@ -29,6 +30,7 @@ export class AddEventPage implements OnInit {
   speakers: Speaker[] = [];
   participants: Participant[] = [];
   hideList = false;
+  swiper: Swiper;
   addressIsValid = false;
   imageIsValid = true;
   address: Address = new Address();
@@ -36,9 +38,9 @@ export class AddEventPage implements OnInit {
   userImage = '../../../assets/images/user-default-image.png';
   file: File;
   now = new Date().toISOString();
-  date: Date;
-  beginsAt: Date;
-  endsAt: Date;
+  // date: Date;
+  // beginsAt: Date;
+  // endsAt: Date;
 
   slideOpts = {
     allowSlidePrev: false,
@@ -50,66 +52,6 @@ export class AddEventPage implements OnInit {
     }
   };
 
-  pickerOptions = {
-    mode: 'ios',
-    cssClass: 'date-picker-class',
-    buttons: [
-      {
-        text: 'ביטול',
-        role: 'cancel',
-        cssClass: 'picker-cancel-btn'
-      },
-      {
-        text: 'אישור',
-        role: 'confirm',
-        cssClass: 'picker-confirm-btn',
-        handler: (value: any) => {
-          this.date = new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value);
-        }
-      }
-    ]
-  };
-
-  beginsAtpickerOptions = {
-    cssClass: 'date-picker-class',
-    mode: 'ios',
-    buttons: [
-      {
-        text: 'ביטול',
-        role: 'cancel',
-        cssClass: 'picker-cancel-btn'
-      },
-      {
-        text: 'אישור',
-        role: 'confirm',
-        cssClass: 'picker-confirm-btn',
-        handler: (value: any) => {
-    this.beginsAt = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate(), value.hour.value, value.minute.value,0 ,0);
-        }
-      }
-    ]
-  };
-
-  endsAtpickerOptions = {
-    cssClass: 'date-picker-class',
-    mode: 'ios',
-    buttons: [
-      {
-        text: 'ביטול',
-        role: 'cancel',
-        cssClass: 'picker-cancel-btn'
-      },
-      {
-        text: 'אישור',
-        role: 'confirm',
-        cssClass: 'picker-confirm-btn',
-        handler: (value: any) => {
-      this.endsAt = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate(), value.hour.value, value.minute.value,0 ,0);
-        }
-      }
-    ]
-  };
-
   constructor(
     private eventService: EventService,
     private modalController: ModalController,
@@ -117,6 +59,15 @@ export class AddEventPage implements OnInit {
     private alertController: AlertController,
     public appService: AppService
     ) { }
+
+ onSlideChange(ItemSlides: IonSlides) {
+      ItemSlides.update();
+    }
+
+  async ngAfterViewInit() {
+      this.swiper = await this.newEventStepper.getSwiper();
+      this.swiper.updateAutoHeight();
+  }
 
   ngOnInit() {
   }
@@ -151,9 +102,9 @@ onSubmit(form: NgForm) {
         null,
         form.value.title,
         form.value.description,
-        this.date,
-        this.beginsAt,
-        this.endsAt,
+        form.value.date,
+        form.value.beginsAt,
+        form.value.endsAt,
         uploadRes.imageUrl,
         form.value.maxCapacity,
         form.value.placeName,
@@ -175,7 +126,7 @@ onSubmit(form: NgForm) {
     form.reset();
     this.appService.presentToast('האירוע נשמר בהצלחה', true);
     this.newEventStepper.slideNext();
-    this.newEventStepper.updateAutoHeight(200);
+    // (ionSlideDidChange)="onSlideChange(stepper)"
   }, error => {
     this.appService.presentToast('חלה תקלה פרטי האירוע לא נשמרו', false);
     this.router.navigate(['/manage/events']);
@@ -206,7 +157,7 @@ onSubmit(form: NgForm) {
 
 onSaveSpeakers() {
   this.newEventStepper.slideNext();
-  this.newEventStepper.updateAutoHeight(200);
+  // (ionSlideDidChange)="onSlideChange(stepper)"
 }
 
 async onRemoveSpeaker(id: string) {
@@ -260,7 +211,7 @@ async onRemoveSpeaker(id: string) {
 
 onSaveParticipants() {
   this.newEventStepper.slideNext();
-  this.newEventStepper.updateAutoHeight(200);
+  // (ionSlideDidChange)="onSlideChange(stepper)"
 }
 
 async onRemoveParticipant(id: string) {

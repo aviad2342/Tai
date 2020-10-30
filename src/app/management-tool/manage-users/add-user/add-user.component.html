@@ -119,9 +119,10 @@
               monthNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
               monthShortNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
               ngModel
-              [value]="date"
-              [pickerOptions]="pickerOptions"
-              name="dateOfBirth"
+              doneText="אישור"
+              cancelText="ביטול"
+              mode="ios"
+              name="date"
               required
               #dateOfBirthCtrl="ngModel"
             ></ion-datetime>

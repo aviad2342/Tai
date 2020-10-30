@@ -110,6 +110,9 @@
 
     <ngx-datatable *ngIf="isRowSelected"
     #ulessonsTable
+    [loadingIndicator]="loadingIndicator"
+    [reorderable]="reorderable"
+    [swapColumns]="reorderable"
     [rows]="lessons"
     class="material ion-margin"
     [rowHeight]="'auto'"

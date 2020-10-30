@@ -25,6 +25,8 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
   private lessonSubscription: Subscription;
    @ViewChild('coursesTable') coursesTable: DatatableComponent;
   isRowSelected = false;
+  reorderable = true;
+  loadingIndicator = false;
   columnMode = ColumnMode;
   SelectionType = SelectionType;
   temp = [];
@@ -205,8 +207,10 @@ async onDeleteLesson(id: string) {
       this.selectedCourseId = '';
       this.isRowSelected = false;
     } else {
+      this.loadingIndicator = true;
      this.lessonSubscription = this.courseservice.getCourseLessons(selected[0].id).subscribe(lessons => {
         this.lessons = lessons;
+        this.loadingIndicator = false;
         this.isRowSelected = true;
       });
       this.selectedCourseId = selected[0].id;

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SegmentChangeEventDetail } from '@ionic/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, IonIcon, IonInput, NavController } from '@ionic/angular';
 import { Address } from 'src/app/shared/address.model';
 import { Therapist } from '../../../therapist/therapist.model';
 import { TherapistService } from '../../../therapist/therapist.service';
@@ -26,7 +26,7 @@ export class EditTherapistPage implements OnInit {
   selectedImage;
   addressIsValid = false;
   imageIsValid = true;
-  date = new Date();
+  // date = new Date();
   treatmentsTypes: string[] = [];
   treatmentsTypesSelectOptions = {
     backdropDismiss: false,
@@ -34,29 +34,29 @@ export class EditTherapistPage implements OnInit {
     header: 'בחר סוגי טיפול מהרשימה'
   };
 
-  pickerOptions = {
-    mode: 'ios',
-    cssClass: 'date-picker-class',
-    backdropDismiss: false,
-    buttons: [
-      {
-        text: 'ביטול',
-        role: 'cancel',
-        cssClass: 'picker-cancel-btn'
-      },
-      {
-        text: 'אישור',
-        role: 'confirm',
-        cssClass: 'picker-confirm-btn',
-        handler: (value: any) => {
-          console.log(new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value).toISOString());
-          // const selectedDate = value.year.value+'-'+ value.month.value+'-'+ value.day.value;
-          // console.log(selectedDate);
-          this.date = new Date(new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value).toISOString());
-        }
-      }
-    ]
-  };
+  // pickerOptions = {
+  //   mode: 'ios',
+  //   cssClass: 'date-picker-class',
+  //   backdropDismiss: false,
+  //   buttons: [
+  //     {
+  //       text: 'ביטול',
+  //       role: 'cancel',
+  //       cssClass: 'picker-cancel-btn'
+  //     },
+  //     {
+  //       text: 'אישור',
+  //       role: 'confirm',
+  //       cssClass: 'picker-confirm-btn',
+  //       handler: (value: any) => {
+  //         console.log(new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value).toISOString());
+  //         // const selectedDate = value.year.value+'-'+ value.month.value+'-'+ value.day.value;
+  //         // console.log(selectedDate);
+  //         this.date = new Date(new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value).toISOString());
+  //       }
+  //     }
+  //   ]
+  // };
 
   typesOfTreatments = utility.typesOfTreatments;
 
@@ -97,7 +97,7 @@ export class EditTherapistPage implements OnInit {
               resume: this.therapist.resume,
               admin: this.therapist.admin,
               };
-              this.date = this.therapist.date;
+              // this.date = this.therapist.date;
             this.form.setValue(therapistObj);
           },
           error => {
@@ -176,7 +176,7 @@ export class EditTherapistPage implements OnInit {
             form.value.password,
             form.value.phone,
             form.value.email,
-            this.date,
+            form.value.date,
             this.address.country,
             this.address.city,
             this.address.street,
@@ -205,7 +205,7 @@ export class EditTherapistPage implements OnInit {
         form.value.password,
         form.value.phone,
         form.value.email,
-        this.date,
+        form.value.date,
         this.address.country,
         this.address.city,
         this.address.street,
@@ -227,6 +227,16 @@ export class EditTherapistPage implements OnInit {
       });
     }
 
+  }
+
+  togglePasswordVisibility(input: IonInput, icon: IonIcon) {
+    if(input.type === 'password') {
+      input.type = 'text';
+      icon.name = 'eye-outline';
+    } else {
+      input.type = 'password';
+      icon.name = 'eye-off-outline'
+    }
   }
 
   onCancel() {

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SegmentChangeEventDetail } from '@ionic/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonIcon, IonInput } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
 import { Therapist } from '../../../therapist/therapist.model';
 import { AppService } from '../../../app.service';
@@ -33,26 +33,26 @@ export class AddTherapistPage implements OnInit {
     header: 'בחר סוגי טיפול מהרשימה'
   };
 
-  pickerOptions = {
-    mode: 'ios',
-    cssClass: 'date-picker-class',
-    backdropDismiss: false,
-    buttons: [
-      {
-        text: 'ביטול',
-        role: 'cancel',
-        cssClass: 'picker-cancel-btn'
-      },
-      {
-        text: 'אישור',
-        role: 'confirm',
-        cssClass: 'picker-confirm-btn',
-        handler: (value: any) => {
-          this.date = new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value);
-        }
-      }
-    ]
-  };
+  // pickerOptions = {
+  //   mode: 'ios',
+  //   cssClass: 'date-picker-class',
+  //   backdropDismiss: false,
+  //   buttons: [
+  //     {
+  //       text: 'ביטול',
+  //       role: 'cancel',
+  //       cssClass: 'picker-cancel-btn'
+  //     },
+  //     {
+  //       text: 'אישור',
+  //       role: 'confirm',
+  //       cssClass: 'picker-confirm-btn',
+  //       handler: (value: any) => {
+  //         this.date = new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value);
+  //       }
+  //     }
+  //   ]
+  // };
   typesOfTreatments = utility.typesOfTreatments;
 
   // typesOfTreatments = {
@@ -133,7 +133,7 @@ export class AddTherapistPage implements OnInit {
           form.value.password,
           form.value.phone,
           form.value.email,
-          this.date,
+          form.value.date,
           this.address.country,
           this.address.city,
           this.address.street,
@@ -157,6 +157,16 @@ export class AddTherapistPage implements OnInit {
       this.router.navigate(['/manage/therapists']);
     }
     );
+  }
+
+  togglePasswordVisibility(input: IonInput, icon: IonIcon) {
+    if(input.type === 'password') {
+      input.type = 'text';
+      icon.name = 'eye-outline';
+    } else {
+      input.type = 'password';
+      icon.name = 'eye-off-outline'
+    }
   }
 
   onCancel() {

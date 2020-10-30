@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, IonSlides, ModalController, NavController } from '@ionic/angular';
@@ -14,13 +14,14 @@ import { AddParticipantComponent } from '../add-participant/add-participant.comp
 import { AddSpeakerComponent } from '../add-speaker/add-speaker.component';
 import { EditSpeakerComponent } from '../edit-speaker/edit-speaker.component';
 import * as utility from '../../../utilities/functions';
+import Swiper from 'swiper';
 
 @Component({
   selector: 'app-edit-event',
   templateUrl: './edit-event.page.html',
   styleUrls: ['./edit-event.page.scss'],
 })
-export class EditEventPage implements OnInit {
+export class EditEventPage implements OnInit, AfterViewInit {
 
   event: Event;
   private pageparamMapSubscription: Subscription;
@@ -31,15 +32,16 @@ export class EditEventPage implements OnInit {
   file: File;
   address: Address = new Address();
   images;
+  swiper: Swiper;
   defaultPicture = 'http://localhost:3000/images/user-default-image.png';
   addressIsValid = false;
   isLoading = false;
   lessonsIsLoading = false;
   now = new Date().toISOString();
   updateImage;
-  date: Date;
-  beginsAt: Date;
-  endsAt: Date;
+  // date: Date;
+  // beginsAt: Date;
+  // endsAt: Date;
 
   slideOpts = {
     allowSlidePrev: false,
@@ -51,67 +53,6 @@ export class EditEventPage implements OnInit {
     }
   };
 
-
-  pickerOptions = {
-    mode: 'ios',
-    cssClass: 'date-picker-class',
-    buttons: [
-      {
-        text: 'ביטול',
-        role: 'cancel',
-        cssClass: 'picker-cancel-btn'
-      },
-      {
-        text: 'אישור',
-        role: 'confirm',
-        cssClass: 'picker-confirm-btn',
-        handler: (value: any) => {
-          this.date = new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value);
-        }
-      }
-    ]
-  };
-
-  beginsAtpickerOptions = {
-    cssClass: 'date-picker-class',
-    mode: 'ios',
-    buttons: [
-      {
-        text: 'ביטול',
-        role: 'cancel',
-        cssClass: 'picker-cancel-btn'
-      },
-      {
-        text: 'אישור',
-        role: 'confirm',
-        cssClass: 'picker-confirm-btn',
-        handler: (value: any) => {
-    this.beginsAt = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate(), value.hour.value, value.minute.value,0 ,0);
-        }
-      }
-    ]
-  };
-
-  endsAtpickerOptions = {
-    cssClass: 'date-picker-class',
-    mode: 'ios',
-    buttons: [
-      {
-        text: 'ביטול',
-        role: 'cancel',
-        cssClass: 'picker-cancel-btn'
-      },
-      {
-        text: 'אישור',
-        role: 'confirm',
-        cssClass: 'picker-confirm-btn',
-        handler: (value: any) => {
-      this.endsAt = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate(), value.hour.value, value.minute.value,0 ,0);
-        }
-      }
-    ]
-  };
-
   constructor(
     private route: ActivatedRoute,
     private eventService: EventService,
@@ -121,6 +62,15 @@ export class EditEventPage implements OnInit {
     private modalController: ModalController,
     public appService: AppService
   ) {}
+
+  onSlideChange(ItemSlides: IonSlides) {
+    ItemSlides.update();
+  }
+
+  async ngAfterViewInit() {
+    this.swiper = await this.newEventStepper.getSwiper();
+    this.swiper.updateAutoHeight();
+}
 
   ngOnInit() {
     this.pageparamMapSubscription = this.route.paramMap.subscribe(paramMap => {
@@ -134,9 +84,9 @@ export class EditEventPage implements OnInit {
       subscribe(event => {
         this.event = event;
         this.isLoading = false;
-        this.date = this.event.date;
-        this.beginsAt = this.event.beginsAt;
-        this.endsAt = this.event.endsAt;
+        // this.date = this.event.date;
+        // this.beginsAt = this.event.beginsAt;
+        // this.endsAt = this.event.endsAt;
         const eventObj = {
           title:         event.title,
           description:   event.description,
@@ -183,9 +133,9 @@ onSubmit(form: NgForm) {
         this.event.id,
         form.value.title,
         form.value.description,
-        this.date,
-        this.beginsAt,
-        this.endsAt,
+        form.value.date,
+        form.value.beginsAt,
+        form.value.endsAt,
         uploadRes.imageUrl,
         form.value.maxCapacity,
         form.value.placeName,
@@ -206,7 +156,7 @@ onSubmit(form: NgForm) {
     this.event = newEvent;
     this.appService.presentToast('האירוע נשמר בהצלחה', true);
     this.newEventStepper.slideNext();
-    this.newEventStepper.updateAutoHeight(200);
+    // this.newEventStepper.updateAutoHeight(200);
   }, error => {
     this.appService.presentToast('חלה תקלה פרטי האירוע לא נשמרו', false);
     this.router.navigate(['/manage/events']);
@@ -217,9 +167,9 @@ onSubmit(form: NgForm) {
     this.event.id,
     form.value.title,
     form.value.description,
-    this.date,
-    this.beginsAt,
-    this.endsAt,
+    form.value.date,
+    form.value.beginsAt,
+    form.value.endsAt,
     this.event.thumbnail,
     form.value.maxCapacity,
     form.value.placeName,
@@ -236,14 +186,14 @@ onSubmit(form: NgForm) {
   );
   if(this.isEquals(this.event, eventToAdd)) {
     this.newEventStepper.slideNext();
-    this.newEventStepper.updateAutoHeight(200);
+    // this.newEventStepper.updateAutoHeight(200);
     return;
   }
   return this.eventService.updateEvent(eventToAdd).subscribe(newEvent => {
     this.event = newEvent;
     this.appService.presentToast('האירוע נשמר בהצלחה', true);
     this.newEventStepper.slideNext();
-    this.newEventStepper.updateAutoHeight(200);
+    // this.newEventStepper.updateAutoHeight(200);
   }, error => {
     this.appService.presentToast('חלה תקלה פרטי האירוע לא נשמרו', false);
     this.router.navigate(['/manage/events']);
@@ -273,7 +223,7 @@ async onAddSpeaker() {
 
 onSaveSpeakers() {
   this.newEventStepper.slideNext();
-  this.newEventStepper.updateAutoHeight(200);
+  // this.newEventStepper.updateAutoHeight(200);
 }
 
 async onEditSpeaker(speaker: Speaker) {
@@ -347,7 +297,7 @@ async onAddParticipant() {
 
 onSaveParticipants() {
   this.newEventStepper.slideNext();
-  this.newEventStepper.updateAutoHeight(200);
+  // this.newEventStepper.updateAutoHeight(200);
 }
 
 async onRemoveParticipant(id: string) {
