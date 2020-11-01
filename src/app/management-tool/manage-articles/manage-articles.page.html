@@ -66,7 +66,7 @@
       [selectionType]="SelectionType.single"
       (select)="onSelect($event)"
     >
-    <ngx-datatable-column name="" [sortable]="false" [width]="100">
+    <ngx-datatable-column name="" [sortable]="false" [width]="100" [resizeable]="false">
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
         <ion-thumbnail>
           <ion-img [src]="row['thumbnail']"></ion-img>
@@ -74,22 +74,22 @@
       </ng-template>
     </ngx-datatable-column> 
 
-      <ngx-datatable-column name="title" [width]="150">
+      <ngx-datatable-column name="title" [width]="150" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>נושא המאמר</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="date" [sortable]="true" [width]="120">
+      <ngx-datatable-column name="date" [sortable]="true" [width]="150" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>תאריך פרסום</strong></ng-template>
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
           {{ row['date'] | date }}
         </ng-template>
       </ngx-datatable-column> 
 
-      <ngx-datatable-column name="authorName" [width]="150">
+      <ngx-datatable-column name="authorName" [width]="150" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>כותב המאמר</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="views" [width]="120">
+      <ngx-datatable-column name="views" [width]="120" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>כמות צפיות</strong></ng-template>
       </ngx-datatable-column>
 
@@ -98,7 +98,7 @@
         let-rowCount="rowCount"
         let-selectedCount="selectedCount"
         >
-        <div>נבחר {{ selectedCount }}  מתוך {{ rowCount }} אירועים </div>
+        <div>&nbsp;נבחר {{ selectedCount }}  מתוך {{ rowCount }} אירועים </div>
         </ng-template>
       </ngx-datatable-footer>
     </ngx-datatable>

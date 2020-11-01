@@ -67,7 +67,7 @@
       (activate)="onActivate($event)"
       (select)="onSelect($event)"
     >
-    <ngx-datatable-column name="" [sortable]="false" [width]="100">
+    <ngx-datatable-column name="" [sortable]="false" [width]="100" [resizeable]="false">
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
         <ion-thumbnail>
           <ion-img [src]="row['thumbnail']"></ion-img>
@@ -75,18 +75,18 @@
       </ng-template>
     </ngx-datatable-column> 
 
-      <ngx-datatable-column name="title" [width]="150">
+      <ngx-datatable-column name="title" [width]="250" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>נושא האירוע</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="date" [sortable]="true" [width]="120">
+      <ngx-datatable-column name="date" [sortable]="true" [width]="150" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>תאריך</strong></ng-template>
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
           {{ row['date'] | date }}
         </ng-template>
       </ngx-datatable-column> 
 
-      <ngx-datatable-column name="city" [sortable]="true" [width]="270">
+      <ngx-datatable-column name="city" [sortable]="true" [width]="300" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>מקום</strong></ng-template>
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
           <a href="https://www.google.com/maps/place/{{row.street}} {{row.houseNumber}}, {{row.city}}, {{row.country}}">
@@ -98,7 +98,7 @@
         </ng-template>
       </ngx-datatable-column> 
 
-      <ngx-datatable-column name="maxCapacity" [width]="120">
+      <ngx-datatable-column name="maxCapacity" [width]="120" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>כמות משתתפים</strong></ng-template>
       </ngx-datatable-column>
 
@@ -107,7 +107,7 @@
         let-rowCount="rowCount"
         let-selectedCount="selectedCount"
         >
-        <div>נבחר {{ selectedCount }}  מתוך {{ rowCount }} אירועים </div>
+        <div>&nbsp;נבחר {{ selectedCount }}  מתוך {{ rowCount }} אירועים </div>
         </ng-template>
       </ngx-datatable-footer>
     </ngx-datatable>

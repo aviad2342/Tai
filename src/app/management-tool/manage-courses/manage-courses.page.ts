@@ -25,7 +25,6 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
   private lessonSubscription: Subscription;
    @ViewChild('coursesTable') coursesTable: DatatableComponent;
   isRowSelected = false;
-  reorderable = true;
   loadingIndicator = false;
   columnMode = ColumnMode;
   SelectionType = SelectionType;

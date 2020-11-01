@@ -94,7 +94,7 @@
       [selectionType]="SelectionType.single"
       (select)="onSelect($event)"
     >
-    <ngx-datatable-column name="" [sortable]="false" [width]="120">
+    <ngx-datatable-column name="" [sortable]="false" [width]="120" [resizeable]="false">
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
         <ion-thumbnail>
           <ion-img [src]="row['profilePicture']"></ion-img>
@@ -102,26 +102,26 @@
       </ng-template>
     </ngx-datatable-column> 
     
-      <ngx-datatable-column name="firstName" [width]="150">
+      <ngx-datatable-column name="firstName" [width]="150" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>שם פרטי</strong></ng-template>
         <!-- <ng-template let-value="value" ngx-datatable-cell-template>
           Hi: <strong>{{value}}</strong>
         </ng-template> -->
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="lastName" [width]="150">
+      <ngx-datatable-column name="lastName" [width]="150" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>שם משפחה</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="phone" [width]="180">
+      <ngx-datatable-column name="phone" [width]="180" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>מספר טלפון</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="email" [width]="220">
+      <ngx-datatable-column name="email" [width]="220" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>אימייל</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="city" [sortable]="true" [width]="270">
+      <ngx-datatable-column name="city" [sortable]="true" [width]="300" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>כתובת</strong></ng-template>
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
           <a href="https://www.google.com/maps/place/{{row.street}} {{row.houseNumber}}, {{row.city}}, {{row.country}}">
@@ -138,7 +138,7 @@
         let-rowCount="rowCount"
         let-selectedCount="selectedCount"
         >
-        <div>נבחר {{ selectedCount }}  מתוך {{ rowCount }} מטפלים </div>
+        <div>&nbsp;נבחר {{ selectedCount }}  מתוך {{ rowCount }} מטפלים </div>
         </ng-template>
       </ngx-datatable-footer>
     </ngx-datatable>

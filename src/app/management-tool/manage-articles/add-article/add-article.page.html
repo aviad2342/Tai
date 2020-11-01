@@ -1,19 +1,15 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-no-padding">מאמר חדש</ion-title>
+    <ion-title>מאמר חדש</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="7">
         <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-
-          <ion-grid>
+          <ion-grid [fixed]="true">
       
             <ion-row class="ion-justify-content-center">
-              <ion-col size="4" size-lg="4" size-md="6" size-sm="6">
+              <ion-col size="12" size-xl="4" size-lg="3" size-md="3" size-sm="3">
                 <app-image-picker 
                 [showPreview]="this.file" 
                 (imagePick)="onImagePicked($event)" 
@@ -26,7 +22,7 @@
             </ion-row>
       
             <ion-row class="ion-justify-content-center">
-              <ion-col size="6" size-md="6">
+              <ion-col size="12" size-xl="6" size-lg="6" size-md="6" size-sm="3">
                 <ion-list>
       
                   <ion-item class="ion-text-center">
@@ -64,7 +60,7 @@
             </ion-row>
       
             <ion-row class="ion-justify-content-center">
-              <ion-col size="10" size-md="12">
+              <ion-col size="12" size-xl="10" size-lg="8" size-md="6" size-sm="6">
                 <angular-editor 
                 [config]="editorConfig"
                 required
@@ -110,11 +106,5 @@
           </ion-grid>
       
         </form>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-
-
 </ion-content>
 

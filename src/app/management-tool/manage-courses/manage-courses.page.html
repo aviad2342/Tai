@@ -76,22 +76,22 @@
       </ng-template>
     </ngx-datatable-column> 
 
-      <ngx-datatable-column name="title" [width]="150">
+      <ngx-datatable-column name="title" [width]="150" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>כותרת הקורס</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="authorName" [width]="140">
+      <ngx-datatable-column name="authorName" [width]="140" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>מרצה</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="date" [sortable]="true" [width]="120">
+      <ngx-datatable-column name="date" [sortable]="true" [width]="150" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>תאריך</strong></ng-template>
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
           {{ row['date'] | date }}
         </ng-template>
       </ngx-datatable-column> 
 
-      <ngx-datatable-column name="courseLessons" [width]="80">
+      <ngx-datatable-column name="courseLessons" [width]="80" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>שיעורים</strong></ng-template>
       </ngx-datatable-column>
 
@@ -100,7 +100,7 @@
         let-rowCount="rowCount"
         let-selectedCount="selectedCount"
         >
-        <div>נבחר {{ selectedCount }}  מתוך {{ rowCount }} קורסים </div>
+        <div>&nbsp;נבחר {{ selectedCount }}  מתוך {{ rowCount }} קורסים </div>
         </ng-template>
       </ngx-datatable-footer>
 
@@ -111,8 +111,6 @@
     <ngx-datatable *ngIf="isRowSelected"
     #ulessonsTable
     [loadingIndicator]="loadingIndicator"
-    [reorderable]="reorderable"
-    [swapColumns]="reorderable"
     [rows]="lessons"
     class="material ion-margin"
     [rowHeight]="'auto'"
@@ -122,11 +120,11 @@
     [limit]="50"
     [columnMode]="columnMode.standard"
   >
-    <ngx-datatable-column name="lessonNumber" [width]="60">
+    <ngx-datatable-column name="lessonNumber" [width]="60" [resizeable]="false">
       <ng-template let-column="column" ngx-datatable-header-template><strong>שיעור</strong></ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="" [sortable]="false" [width]="100">
+    <ngx-datatable-column name="" [sortable]="false" [width]="100" [resizeable]="false">
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
         <ion-thumbnail>
           <ion-img [src]="getVideoThumbnail(row['videoId'])"></ion-img>
@@ -134,22 +132,22 @@
       </ng-template>
     </ngx-datatable-column> 
 
-    <ngx-datatable-column name="title" [width]="150">
+    <ngx-datatable-column name="title" [width]="150" [resizeable]="false">
       <ng-template let-column="column" ngx-datatable-header-template><strong>כותרת שיעור</strong></ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="date" [sortable]="true" [width]="110">
+    <ngx-datatable-column name="date" [sortable]="true" [width]="110" [resizeable]="false">
       <ng-template let-column="column" ngx-datatable-header-template><strong>תאריך</strong></ng-template>
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
         {{ row['date'] | date }}
       </ng-template>
     </ngx-datatable-column> 
 
-    <ngx-datatable-column name="פעולות" [sortable]="false" [width]="130">
+    <ngx-datatable-column name="פעולות" [sortable]="false" [width]="130" [resizeable]="false">
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-        <ion-icon slot="start" color="primary" name="eye-outline" class="icon-size-large icon-vertical-line" (click)="onViewLesson(row.id)"></ion-icon>
-        <ion-icon slot="start" color="warning" name="create-outline" class="icon-size-large icon-vertical-line" (click)="onEditLesson(row)"></ion-icon>
-        <ion-icon slot="start" color="danger" name="trash-outline" class="icon-size-large" (click)="onDeleteLesson(row.id)"></ion-icon>
+        <ion-icon slot="start" color="primary" name="eye-outline" class="icon-size-large icon-vertical-line icon-actions-hover" (click)="onViewLesson(row.id)"></ion-icon>
+        <ion-icon slot="start" color="warning" name="create-outline" class="icon-size-large icon-vertical-line icon-actions-hover" (click)="onEditLesson(row)"></ion-icon>
+        <ion-icon slot="start" color="danger" name="trash-outline" class="icon-size-large icon-actions-hover" (click)="onDeleteLesson(row.id)"></ion-icon>
       </ng-template>
     </ngx-datatable-column>
 

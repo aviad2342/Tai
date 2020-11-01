@@ -83,7 +83,7 @@
       (activate)="onActivate($event)"
       (select)="onSelect($event)"
     >
-    <ngx-datatable-column name="" [sortable]="false" [width]="100">
+    <ngx-datatable-column name="" [sortable]="false" [width]="100" [resizeable]="false">
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
         <ion-thumbnail>
           <ion-img [src]="row['thumbnail']"></ion-img>
@@ -91,22 +91,22 @@
       </ng-template>
     </ngx-datatable-column> 
 
-      <ngx-datatable-column name="name" [width]="150">
+      <ngx-datatable-column name="name" [width]="150" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>שם המוצר</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="price" [sortable]="true" [width]="120">
+      <ngx-datatable-column name="price" [sortable]="true" [width]="120" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>מחיר</strong></ng-template>
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
           {{ row['price'] | currency:'ILS' }}
         </ng-template>
       </ngx-datatable-column> 
 
-      <ngx-datatable-column name="quantity" [width]="120">
+      <ngx-datatable-column name="quantity" [width]="120" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>כמות</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="category" [width]="120">
+      <ngx-datatable-column name="category" [width]="120" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>קטגוריה</strong></ng-template>
       </ngx-datatable-column>
 
@@ -115,7 +115,7 @@
         let-rowCount="rowCount"
         let-selectedCount="selectedCount"
         >
-        <div>נבחר {{ selectedCount }}  מתוך {{ rowCount }} מוצרים </div>
+        <div>&nbsp;נבחר {{ selectedCount }}  מתוך {{ rowCount }} מוצרים </div>
         </ng-template>
       </ngx-datatable-footer>
     </ngx-datatable>
