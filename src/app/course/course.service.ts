@@ -51,43 +51,6 @@ export class CourseService {
     }));
   }
 
-  // addCourse(course: Course) {
-  //   return this.http.post<{id: string}>('http://localhost:3000/api/course/course',
-  //   {
-  //     ...course
-  //   }).
-  //   pipe(
-  //     switchMap(resData => {
-  //       course.id = resData.id;
-  //       return this.courses;
-  //     }),
-  //     take(1),
-  //     tap(courses => {
-  //       this._courses.next(courses.concat(course));
-  //     }));
-  // }
-
-  // addCourse(course: Course) {
-  //   return this.http.post<Course>('http://localhost:3000/api/course/course',
-  //   {
-  //     ...course
-  //   }).
-  //   pipe(
-  //     switchMap(resData => {
-  //       course.id = resData.id;
-  //       return this.courses;
-  //     }),
-  //     take(1),
-  //     switchMap(courses => {
-  //       this._courses.next(courses.concat(course));
-  //        return courses;
-  //     }),
-  //     tap(courses => {
-  //        return courses;
-  //     }
-  //   ));
-  // }
-
   addCourse(course: Course) {
     return this.http.post<Course>('http://localhost:3000/api/course/course',
     {
@@ -138,13 +101,6 @@ export class CourseService {
       }));
   }
 
-  // getCourseLessons(courseId: string) {
-  //   return this.lessons.pipe(
-  //     map(lessons => {
-  //       return lessons.filter(p => p.courseId === courseId);
-  //     })
-  //   );
-  // }
 
   getCourseLessons(course: string) {
     return this.http.get<Lesson[]>( `http://localhost:3000/api/lesson/lesson/course/${course}`)

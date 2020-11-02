@@ -127,7 +127,7 @@ export class EditUserComponent implements OnInit {
           this.address.entry,
           uploadRes.imageUrl
         );
-        return this.userService.updateUserAndProfilePicture(userToUpdate);
+        return this.userService.updateUser(userToUpdate);
       })
     ).subscribe(user => {
       this.appService.presentToast('המשתמש נשמר בהצלחה', true);

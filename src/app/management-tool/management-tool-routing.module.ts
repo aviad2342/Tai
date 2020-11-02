@@ -31,6 +31,10 @@ const routes: Routes = [
   {
     path: 'therapists',
     loadChildren: () => import('./manage-therapists/manage-therapists.module').then( m => m.ManageTherapistsPageModule)
+  },
+  {
+    path: 'treatments',
+    loadChildren: () => import('./manage-treatments/manage-treatments.module').then( m => m.ManageTreatmentsPageModule)
   }
 ];
 

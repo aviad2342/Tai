@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>הוספת מטפל</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="close(null)">
+        <ion-icon slot="icon-only" name="close-outline" class="toolbar-icon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" fullscreen="true">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-sm="10">
+        <ion-virtual-scroll
+        [items]="therapists"
+        approxItemHeight="60px"
+      >
+      <ion-item *virtualItem="let therapist">
+        <ion-avatar size="medium" slot="start">
+          <ion-img [src]="therapist.profilePicture"></ion-img>
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ getTherapistFullName(therapist) }}</h2>
+          <ion-text color="medium">
+            <p>{{ therapist.email }}</p>
+          </ion-text>
+        </ion-label>
+        <ion-button color="primary" fill="outline" slot="end" (click)="close(therapist)">
+          <ion-icon name="person-add-outline" ></ion-icon>
+          <ion-label>הוסף משתתף</ion-label>
+        </ion-button>
+      </ion-item>
+      </ion-virtual-scroll>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<!-- <ion-footer class="add-participant-footer">
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="12" size-sm="6" class="ion-text-center">
+      <ion-button color="primary" fill="outline" (click)="onDoneAdding()">
+        <ion-label>סיום</ion-label>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer> -->

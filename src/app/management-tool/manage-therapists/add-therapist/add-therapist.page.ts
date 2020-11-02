@@ -33,26 +33,6 @@ export class AddTherapistPage implements OnInit {
     header: 'בחר סוגי טיפול מהרשימה'
   };
 
-  // pickerOptions = {
-  //   mode: 'ios',
-  //   cssClass: 'date-picker-class',
-  //   backdropDismiss: false,
-  //   buttons: [
-  //     {
-  //       text: 'ביטול',
-  //       role: 'cancel',
-  //       cssClass: 'picker-cancel-btn'
-  //     },
-  //     {
-  //       text: 'אישור',
-  //       role: 'confirm',
-  //       cssClass: 'picker-confirm-btn',
-  //       handler: (value: any) => {
-  //         this.date = new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value);
-  //       }
-  //     }
-  //   ]
-  // };
   typesOfTreatments = utility.typesOfTreatments;
 
   // typesOfTreatments = {
