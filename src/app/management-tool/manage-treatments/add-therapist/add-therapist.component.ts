@@ -22,7 +22,6 @@ export class AddTherapistComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    console.log(this.treatmentType);
     this.therapistService.getTherapists().subscribe(therapists => {
       this.therapists = therapists.filter(t => t.treatmentTypes.includes(this.treatmentType));
     });

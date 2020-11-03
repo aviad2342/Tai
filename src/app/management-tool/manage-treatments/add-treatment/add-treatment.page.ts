@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SegmentChangeEventDetail } from '@ionic/core';
 import { Router } from '@angular/router';
-import { AlertController, ModalController } from '@ionic/angular';
+import {  ModalController } from '@ionic/angular';
 import { AppService } from '../../../app.service';
 import { TreatmentService } from '../../../treatment/treatment.service';
 import * as utility from '../../../utilities/functions';
@@ -37,7 +37,6 @@ export class AddTreatmentPage implements OnInit {
   constructor(
     private treatmentService: TreatmentService,
     private modalController: ModalController,
-    private alertController: AlertController,
     private router: Router,
     private appService: AppService
     ) { }

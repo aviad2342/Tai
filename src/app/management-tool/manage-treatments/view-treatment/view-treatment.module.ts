@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ViewTreatmentPageRoutingModule } from './view-treatment-routing.module';
 
 import { ViewTreatmentPage } from './view-treatment.page';
+import { TherapistDetailComponent } from '../therapist-detail/therapist-detail.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { ViewTreatmentPage } from './view-treatment.page';
     IonicModule,
     ViewTreatmentPageRoutingModule
   ],
-  declarations: [ViewTreatmentPage]
+  declarations: [ViewTreatmentPage, TherapistDetailComponent]
 })
 export class ViewTreatmentPageModule {}

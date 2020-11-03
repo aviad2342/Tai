@@ -9,6 +9,7 @@ import { AddTreatmentPageRoutingModule } from './add-treatment-routing.module';
 import { AddTreatmentPage } from './add-treatment.page';
 import { SharedModule } from '../../../shared/shared.module';
 import { AddTherapistComponent } from '../add-therapist/add-therapist.component';
+import { TherapistSharedModule } from '../therapist-shared/therapist-shared.module';
 
 @NgModule({
   imports: [
@@ -16,8 +17,9 @@ import { AddTherapistComponent } from '../add-therapist/add-therapist.component'
     FormsModule,
     IonicModule,
     AddTreatmentPageRoutingModule,
-    SharedModule
+    SharedModule,
+    TherapistSharedModule
   ],
-  declarations: [AddTreatmentPage, AddTherapistComponent]
+  declarations: [AddTreatmentPage]
 })
 export class AddTreatmentPageModule {}

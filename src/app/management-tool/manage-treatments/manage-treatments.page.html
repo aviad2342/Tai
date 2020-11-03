@@ -70,7 +70,7 @@
       [rows]="treatments"
       class="bootstrap"
       [messages]="{emptyMessage:'אין נתונים להצגה', totalMessage: 'total', selectedMessage: 'selected'}"
-      [rowHeight]="'auto'"
+      [rowHeight]="70"
       [headerHeight]="50"
       [footerHeight]="50"
       [limit]="50"
@@ -87,7 +87,7 @@
       </ng-template>
     </ngx-datatable-column> 
     
-      <ngx-datatable-column name="treatmentType" [width]="200" [resizeable]="false">
+      <ngx-datatable-column name="treatmentType" [width]="150" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>סוג טיפול</strong></ng-template>
       </ngx-datatable-column>
 

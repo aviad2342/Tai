@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Output, Input, ElementRef, EventEmitter } from '@angular/core';
 import { Plugins, Capacitor, CameraSource, CameraResultType} from '@capacitor/core';
-import { ActionSheetController, Platform } from '@ionic/angular';
+import { ActionSheetController, AlertController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-image-picker',
@@ -14,8 +14,17 @@ export class ImagePickerComponent implements OnInit {
   @Input() showPreview = false;
   @Input() selectedImage: string;
   usePicker = false;
+  MIME_TYPE_MAP: object = {
+    'image/png': 'png',
+    'image/jpeg': 'jpg',
+    'image/jpg': 'jpg'
+};
 
-  constructor(private platform: Platform, private actionSheetCtrl: ActionSheetController,) { }
+  constructor(
+    private platform: Platform,
+    private actionSheetCtrl: ActionSheetController,
+    private alertController: AlertController,
+    ) { }
 
   ngOnInit() {
     // console.log('Mobile:', this.platform.is('mobile'));
@@ -89,6 +98,10 @@ export class ImagePickerComponent implements OnInit {
     if (!pickedFile) {
       return;
     }
+    if(!this.MIME_TYPE_MAP[pickedFile.type]) {
+      this.onErrorImageType();
+      return;
+    }
     const fr = new FileReader();
     fr.onload = () => {
       const dataUrl = fr.result.toString();
@@ -97,5 +110,19 @@ export class ImagePickerComponent implements OnInit {
     };
     fr.readAsDataURL(pickedFile);
   }
+
+  async onErrorImageType() {
+    const alert = await this.alertController.create({
+      cssClass: 'error-image-type-alert',
+      header: 'פורמט תמונה שגוי',
+      message: `אנא בחר תמונה בפורמטים הבאים: png, jpg, jpeg`,
+      mode: 'ios',
+      buttons: [{
+          text: 'אישור',
+        }
+      ]
+    });
+    await alert.present();
+}
 
 }

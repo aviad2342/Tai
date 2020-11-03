@@ -7,13 +7,18 @@ import { IonicModule } from '@ionic/angular';
 import { EditTreatmentPageRoutingModule } from './edit-treatment-routing.module';
 
 import { EditTreatmentPage } from './edit-treatment.page';
+import { AddTherapistComponent } from '../add-therapist/add-therapist.component';
+import { TherapistSharedModule } from '../therapist-shared/therapist-shared.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    EditTreatmentPageRoutingModule
+    EditTreatmentPageRoutingModule,
+    TherapistSharedModule,
+    SharedModule
   ],
   declarations: [EditTreatmentPage]
 })
