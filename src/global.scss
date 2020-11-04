@@ -391,6 +391,14 @@ ion-icon {
     &[class*="toolbar-icon-brain-treatment"] {
       mask-image: url(./assets/icon/brain-treatment.svg);
     }
+
+    &[class*="custom-users-list"] {
+      mask-image: url(./assets/icon/usersList.svg);
+    }
+
+    &[class*="toolbar-icon-users-list"] {
+      mask-image: url(./assets/icon/usersList.svg);
+    }
   
   
   }
