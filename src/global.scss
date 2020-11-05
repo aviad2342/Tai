@@ -263,11 +263,11 @@ ion-icon {
       mask-image: url(./assets/icon/shopping-cart.svg);
     }
 
-    &[class*="custom-inventory"] {
+    &[class*="custom-orders"] {
       mask-image: url(./assets/icon/inventory.svg);
     }
 
-    &[class*="toolbar-icon-inventory"] {
+    &[class*="toolbar-icon-orders"] {
       mask-image: url(./assets/icon/inventory.svg);
     }
 
@@ -398,6 +398,14 @@ ion-icon {
 
     &[class*="toolbar-icon-users-list"] {
       mask-image: url(./assets/icon/usersList.svg);
+    }
+
+    &[class*="custom-item"] {
+      mask-image: url(./assets/icon/item.svg);
+    }
+
+    &[class*="toolbar-icon-item"] {
+      mask-image: url(./assets/icon/item.svg);
     }
   
   

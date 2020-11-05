@@ -19,6 +19,8 @@ import { Article } from '../../../article/article.model';
 import { ArticleService } from '../../../article/article.service';
 import Swiper from 'swiper';
 import * as utility from '../../../utilities/functions';
+import { Treatment } from '../../../treatment/treatment.model';
+import { TreatmentService } from '../../../treatment/treatment.service';
 
 registerLocaleData(localeHe, 'he-HE');
 
@@ -33,9 +35,11 @@ export class AddItemPage implements OnInit, AfterViewInit {
   events: Event[];
   courses: Course[];
   articles: Article[];
+  treatments: Treatment[];
   isEvent = false;
   isArticle = false;
   isCourse = false;
+  isTreatment = false;
   isImageselected = false;
   selectedThumbnail = '';
   productId = '';
@@ -70,6 +74,7 @@ export class AddItemPage implements OnInit, AfterViewInit {
     private eventService: EventService,
     private courseService: CourseService,
     private articleService: ArticleService,
+    private treatmentService: TreatmentService,
     private modalController: ModalController,
     private alertController: AlertController,
     private router: Router,
@@ -100,7 +105,15 @@ export class AddItemPage implements OnInit, AfterViewInit {
         this.addItemSlides.slideTo(0);
         break;
     case this.categories.TREATMENTS:
+      if(!this.treatments) {
+        this.treatmentService.getTreatments().subscribe(treatments => {
+          this.treatments = treatments;
+          this.isTreatment = true;
+          this.addItemSlides.slideTo(1, 500);
+        });
+      } else {
         this.addItemSlides.slideTo(1);
+      }
         break;
     case this.categories.CONFERENCES:
       if(!this.events) {
@@ -185,6 +198,21 @@ export class AddItemPage implements OnInit, AfterViewInit {
       quantity:    1000,
       };
     this.form.setValue(courseObj);
+    this.isImageselected = true;
+    this.addItemSlides.slideTo(0);
+  }
+
+  onAddTreatmentItem(treatment: Treatment) {
+    this.form.reset();
+    this.selectedThumbnail = treatment.thumbnail;
+    this.productId = treatment.id;
+    const treatmentObj = {
+      name:        treatment.treatmentType,
+      description: treatment.description,
+      price:       '',
+      quantity:    1000,
+      };
+    this.form.setValue(treatmentObj);
     this.isImageselected = true;
     this.addItemSlides.slideTo(0);
   }

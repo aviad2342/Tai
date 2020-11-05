@@ -8,6 +8,18 @@ ion-segment-button {
     background-color: lightgrey;
 }
 
+.treatment-card {
+    border: 1px solid black;
+    background: rgb(248, 244, 244);
+}
+
+.treatment-thumbnail {
+    height: 200px;
+    width: 100%;
+    object-fit: contain;
+    background: black;
+}
+
 .event-card {
     border: 1px solid black;
     background: rgb(248, 244, 244);
@@ -15,18 +27,15 @@ ion-segment-button {
 
 .event-thumbnail {
     height: 200px;
-    object-fit: fill;
-    padding-bottom: 5px;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
+    object-fit: contain;
+    background: black;
 }
 
 .course-thumbnail {
     height: 200px;
-    object-fit: fill;
-    padding: 5px;
-    margin-left: auto;
-    margin-right: auto;
+    object-fit: contain;
+    background: black;
 }
 
 .course-card {
@@ -35,10 +44,8 @@ ion-segment-button {
 
 .article-thumbnail {
     height: 200px;
-    object-fit: fill;
-    padding-bottom: 5px;
-    margin-left: auto;
-    margin-right: auto;
+    object-fit: contain;
+    background: black;
 }
 
 .article-card {
@@ -53,9 +60,9 @@ ion-item::part(native){
     --inner-padding-end: 0;
 }
 
-// .swiper-slide {
-//     min-height: 800px;
-// }
+.treatment-therapist-item{
+    --background: lightgray;
+}
 
 ion-slides {
     height: 100%;

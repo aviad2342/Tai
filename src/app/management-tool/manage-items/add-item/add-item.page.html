@@ -57,14 +57,22 @@
     
                     <ion-item>
                       <ion-label position="floating"> תיאור המוצר <ion-text color="danger">*</ion-text></ion-label>
-                      <ion-input
+                      <!-- <ion-input
                         type="text"
                         ngModel
                         name="description"
                         required
                         #descriptionCtrl="ngModel"
-                      ></ion-input>
-                      <ion-icon  slot="end" position="floating" class="custom-product-description"></ion-icon>
+                      ></ion-input> -->
+                      <ion-textarea 
+                          type="text"
+                          autoGrow="true"
+                          ngModel
+                          name="description"
+                          required
+                          #descriptionCtrl="ngModel"
+                        ></ion-textarea>
+                      <ion-icon  slot="end" position="floating" class="custom-product-description ion-align-self-center"></ion-icon>
                     </ion-item>
                     <ion-item
                     *ngIf="!descriptionCtrl.valid && descriptionCtrl.touched"
@@ -124,31 +132,45 @@
             </ion-grid>
           </form>
         </ion-slide>
-            <!------------------------------------- Add TREATMENTS List Slide ----------------------------------------------->
+            <!------------------------------------- Add Treatment List Slide ----------------------------------------------->
             <ion-slide class="slide-step">
-              <!-- <ion-grid>
+              <ion-grid>
               <ion-row class="ion-justify-content-center">
-                <ion-col size="12" size-sm="10" *ngIf=isEvent>
+                <ion-col size="12" size-md="4" *ngIf="isTreatment">
                   <ion-virtual-scroll
-                  [items]="events"
-                  approxItemHeight="60px"
+                  [items]="treatments"
+                  approxItemHeight="500px"
                 >
-                <ion-item class="ion-text-center ion-no-padding" *virtualItem="let event" (click)="onAddEventItem(event)">
-                    <ion-card class="event-card">
-                      <ion-img [src]="event.thumbnail"></ion-img>
+                <ion-item class="ion-text-center ion-no-padding" *virtualItem="let treatment" (click)="onAddTreatmentItem(treatment)">
+                    <ion-card class="treatment-card">
+                      <ion-img [src]="treatment.thumbnail" class="treatment-thumbnail"></ion-img>
                       <ion-card-header>
-                        <ion-card-title>{{ event.title }}</ion-card-title>
-                        <ion-card-subtitle>{{ event.date | date }} - {{ event.placeName }}</ion-card-subtitle>
+                        <ion-card-title>{{ treatment.treatmentType }}</ion-card-title>
                       </ion-card-header>
                       <ion-card-content>
-                        <p>{{ event.description }}</p>
+                        <p>{{ treatment.description }}</p>
+                        <ion-label class="ion-text-right ion-padding-start" color="dark">
+                          <strong>
+                          מטפל:
+                          </strong>
+                        </ion-label>
+                        <ion-item lines="none" class="treatment-therapist-item">
+                          <ion-avatar size="medium" slot="start">
+                            <ion-img [src]="treatment?.therapistProfilePicture"></ion-img>
+                          </ion-avatar>
+                          <ion-label>
+                            <strong>
+                            {{ treatment?.therapistName }}
+                            </strong>
+                          </ion-label>
+                        </ion-item>
                       </ion-card-content>
                     </ion-card>
                 </ion-item>
                 </ion-virtual-scroll>
                 </ion-col>
               </ion-row>
-            </ion-grid> -->
+            </ion-grid>
             </ion-slide>
     <!------------------------------------- Add event List Slide ----------------------------------------------->
         <ion-slide class="slide-step">
@@ -191,8 +213,8 @@
                 <ion-card-title>{{ course.title}}</ion-card-title>
                 <ion-card-subtitle>{{ course.description }}</ion-card-subtitle>
               </ion-card-header>
-              <ion-img [src]="course.thumbnail" class="course-thumbnail"></ion-img>
               <ion-card-content>
+                <ion-img [src]="course.thumbnail" class="course-thumbnail"></ion-img>
                 <ion-label>מחבר: {{ course.authorName }}</ion-label>
                 <p>נוסף בתאריך: {{ course.date | date }}</p>
                 <p>מספר שיעורים: {{ course.courseLessons }}</p>
