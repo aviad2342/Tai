@@ -19,7 +19,6 @@ export class ManageEventsPage implements OnInit, OnDestroy {
   speakers: Speaker[];
   selectedEventId;
   private eventSubscription: Subscription;
-  private speakerSubscription: Subscription;
    @ViewChild('coursesTable') coursesTable: DatatableComponent;
   isRowSelected = false;
   columnMode = ColumnMode;

@@ -1,0 +1,122 @@
+<ion-header>
+  <ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button routerLink="/manage" defaultHref="/manage"></ion-back-button>
+  </ion-buttons>
+  <ion-title>ניהול הזמנות</ion-title>
+</ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+<!---------------------------------- Action Buttons -------------------------------------------------->
+    <ion-row>
+      <ion-col>
+        <ion-button color="primary" (click)="onAddOrder()">
+        <ion-icon class="custom-online-course" slot="start"></ion-icon>
+        <ion-label>הוסף</ion-label>
+      </ion-button>
+
+      <ion-button color="secondary" (click)="onViewOrder()" [disabled]="!isRowSelected">
+        <ion-icon name="eye-outline" slot="start"></ion-icon>
+        <ion-label>צפייה</ion-label>
+      </ion-button>
+
+      <ion-button color="warning" (click)="onEditOrder()" [disabled]="!isRowSelected">
+        <ion-icon name="create-outline" slot="start"></ion-icon>
+        <ion-label>ערוך</ion-label>
+      </ion-button>
+
+      <ion-button color="danger" (click)="onDeleteOrder()" [disabled]="!isRowSelected">
+        <ion-icon name="trash-outline" slot="start"></ion-icon>
+        <ion-label>מחק</ion-label>
+      </ion-button>
+
+      </ion-col>
+    </ion-row>
+<!---------------------------------- filtering inputs -------------------------------------------------->
+    <ion-row>
+
+      <!-- <ion-col size="4" class="ion-padding-end">
+        <ion-item>
+          <ion-input   
+          type="text"
+          placeholder="חפש קורס"
+          (keyup)="filterEvents($event)">
+          </ion-input>
+          <ion-icon name="funnel-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="4" class="ion-padding-end">
+        <ion-item>
+          <ion-input   
+          type="text"
+          placeholder="חפש קורס"
+          (keyup)="filterEvents($event)">
+          </ion-input>
+          <ion-icon name="funnel-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+        </ion-item>
+      </ion-col> -->
+
+    </ion-row>
+<!------------------------------------------ courses datatable -------------------------------------------------->
+    <ion-row>
+      
+      <ngx-datatable
+      #ordersTable
+      [rows]="orders"
+      class="bootstrap"
+      [rowHeight]="'auto'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [messages]="{emptyMessage:'אין נתונים להצגה', totalMessage: 'total', selectedMessage: 'selected'}"
+      [limit]="50"
+      [columnMode]="columnMode.standard"
+      [selected]="selected"
+      [selectionType]="SelectionType.single"
+      (select)="onSelect($event)"
+    >
+    <ngx-datatable-column name="id" [width]="120" [resizeable]="false">
+      <ng-template let-column="column" ngx-datatable-header-template><strong>מספר הזמנה</strong></ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="date" [sortable]="true" [width]="150" [resizeable]="false">
+      <ng-template let-column="column" ngx-datatable-header-template><strong>תאריך הזמנה</strong></ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        {{ row['date'] | date }}
+      </ng-template>
+    </ngx-datatable-column> 
+
+    <ngx-datatable-column name="totalPayment" [width]="120" [resizeable]="false">
+      <ng-template let-column="column" ngx-datatable-header-template><strong>סכום ההזמנה</strong></ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        {{ row['totalPayment'] | currency:'ILS' }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="receivedPayment" [sortable]="true" [width]="70" [resizeable]="false">
+      <ng-template let-column="column" ngx-datatable-header-template><strong>התקבל תשלום</strong></ng-template>
+       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <input type="checkbox" [checked]="row['receivedPayment']" />
+       </ng-template>
+    </ngx-datatable-column> 
+
+      <!-- <ngx-datatable-column name="maxCapacity" [width]="120" [resizeable]="false">
+        <ng-template let-column="column" ngx-datatable-header-template><strong>כמות משתתפים</strong></ng-template>
+      </ngx-datatable-column> -->
+
+      <ngx-datatable-footer #datatableFooter>
+        <ng-template ngx-datatable-footer-template 
+        let-rowCount="rowCount"
+        let-selectedCount="selectedCount"
+        >
+        <div>&nbsp;נבחר {{ selectedCount }}  מתוך {{ rowCount }} הזמנות </div>
+        </ng-template>
+      </ngx-datatable-footer>
+    </ngx-datatable>
+
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

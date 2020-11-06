@@ -14,12 +14,7 @@
       <ion-button
         fill="clear"
         color="primary"
-        [routerLink]="[
-          '/',
-          'tabs',
-          'discover',
-          item.id
-        ]"
+        (click)="onItemSelected()"
       >
       <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
       <ion-label>הוסף לסל</ion-label>

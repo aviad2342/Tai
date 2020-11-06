@@ -35,6 +35,14 @@ const routes: Routes = [
   {
     path: 'treatments',
     loadChildren: () => import('./manage-treatments/manage-treatments.module').then( m => m.ManageTreatmentsPageModule)
+  },
+  {
+    path: 'orders',
+    loadChildren: () => import('./manage-orders/manage-orders.module').then( m => m.ManageOrdersPageModule)
+  },
+  {
+    path: 'customers',
+    loadChildren: () => import('./manage-customers/manage-customers.module').then( m => m.ManageCustomersPageModule)
   }
 ];
 

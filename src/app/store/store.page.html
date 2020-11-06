@@ -9,7 +9,7 @@
       <ion-button class="btn-cart">
         <ion-icon name="cart-outline" class="toolbar-icon" slot="icon-only"></ion-icon>
       </ion-button>
-      <ion-badge color="danger" class="cart-badge">3</ion-badge>
+      <ion-badge color="danger" class="cart-badge">{{ itemsAddedToCart.length }}</ion-badge>
     </ion-buttons>
     <!-- <ion-button slot="end" fill="outline">
       <ion-icon name="cart-outline" slot="icon-only" color="dark" class="cart-icon"></ion-icon>
@@ -25,7 +25,7 @@
     </ion-row>
     <ion-slides [options]="sliderConfig">
       <ion-slide class="item-slide" *ngFor="let item of getItemByCategory(category)">
-          <app-store-item [item]="item" class="store-item"></app-store-item>
+          <app-store-item [item]="item" class="store-item" (selectedItem)="onItemAddedToCart($event)"></app-store-item>
       </ion-slide>
     </ion-slides>
   </div>

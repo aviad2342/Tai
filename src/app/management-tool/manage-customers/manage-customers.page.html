@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button routerLink="/manage" defaultHref="/manage"></ion-back-button>
     </ion-buttons>
-    <ion-title>ניהול מטפלים</ion-title>
+    <ion-title>ניהול לקוחות</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,22 +12,22 @@
 <!---------------------------------- Action Buttons -------------------------------------------------->
     <ion-row>
       <ion-col>
-        <ion-button color="primary" (click)="onAddTherapist()">
+        <ion-button color="primary" (click)="onAddCustomer()">
         <ion-icon name="person-add-outline" slot="start"></ion-icon>
         <ion-label>הוסף</ion-label>
       </ion-button>
 
-      <ion-button color="secondary" (click)="onViewTherapist()" [disabled]="!isRowSelected">
+      <ion-button color="secondary" (click)="onViewCustomer()" [disabled]="!isRowSelected">
         <ion-icon name="eye-outline" slot="start"></ion-icon>
         <ion-label>פרופיל</ion-label>
       </ion-button>
 
-      <ion-button color="warning" (click)="onEditTherapist()" [disabled]="!isRowSelected">
+      <ion-button color="warning" (click)="onEditCustomer()" [disabled]="!isRowSelected">
         <ion-icon name="create-outline" slot="start"></ion-icon>
         <ion-label>ערוך</ion-label>
       </ion-button>
 
-      <ion-button color="danger" (click)="onDeleteTherapist()" [disabled]="!isRowSelected">
+      <ion-button color="danger" (click)="onDeleteCustomer()" [disabled]="!isRowSelected">
         <ion-icon name="trash-outline" slot="start"></ion-icon>
         <ion-label>מחק</ion-label>
       </ion-button>
@@ -81,8 +81,8 @@
 <!------------------------------------------datatable -------------------------------------------------->
     <ion-row>
       <ngx-datatable
-      #therapistsTable
-      [rows]="therapists"
+      #customersTable
+      [rows]="customers"
       class="bootstrap"
       [messages]="{emptyMessage:'אין נתונים להצגה', totalMessage: 'total', selectedMessage: 'selected'}"
       [rowHeight]="'auto'"
@@ -104,9 +104,6 @@
     
       <ngx-datatable-column name="firstName" [width]="150" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>שם פרטי</strong></ng-template>
-        <!-- <ng-template let-value="value" ngx-datatable-cell-template>
-          Hi: <strong>{{value}}</strong>
-        </ng-template> -->
       </ngx-datatable-column>
 
       <ngx-datatable-column name="lastName" [width]="150" [resizeable]="false">
@@ -138,7 +135,7 @@
         let-rowCount="rowCount"
         let-selectedCount="selectedCount"
         >
-        <div>&nbsp;נבחר {{ selectedCount }}  מתוך {{ rowCount }} מטפלים </div>
+        <div>&nbsp;נבחר {{ selectedCount }}  מתוך {{ rowCount }} לקוחות </div>
         </ng-template>
       </ngx-datatable-footer>
     </ngx-datatable>

@@ -4,6 +4,9 @@ import { StoreService } from './store.service';
 import { Item } from './item.model';
 import { AppService } from '../app.service';
 import { ItemService } from './item.service';
+import { AuthService } from '../auth/auth.service';
+import { User } from '../user/user.model';
+import { Customer } from '../customer/customer.model';
 
 
 @Component({
@@ -14,6 +17,9 @@ import { ItemService } from './item.service';
 export class StorePage implements OnInit, OnDestroy {
 
   items: Item[];
+  itemsAddedToCart: Item[] = [];
+  user: User;
+  customer: Customer;
   isLoading = false;
   private itemsSubscription: Subscription;
   isDesktop: boolean;
@@ -75,6 +81,7 @@ export class StorePage implements OnInit, OnDestroy {
 
   constructor(
     private storeService: StoreService,
+    private authService: AuthService,
     private appService: AppService,
     private itemService: ItemService
     ) { }
@@ -83,6 +90,15 @@ export class StorePage implements OnInit, OnDestroy {
     this.itemsSubscription = this.itemService.items.subscribe(items => {
       this.items = items;
     });
+
+    this.authService.getUserLogged().subscribe(user => {
+      this.user = user;
+    });
+  }
+
+  onItemAddedToCart(item: Item) {
+    this.itemsAddedToCart.push(item);
+    this.appService.presentToast('הפריט נשמר בהצלחה', true);
   }
 
   ionViewWillEnter() {

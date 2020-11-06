@@ -17,7 +17,7 @@ export class ManageItemsPage implements OnInit, OnDestroy {
   items: Item[];
   selectedItemId;
   private itemSubscription: Subscription;
-   @ViewChild('coursesTable') coursesTable: DatatableComponent;
+   @ViewChild('itemsTable') itemsTable: DatatableComponent;
   isRowSelected = false;
   columnMode = ColumnMode;
   SelectionType = SelectionType;

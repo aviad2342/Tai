@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ManageTherapistsPageRoutingModule } from './manage-therapists-routing.module';
+import { ManageCustomersPageRoutingModule } from './manage-customers-routing.module';
 
-import { ManageTherapistsPage } from './manage-therapists.page';
+import { ManageCustomersPage } from './manage-customers.page';
 import { NgxDatatableModule } from '../../../../projects/swimlane/ngx-datatable/src/public-api';
 import { SharedModule } from '../../shared/shared.module';
 
@@ -15,11 +15,10 @@ import { SharedModule } from '../../shared/shared.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    ManageTherapistsPageRoutingModule,
+    ManageCustomersPageRoutingModule,
     NgxDatatableModule,
-    SharedModule,
-    ReactiveFormsModule
+    SharedModule
   ],
-  declarations: [ManageTherapistsPage]
+  declarations: [ManageCustomersPage]
 })
-export class ManageTherapistsPageModule {}
+export class ManageCustomersPageModule {}
