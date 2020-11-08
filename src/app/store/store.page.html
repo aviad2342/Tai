@@ -6,10 +6,10 @@
     <ion-title class="ion-no-padding">חנות</ion-title>
     <ion-icon class="title-icon" slot="start" name="pricetags-outline"></ion-icon>
     <ion-buttons slot="primary">
-      <ion-button class="btn-cart">
+      <ion-button class="btn-cart" (click)="onGoToCart()">
         <ion-icon name="cart-outline" class="toolbar-icon" slot="icon-only"></ion-icon>
       </ion-button>
-      <ion-badge color="danger" class="cart-badge">{{ itemsAddedToCart.length }}</ion-badge>
+      <ion-badge color="danger" class="cart-badge">{{ itemsAddedToCart }}</ion-badge>
     </ion-buttons>
     <!-- <ion-button slot="end" fill="outline">
       <ion-icon name="cart-outline" slot="icon-only" color="dark" class="cart-icon"></ion-icon>

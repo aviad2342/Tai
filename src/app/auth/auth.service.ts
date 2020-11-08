@@ -24,6 +24,8 @@ export class AuthService implements OnDestroy {
   // tslint:disable-next-line: variable-name
   private _user = new BehaviorSubject<UserLogged>(null);
   private activeLogoutTimer: any;
+  public loggedUserId: string;
+
 
   get userIsAuthenticated() {
     return this._user.asObservable().pipe(
@@ -61,6 +63,10 @@ export class AuthService implements OnDestroy {
     );
   }
 
+  public getLoggedUserId() {
+    return this.loggedUserId;
+  }
+
   constructor(private http: HttpClient, private userSrvice: UserService) {}
 
   getUserLogged() {
@@ -90,6 +96,7 @@ export class AuthService implements OnDestroy {
         if (expirationTime <= new Date()) {
           return null;
         }
+        this.loggedUserId = parsedData.userId;
         const user = new UserLogged(
           parsedData.userId,
           parsedData.firstName,
@@ -155,6 +162,7 @@ export class AuthService implements OnDestroy {
   }
 
   private setUserData(userData: AuthResponseData) {
+    this.loggedUserId = userData.userId;
     const expirationTime = new Date(
       new Date().getTime() + +userData.expiresIn * 1000);
     const user = new UserLogged(

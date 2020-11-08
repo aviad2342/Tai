@@ -18,7 +18,7 @@ export class Customer extends User {
       public apartment: string,
       public entry: string,
       public profilePicture: string,
-      public orders: Order[]
+      public orders?: Order[]
     ) {
         super(
             id,
