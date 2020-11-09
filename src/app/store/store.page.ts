@@ -97,6 +97,7 @@ export class StorePage implements OnInit, OnDestroy {
     });
 console.log(this.authService.getLoggedUserId());
     this.cartService.getCustomerCart(this.authService.getLoggedUserId()).subscribe(cart => {
+      console.log(cart);
       if(cart) {
         this.cart = cart;
         this.itemsAddedToCart = cart.items.length;
@@ -110,7 +111,7 @@ console.log(this.authService.getLoggedUserId());
 
   onItemAddedToCart(item: Item) {
     const cartItem: CartItem = item;
-    cartItem.units = 0;
+    cartItem.units = 1;
     this.cart.items.push(cartItem);
     this.itemsAddedToCart = this.cart.items.length;
     this.appService.presentToast('הפריט נשמר בהצלחה', true);

@@ -125,6 +125,14 @@ ion-tab-bar{
   --max-width: 420px;
 }
 
+.select-units-style {
+  --width: 100px;
+}
+
+.select-units-style .popover-content {
+  overflow-y: hidden;
+  align-items: flex-start;
+}
 // #youtube-player {
 //   box-sizing: border-box;
 //   border-width: 50px;

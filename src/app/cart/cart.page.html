@@ -1,9 +1,50 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>cart</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button routerLink="/tabs/store" defaultHref="/tabs/store"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-no-padding">עגלת קניות</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-grid [fixed]="true">
 
+    <ion-row class="ion-no-padding ion-justify-content-center">
+      <ion-col class="button tappable ion-text-right align-self-center category-title">פריטים בעגלה:</ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding">
+      <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2"  class="ion-text-center" *ngIf="isLoading">
+        <ion-spinner color="primary"></ion-spinner>
+      </ion-col>
+      <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2" class="ion-text-right" *ngIf="!isLoading">
+        <ion-list>
+          <ion-item lines="inset" *ngFor="let item of cart.items">
+            <ion-thumbnail>
+              <ion-img [src]="item?.thumbnail"></ion-img>
+            </ion-thumbnail>
+            <ion-label class="ion-padding">
+              <h1>{{ item.name }}</h1>
+              <ion-text color="medium">
+                <p>{{ item.category }}</p>
+              </ion-text>
+            </ion-label>
+            <div class="units-select ion-padding">
+            <ion-label>
+              <ion-text>
+                {{ (item.price * item.units) | currency:'ILS' }}
+              </ion-text>
+            </ion-label>
+            <ion-select class="ion-no-padding ion-padding-end ion-margin-top" interface="popover" mode="ios" [interfaceOptions]="itemUnitsSelectOptions" [value]="item.units" (ionChange)="onItemQuantityChange($event, item)">
+              <ion-select-option *ngFor="let unit of units" [value]="unit">{{unit}}</ion-select-option>
+            </ion-select>
+          </div>
+          </ion-item>
+        </ion-list>
+
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
 </ion-content>
