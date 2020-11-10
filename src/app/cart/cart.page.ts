@@ -15,6 +15,9 @@ export class CartPage implements OnInit {
 
   cart: Cart;
   isLoading = false;
+  summaryItems = 20.99;
+  shippingCost = 9.99;
+  summaryOrder = 30.98;
   // units: number[] = Array.from(Array(11).keys());
   units: number[] = [1,2,3,4,5,6,7,8,9,10];
   itemUnitsSelectOptions = {
@@ -67,5 +70,11 @@ export class CartPage implements OnInit {
     const val = event.target.value;
     item.units = val;
   }
+
+  onRemoveItem(item: CartItem) {
+    this.cart.items.splice(this.cart.items.indexOf(item), 1);
+  }
+
+  onDoneAdding(){}
 
 }

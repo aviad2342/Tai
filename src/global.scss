@@ -415,6 +415,30 @@ ion-icon {
     &[class*="toolbar-icon-item"] {
       mask-image: url(./assets/icon/item.svg);
     }
+
+    &[class*="custom-coupon"] {
+      mask-image: url(./assets/icon/coupon.svg);
+    }
+
+    &[class*="toolbar-icon-coupon"] {
+      mask-image: url(./assets/icon/coupon.svg);
+    }
+
+    &[class*="custom-coupons"] {
+      mask-image: url(./assets/icon/coupons.svg);
+    }
+
+    &[class*="toolbar-icon-coupons"] {
+      mask-image: url(./assets/icon/coupons.svg);
+    }
+
+    &[class*="custom-cashier"] {
+      mask-image: url(./assets/icon/cashier.svg);
+    }
+
+    &[class*="toolbar-icon-cashier"] {
+      mask-image: url(./assets/icon/cashier.svg);
+    }
   
   
   }

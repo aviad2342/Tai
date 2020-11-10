@@ -23,6 +23,10 @@
           <ion-item lines="inset" *ngFor="let item of cart.items">
             <ion-thumbnail>
               <ion-img [src]="item?.thumbnail"></ion-img>
+              <ion-button color="danger" fill="clear" (click)="onRemoveItem(item)" class="ion-no-padding">
+                <ion-icon name="trash-outline" slot="start"></ion-icon>
+                הסרה
+              </ion-button>
             </ion-thumbnail>
             <ion-label class="ion-padding">
               <h1>{{ item.name }}</h1>
@@ -46,5 +50,64 @@
       </ion-col>
     </ion-row>
 
+    <ion-row class="ion-no-padding ion-justify-content-center">
+      <ion-col class="button tappable ion-text-right align-self-center category-title">קופון:</ion-col>
+    </ion-row>
+    <ion-row class="">
+      <ion-col class="ion-padding">
+        <ion-input class="item-coupon-input"></ion-input>
+      </ion-col>
+      <ion-col class="ion-padding coupon-btn">
+        <ion-button color="primary" fill="outline">
+          <ion-icon class="custom-coupons" slot="start"></ion-icon>
+          <ion-label>הפעל קופון</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding ion-justify-content-center">
+      <ion-col class="button tappable ion-text-right align-self-center category-title">סיכום:</ion-col>
+    </ion-row>
+    <ion-row class="ion-no-padding">
+      <ion-col size="auto" class="ion-text-right">
+        <ion-label>סכום ביניים</ion-label>
+      </ion-col>
+      <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
+        <!-- <ion-label>.........................................................................................................................................................................................................................</ion-label> -->
+      </ion-col>
+      <ion-col size="auto" class="ion-text-right">
+        <ion-label>{{ summaryItems | currency:'ILS' }}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-no-padding">
+      <ion-col size="auto" class="ion-text-right">
+        <ion-label>משלוח</ion-label>
+      </ion-col>
+      <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
+        <!-- <ion-label>.........................................................................................................................................................................................................................</ion-label> -->
+      </ion-col>
+      <ion-col size="auto" class="ion-text-right">
+        <ion-label>{{ shippingCost | currency:'ILS' }}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-no-padding">
+      <ion-col size="auto" class="ion-text-right">
+        <ion-label>סה'כ לתשלום</ion-label>
+      </ion-col>
+      <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
+        <!-- <ion-label>.........................................................................................................................................................................................................................</ion-label> -->
+      </ion-col>
+      <ion-col size="auto" class="ion-text-right">
+        <ion-label>{{ summaryOrder | currency:'ILS' }}</ion-label>
+      </ion-col>
+    </ion-row>
+
   </ion-grid>
 </ion-content>
+
+<ion-footer class="add-participant-footer ion-no-padding">
+  <ion-button expand="full" color="secondary" (click)="onDoneAdding()" class="ion-no-padding">
+    <ion-icon class="custom-cashier" slot="start"></ion-icon>
+    <ion-label>המשך לתשלום</ion-label>
+  </ion-button>
+</ion-footer>

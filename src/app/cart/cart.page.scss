@@ -3,7 +3,7 @@
 .category-title {
     font-size: larger;
     font-weight: bolder;
-    background-color: rgb(194, 194, 194);
+    background-color: rgb(223, 223, 223);
 }
 
 .units-select {
@@ -21,4 +21,18 @@ ion-select {
 
 ion-select::part(icon) {
     opacity: inherit;
+}
+
+.item-coupon-input {
+    border: 1px solid black;
+    border-radius: 7px;
+}
+
+.dotted-border-bottom {
+    border-bottom: 1px dotted black;
+    top: -8px;
+}
+
+.coupon-btn {
+    top: -2px;
 }
