@@ -11,13 +11,32 @@
 }
 
 ion-select {
-    border: 1px solid black;
-    border-radius: 4px;
-    padding-top: 4px;
-    padding-bottom: 3px;
-    background: gray;
-    box-shadow: 2;
+    // border: 1px solid black;
+    // border-radius: 4px;
+    // padding-top: 4px;
+    // padding-bottom: 3px;
+    // background: lightgrey;
+    width: 100%;
+    justify-content: center;
 }
+
+.units-select-item {
+    --background: lightgrey;
+    --detail-icon-color: black;
+    --background-hover-opacity: 0.2;
+    --border-width: 1px;
+    --border-radius: 5px;
+    --border-color: black;
+}
+
+// .units-select-item::part(native) {
+//     padding: 0;
+// }
+
+// .no-click {
+//     pointer-events:none; //This makes it not clickable
+//   }
+
 
 ion-select::part(icon) {
     opacity: inherit;

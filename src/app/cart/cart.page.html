@@ -20,13 +20,9 @@
       </ion-col>
       <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2" class="ion-text-right" *ngIf="!isLoading">
         <ion-list>
-          <ion-item lines="inset" *ngFor="let item of cart.items">
+          <ion-item lines="inset" detail="false" *ngFor="let item of cart.items">
             <ion-thumbnail>
               <ion-img [src]="item?.thumbnail"></ion-img>
-              <ion-button color="danger" fill="clear" (click)="onRemoveItem(item)" class="ion-no-padding">
-                <ion-icon name="trash-outline" slot="start"></ion-icon>
-                הסרה
-              </ion-button>
             </ion-thumbnail>
             <ion-label class="ion-padding">
               <h1>{{ item.name }}</h1>
@@ -40,11 +36,18 @@
                 {{ (item.price * item.units) | currency:'ILS' }}
               </ion-text>
             </ion-label>
-            <ion-select class="ion-no-padding ion-padding-end ion-margin-top" interface="popover" mode="ios" [interfaceOptions]="itemUnitsSelectOptions" [value]="item.units" (ionChange)="onItemQuantityChange($event, item)">
+            <app-number-picker [min]="1" [max]="10" (numberPick)="onItemQuantityChange($event, item)"></app-number-picker>
+            <!-- <ion-item detail="true" slot="start" lines="none" class="units-select-item ion-no-padding">
+            <ion-select class="" interface="popover" mode="ios" [interfaceOptions]="itemUnitsSelectOptions" [value]="item.units" (ionChange)="onItemQuantityChange($event, item)">
               <ion-select-option *ngFor="let unit of units" [value]="unit">{{unit}}</ion-select-option>
             </ion-select>
+          </ion-item> -->
+          <!-- <ion-button color="danger" fill="clear" (click)="onRemoveItem(item)">
+            <ion-icon name="trash-outline" slot="start"></ion-icon>
+            הסרה
+          </ion-button> -->
           </div>
-          </ion-item>
+        </ion-item>
         </ion-list>
 
       </ion-col>

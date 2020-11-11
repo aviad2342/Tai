@@ -39,7 +39,7 @@
 
       <ion-col size="12" size-xl="4" size-lg="4" size-md="6" size-sm="8" class="ion-padding-end">
         <ion-item>
-          <ion-select interface="popover" mode="ios" value=" " placeholder="סנן לפי סוג טיפול" (ionChange)="filterByTreatmentType($event)">
+          <ion-select interface="popover" mode="ios" [interfaceOptions]="treatmentTypesSelectOptions" value=" " placeholder="סנן לפי סוג טיפול" (ionChange)="filterByTreatmentType($event)">
             <ion-select-option value="">הצג הכל</ion-select-option>
             <ion-select-option [value]="typesOfTreatments.BOOKS">{{ typesOfTreatments.BOOKS }}</ion-select-option>
             <ion-select-option [value]="typesOfTreatments.TREATMENTS">{{ typesOfTreatments.TREATMENTS }}</ion-select-option>

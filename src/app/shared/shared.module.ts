@@ -9,10 +9,11 @@ import { FormsModule } from '@angular/forms';
 import { GalleryComponent } from './gallery/gallery.component';
 import { ImageItemComponent } from './image-item/image-item.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { NumberPickerComponent } from './pickers/number-picker/number-picker.component';
 
 @NgModule({
-  declarations: [ImagePickerComponent, AddressPickerComponent, GalleryComponent, ImageItemComponent],
+  declarations: [ImagePickerComponent, AddressPickerComponent, GalleryComponent, ImageItemComponent, NumberPickerComponent],
   imports: [CommonModule, IonicModule, IonicSelectableModule, FormsModule, NgxDropzoneModule],
-  exports: [ImagePickerComponent, AddressPickerComponent, GalleryComponent, ImageItemComponent]
+  exports: [ImagePickerComponent, AddressPickerComponent, GalleryComponent, ImageItemComponent, NumberPickerComponent]
 })
 export class SharedModule {}

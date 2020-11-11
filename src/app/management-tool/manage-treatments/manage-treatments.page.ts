@@ -26,6 +26,9 @@ export class ManageTreatmentsPage implements OnInit, OnDestroy {
   temp = [];
   selected = [];
   typesOfTreatments = utility.typesOfTreatments;
+  treatmentTypesSelectOptions = {
+    cssClass: 'select-treatment-types',
+  };
 
   constructor(
     private therapistService: TreatmentService,

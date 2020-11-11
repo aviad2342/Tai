@@ -66,9 +66,9 @@ export class CartPage implements OnInit {
   onk() {
     return;
   }
-  onItemQuantityChange(event, item: CartItem) {
-    const val = event.target.value;
-    item.units = val;
+  onItemQuantityChange(num: number, item: CartItem) {
+    // const val = event.target.value;
+    item.units = num;
   }
 
   onRemoveItem(item: CartItem) {

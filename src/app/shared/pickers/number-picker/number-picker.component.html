@@ -1,0 +1,5 @@
+<ion-item lines="none" class="number-select-item">
+  <ion-select class="" interface="popover" mode="ios" [interfaceOptions]="numberPickerOptions" [value]="min" (ionChange)="onNumberChange($event)">
+    <ion-select-option *ngFor="let number of numbers" [value]="number">{{number}}</ion-select-option>
+  </ion-select>
+</ion-item>

@@ -133,6 +133,19 @@ ion-tab-bar{
   overflow-y: hidden;
   align-items: flex-start;
 }
+
+.select-treatment-types .popover-content {
+  overflow-y: hidden;
+}
+
+.number-picker-style {
+  --width: 100px;
+}
+
+.number-picker-style .popover-content {
+  overflow-y: hidden;
+  align-items: flex-start;
+}
 // #youtube-player {
 //   box-sizing: border-box;
 //   border-width: 50px;
