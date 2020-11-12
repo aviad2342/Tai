@@ -1,5 +1,37 @@
-<ion-item lines="none" class="number-select-item">
+<!-- <ion-item lines="none" class="number-select-item">
   <ion-select class="" interface="popover" mode="ios" [interfaceOptions]="numberPickerOptions" [value]="min" (ionChange)="onNumberChange($event)">
     <ion-select-option *ngFor="let number of numbers" [value]="number">{{number}}</ion-select-option>
   </ion-select>
-</ion-item>
+</ion-item> -->
+<!-- <ion-item lines="none" class="ion-no-padding"> -->
+  <!-- <div>
+<ion-button size="small" mode="ios" color="secondary" fill="clear" type="button" (click)="decrement()">
+  <ion-icon name="remove-circle-outline" slot="icon-only"></ion-icon>
+</ion-button>
+<ion-label class="ion-text-center ion-no-margin">{{number}}</ion-label>
+<ion-label class="ion-text-center ion-no-margin"><ion-text class="">{{number}}</ion-text></ion-label>
+<ion-button size="small" mode="ios" color="secondary" fill="clear" type="button" disabled="(number >== max)" (click)="increment()">
+  <ion-icon name="add-circle-outline" slot="icon-only"></ion-icon>
+</ion-button>
+</div> -->
+<!-- </ion-item> -->
+<ion-row>
+  <ion-col size="auto" class="ion-no-padding ion-text-right">
+    <ion-button [disabled]="number >= max ? 'true' : 'false'" class="ion-no-padding" size="small" mode="ios" color="secondary" fill="clear" type="button" (click)="increment()">
+      <ion-icon name="add-circle-outline" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-col>
+  <ion-col size="auto" class="ion-text-right">
+    <ion-label class="ion-text-center">
+      <ion-text>
+        <p>{{number}}</p>
+      </ion-text>
+    </ion-label>
+  </ion-col>
+  <ion-col size="auto" class="ion-no-padding ion-text-right">
+    <ion-button [disabled]="number <= min ? 'true' : 'false'" class="ion-no-padding" size="small" mode="ios" color="secondary" fill="clear" type="button" (click)="decrement()">
+      <ion-icon name="remove-circle-outline" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-col>
+</ion-row>
+

@@ -43,6 +43,7 @@ export class CartPage implements OnInit {
       this.cartService.getCart(paramMap.get('id')).subscribe(cart => {
             this.cart = cart;
             this.isLoading = false;
+            this.updateTotalOrder();
           },
           error => {
             this.alertController
@@ -69,12 +70,21 @@ export class CartPage implements OnInit {
   onItemQuantityChange(num: number, item: CartItem) {
     // const val = event.target.value;
     item.units = num;
+    this.updateTotalOrder();
   }
 
   onRemoveItem(item: CartItem) {
     this.cart.items.splice(this.cart.items.indexOf(item), 1);
   }
 
-  onDoneAdding(){}
+  onDoneAdding() {}
+
+  updateTotalOrder() {
+    this.summaryItems = this.cart.items.reduce((sum, current) => {
+      return sum + (current.price * current.units);
+    }, 0);
+
+    this.summaryOrder = this.summaryItems + this.shippingCost;
+  }
 
 }

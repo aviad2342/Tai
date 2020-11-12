@@ -7,3 +7,15 @@
     --border-radius: 5px;
     --border-color: black;
 }
+
+ion-label {
+    border: 1px solid black;
+    border-radius: 5px;
+    background: rgb(214, 214, 214);
+    height: 24px;
+    width: 24px;
+}
+
+.number-input {
+    border: 1px solid black;
+}

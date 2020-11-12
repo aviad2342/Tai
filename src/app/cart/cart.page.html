@@ -31,21 +31,16 @@
               </ion-text>
             </ion-label>
             <div class="units-select ion-padding">
-            <ion-label>
+            <ion-label class="ion-text-center">
               <ion-text>
                 {{ (item.price * item.units) | currency:'ILS' }}
               </ion-text>
             </ion-label>
-            <app-number-picker [min]="1" [max]="10" (numberPick)="onItemQuantityChange($event, item)"></app-number-picker>
-            <!-- <ion-item detail="true" slot="start" lines="none" class="units-select-item ion-no-padding">
-            <ion-select class="" interface="popover" mode="ios" [interfaceOptions]="itemUnitsSelectOptions" [value]="item.units" (ionChange)="onItemQuantityChange($event, item)">
-              <ion-select-option *ngFor="let unit of units" [value]="unit">{{unit}}</ion-select-option>
-            </ion-select>
-          </ion-item> -->
-          <!-- <ion-button color="danger" fill="clear" (click)="onRemoveItem(item)">
-            <ion-icon name="trash-outline" slot="start"></ion-icon>
-            הסרה
-          </ion-button> -->
+            <app-number-picker 
+            [initialNumber]="item.units" 
+            [min]="1" [max]="10" 
+            (numberPick)="onItemQuantityChange($event, item)"
+            ></app-number-picker>
           </div>
         </ion-item>
         </ion-list>
@@ -76,7 +71,7 @@
         <ion-label>סכום ביניים</ion-label>
       </ion-col>
       <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
-        <!-- <ion-label>.........................................................................................................................................................................................................................</ion-label> -->
+       
       </ion-col>
       <ion-col size="auto" class="ion-text-right">
         <ion-label>{{ summaryItems | currency:'ILS' }}</ion-label>
@@ -87,7 +82,7 @@
         <ion-label>משלוח</ion-label>
       </ion-col>
       <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
-        <!-- <ion-label>.........................................................................................................................................................................................................................</ion-label> -->
+       
       </ion-col>
       <ion-col size="auto" class="ion-text-right">
         <ion-label>{{ shippingCost | currency:'ILS' }}</ion-label>
@@ -98,7 +93,7 @@
         <ion-label>סה'כ לתשלום</ion-label>
       </ion-col>
       <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
-        <!-- <ion-label>.........................................................................................................................................................................................................................</ion-label> -->
+       
       </ion-col>
       <ion-col size="auto" class="ion-text-right">
         <ion-label>{{ summaryOrder | currency:'ILS' }}</ion-label>
