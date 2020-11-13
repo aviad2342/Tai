@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, IonItemSliding, NavController } from '@ionic/angular';
 import { range } from 'rxjs';
 import { CartItem } from '../store/item.model';
 import { Cart } from './cart.model';
@@ -15,6 +15,9 @@ export class CartPage implements OnInit {
 
   cart: Cart;
   isLoading = false;
+  @ViewChild('slidingItem') slidingItem: IonItemSliding;
+  slidingItems: IonItemSliding[] = [];
+  bla: HTMLAllCollection;
   summaryItems = 20.99;
   shippingCost = 9.99;
   summaryOrder = 30.98;
@@ -75,6 +78,11 @@ export class CartPage implements OnInit {
 
   onRemoveItem(item: CartItem) {
     this.cart.items.splice(this.cart.items.indexOf(item), 1);
+    this.updateTotalOrder();
+  }
+
+  onEditItems() {
+
   }
 
   onDoneAdding() {}

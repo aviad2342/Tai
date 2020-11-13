@@ -4,6 +4,11 @@
       <ion-back-button routerLink="/tabs/store" defaultHref="/tabs/store"></ion-back-button>
     </ion-buttons>
     <ion-title class="ion-no-padding">עגלת קניות</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button class="btn-cart" (click)="onEditItems()">
+        <ion-icon name="cart-outline" class="toolbar-icon" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -18,19 +23,20 @@
       <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2"  class="ion-text-center" *ngIf="isLoading">
         <ion-spinner color="primary"></ion-spinner>
       </ion-col>
-      <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2" class="ion-text-right" *ngIf="!isLoading">
+      <ion-col size="12" size-xl="12" size-lg="6" size-md="4" size-sm="5" class="ion-no-padding" *ngIf="!isLoading">
         <ion-list>
-          <ion-item lines="inset" detail="false" *ngFor="let item of cart.items">
+          <ion-item-sliding *ngFor="let item of cart.items" #slidingItem>
+          <ion-item lines="inset" detail="false">
             <ion-thumbnail>
               <ion-img [src]="item?.thumbnail"></ion-img>
             </ion-thumbnail>
-            <ion-label class="ion-padding">
+            <ion-label class="ion-no-padding ion-padding-start">
               <h1>{{ item.name }}</h1>
               <ion-text color="medium">
                 <p>{{ item.category }}</p>
               </ion-text>
             </ion-label>
-            <div class="units-select ion-padding">
+            <div class="units-select">
             <ion-label class="ion-text-center">
               <ion-text>
                 {{ (item.price * item.units) | currency:'ILS' }}
@@ -38,11 +44,18 @@
             </ion-label>
             <app-number-picker 
             [initialNumber]="item.units" 
-            [min]="1" [max]="10" 
+            [min]="1" 
+            [max]="10" 
             (numberPick)="onItemQuantityChange($event, item)"
             ></app-number-picker>
           </div>
         </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="onRemoveItem(item)">
+            <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
         </ion-list>
 
       </ion-col>
