@@ -10,10 +10,25 @@ import { GalleryComponent } from './gallery/gallery.component';
 import { ImageItemComponent } from './image-item/image-item.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { NumberPickerComponent } from './pickers/number-picker/number-picker.component';
+import { AddressDetailsPickerComponent } from './pickers/address-details-picker/address-details-picker.component';
 
 @NgModule({
-  declarations: [ImagePickerComponent, AddressPickerComponent, GalleryComponent, ImageItemComponent, NumberPickerComponent],
+  declarations: [
+    ImagePickerComponent,
+    AddressPickerComponent,
+    GalleryComponent,
+    ImageItemComponent,
+    NumberPickerComponent,
+    AddressDetailsPickerComponent
+  ],
   imports: [CommonModule, IonicModule, IonicSelectableModule, FormsModule, NgxDropzoneModule],
-  exports: [ImagePickerComponent, AddressPickerComponent, GalleryComponent, ImageItemComponent, NumberPickerComponent]
+  exports: [
+    ImagePickerComponent,
+    AddressPickerComponent,
+    GalleryComponent,
+    ImageItemComponent,
+    NumberPickerComponent,
+    AddressDetailsPickerComponent
+  ]
 })
 export class SharedModule {}

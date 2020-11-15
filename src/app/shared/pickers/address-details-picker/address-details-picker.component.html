@@ -1,0 +1,41 @@
+<ion-grid [fixed]="true">
+  <ion-row>
+    <ion-col>
+      <ion-input 
+      #countryInput
+      class="input-item"
+      autocorrect="on"
+      name="country"
+      type="text"
+      >
+      </ion-input>
+      <datalist id="browsers">
+        <option *ngFor="let val of valus" [value]="val"></option>
+    </datalist>
+    </ion-col>
+    <ion-col>
+      <ion-searchbar
+      #countriesInput
+      placeholder="חפש מדינה"
+      spellcheck="true"
+      mode="ios"
+      [autocomplete]="valus"
+      >
+
+      </ion-searchbar>
+      <datalist id="browsers">
+        <option *ngFor="let val of valus" [value]="val"></option>
+    </datalist>
+    </ion-col>
+    <ion-col>
+    <input type="text" list="browsers">
+    <datalist id="browsers">
+      <option value="Internet Explorer"></option>
+      <option value="Firefox"></option>
+      <option value="Chrome"></option>
+      <option value="Opera"></option>
+      <option value="Safari"></option>
+  </datalist>
+    </ion-col>
+  </ion-row>
+</ion-grid>

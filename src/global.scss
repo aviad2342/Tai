@@ -152,6 +152,10 @@ ion-tab-bar{
 //   border-image: url(assets/background/screen.png) 50 stretch;
 // }
 
+input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
 #youtube-player {
   border-radius: 4px;
     margin-top: 46px;
