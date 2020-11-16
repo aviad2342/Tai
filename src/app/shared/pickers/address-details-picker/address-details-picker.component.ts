@@ -13,6 +13,7 @@ export class AddressDetailsPickerComponent implements OnInit, AfterViewInit {
   @Output() addressPicked = new EventEmitter<Address>();
   @ViewChild('countryInput') country: IonInput;
   @ViewChild('countriesInput') countries: IonSearchbar;
+  countrySearch = '';
   valus: string[] = ['bla', 'nana', 'aba', 'kaka', 'sata', 'vava', 'rara'];
 
   constructor( private addressService: AddressService ) { }
@@ -30,6 +31,16 @@ export class AddressDetailsPickerComponent implements OnInit, AfterViewInit {
       countryInput.setAttribute('list', 'browsers');
       countryInput.setAttribute('autocomplete', 'on');
     });
+}
+
+getCountryPrediction() {
+  console.log(this.countrySearch);
+  if(this.countrySearch !== '') {
+    this.addressService.getCitiesPrediction(this.countrySearch).subscribe(cities => {
+      console.log(cities);
+      this.valus = cities;
+    });
+  }
 }
 
 }

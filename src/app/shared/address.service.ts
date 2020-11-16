@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,74 +10,58 @@ export class AddressService {
   constructor( private http: HttpClient ) { }
 
   getCountries() {
-    return this.http.get<any>(
+    return this.http.get<string[]>(
       // tslint:disable-next-line: max-line-length
       `http://localhost:3000/api/address/countries`)
-      .pipe(
-      map(countriesSet => {
-        const countries: string[] = [];
-        countriesSet.forEach(element => {
-          countries.push(element.he);
-        });
+      .pipe(tap(countries => {
         return countries;
-      })
-    );
+      }));
   }
 
   getCountriesPrediction(country: string) {
-    return this.http.get<any>(
+    return this.http.get<string[]>(
       // tslint:disable-next-line: max-line-length
       `http://localhost:3000/api/address/countries/${country}`)
-      .pipe(
-      map(predictions => {
-        const countries: string[] = [];
-        predictions.forEach(element => {
-          countries.push(element.he);
-        });
+      .pipe(tap(countries => {
         return countries;
-      })
-    );
+      }));
   }
 
   getCities() {
-    return this.http.get<any>(
+    return this.http.get<string[]>(
       // tslint:disable-next-line: max-line-length
       `http://localhost:3000/api/address/cities`)
-      .pipe(
-      map(citiesSet => {
-        const cities: string[] = [];
-        citiesSet.forEach(element => {
-          cities.push(element.name);
-        });
+      .pipe(tap(cities => {
         return cities;
-      })
-    );
+      }));
   }
 
   getCitiesPrediction(city: string) {
-    return this.http.get<any>(
+    return this.http.get<string[]>(
       // tslint:disable-next-line: max-line-length
       `http://localhost:3000/api/address/cities/${city}`)
-      .pipe(
-      map(predictions => {
-        const cities: string[] = [];
-        predictions.forEach(element => {
-          cities.push(element.name);
-        });
+      .pipe(tap(cities => {
         return cities;
-      })
-    );
+      }));
   }
 
   getCityStreets(city: string) {
-    return this.http.get<any>(
+    return this.http.get<string[]>(
       // tslint:disable-next-line: max-line-length
       `http://localhost:3000/api/address/streets/${city}`)
-      .pipe(
-      map(cityStreets => {
-        const streets: string[] = cityStreets[0].streets;
+      .pipe(tap(streets => {
         return streets;
-      })
-    );
+      }));
   }
+
+  getStreetsPrediction(city: string, street: string) {
+    return this.http.get<string[]>(
+      // tslint:disable-next-line: max-line-length
+      `http://localhost:3000/api/address/streets/${city}/${street}`)
+      .pipe(tap(streets => {
+        return streets;
+      }));
+  }
+
+
 }

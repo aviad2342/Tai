@@ -3,3 +3,11 @@
     border: 1px solid black;
     border-radius: 7px;
 }
+
+.city-options {
+    border: 1px solid black;
+}
+
+option::-webkit-search-results-decoration {
+    background: blue;
+  }

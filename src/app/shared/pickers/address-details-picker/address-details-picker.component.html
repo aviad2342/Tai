@@ -5,12 +5,15 @@
       #countryInput
       class="input-item"
       autocorrect="on"
+      placeholder="הקלד שם של עיר"
       name="country"
+      [(ngModel)]="countrySearch"
       type="text"
+      (keyup)="getCountryPrediction()"
       >
       </ion-input>
       <datalist id="browsers">
-        <option *ngFor="let val of valus" [value]="val"></option>
+        <option class="city-options" *ngFor="let val of valus" [value]="val"></option>
     </datalist>
     </ion-col>
     <ion-col>
