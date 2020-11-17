@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import { AutoCompleteModule } from '@syncfusion/ej2-angular-dropdowns';
 import { IonicSelectableModule } from 'ionic-selectable';
 
 import { ImagePickerComponent } from './pickers/image-picker/image-picker.component';
@@ -21,7 +22,7 @@ import { AddressDetailsPickerComponent } from './pickers/address-details-picker/
     NumberPickerComponent,
     AddressDetailsPickerComponent
   ],
-  imports: [CommonModule, IonicModule, IonicSelectableModule, FormsModule, NgxDropzoneModule],
+  imports: [CommonModule, IonicModule, IonicSelectableModule, FormsModule, NgxDropzoneModule, AutoCompleteModule],
   exports: [
     ImagePickerComponent,
     AddressPickerComponent,

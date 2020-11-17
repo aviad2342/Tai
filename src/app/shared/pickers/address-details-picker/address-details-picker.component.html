@@ -1,18 +1,19 @@
 <ion-grid [fixed]="true">
-  <ion-row>
+  <!-- <ion-row>
     <ion-col>
       <ion-input 
       #countryInput
       class="input-item"
-      autocorrect="on"
       placeholder="הקלד שם של עיר"
-      name="country"
-      [(ngModel)]="countrySearch"
+      name="city"
+      spellcheck="true"
+      [(ngModel)]="citySearch"
       type="text"
+      [autocomplete]="browsers"
       (keyup)="getCountryPrediction()"
       >
       </ion-input>
-      <datalist id="browsers">
+      <datalist #browsers id="browsers">
         <option class="city-options" *ngFor="let val of valus" [value]="val"></option>
     </datalist>
     </ion-col>
@@ -22,7 +23,7 @@
       placeholder="חפש מדינה"
       spellcheck="true"
       mode="ios"
-      [autocomplete]="valus"
+      [autocomplete]="browsers"
       >
 
       </ion-searchbar>
@@ -39,6 +40,22 @@
       <option value="Opera"></option>
       <option value="Safari"></option>
   </datalist>
+    </ion-col>
+  </ion-row> -->
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="6">
+      <ejs-autocomplete 
+      #cityInput
+      id="atcelement" 
+      FilterType="StartsWith"
+      enableRtl="true"
+      (filtering)="onFiltering($event)"
+      [dataSource]="citiesPrediction" 
+      placeholder="הקלד שם של עיר"
+      [autofill]="true"
+      (keyup)="getCountryPrediction($event)"
+      (select)='onChange($event)'
+      ></ejs-autocomplete>
     </ion-col>
   </ion-row>
 </ion-grid>
