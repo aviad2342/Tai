@@ -1,61 +1,73 @@
 <ion-grid [fixed]="true">
-  <!-- <ion-row>
-    <ion-col>
-      <ion-input 
-      #countryInput
-      class="input-item"
-      placeholder="הקלד שם של עיר"
-      name="city"
-      spellcheck="true"
-      [(ngModel)]="citySearch"
-      type="text"
-      [autocomplete]="browsers"
-      (keyup)="getCountryPrediction()"
-      >
-      </ion-input>
-      <datalist #browsers id="browsers">
-        <option class="city-options" *ngFor="let val of valus" [value]="val"></option>
-    </datalist>
-    </ion-col>
-    <ion-col>
-      <ion-searchbar
-      #countriesInput
-      placeholder="חפש מדינה"
-      spellcheck="true"
-      mode="ios"
-      [autocomplete]="browsers"
-      >
-
-      </ion-searchbar>
-      <datalist id="browsers">
-        <option *ngFor="let val of valus" [value]="val"></option>
-    </datalist>
-    </ion-col>
-    <ion-col>
-    <input type="text" list="browsers">
-    <datalist id="browsers">
-      <option value="Internet Explorer"></option>
-      <option value="Firefox"></option>
-      <option value="Chrome"></option>
-      <option value="Opera"></option>
-      <option value="Safari"></option>
-  </datalist>
-    </ion-col>
-  </ion-row> -->
   <ion-row class="ion-justify-content-center">
-    <ion-col size="6">
+    <ion-col>
       <ejs-autocomplete 
       #cityInput
+      class="city-input"
       id="atcelement" 
       FilterType="StartsWith"
       enableRtl="true"
-      (filtering)="onFiltering($event)"
-      [dataSource]="citiesPrediction" 
+      (filtering)="onFilteringCity($event)"
       placeholder="הקלד שם של עיר"
       [autofill]="true"
-      (keyup)="getCountryPrediction($event)"
-      (select)='onChange($event)'
+      (select)='onSelectedCity($event)'
       ></ejs-autocomplete>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-justify-content-center">
+    <ion-col>
+      <ejs-autocomplete 
+      #streetInput
+      class="city-input"
+      id="atcelement" 
+      FilterType="StartsWith"
+      enableRtl="true"
+      (filtering)="onFilteringStreet($event)"
+      placeholder="הקלד שם של רחוב"
+      [autofill]="true"
+      (select)='onSelectedStreet($event)'
+      ></ejs-autocomplete>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-justify-content-center">
+    <ion-col>
+      <ion-input 
+      placeholder="בחר מספר בית"
+      class="item-border-input"
+      [disabled]="false" 
+      #houseNumberComponent 
+      type="number" 
+      [(ngModel)]="this.selectedAddress.houseNumber" 
+      #houseNumberCtrl="ngModel"
+      required 
+      (click)="onSelecteHouseNumber()">
+    </ion-input>
+    </ion-col>
+    <ion-col>
+      <ion-input 
+      placeholder="בחר מספר דירה"
+      class="item-border-input"
+      [disabled]="false" 
+      #apartmentComponent 
+      type="number" 
+      [(ngModel)]="this.selectedAddress.houseNumber" 
+      #apartmentCtrl="ngModel"
+      required 
+      (click)="onSelecteHouseNumber()">
+    </ion-input>
+    </ion-col>
+    <ion-col>
+      <ion-input 
+      placeholder="כניסה"
+      class="item-border-input"
+      [disabled]="false" 
+      #entryComponent 
+      type="text" 
+      [(ngModel)]="this.selectedAddress.houseNumber" 
+      #entryCtrl="ngModel"
+      required 
+      >
+    </ion-input>
     </ion-col>
   </ion-row>
 </ion-grid>
