@@ -1,4 +1,5 @@
 <ion-grid [fixed]="true">
+
   <ion-row class="ion-justify-content-center">
     <ion-col>
       <ejs-autocomplete 
@@ -14,9 +15,11 @@
       ></ejs-autocomplete>
     </ion-col>
   </ion-row>
+
   <ion-row class="ion-justify-content-center">
     <ion-col>
       <ejs-autocomplete 
+      [enabled]="enableStreetPicker"
       #streetInput
       class="city-input"
       id="atcelement" 
@@ -29,12 +32,14 @@
       ></ejs-autocomplete>
     </ion-col>
   </ion-row>
+
   <ion-row class="ion-justify-content-center">
+
     <ion-col>
       <ion-input 
+      [disabled]="disableHouseNumberPicker"
       placeholder="בחר מספר בית"
       class="item-border-input"
-      [disabled]="false" 
       #houseNumberComponent 
       type="number" 
       [(ngModel)]="this.selectedAddress.houseNumber" 
@@ -43,31 +48,35 @@
       (click)="onSelecteHouseNumber()">
     </ion-input>
     </ion-col>
+
     <ion-col>
       <ion-input 
+      [disabled]="disableHouseNumberPicker"
       placeholder="בחר מספר דירה"
       class="item-border-input"
-      [disabled]="false" 
       #apartmentComponent 
       type="number" 
-      [(ngModel)]="this.selectedAddress.houseNumber" 
+      [(ngModel)]="this.selectedAddress.apartment" 
       #apartmentCtrl="ngModel"
       required 
-      (click)="onSelecteHouseNumber()">
+      (click)="onSelecteApartment()">
     </ion-input>
     </ion-col>
+
     <ion-col>
       <ion-input 
+      [disabled]="disableHouseNumberPicker"
       placeholder="כניסה"
       class="item-border-input"
-      [disabled]="false" 
       #entryComponent 
       type="text" 
-      [(ngModel)]="this.selectedAddress.houseNumber" 
+      [(ngModel)]="this.selectedAddress.entry" 
       #entryCtrl="ngModel"
       required 
+      (ionChange)="onSelecteEntry($event)"
       >
     </ion-input>
     </ion-col>
+
   </ion-row>
 </ion-grid>

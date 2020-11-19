@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { IonInput, IonSearchbar, PickerController } from '@ionic/angular';
 import { AutoCompleteComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { Address } from '../../address.model';
@@ -17,20 +17,28 @@ export interface PickerColumnOption {
   templateUrl: './address-details-picker.component.html',
   styleUrls: ['./address-details-picker.component.scss'],
 })
-export class AddressDetailsPickerComponent implements OnInit {
+export class AddressDetailsPickerComponent implements OnInit, AfterViewInit {
 
   @Output() addressPicked = new EventEmitter<Address>();
   @Output() isValid = new EventEmitter<boolean>();
-  @ViewChild('countryInput') country: IonInput;
-  @ViewChild('countriesInput') countries: IonSearchbar;
+
   @ViewChild('cityInput') cities: AutoCompleteComponent;
-  selectedAddress: Address = new Address();
+  @ViewChild('streetInput') streets: AutoCompleteComponent;
+
+  @Input() selectedAddress: Address = new Address();
+  @Input() isEdit = false;
+
+  selectedHouseNumberIndex = 0;
+  selectedApartmentIndex = 0;
+
   houseNumber = Array.from(Array(401).keys());
-  citiesData: string[];
-  citySearch = '';
-  selectedCity = '';
-  selectedIndex = 0;
-  pickerOptions: PickerColumnOption[] = [];
+  apartment = Array.from(Array(50).keys());
+
+  houseNumberPickerOptions: PickerColumnOption[] = [];
+  apartmentPickerOptions: PickerColumnOption[] = [];
+
+  enableStreetPicker = false;
+  disableHouseNumberPicker = true;
 
   constructor(
     private addressService: AddressService,
@@ -38,9 +46,24 @@ export class AddressDetailsPickerComponent implements OnInit {
      ) { }
 
   ngOnInit() {
+    this.selectedAddress.country = 'ישראל';
+
+    if(this.isEdit) {
+      this.enableStreetPicker = true;
+      this.disableHouseNumberPicker = false;
+    }
     this.houseNumber.splice(0, 1);
     this.houseNumber.forEach(element => {
-      this.pickerOptions.push({
+      this.houseNumberPickerOptions.push({
+        text: element,
+        value: element,
+        selected: false
+      });
+    });
+
+    this.apartment.splice(0, 1);
+    this.apartment.forEach(element => {
+      this.apartmentPickerOptions.push({
         text: element,
         value: element,
         selected: false
@@ -48,76 +71,80 @@ export class AddressDetailsPickerComponent implements OnInit {
     });
   }
 
+  async ngAfterViewInit() {
+    if(this.isEdit) {
+      this.cities.value = this.selectedAddress.city; // todo
+      this.streets.value = this.selectedAddress.street;// todo
+    }
+}
+
 
 onSelectedCity(event) {
   this.selectedAddress.city = event.itemData.value;
+  this.enableStreetPicker = true;
 }
 
 onFilteringCity(event) {
-  this.selectedCity = event.text;
+  this.resetAddress();
+  this.cities.showSpinner();
   if(event.text !== '') {
     this.addressService.getCitiesPrediction(event.text).subscribe(cities => {
-      // (this.cities.dataSource as any) = this.citiesPrediction;
-      // this.cities.dataBind();
       event.updateData(cities);
-      // const keyEventArgs: any = { preventDefault: (): void => { }, action: 'down', keyCode: 40, type: null };
-      // (this.cities as any).onFilterUp(keyEventArgs);
-      // (this.cities as any).popupObj.element.classList.add('event-suggestion');
-      // console.log(cities);
-      // this.citiesPrediction = cities;
-      // this.citiesPrediction.push('');
-      // this.cities.dataSource = this.citiesPrediction;
-      // this.cities.showPopup();
-      // this.cities.dataBind();
+      this.cities.hideSpinner();
     });
   }
 }
 
 onSelectedStreet(event) {
   this.selectedAddress.street = event.itemData.value;
-  this.selectedCity = event.itemData.value;
-  console.log(event.itemData.value);
+  this.disableHouseNumberPicker = false;
 }
 
 onFilteringStreet(event) {
-  this.selectedCity = event.text;
+  this.resetHouseNumber();
   if(event.text !== '') {
-    this.addressService.getStreetsPrediction( this.selectedCity, event.text).subscribe(cities => {
-      event.updateData(cities);
+    this.streets.showSpinner();
+    this.addressService.getStreetsPrediction( this.selectedAddress.city, event.text).subscribe(streets => {
+      event.updateData(streets);
+      this.streets.hideSpinner();
     });
   }
 }
 
 async onSelecteHouseNumber() {
+  if(this.disableHouseNumberPicker) {
+    return;
+  }
   const picker = await this.pickerController.create({
     animated: true,
     mode: 'ios',
+    cssClass: 'house-number-picker',
     backdropDismiss: false,
     columns: [{
       name: 'Number',
-      selectedIndex: this.selectedIndex,
-      options: this.pickerOptions
+      selectedIndex: this.selectedHouseNumberIndex,
+      options: this.houseNumberPickerOptions
     }],
-   // input: {input: Number},
     buttons: [
       {
         text: 'ביטול',
         role: 'cancel',
-        cssClass: 'ion-text-capitalize'
+        cssClass: 'house-number-picker-btn'
       },
       {
         text: '+100',
-        role: 'sort',
-        cssClass: 'ion-text-capitalize',
+        role: 'null',
+        cssClass: 'house-number-picker-btn',
         handler: (value: any) => {
-          this.selectedIndex = value.Number.value + 100;
+          this.selectedHouseNumberIndex = value.Number.value + 99;
         }
       },
       {
         text: 'אישור',
-        cssClass: 'ion-text-capitalize',
+        cssClass: 'house-number-picker-btn',
         handler: (value: any) => {
           this.selectedAddress.houseNumber = value.Number.value;
+          this.selectedHouseNumberIndex = value.Number.value - 1;
           this.addressPicked.emit(this.selectedAddress);
           this.isValid.emit(true);
         }
@@ -127,5 +154,60 @@ async onSelecteHouseNumber() {
   await picker.present();
 }
 
+async onSelecteApartment() {
+  if(this.disableHouseNumberPicker) {
+    return;
+  }
+  const picker = await this.pickerController.create({
+    animated: true,
+    mode: 'ios',
+    cssClass: 'house-number-picker',
+    backdropDismiss: false,
+    columns: [{
+      name: 'Number',
+      selectedIndex: this.selectedApartmentIndex,
+      options: this.apartmentPickerOptions
+    }],
+    buttons: [
+      {
+        text: 'ביטול',
+        role: 'cancel',
+        cssClass: 'house-number-picker-btn'
+      },
+      {
+        text: 'אישור',
+        cssClass: 'house-number-picker-btn',
+        handler: (value: any) => {
+          this.selectedAddress.houseNumber = value.Number.value;
+          this.selectedApartmentIndex = value.Number.value - 1;
+          this.addressPicked.emit(this.selectedAddress);
+        }
+      }
+    ]
+  });
+  await picker.present();
+}
+
+onSelecteEntry(event) {
+  this.selectedAddress.entry = event.detail.value;
+  this.addressPicked.emit(this.selectedAddress);
+}
+
+resetAddress() {
+  this.enableStreetPicker = false;
+  this.disableHouseNumberPicker = true;
+  this.streets.value = '';
+  this.selectedAddress.street = '';
+  this.selectedAddress.houseNumber = '';
+  this.selectedAddress.apartment = '';
+  this.selectedAddress.entry = '';
+}
+
+resetHouseNumber() {
+  this.disableHouseNumberPicker = true;
+  this.selectedAddress.houseNumber = '';
+  this.selectedAddress.apartment = '';
+  this.selectedAddress.entry = '';
+}
 
 }

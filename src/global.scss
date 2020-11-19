@@ -158,6 +158,9 @@ ion-tab-bar{
 //   border-width: 50px;
 //   border-image: url(assets/background/screen.png) 50 stretch;
 // }
+.house-number-picker-btn {
+  --width: auto;
+}
 
 input::-webkit-calendar-picker-indicator {
   display: none;

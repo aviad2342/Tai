@@ -58,7 +58,7 @@ export class AddressService {
   getStreetsPrediction(city: string, street: string) {
     return this.http.get<string[]>(
       // tslint:disable-next-line: max-line-length
-      `http://localhost:3000/api/address/streets/${city}/${street}`)
+      `http://localhost:3000/api/address/city/streets/${city}/${street}`)
       .pipe(tap(streets => {
         return streets;
       }));
