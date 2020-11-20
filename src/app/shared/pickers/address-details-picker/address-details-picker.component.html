@@ -12,6 +12,7 @@
       placeholder="הקלד שם של עיר"
       [autofill]="true"
       (select)='onSelectedCity($event)'
+      [(value)]='selectedAddress.city'
       ></ejs-autocomplete>
     </ion-col>
   </ion-row>
@@ -29,6 +30,7 @@
       placeholder="הקלד שם של רחוב"
       [autofill]="true"
       (select)='onSelectedStreet($event)'
+      [(value)]='selectedAddress.street'
       ></ejs-autocomplete>
     </ion-col>
   </ion-row>

@@ -57,6 +57,7 @@ export class OrderService {
         totalPayment:    order.totalPayment,
         receivedPayment: order.receivedPayment,
         customer:        order.customer,
+        address:        order.address,
         items:           order.items,
         };
       return this.http.put<Order>(`http://localhost:3000/api/order/order/${order.id}`,

@@ -18,10 +18,9 @@ export class CartPage implements OnInit {
   @ViewChild('slidingItem') slidingItem: IonItemSliding;
   slidingItems: IonItemSliding[] = [];
   bla: HTMLAllCollection;
-  summaryItems = 20.99;
-  shippingCost = 9.99;
-  summaryOrder = 30.98;
-  // units: number[] = Array.from(Array(11).keys());
+  summaryItems = 0;
+  shippingCost = 0;
+  summaryOrder = 0;
   units: number[] = [1,2,3,4,5,6,7,8,9,10];
   itemUnitsSelectOptions = {
     cssClass: 'select-units-style',

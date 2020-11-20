@@ -17,7 +17,7 @@ export interface PickerColumnOption {
   templateUrl: './address-details-picker.component.html',
   styleUrls: ['./address-details-picker.component.scss'],
 })
-export class AddressDetailsPickerComponent implements OnInit, AfterViewInit {
+export class AddressDetailsPickerComponent implements OnInit {
 
   @Output() addressPicked = new EventEmitter<Address>();
   @Output() isValid = new EventEmitter<boolean>();
@@ -70,14 +70,6 @@ export class AddressDetailsPickerComponent implements OnInit, AfterViewInit {
       });
     });
   }
-
-  async ngAfterViewInit() {
-    if(this.isEdit) {
-      this.cities.value = this.selectedAddress.city; // todo
-      this.streets.value = this.selectedAddress.street;// todo
-    }
-}
-
 
 onSelectedCity(event) {
   this.selectedAddress.city = event.itemData.value;
