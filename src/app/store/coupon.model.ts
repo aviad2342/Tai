@@ -6,7 +6,8 @@ export class Coupon {
       public quantity: number,
       public singleItem: boolean,
       public discount: number,
-      public usedBy: string[],
+      public itemId?: string,
+      public customers?: string[],
     ) {}
 
   }

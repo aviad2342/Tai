@@ -25,7 +25,7 @@
     </ion-row>
     <ion-slides [options]="sliderConfig">
       <ion-slide class="item-slide" *ngFor="let item of getItemByCategory(category)">
-          <app-store-item [item]="item" class="store-item" (selectedItem)="onItemAddedToCart($event)"></app-store-item>
+          <app-store-item [item]="item" [disabled]="itemExistInCart(item)" class="store-item" (selectedItem)="onItemAddedToCart($event)"></app-store-item>
       </ion-slide>
     </ion-slides>
   </div>

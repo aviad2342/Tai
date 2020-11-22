@@ -9,6 +9,7 @@ import { Item } from '../item.model';
 export class StoreItemComponent implements OnInit {
 
   @Input() item: Item;
+  @Input() disabled = false;
   @Output() selectedItem = new EventEmitter<Item>();
 
   constructor() { }

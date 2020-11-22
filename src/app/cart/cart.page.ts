@@ -20,6 +20,7 @@ export class CartPage implements OnInit {
   bla: HTMLAllCollection;
   summaryItems = 0;
   shippingCost = 0;
+  discount = 0;
   summaryOrder = 0;
   units: number[] = [1,2,3,4,5,6,7,8,9,10];
   itemUnitsSelectOptions = {

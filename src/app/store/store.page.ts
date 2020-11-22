@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
 export class StorePage implements OnInit, OnDestroy {
 
   items: Item[];
+  cartItems: CartItem[] = [];
   itemsAddedToCart = 0;
   user: User;
   cart: Cart;
@@ -95,11 +96,11 @@ export class StorePage implements OnInit, OnDestroy {
     this.itemsSubscription = this.itemService.items.subscribe(items => {
       this.items = items;
     });
-console.log(this.authService.getLoggedUserId());
-    this.cartService.getCustomerCart(this.authService.getLoggedUserId()).subscribe(cart => {
-      console.log(cart);
+    console.log(this.authService.getLoggedUserId());
+        this.cartService.getCustomerCart(this.authService.getLoggedUserId()).subscribe(cart => {
       if(cart) {
         this.cart = cart;
+        this.cartItems = cart.items;
         this.itemsAddedToCart = cart.items.length;
       } else {
         this.authService.getUserLogged().subscribe(user => {
@@ -134,6 +135,10 @@ console.log(this.authService.getLoggedUserId());
   getItemByCategory(category: string) {
     const items = this.items.filter(p => p.category === category).slice();
     return items;
+  }
+
+  itemExistInCart(item: Item) {
+    return this?.cartItems.map(cartItem => cartItem.id).includes(item.id);
   }
 
   ngOnDestroy() {
