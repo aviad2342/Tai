@@ -113,9 +113,20 @@ export class StorePage implements OnInit, OnDestroy {
   onItemAddedToCart(item: Item) {
     const cartItem: CartItem = item;
     cartItem.units = 1;
+    if(this.cart.id !== null) {
+    cartItem.cart = this.cart.id;
+    this.cartService.addCartItem(cartItem).subscribe(() => {
+      this.cart.items.push(cartItem);
+      this.itemsAddedToCart = this.cart.items.length;
+      this.appService.presentToast('הפריט נשמר בהצלחה', true);
+    }, error => {
+      this.appService.presentToast('חלה תקלה לא ניתן להוסיף את המוצר! נסה שנית מאוחר יותר', false);
+    });
+  } else {
     this.cart.items.push(cartItem);
-    this.itemsAddedToCart = this.cart.items.length;
-    this.appService.presentToast('הפריט נשמר בהצלחה', true);
+      this.itemsAddedToCart = this.cart.items.length;
+      this.appService.presentToast('הפריט נשמר בהצלחה', true);
+  }
   }
 
   onGoToCart() {

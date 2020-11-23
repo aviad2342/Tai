@@ -37,6 +37,7 @@ export class CartItem extends Item {
     public quantity: number,
     public category: string,
     public units?: number,
+    public cart?: string,
     ) {
        super(
         id,

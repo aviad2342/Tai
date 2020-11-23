@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
+import { CartItem } from '../store/item.model';
 import { Cart } from './cart.model';
 
 @Injectable({
@@ -49,6 +50,17 @@ export class CartService {
         }));
     }
 
+    addCartItem(item: CartItem) {
+      return this.http.post<{id: string}>('http://localhost:3000/api/cart/item',
+      {
+        ...item
+      }).
+      pipe(tap(resData => {
+        item.id = resData.id;
+          return item;
+        }));
+    }
+
     updateCart(cart: Cart) {
       const cartObj = {
         customer: cart.customer,
@@ -64,8 +76,37 @@ export class CartService {
         }));
     }
 
+    updateCartItem(item: CartItem) {
+      const cartItemObj = {
+        productId:     item.productId,
+        name:          item.name,
+        description:   item.description,
+        price:         item.price,
+        thumbnail:     item.thumbnail,
+        catalogNumber: item.catalogNumber,
+        quantity:      item.quantity,
+        country:       item.category,
+        units:         item.units
+       };
+      return this.http.put<CartItem>(`http://localhost:3000/api/cart/item/${item.id}`,
+      {
+        ...cartItemObj
+      }).
+      pipe(tap(updatedCartItem => {
+          return updatedCartItem;
+        }));
+    }
+
     deleteCart(id: string) {
       return this.http.delete(`http://localhost:3000/api/cart/cart/${id}`).
+      pipe(
+        tap(resData => {
+          return resData;
+        }));
+    }
+
+    deleteCartItem(id: string) {
+      return this.http.delete(`http://localhost:3000/api/cart/item/${id}`).
       pipe(
         tap(resData => {
           return resData;

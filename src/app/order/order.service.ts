@@ -52,13 +52,17 @@ export class OrderService {
 
     updateOrder(order: Order) {
       const orderObj = {
-        date:            order.date,
-        note:            order.note,
-        totalPayment:    order.totalPayment,
-        receivedPayment: order.receivedPayment,
-        customer:        order.customer,
-        address:        order.address,
-        items:           order.items,
+        date:                 order.date,
+        note:                 order.note,
+        delivery:             order.delivery,
+        couponCode:           order.couponCode,
+        discount:             order.discount,
+        totalPayment:         order.totalPayment,
+        receivedPayment:      order.receivedPayment,
+        confirmPaymentNumber: order.confirmPaymentNumber,
+        customer:             order.customer,
+        address:              order.address,
+        items:                order.items,
         };
       return this.http.put<Order>(`http://localhost:3000/api/order/order/${order.id}`,
       {

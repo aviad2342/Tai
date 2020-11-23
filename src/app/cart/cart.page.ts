@@ -1,7 +1,9 @@
+import { DecimalPipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, IonItemSliding, NavController } from '@ionic/angular';
 import { range } from 'rxjs';
+import { AppService } from '../app.service';
 import { CartItem } from '../store/item.model';
 import { Cart } from './cart.model';
 import { CartService } from './cart.service';
@@ -20,8 +22,11 @@ export class CartPage implements OnInit {
   bla: HTMLAllCollection;
   summaryItems = 0;
   shippingCost = 0;
-  discount = 0;
+  couponCode = '';
+  discountRate  = 0;
+  discount = 0.000;
   summaryOrder = 0;
+  haveDiscount = false;
   units: number[] = [1,2,3,4,5,6,7,8,9,10];
   itemUnitsSelectOptions = {
     cssClass: 'select-units-style',
@@ -32,7 +37,7 @@ export class CartPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private alertController: AlertController,
-    private navController: NavController
+    public appService: AppService
   ) {}
 
   ngOnInit() {
@@ -71,13 +76,26 @@ export class CartPage implements OnInit {
     return;
   }
   onItemQuantityChange(num: number, item: CartItem) {
-    // const val = event.target.value;
     item.units = num;
-    this.updateTotalOrder();
+    this.cartService.updateCartItem(item).subscribe(() => {
+      this.updateTotalOrder();
+    });
   }
 
   onRemoveItem(item: CartItem) {
-    this.cart.items.splice(this.cart.items.indexOf(item), 1);
+    this.cartService.deleteCartItem(item.id).subscribe(() => {
+      this.cart.items.splice(this.cart.items.indexOf(item), 1);
+    this.updateTotalOrder();
+    }, error => {
+      this.appService.presentToast('חלה תקלה לא ניתן למחוק את המוצר! נסה שנית מאוחר יותר', false);
+    });
+  }
+
+  onAddCoupon() {
+    console.log(this.couponCode);
+    this.discountRate = (30/100);
+    this.discount = (this.cart.items[0].price * this.discountRate);
+    this.haveDiscount = true;
     this.updateTotalOrder();
   }
 
@@ -92,7 +110,7 @@ export class CartPage implements OnInit {
       return sum + (current.price * current.units);
     }, 0);
 
-    this.summaryOrder = this.summaryItems + this.shippingCost;
+    this.summaryOrder = (this.summaryItems + this.shippingCost) - this.discount;
   }
 
 }
