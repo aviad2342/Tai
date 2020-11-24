@@ -53,3 +53,32 @@ export class CartItem extends Item {
     }
 
   }
+
+  export class OrderItem extends Item {
+
+    constructor(
+     public id: string,
+     public productId: string,
+     public name: string,
+     public description: string,
+     public price: number,
+     public thumbnail: string,
+     public catalogNumber: string,
+     public quantity: number,
+     public category: string,
+     public units?: number,
+     public order?: string,
+     ) {
+        super(
+         id,
+         productId,
+         name,
+         description,
+         price,
+         thumbnail,
+         catalogNumber,
+         quantity,
+         category
+       );
+     }
+   }

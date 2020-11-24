@@ -48,7 +48,7 @@ const routes: Routes = [
     loadChildren: () => import('./customer/customer.module').then( m => m.CustomerPageModule)
   },
   {
-    path: 'order',
+    path: 'order/:id',
     loadChildren: () => import('./order/order.module').then( m => m.OrderPageModule)
   },
   {

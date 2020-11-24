@@ -52,6 +52,7 @@ export class OrderService {
 
     updateOrder(order: Order) {
       const orderObj = {
+        cartId:               order.cartId,
         date:                 order.date,
         note:                 order.note,
         delivery:             order.delivery,

@@ -4,6 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, IonItemSliding, NavController } from '@ionic/angular';
 import { range } from 'rxjs';
 import { AppService } from '../app.service';
+import { AuthService } from '../auth/auth.service';
+import { Order } from '../order/order.model';
+import { OrderService } from '../order/order.service';
+import { Coupon } from '../store/coupon.model';
+import { CouponService } from '../store/coupon.service';
 import { CartItem } from '../store/item.model';
 import { Cart } from './cart.model';
 import { CartService } from './cart.service';
@@ -19,10 +24,11 @@ export class CartPage implements OnInit {
   isLoading = false;
   @ViewChild('slidingItem') slidingItem: IonItemSliding;
   slidingItems: IonItemSliding[] = [];
-  bla: HTMLAllCollection;
+  coupon: Coupon;
   summaryItems = 0;
   shippingCost = 0;
   couponCode = '';
+  orderCouponCode = '';
   discountRate  = 0;
   discount = 0.000;
   summaryOrder = 0;
@@ -37,11 +43,13 @@ export class CartPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private alertController: AlertController,
+    private couponService: CouponService,
+    private orderService: OrderService,
+    private authService: AuthService,
     public appService: AppService
   ) {}
 
   ngOnInit() {
-    console.log(this.units);
     this.isLoading = true;
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
@@ -57,7 +65,7 @@ export class CartPage implements OnInit {
             this.alertController
               .create({
                 header: 'ישנה תקלה!',
-                message: 'לא ניתן להציג את המוצר.',
+                message: 'לא ניתן להציג את העגלה.',
                 buttons: [
                   {
                     text: 'אישור',
@@ -72,9 +80,7 @@ export class CartPage implements OnInit {
         );
     });
   }
-  onk() {
-    return;
-  }
+
   onItemQuantityChange(num: number, item: CartItem) {
     item.units = num;
     this.cartService.updateCartItem(item).subscribe(() => {
@@ -92,18 +98,77 @@ export class CartPage implements OnInit {
   }
 
   onAddCoupon() {
-    console.log(this.couponCode);
-    this.discountRate = (30/100);
-    this.discount = (this.cart.items[0].price * this.discountRate);
-    this.haveDiscount = true;
-    this.updateTotalOrder();
+    this.couponService.getCoupon(this.couponCode).subscribe(coupon => {
+      if(coupon) {
+        this.coupon = coupon;
+        if(coupon.customers.includes(this.authService.getLoggedUserId())) {
+          this.appService.presentToast('הקופון נוצל בעבר!', false);
+          this.couponCode = '';
+          return;
+        }
+        if(coupon.expirationDate < new Date()) {
+          this.appService.presentToast('פג תוקופו של קופון זה!', false);
+          this.couponCode = '';
+          return;
+        }
+        if(coupon.singleItem) {
+          this.discountRate = (coupon.discount/100);
+          if(!this.cart.items.find(i => i.productId === coupon.itemId)) {
+            this.appService.presentToast('קופון זה אינו תואם למוצרים בעגלה!', false);
+            this.couponCode = '';
+            return;
+          }
+          this.discount = (this.cart.items.find(i => i.productId === coupon.itemId).price * this.discountRate);
+          this.haveDiscount = true;
+          this.updateTotalOrder();
+          this.appService.presentToast('הקופון נוסף בהצלחה', true);
+          this.orderCouponCode = this.couponCode;
+          this.couponCode = '';
+        } else {
+          this.discountRate = (coupon.discount/100);
+          this.discount = (this.summaryOrder * this.discountRate);
+          this.haveDiscount = true;
+          this.updateTotalOrder();
+          this.appService.presentToast('הקופון נוסף בהצלחה', true);
+          this.orderCouponCode = this.couponCode;
+          this.couponCode = '';
+        }
+      } else {
+        this.appService.presentToast('קוד קופון שגוי!', false);
+        this.couponCode = '';
+          return;
+      }
+    }, error => {
+      this.appService.presentToast('חלה תקלה לא ניתן לאמת את קוד הקפון כרגע. אנא נסו שנית מאוחר יותר.', false);
+    });
   }
 
   onEditItems() {
 
   }
 
-  onDoneAdding() {}
+  onMoveToPayment() {
+    const newOrder = new Order(
+      null,
+      this.cart.id,
+      new Date(),
+      '',
+      this.shippingCost,
+      this.orderCouponCode,
+      this.discount,
+      this.summaryOrder,
+      false,
+      '',
+      this.cart.customer,
+      null,
+      this.cart.items
+    );
+    this.orderService.addOrder(newOrder).subscribe(order => {
+      this.router.navigate(['/', 'order', order.id]);
+    }, error => {
+      this.appService.presentToast('חלה תקלה לא ניתן לבצע את ההזמנה כרגע. אנא נסו שנית מאוחר יותר.', false);
+    });
+  }
 
   updateTotalOrder() {
     this.summaryItems = this.cart.items.reduce((sum, current) => {
