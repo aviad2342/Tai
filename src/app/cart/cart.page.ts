@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, IonItemSliding, NavController } from '@ionic/angular';
 import { range } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { AppService } from '../app.service';
 import { AuthService } from '../auth/auth.service';
 import { Order } from '../order/order.model';
@@ -148,26 +149,51 @@ export class CartPage implements OnInit {
   }
 
   onMoveToPayment() {
-    const newOrder = new Order(
-      null,
-      this.cart.id,
-      new Date(),
-      '',
-      this.shippingCost,
-      this.orderCouponCode,
-      this.discount,
-      this.summaryOrder,
-      false,
-      '',
-      this.cart.customer,
-      null,
-      this.cart.items
-    );
-    this.orderService.addOrder(newOrder).subscribe(order => {
-      this.router.navigate(['/', 'order', order.id]);
-    }, error => {
-      this.appService.presentToast('חלה תקלה לא ניתן לבצע את ההזמנה כרגע. אנא נסו שנית מאוחר יותר.', false);
-    });
+    if(this.cart.orderId && this.cart.orderId !== null && this.cart.orderId.length > 0 ) {
+      this.orderService.getOrder(this.cart.orderId)
+      .pipe(
+        switchMap(order => {
+        const orderToUpdate = new Order(
+          order.id,
+          order.cartId,
+          new Date(),
+          order.note,
+          this.shippingCost,
+          this.orderCouponCode,
+          this.summaryOrder,
+          order.receivedPayment,
+          order.confirmPaymentNumber,
+          order.customer,
+          order.address,
+          this.cart.items
+        );
+        return this.orderService.updateOrder(orderToUpdate);
+      })).subscribe(updateedOrder => {
+        this.router.navigate(['/', 'order', updateedOrder.id]);
+      }, error => {
+        this.appService.presentToast('חלה תקלה לא ניתן לבצע את ההזמנה כרגע. אנא נסו שנית מאוחר יותר.', false);
+      });
+    } else {
+      const newOrder = new Order(
+        null,
+        this.cart.id,
+        new Date(),
+        '',
+        this.shippingCost,
+        this.orderCouponCode,
+        this.summaryOrder,
+        false,
+        '',
+        this.cart.customer,
+        null,
+        this.cart.items
+      );
+      this.orderService.addOrder(newOrder).subscribe(order => {
+        this.router.navigate(['/', 'order', order.id]);
+      }, error => {
+        this.appService.presentToast('חלה תקלה לא ניתן לבצע את ההזמנה כרגע. אנא נסו שנית מאוחר יותר.', false);
+      });
+    }
   }
 
   updateTotalOrder() {

@@ -57,7 +57,6 @@ export class OrderService {
         note:                 order.note,
         delivery:             order.delivery,
         couponCode:           order.couponCode,
-        discount:             order.discount,
         totalPayment:         order.totalPayment,
         receivedPayment:      order.receivedPayment,
         confirmPaymentNumber: order.confirmPaymentNumber,

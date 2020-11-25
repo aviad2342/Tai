@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { AppService } from '../app.service';
 import { AuthService } from '../auth/auth.service';
 import { CartService } from '../cart/cart.service';
+import { Coupon } from '../store/coupon.model';
 import { CouponService } from '../store/coupon.service';
 import { Order } from './order.model';
 import { OrderService } from './order.service';
@@ -16,6 +17,9 @@ import { OrderService } from './order.service';
 export class OrderPage implements OnInit {
 
   order: Order;
+  coupon: Coupon;
+  discountRate  = 0;
+  discount = 0.000;
   isLoading = false;
 
   constructor(
@@ -38,7 +42,16 @@ export class OrderPage implements OnInit {
       }
       this.orderService.getOrder(paramMap.get('id')).subscribe(order => {
             this.order = order;
-            this.isLoading = false;
+            if(order.couponCode.length > 0) {
+              this.couponService.getCoupon(order.couponCode).subscribe(coupon => {
+                this.coupon = coupon;
+                this.discountRate = (coupon.discount/100);
+                this.discount = (order.totalPayment * this.discountRate);
+                this.isLoading = false;
+              });
+            } else {
+              this.isLoading = false;
+            }
           },
           error => {
             this.alertController

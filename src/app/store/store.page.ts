@@ -104,7 +104,7 @@ export class StorePage implements OnInit, OnDestroy {
         this.itemsAddedToCart = cart.items.length;
       } else {
         this.authService.getUserLogged().subscribe(user => {
-          this.cart = new Cart(null, user, []);
+          this.cart = new Cart(null, user, [], null);
         });
       }
     });
