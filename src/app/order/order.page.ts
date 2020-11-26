@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { AppService } from '../app.service';
 import { AuthService } from '../auth/auth.service';
 import { CartService } from '../cart/cart.service';
+import { DeliveryAddress } from '../shared/address.model';
 import { Coupon } from '../store/coupon.model';
 import { CouponService } from '../store/coupon.service';
 import { Order } from './order.model';
@@ -18,8 +19,12 @@ export class OrderPage implements OnInit {
 
   order: Order;
   coupon: Coupon;
+  address: DeliveryAddress = new DeliveryAddress();
+  addressIsValid = false;
+  openAddressPicker = false;
   discountRate  = 0;
   discount = 0.000;
+  summaryItems = 0;
   isLoading = false;
 
   constructor(
@@ -46,10 +51,18 @@ export class OrderPage implements OnInit {
               this.couponService.getCoupon(order.couponCode).subscribe(coupon => {
                 this.coupon = coupon;
                 this.discountRate = (coupon.discount/100);
-                this.discount = (order.totalPayment * this.discountRate);
-                this.isLoading = false;
+                if(coupon.singleItem) {
+                  this.discount = (this.order.items.find(i => i.productId === coupon.itemId).price * this.discountRate);
+                  this.updateTotalOrder();
+                  this.isLoading = false;
+                } else {
+                  this.discount = ((this.order.totalItems + this.order.delivery) * this.discountRate);
+                  this.updateTotalOrder();
+                  this.isLoading = false;
+                }
               });
             } else {
+              this.updateTotalOrder();
               this.isLoading = false;
             }
           },
@@ -71,6 +84,22 @@ export class OrderPage implements OnInit {
           }
         );
     });
+  }
+
+  onAddressPicked(address: DeliveryAddress) {
+    this.address = address;
+  }
+
+  onAddressIsValid(isValid: boolean) {
+    this.addressIsValid = isValid;
+  }
+
+  onToggleAddressPicker() {
+    this.openAddressPicker  = this.openAddressPicker ? false : true;
+  }
+
+  updateTotalOrder() {
+    this.order.totalPayment = (this.order.totalItems + this.order.delivery) - this.discount;
   }
 
 }

@@ -160,6 +160,7 @@ export class CartPage implements OnInit {
           order.note,
           this.shippingCost,
           this.orderCouponCode,
+          this.summaryItems,
           this.summaryOrder,
           order.receivedPayment,
           order.confirmPaymentNumber,
@@ -181,6 +182,7 @@ export class CartPage implements OnInit {
         '',
         this.shippingCost,
         this.orderCouponCode,
+        this.summaryItems,
         this.summaryOrder,
         false,
         '',
@@ -189,6 +191,8 @@ export class CartPage implements OnInit {
         this.cart.items
       );
       this.orderService.addOrder(newOrder).subscribe(order => {
+        this.cart.orderId = order.id;
+        this.cartService.updateCart(this.cart).subscribe();
         this.router.navigate(['/', 'order', order.id]);
       }, error => {
         this.appService.presentToast('חלה תקלה לא ניתן לבצע את ההזמנה כרגע. אנא נסו שנית מאוחר יותר.', false);

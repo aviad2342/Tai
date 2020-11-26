@@ -11,6 +11,7 @@ export class Order {
       public note: string,
       public delivery: number,
       public couponCode: string,
+      public totalItems: number,
       public totalPayment: number,
       public receivedPayment: boolean,
       public confirmPaymentNumber: string,

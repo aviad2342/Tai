@@ -64,5 +64,38 @@
       </ion-col>
     </ion-row>
 
+
+    <ion-row class="ion-no-padding ion-justify-content-center" *ngIf="!isLoading">
+      <ion-col class="button tappable ion-text-right align-self-center category-title">
+        <ion-label>כתובת למשלוח:</ion-label>
+        <ion-button>
+          <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding" [ngClass]="{'address-open': openAddressPicker, 'address-clos': !openAddressPicker}" *ngIf="!isLoading">
+      <ion-col size="auto" class="address-details-picker">
+        <app-address-details-picker class="address-details-picker" (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)"></app-address-details-picker>
+      </ion-col>
+      <ion-col>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding ion-justify-content-center" *ngIf="!isLoading">
+      <ion-col class="button tappable ion-text-right align-self-center category-title">אמצעי תשלום:</ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding" *ngIf="!isLoading">
+      <ion-col size="auto">
+        <ion-button (click)="onToggleAddressPicker()">
+          <ion-label>כתובת למשלוח:</ion-label>
+          <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+      </ion-col>
+    </ion-row>
+
   </ion-grid>
 </ion-content>

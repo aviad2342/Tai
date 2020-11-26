@@ -9,3 +9,24 @@
     border-bottom: 1px dotted black;
     top: -8px;
 }
+
+.address-details-picker {
+    transition: 5.5s;
+    animation: forwards;
+}
+
+.base-class {
+    -webkit-transition: all 3s;
+    transition: all 3s;
+}
+
+.address-clos {
+    -webkit-transition: all 3s;
+    transition: all 3s;
+    display: none;
+}
+
+.address-open {
+    -webkit-transition: all 3s;
+    transition: all 3s;
+}

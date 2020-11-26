@@ -34,20 +34,13 @@ export class OrderService {
     }
 
     addOrder(order: Order) {
-      return this.http.post<{id: string}>('http://localhost:3000/api/order/order',
+      return this.http.post<Order>('http://localhost:3000/api/order/order',
       {
         ...order
       }).
-      pipe(
-        switchMap(resData => {
-          order.id = resData.id;
-          return this.orders;
-        }),
-        take(1),
-        switchMap(orders => {
-          this._orders.next(orders.concat(order));
-          return this.getOrder(order.id);
-        }));
+      pipe(tap(newOrder => {
+        return newOrder;
+      }));
     }
 
     updateOrder(order: Order) {
@@ -57,6 +50,7 @@ export class OrderService {
         note:                 order.note,
         delivery:             order.delivery,
         couponCode:           order.couponCode,
+        totalItems:           order.totalItems,
         totalPayment:         order.totalPayment,
         receivedPayment:      order.receivedPayment,
         confirmPaymentNumber: order.confirmPaymentNumber,
@@ -68,9 +62,8 @@ export class OrderService {
       {
         ...orderObj
       }).
-      pipe(tap(updatedItem => {
-          this.getOrders();
-          return updatedItem;
+      pipe(tap(updatedOrder => {
+          return updatedOrder;
         }));
     }
 

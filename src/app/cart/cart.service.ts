@@ -64,7 +64,8 @@ export class CartService {
     updateCart(cart: Cart) {
       const cartObj = {
         customer: cart.customer,
-        items:    cart.items
+        items:    cart.items,
+        orderId: cart.orderId,
         };
       return this.http.put<Cart>(`http://localhost:3000/api/cart/cart/${cart.id}`,
       {
