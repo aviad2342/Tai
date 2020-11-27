@@ -1,6 +1,8 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, AnimationController } from '@ionic/angular';
 import { AppService } from '../app.service';
 import { AuthService } from '../auth/auth.service';
 import { CartService } from '../cart/cart.service';
@@ -13,6 +15,14 @@ import { OrderService } from './order.service';
 @Component({
   selector: 'app-order',
   templateUrl: './order.page.html',
+  animations: [
+    trigger('visibilityChanged', [
+      state('shown', style({ opacity: 1 })),
+      state('hidden', style({ opacity: 0 })),
+      transition('hidden => shown', animate('1s ease-in')),
+      transition('shown => hidden', animate('1s ease-out'))
+    ])
+  ],
   styleUrls: ['./order.page.scss'],
 })
 export class OrderPage implements OnInit {
@@ -22,10 +32,13 @@ export class OrderPage implements OnInit {
   address: DeliveryAddress = new DeliveryAddress();
   addressIsValid = false;
   openAddressPicker = false;
+  openPaymentDetails = false;
   discountRate  = 0;
   discount = 0.000;
   summaryItems = 0;
   isLoading = false;
+  addressPickerState = 'hidden';
+  paymentDetailsState = 'hidden';
 
   constructor(
     private cartService: CartService,
@@ -35,7 +48,8 @@ export class OrderPage implements OnInit {
     private couponService: CouponService,
     private orderService: OrderService,
     private authService: AuthService,
-    public appService: AppService
+    public appService: AppService,
+    public animationController: AnimationController
   ) {}
 
   ngOnInit() {
@@ -95,7 +109,46 @@ export class OrderPage implements OnInit {
   }
 
   onToggleAddressPicker() {
-    this.openAddressPicker  = this.openAddressPicker ? false : true;
+    // this.openAddressPicker  = this.openAddressPicker ? false : true;
+    this.openAddressPicker  = !this.openAddressPicker;
+    this.addressPickerState = this.openAddressPicker ? 'shown' : 'hidden';
+  }
+
+  onTogglePaymentDetails() {
+    // this.openAddressPicker  = this.openAddressPicker ? false : true;
+    this.openPaymentDetails  = !this.openPaymentDetails;
+    this.paymentDetailsState = this.openPaymentDetails ? 'shown' : 'hidden';
+  }
+
+  onSubmit(form: NgForm) {
+    // form.value.image = this.file;
+    // if (!form.valid || !this.form.value.image) {
+    //   this.onEmptyExit();
+    //   return;
+    // }
+    // this.eventService.uploadParticipantPicture(this.form.value.image, 'Participant')
+    // .pipe(
+    //   switchMap(uploadRes => {
+    //   const participantToAdd = new Participant(
+    //     uuidv4(),
+    //     form.value.firstName,
+    //     form.value.lastName,
+    //     form.value.phone,
+    //     form.value.email,
+    //     uploadRes.imageUrl,
+    //     this.eventId
+    //   );
+    //   return this.eventService.addParticipant(participantToAdd);
+    // })).subscribe(participant => {
+    //   this.participants.push(participant);
+    //   form.reset();
+    //   this.appService.presentToast('הנואם נשמר בהצלחה', true);
+    //   this.close(this.participants);
+    // }, error => {
+    //   form.reset();
+    //   this.appService.presentToast('חלה תקלה פרטי הנואם לא נשמרו', false);
+    //   this.close(null);
+    // } );
   }
 
   updateTotalOrder() {

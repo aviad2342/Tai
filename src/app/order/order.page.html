@@ -66,34 +66,138 @@
 
 
     <ion-row class="ion-no-padding ion-justify-content-center" *ngIf="!isLoading">
-      <ion-col class="button tappable ion-text-right align-self-center category-title">
+      <ion-col class="button tappable align-self-center category-title">
         <ion-label>כתובת למשלוח:</ion-label>
-        <ion-button>
-          <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+        <ion-button class="expand-btn ion-no-margin" color="dark" expand="undefined" size="small" fill="clear" shape="round" (click)="onToggleAddressPicker()">
+          <ion-icon slot="icon-only" [name]="openAddressPicker ? 'caret-down-outline' : 'caret-back-outline'"></ion-icon>
         </ion-button>
       </ion-col>
     </ion-row>
-
-    <ion-row class="ion-no-padding" [ngClass]="{'address-open': openAddressPicker, 'address-clos': !openAddressPicker}" *ngIf="!isLoading">
-      <ion-col size="auto" class="address-details-picker">
-        <app-address-details-picker class="address-details-picker" (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)"></app-address-details-picker>
-      </ion-col>
-      <ion-col>
+    <!-- [ngClass]="{'address-open': openAddressPicker, 'address-clos': !openAddressPicker}" -->
+    <ion-row class="ion-no-padding" [@visibilityChanged]="openAddressPicker" *ngIf="!isLoading && openAddressPicker">
+      <ion-col size="auto">
+        <app-address-details-picker (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)"></app-address-details-picker>
       </ion-col>
     </ion-row>
 
     <ion-row class="ion-no-padding ion-justify-content-center" *ngIf="!isLoading">
-      <ion-col class="button tappable ion-text-right align-self-center category-title">אמצעי תשלום:</ion-col>
-    </ion-row>
-
-    <ion-row class="ion-no-padding" *ngIf="!isLoading">
-      <ion-col size="auto">
-        <ion-button (click)="onToggleAddressPicker()">
-          <ion-label>כתובת למשלוח:</ion-label>
-          <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+      <ion-col class="button tappable align-self-center category-title">
+        <ion-label>אמצעי תשלום:</ion-label>
+        <ion-button class="expand-btn ion-no-margin" color="dark" expand="undefined" size="small" fill="clear" shape="round" (click)="onTogglePaymentDetails()">
+          <ion-icon slot="icon-only" [name]="openPaymentDetails ? 'caret-down-outline' : 'caret-back-outline'"></ion-icon>
         </ion-button>
       </ion-col>
-      <ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding" [@visibilityChanged]="openPaymentDetails" *ngIf="!isLoading && openPaymentDetails">
+      <ion-col size="auto">
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+          <ion-grid [fixed]="true">
+
+            <ion-row class="ion-justify-content-center">
+              <ion-col>
+                <ion-input 
+                placeholder="שם בעל הכרטיס"
+                class="item-border-input ion-no-padding"
+                type="text" 
+                name="cardOwnerName"
+                ngModel
+                #houseNumberCtrl="ngModel"
+                required 
+              >
+              </ion-input>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="ion-justify-content-center">
+              <ion-col>
+                <ion-input 
+                placeholder="ת'ז בעל הכרטיס"
+                class="item-border-input ion-no-padding"
+                type="text" 
+                name="cardOwnerId"
+                ngModel
+                #houseNumberCtrl="ngModel"
+                required 
+              >
+              </ion-input>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="ion-justify-content-center">
+              <ion-col>
+                <ion-input 
+                placeholder="מספר כרטיס"
+                class="item-border-input ion-no-padding"
+                name="cardNumber"
+                type="text" 
+                ngModel
+                #houseNumberCtrl="ngModel"
+                required 
+              >
+              </ion-input>
+              </ion-col>
+            </ion-row>
+  
+    
+            <ion-row class="ion-justify-content-center">
+              <ion-col>
+                <ion-input 
+                placeholder="חודש"
+                class="item-border-input ion-no-padding"
+                name="cardMmonth"
+                type="text" 
+                ngModel
+                #houseNumberCtrl="ngModel"
+                required 
+              >
+              </ion-input>
+              </ion-col>
+          
+              <ion-col>
+                <ion-input 
+                placeholder="שנה"
+                class="item-border-input ion-no-padding"
+                type="text" 
+                name="cardYear"
+                ngModel
+                #houseNumberCtrl="ngModel"
+                required 
+              >
+              </ion-input>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="ion-justify-content-center"> 
+              <ion-col>
+                <ion-input 
+                placeholder="cvv"
+                class="item-border-input ion-no-padding"
+                type="text" 
+                name="cardCvv"
+                ngModel
+                #houseNumberCtrl="ngModel"
+                required 
+              >
+              </ion-input>
+              </ion-col>
+            </ion-row>
+  
+            <ion-row class="ion-justify-content-center">
+              <ion-col>
+                <ion-button
+                  type="submit"
+                  color="primary"
+                  fill="outline"
+                  expand="block"
+                  [disabled]="!f.valid"
+                >
+                בצע תשלום
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </form>
       </ion-col>
     </ion-row>
 

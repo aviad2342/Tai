@@ -29,13 +29,13 @@ export class DeliveryAddress extends Address {
   public houseNumber: string;
   public apartment: string;
   public entry: string;
-  public zipCode: string;
+  public zipCode?: string;
 
   constructor() {
     super();
   }
 
-  setDeliveryAddress(country: string, city: string, street: string, houseNumber: string, apartment: string, entry: string, zipCode: string)
+  setDeliveryAddress(country: string, city: string, street: string, houseNumber: string, apartment: string, entry: string, zipCode = '')
    {
     this.country = country;
     this.city = city;

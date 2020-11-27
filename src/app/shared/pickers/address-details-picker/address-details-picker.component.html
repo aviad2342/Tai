@@ -4,7 +4,7 @@
     <ion-col>
       <ejs-autocomplete 
       #cityInput
-      class="city-input"
+      class="city-input ion-no-padding"
       id="atcelement" 
       FilterType="StartsWith"
       enableRtl="true"
@@ -22,7 +22,7 @@
       <ejs-autocomplete 
       [enabled]="enableStreetPicker"
       #streetInput
-      class="city-input"
+      class="city-input ion-no-padding"
       id="atcelement" 
       FilterType="StartsWith"
       enableRtl="true"
@@ -41,7 +41,7 @@
       <ion-input 
       [disabled]="disableHouseNumberPicker"
       placeholder="בחר מספר בית"
-      class="item-border-input"
+      class="item-border-input ion-no-padding"
       #houseNumberComponent 
       type="number" 
       [(ngModel)]="this.selectedAddress.houseNumber" 
@@ -55,7 +55,7 @@
       <ion-input 
       [disabled]="disableHouseNumberPicker"
       placeholder="בחר מספר דירה"
-      class="item-border-input"
+      class="item-border-input ion-no-padding"
       #apartmentComponent 
       type="number" 
       [(ngModel)]="this.selectedAddress.apartment" 
@@ -69,7 +69,7 @@
       <ion-input 
       [disabled]="disableHouseNumberPicker"
       placeholder="כניסה"
-      class="item-border-input"
+      class="item-border-input ion-no-padding"
       #entryComponent 
       type="text" 
       [(ngModel)]="this.selectedAddress.entry" 

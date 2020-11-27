@@ -3,6 +3,8 @@
     font-size: larger;
     font-weight: bolder;
     background-color: rgb(223, 223, 223);
+    border-radius: 16px;
+    border: 1px solid rgb(223, 223, 223);
 }
 
 .dotted-border-bottom {
@@ -29,4 +31,15 @@
 .address-open {
     -webkit-transition: all 3s;
     transition: all 3s;
+}
+
+.expand-btn {
+    vertical-align: middle;
+    float: left;
+}
+
+.item-border-input {
+    border: 1px solid black;
+    border-radius: 7px;
+    padding: 6px !important;
 }
