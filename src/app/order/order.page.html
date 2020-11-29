@@ -65,7 +65,7 @@
     </ion-row>
 
 
-    <ion-row class="ion-no-padding ion-justify-content-center" *ngIf="!isLoading">
+    <ion-row class="ion-no-padding ion-justify-content-center" (click)="onToggleAddressPicker()" *ngIf="!isLoading">
       <ion-col class="button tappable align-self-center category-title">
         <ion-label>כתובת למשלוח:</ion-label>
         <ion-button class="expand-btn ion-no-margin" color="dark" expand="undefined" size="small" fill="clear" shape="round" (click)="onToggleAddressPicker()">
@@ -75,12 +75,16 @@
     </ion-row>
     <!-- [ngClass]="{'address-open': openAddressPicker, 'address-clos': !openAddressPicker}" -->
     <ion-row class="ion-no-padding" [@visibilityChanged]="openAddressPicker" *ngIf="!isLoading && openAddressPicker">
-      <ion-col size="auto">
+      <ion-col size="12" size-xl="5" size-lg="5" size-md="5" size-sm="4">
         <app-address-details-picker (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)"></app-address-details-picker>
+      </ion-col>
+
+      <ion-col size="12" size-xl="5" size-lg="5" size-md="5" size-sm="4">
+    
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-no-padding ion-justify-content-center" *ngIf="!isLoading">
+    <ion-row class="ion-no-padding ion-justify-content-center" (click)="onTogglePaymentDetails()" *ngIf="!isLoading">
       <ion-col class="button tappable align-self-center category-title">
         <ion-label>אמצעי תשלום:</ion-label>
         <ion-button class="expand-btn ion-no-margin" color="dark" expand="undefined" size="small" fill="clear" shape="round" (click)="onTogglePaymentDetails()">
@@ -94,45 +98,53 @@
         <form #f="ngForm" (ngSubmit)="onSubmit(f)">
           <ion-grid [fixed]="true">
 
-            <ion-row class="ion-justify-content-center">
-              <ion-col>
+            <ion-row>
+              <ion-col size="12" size-xl="5" size-lg="5" size-md="5" size-sm="4">
                 <ion-input 
+                enterkeyhint="next"
                 placeholder="שם בעל הכרטיס"
                 class="item-border-input ion-no-padding"
                 type="text" 
                 name="cardOwnerName"
                 ngModel
-                #houseNumberCtrl="ngModel"
+                #cardOwnerNameCtrl="ngModel"
                 required 
               >
               </ion-input>
               </ion-col>
             </ion-row>
 
-            <ion-row class="ion-justify-content-center">
-              <ion-col>
+            <ion-row>
+              <ion-col size="12" size-xl="5" size-lg="5" size-md="5" size-sm="4">
                 <ion-input 
+                enterkeyhint="next"
                 placeholder="ת'ז בעל הכרטיס"
                 class="item-border-input ion-no-padding"
-                type="text" 
+                type="tel"
+                inputmode="numeric" 
+                maxlength="9"
+                min="9"
+                pattern="[0–9]*"
                 name="cardOwnerId"
                 ngModel
-                #houseNumberCtrl="ngModel"
+                #cardOwnerIdCtrl="ngModel"
                 required 
               >
               </ion-input>
               </ion-col>
             </ion-row>
 
-            <ion-row class="ion-justify-content-center">
-              <ion-col>
+            <ion-row>
+              <ion-col size="12" size-xl="5" size-lg="5" size-md="5" size-sm="4">
                 <ion-input 
+                enterkeyhint="next"
                 placeholder="מספר כרטיס"
                 class="item-border-input ion-no-padding"
                 name="cardNumber"
                 type="text" 
+                maxlength="16"
                 ngModel
-                #houseNumberCtrl="ngModel"
+                #cardNumberCtrl="ngModel"
                 required 
               >
               </ion-input>
@@ -140,22 +152,11 @@
             </ion-row>
   
     
-            <ion-row class="ion-justify-content-center">
-              <ion-col>
-                <ion-input 
-                placeholder="חודש"
-                class="item-border-input ion-no-padding"
-                name="cardMmonth"
-                type="text" 
-                ngModel
-                #houseNumberCtrl="ngModel"
-                required 
-              >
-              </ion-input>
-              </ion-col>
-          
-              <ion-col>
-                <ion-input 
+            <ion-row>
+
+              <ion-col size="12" size-xl="1" size-lg="2" size-md="2" size-sm="1" size-xs="4">
+                <!-- <ion-input 
+                enterkeyhint="next"
                 placeholder="שנה"
                 class="item-border-input ion-no-padding"
                 type="text" 
@@ -164,13 +165,58 @@
                 #houseNumberCtrl="ngModel"
                 required 
               >
-              </ion-input>
+              </ion-input> -->
+              <ion-datetime
+                  placeholder="שנה"
+                  display-format="YYYY"
+                  pickerFormat="YYYY"
+                  ngModel
+                  max="2025-01-01"
+                  [min]="now"
+                  class="item-border-input ion-no-padding"
+                  doneText="אישור"
+                  cancelText="ביטול"
+                  mode="ios"
+                  name="cardYear"
+                  value="string"
+                  required
+                  #cardYearCtrl="ngModel"
+                ></ion-datetime>
               </ion-col>
-            </ion-row>
 
-            <ion-row class="ion-justify-content-center"> 
-              <ion-col>
+              <ion-label class="date-separator-label">/</ion-label>
+
+              <ion-col size="12" size-xl="1" size-lg="2" size-md="2" size-sm="1" size-xs="4">
+                <!-- <ion-input 
+                enterkeyhint="next"
+                placeholder="חודש"
+                class="item-border-input ion-no-padding"
+                name="cardMmonth"
+                type="text" 
+                ngModel
+                #houseNumberCtrl="ngModel"
+                required 
+              >
+              </ion-input> -->
+              <ion-datetime
+                  placeholder="חודש"
+                  display-format="MM"
+                  pickerFormat="MM"
+                  ngModel
+                  class="item-border-input ion-no-padding"
+                  doneText="אישור"
+                  cancelText="ביטול"
+                  mode="ios"
+                  name="cardMmonth"
+                  value="string"
+                  required
+                  #cardMmonthCtrl="ngModel"
+                ></ion-datetime>
+              </ion-col>
+
+              <ion-col size="12" size-xl="1" size-lg="1" size-md="1" size-sm="1" size-xs="3.5">
                 <ion-input 
+                enterkeyhint="go"
                 placeholder="cvv"
                 class="item-border-input ion-no-padding"
                 type="text" 
@@ -181,8 +227,9 @@
               >
               </ion-input>
               </ion-col>
+
             </ion-row>
-  
+
             <ion-row class="ion-justify-content-center">
               <ion-col>
                 <ion-button
@@ -190,7 +237,7 @@
                   color="primary"
                   fill="outline"
                   expand="block"
-                  [disabled]="!f.valid"
+                  [disabled]="!f.valid || !addressIsValid"
                 >
                 בצע תשלום
                 </ion-button>

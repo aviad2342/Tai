@@ -31,14 +31,15 @@ export class OrderPage implements OnInit {
   coupon: Coupon;
   address: DeliveryAddress = new DeliveryAddress();
   addressIsValid = false;
-  openAddressPicker = false;
-  openPaymentDetails = false;
+  openAddressPicker = true;
+  openPaymentDetails = true;
   discountRate  = 0;
   discount = 0.000;
   summaryItems = 0;
   isLoading = false;
-  addressPickerState = 'hidden';
-  paymentDetailsState = 'hidden';
+  addressPickerState = 'shown';
+  paymentDetailsState = 'shown';
+  now = new Date().toISOString();
 
   constructor(
     private cartService: CartService,
@@ -121,34 +122,12 @@ export class OrderPage implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    // form.value.image = this.file;
-    // if (!form.valid || !this.form.value.image) {
-    //   this.onEmptyExit();
-    //   return;
-    // }
-    // this.eventService.uploadParticipantPicture(this.form.value.image, 'Participant')
-    // .pipe(
-    //   switchMap(uploadRes => {
-    //   const participantToAdd = new Participant(
-    //     uuidv4(),
-    //     form.value.firstName,
-    //     form.value.lastName,
-    //     form.value.phone,
-    //     form.value.email,
-    //     uploadRes.imageUrl,
-    //     this.eventId
-    //   );
-    //   return this.eventService.addParticipant(participantToAdd);
-    // })).subscribe(participant => {
-    //   this.participants.push(participant);
-    //   form.reset();
-    //   this.appService.presentToast('הנואם נשמר בהצלחה', true);
-    //   this.close(this.participants);
-    // }, error => {
-    //   form.reset();
-    //   this.appService.presentToast('חלה תקלה פרטי הנואם לא נשמרו', false);
-    //   this.close(null);
-    // } );
+    if (!form.valid || !this.addressIsValid) {
+      return;
+    }
+    console.log(new Date(form.value.cardYear).getFullYear().toString());
+    console.log(new Date(form.value.cardMmonth).getMonth().toString());
+
   }
 
   updateTotalOrder() {

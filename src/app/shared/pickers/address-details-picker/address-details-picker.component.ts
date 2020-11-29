@@ -170,7 +170,7 @@ async onSelecteApartment() {
         text: 'אישור',
         cssClass: 'house-number-picker-btn',
         handler: (value: any) => {
-          this.selectedAddress.houseNumber = value.Number.value;
+          this.selectedAddress.apartment = value.Number.value;
           this.selectedApartmentIndex = value.Number.value - 1;
           this.addressPicked.emit(this.selectedAddress);
         }
