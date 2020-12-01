@@ -93,7 +93,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-no-padding" [@visibilityChanged]="openPaymentDetails" *ngIf="!isLoading && openPaymentDetails">
+    <ion-row class="ion-no-padding" *ngIf="!isLoading && openPaymentDetails">
       <ion-col size="auto">
         <form #f="ngForm" (ngSubmit)="onSubmit(f)">
           <ion-grid [fixed]="true">
@@ -124,11 +124,12 @@
                 inputmode="numeric" 
                 maxlength="9"
                 min="9"
-                pattern="[0–9]*"
+                pattern="^\d{9}$"
                 name="cardOwnerId"
                 ngModel
                 #cardOwnerIdCtrl="ngModel"
                 required 
+                [ngClass]="{'item-border-input-error': cardOwnerIdCtrl.touched && !cardOwnerIdCtrl.valid}"
               >
               </ion-input>
               </ion-col>
@@ -143,9 +144,11 @@
                 name="cardNumber"
                 type="text" 
                 maxlength="16"
+                pattern="^\d{16}$"
                 ngModel
                 #cardNumberCtrl="ngModel"
                 required 
+                [ngClass]="{'item-border-input-error': cardNumberCtrl.touched && !cardNumberCtrl.valid}"
               >
               </ion-input>
               </ion-col>
@@ -207,10 +210,10 @@
                   doneText="אישור"
                   cancelText="ביטול"
                   mode="ios"
-                  name="cardMmonth"
+                  name="cardMonth"
                   value="string"
                   required
-                  #cardMmonthCtrl="ngModel"
+                  #cardMonthCtrl="ngModel"
                 ></ion-datetime>
               </ion-col>
 

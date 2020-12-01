@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { IonInput, IonSearchbar, PickerController } from '@ionic/angular';
 import { AutoCompleteComponent } from '@syncfusion/ej2-angular-dropdowns';
-import { Address } from '../../address.model';
+import { Address, DeliveryAddress } from '../../address.model';
 import { AddressService } from '../../address.service';
 import { Query, DataManager,Predicate } from '@syncfusion/ej2-data';
 import { Observable, Subscription } from 'rxjs';
@@ -25,7 +25,7 @@ export class AddressDetailsPickerComponent implements OnInit {
   @ViewChild('cityInput') cities: AutoCompleteComponent;
   @ViewChild('streetInput') streets: AutoCompleteComponent;
 
-  @Input() selectedAddress: Address = new Address();
+  @Input() selectedAddress: DeliveryAddress = new DeliveryAddress();
   @Input() isEdit = false;
 
   selectedHouseNumberIndex = 0;
@@ -139,6 +139,12 @@ async onSelecteHouseNumber() {
           this.selectedHouseNumberIndex = value.Number.value - 1;
           this.addressPicked.emit(this.selectedAddress);
           this.isValid.emit(true);
+          this.addressService.getZipCode(this.selectedAddress.city, this.selectedAddress.street, this.selectedAddress.houseNumber)
+          .subscribe(zipCode => {
+            console.log(zipCode);
+            this.selectedAddress.zipCode = zipCode;
+            this.addressPicked.emit(this.selectedAddress);
+          });
         }
       }
     ]

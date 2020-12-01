@@ -64,5 +64,14 @@ export class AddressService {
       }));
   }
 
+  getZipCode(city: string, street: string, house: string) {
+    return this.http.get<string>(
+      // tslint:disable-next-line: max-line-length
+      `https://www.israelpost.co.il/zip_data.nsf/SearchZip?OpenAgent&Location=${city}&Street=${street}&House=${house}`)
+      .pipe(tap(ZipCode => {
+        return ZipCode;
+      }));
+  }
+
 
 }

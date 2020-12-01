@@ -126,7 +126,7 @@ export class OrderPage implements OnInit {
       return;
     }
     console.log(new Date(form.value.cardYear).getFullYear().toString());
-    console.log(new Date(form.value.cardMmonth).getMonth().toString());
+    console.log((new Date(form.value.cardMonth).getMonth() + 1).toString());
 
   }
 
