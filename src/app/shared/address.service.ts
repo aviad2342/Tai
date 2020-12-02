@@ -3,6 +3,20 @@ import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 
+export interface Locations {
+  n: string;
+  id: string;
+  sym: string;
+}
+
+export interface CitiesLocations {
+  locations: Locations[];
+}
+
+export interface StreetsLocations {
+  streets: Locations[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -65,13 +79,51 @@ export class AddressService {
   }
 
   getZipCode(city: string, street: string, house: string) {
-    return this.http.get<string>(
+    return this.http.get(
       // tslint:disable-next-line: max-line-length
-      `https://www.israelpost.co.il/zip_data.nsf/SearchZip?OpenAgent&Location=${city}&Street=${street}&House=${house}`)
-      .pipe(tap(ZipCode => {
-        return ZipCode;
+      `https://www.israelpost.co.il/zip_data.nsf/SearchZip?OpenAgent&Location=${city}&Street=${street}&House=${house}`, {responseType: 'text'})
+      .pipe(tap(zipCode => {
+        return zipCode;
       }));
   }
 
+  // --------------------------------------------------- Israeli Post API ---------------------------------------------
+
+  getPostCitiesPrediction(city: string) {
+    return this.http.get<CitiesLocations>(
+      // tslint:disable-next-line: max-line-length
+      `https://www.israelpost.co.il/zip_data1.nsf/CreateLocationsforAutocompleteJSON?OpenAgent&callback=&StartsWith=${city}`)
+      .pipe(map(locations => {
+        const cities = locations.locations.map(item => {
+          return item.n;
+        });
+        return cities;
+      }));
+  }
+
+  getPostStreetsPrediction(city: string, street: string) {
+    return this.http.get<StreetsLocations>(
+      // tslint:disable-next-line: max-line-length
+      `https://www.israelpost.co.il/zip_data1.nsf/CreateStreetsforAutocompleteJSON?OpenAgent&callback=&Location=${city}&StartsWith=${street}`)
+      .pipe(map(locations => {
+        const streets = locations.streets.map(item => {
+          return item.n;
+        });
+        return streets;
+      }));
+  }
+
+  getPostZipCode(city: string, street: string, house: string, entrance: string) {
+    return this.http.get(
+      // tslint:disable-next-line: max-line-length
+      `https://www.israelpost.co.il/zip_data.nsf/SearchZip?OpenAgent&Location=${city}&Street=${street}&House=${house}&Entrance=${entrance}`, {responseType: 'text'})
+      .pipe(tap(zipCode => {
+        console.log(zipCode);
+        const html: HTMLElement = document.createElement('div');
+        html.innerHTML = zipCode;
+        console.log(html.innerText);
+        return zipCode;
+      }));
+  }
 
 }

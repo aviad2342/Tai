@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { PickerController } from '@ionic/angular';
 import { AutoCompleteComponent } from '@syncfusion/ej2-angular-dropdowns';
-import { Address, DeliveryAddress } from '../../address.model';
 import { AddressService } from '../../address.service';
+import { DeliveryAddress } from '../../address.model';
 
 export interface PickerColumnOption {
   text?: any;
@@ -10,14 +10,15 @@ export interface PickerColumnOption {
   selected?: boolean;
 }
 
-@Component({
-  selector: 'app-address-details-picker',
-  templateUrl: './address-details-picker.component.html',
-  styleUrls: ['./address-details-picker.component.scss'],
-})
-export class AddressDetailsPickerComponent implements OnInit {
 
-  @Output() addressPicked = new EventEmitter<Address>();
+@Component({
+  selector: 'app-address-finder',
+  templateUrl: './address-finder.component.html',
+  styleUrls: ['./address-finder.component.scss'],
+})
+export class AddressFinderComponent implements OnInit {
+
+  @Output() addressPicked = new EventEmitter<DeliveryAddress>();
   @Output() isValid = new EventEmitter<boolean>();
 
   @ViewChild('cityInput') cities: AutoCompleteComponent;
@@ -79,7 +80,7 @@ onFilteringCity(event) {
   this.resetAddress();
   this.cities.showSpinner();
   if(event.text !== '') {
-    this.addressService.getCitiesPrediction(event.text).subscribe(cities => {
+    this.addressService.getPostCitiesPrediction(event.text).subscribe(cities => {
       event.updateData(cities);
       this.cities.hideSpinner();
     });
@@ -95,7 +96,7 @@ onFilteringStreet(event) {
   this.resetHouseNumber();
   if(event.text !== '') {
     this.streets.showSpinner();
-    this.addressService.getStreetsPrediction( this.selectedAddress.city, event.text).subscribe(streets => {
+    this.addressService.getPostStreetsPrediction( this.selectedAddress.city, event.text).subscribe(streets => {
       event.updateData(streets);
       this.streets.hideSpinner();
     });
@@ -140,7 +141,6 @@ async onSelecteHouseNumber() {
           this.isValid.emit(true);
           this.addressService.getZipCode(this.selectedAddress.city, this.selectedAddress.street, this.selectedAddress.houseNumber)
           .subscribe(zipCode => {
-            console.log(zipCode);
             this.demo = zipCode;
             // this.selectedAddress.zipCode = zipCode;
             // this.addressPicked.emit(this.selectedAddress);
@@ -207,5 +207,4 @@ resetHouseNumber() {
   this.selectedAddress.apartment = '';
   this.selectedAddress.entry = '';
 }
-
 }
