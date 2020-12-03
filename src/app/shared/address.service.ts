@@ -26,7 +26,6 @@ export class AddressService {
 
   getCountries() {
     return this.http.get<string[]>(
-      // tslint:disable-next-line: max-line-length
       `http://localhost:3000/api/address/countries`)
       .pipe(tap(countries => {
         return countries;
@@ -35,7 +34,6 @@ export class AddressService {
 
   getCountriesPrediction(country: string) {
     return this.http.get<string[]>(
-      // tslint:disable-next-line: max-line-length
       `http://localhost:3000/api/address/countries/${country}`)
       .pipe(tap(countries => {
         return countries;
@@ -44,7 +42,6 @@ export class AddressService {
 
   getCities() {
     return this.http.get<string[]>(
-      // tslint:disable-next-line: max-line-length
       `http://localhost:3000/api/address/cities`)
       .pipe(tap(cities => {
         return cities;
@@ -53,7 +50,6 @@ export class AddressService {
 
   getCitiesPrediction(city: string) {
     return this.http.get<string[]>(
-      // tslint:disable-next-line: max-line-length
       `http://localhost:3000/api/address/cities/${city}`)
       .pipe(tap(cities => {
         return cities;
@@ -62,7 +58,6 @@ export class AddressService {
 
   getCityStreets(city: string) {
     return this.http.get<string[]>(
-      // tslint:disable-next-line: max-line-length
       `http://localhost:3000/api/address/streets/${city}`)
       .pipe(tap(streets => {
         return streets;
@@ -71,7 +66,6 @@ export class AddressService {
 
   getStreetsPrediction(city: string, street: string) {
     return this.http.get<string[]>(
-      // tslint:disable-next-line: max-line-length
       `http://localhost:3000/api/address/city/streets/${city}/${street}`)
       .pipe(tap(streets => {
         return streets;
@@ -80,7 +74,6 @@ export class AddressService {
 
   getZipCode(city: string, street: string, house: string) {
     return this.http.get(
-      // tslint:disable-next-line: max-line-length
       `https://www.israelpost.co.il/zip_data.nsf/SearchZip?OpenAgent&Location=${city}&Street=${street}&House=${house}`, {responseType: 'text'})
       .pipe(tap(zipCode => {
         return zipCode;
@@ -91,8 +84,8 @@ export class AddressService {
 
   getPostCitiesPrediction(city: string) {
     return this.http.get<CitiesLocations>(
-      // tslint:disable-next-line: max-line-length
-      `https://www.israelpost.co.il/zip_data1.nsf/CreateLocationsforAutocompleteJSON?OpenAgent&callback=&StartsWith=${city}`)
+      `https://www.israelpost.co.il/zip_data1.nsf/CreateLocationsforAutocompleteJSON?OpenAgent&StartsWith=
+      ${city}`)
       .pipe(map(locations => {
         const cities = locations.locations.map(item => {
           return item.n;
@@ -103,8 +96,8 @@ export class AddressService {
 
   getPostStreetsPrediction(city: string, street: string) {
     return this.http.get<StreetsLocations>(
-      // tslint:disable-next-line: max-line-length
-      `https://www.israelpost.co.il/zip_data1.nsf/CreateStreetsforAutocompleteJSON?OpenAgent&callback=&Location=${city}&StartsWith=${street}`)
+      `https://www.israelpost.co.il/zip_data1.nsf/CreateStreetsforAutocompleteJSON?OpenAgent&callback=&Location=
+      ${city}&StartsWith=${street}`)
       .pipe(map(locations => {
         const streets = locations.streets.map(item => {
           return item.n;
@@ -113,15 +106,14 @@ export class AddressService {
       }));
   }
 
-  getPostZipCode(city: string, street: string, house: string, entrance: string) {
+  getPostZipCode(city: string, street: string, house: string, entrance = '') {
     return this.http.get(
-      // tslint:disable-next-line: max-line-length
-      `https://www.israelpost.co.il/zip_data.nsf/SearchZip?OpenAgent&Location=${city}&Street=${street}&House=${house}&Entrance=${entrance}`, {responseType: 'text'})
+      `https://www.israelpost.co.il/zip_data.nsf/SearchZip?OpenAgent&Location=
+      ${city}&Street=${street}&House=${house}&Entrance=${entrance}`, {responseType: 'text'})
       .pipe(tap(zipCode => {
         console.log(zipCode);
-        const html: HTMLElement = document.createElement('div');
-        html.innerHTML = zipCode;
-        console.log(html.innerText);
+        const plainText = zipCode.replace(/<[^>]*>/g, '');
+        console.log(plainText);
         return zipCode;
       }));
   }

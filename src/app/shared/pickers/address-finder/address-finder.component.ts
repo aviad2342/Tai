@@ -81,8 +81,11 @@ onFilteringCity(event) {
   this.cities.showSpinner();
   if(event.text !== '') {
     this.addressService.getPostCitiesPrediction(event.text).subscribe(cities => {
+      console.log(cities);
       event.updateData(cities);
       this.cities.hideSpinner();
+    }, error => {
+      console.log(error);
     });
   }
 }
@@ -139,7 +142,7 @@ async onSelecteHouseNumber() {
           this.selectedHouseNumberIndex = value.Number.value - 1;
           this.addressPicked.emit(this.selectedAddress);
           this.isValid.emit(true);
-          this.addressService.getZipCode(this.selectedAddress.city, this.selectedAddress.street, this.selectedAddress.houseNumber)
+          this.addressService.getPostZipCode(this.selectedAddress.city, this.selectedAddress.street, this.selectedAddress.houseNumber)
           .subscribe(zipCode => {
             this.demo = zipCode;
             // this.selectedAddress.zipCode = zipCode;

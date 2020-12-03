@@ -17,6 +17,8 @@
       <ion-col class="button tappable ion-text-right align-self-center category-title">סיכום:</ion-col>
     </ion-row>
 
+    <ion-row class="ion-no-padding" >
+      <ion-col  class="address-panel">
     <div *ngIf="!isLoading">
       <ion-row class="ion-no-padding" *ngFor="let item of order?.items">
         <ion-col size="auto" class="ion-text-right">
@@ -63,7 +65,8 @@
         <ion-label>{{ order?.totalPayment | currency:'ILS' }}</ion-label>
       </ion-col>
     </ion-row>
-
+  </ion-col>
+</ion-row>
 
     <ion-row class="ion-no-padding ion-justify-content-center" (click)="onToggleAddressPicker()" *ngIf="!isLoading">
       <ion-col class="button tappable align-self-center category-title">
@@ -75,13 +78,13 @@
     </ion-row>
     <!-- [ngClass]="{'address-open': openAddressPicker, 'address-clos': !openAddressPicker}" -->
     <ion-row class="ion-no-padding" [@visibilityChanged]="openAddressPicker" *ngIf="!isLoading && openAddressPicker">
-      <ion-col size="12" size-xl="5" size-lg="5" size-md="5" size-sm="4">
+      <ion-col  class="address-panel">
         <app-address-details-picker (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)"></app-address-details-picker>
       </ion-col>
 
-      <ion-col size="12" size-xl="5" size-lg="5" size-md="5" size-sm="4">
+      <!-- <ion-col size="12" size-xl="5" size-lg="5" size-md="5" size-sm="4">
     
-      </ion-col>
+      </ion-col> -->
     </ion-row>
 
     <ion-row class="ion-no-padding ion-justify-content-center" (click)="onTogglePaymentDetails()" *ngIf="!isLoading">
@@ -94,7 +97,7 @@
     </ion-row>
 
     <ion-row class="ion-no-padding" *ngIf="!isLoading && openPaymentDetails">
-      <ion-col size="auto">
+      <ion-col size="auto"  class="address-panel">
         <form #f="ngForm" (ngSubmit)="onSubmit(f)">
           <ion-grid [fixed]="true">
 
