@@ -22,7 +22,11 @@
     transition: all 3s;
 }
 
-.address-clos {
+.row-btn {
+    cursor: pointer;
+}
+
+.address-close {
     -webkit-transition: all 3s;
     transition: all 3s;
     display: none;
@@ -31,6 +35,10 @@
 .address-open {
     -webkit-transition: all 3s;
     transition: all 3s;
+}
+
+.save-delivery-dddress-item {
+    --background: transparent;
 }
 
 .expand-btn {

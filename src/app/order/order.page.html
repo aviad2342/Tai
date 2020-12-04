@@ -13,12 +13,17 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-no-padding ion-justify-content-center" *ngIf="!isLoading">
-      <ion-col class="button tappable ion-text-right align-self-center category-title">סיכום:</ion-col>
+    <ion-row class="ion-no-padding ion-justify-content-center row-btn" (click)="onToggleOrderDetails()" *ngIf="!isLoading">
+      <ion-col class="button tappable ion-text-right align-self-center category-title">
+        <ion-label>סיכום:</ion-label>
+        <ion-button class="expand-btn ion-no-margin" color="dark" expand="undefined" size="small" fill="clear" shape="round">
+          <ion-icon slot="icon-only" [name]="openOrderDetails ? 'caret-down-outline' : 'caret-back-outline'"></ion-icon>
+        </ion-button>
+      </ion-col>
     </ion-row>
 
-    <ion-row class="ion-no-padding" >
-      <ion-col  class="address-panel">
+    <ion-row class="ion-no-padding" [@visibilityChanged]="orderDetailsState" *ngIf="!isLoading && openOrderDetails">
+      <ion-col class="address-panel">
     <div *ngIf="!isLoading">
       <ion-row class="ion-no-padding" *ngFor="let item of order?.items">
         <ion-col size="auto" class="ion-text-right">
@@ -68,18 +73,22 @@
   </ion-col>
 </ion-row>
 
-    <ion-row class="ion-no-padding ion-justify-content-center" (click)="onToggleAddressPicker()" *ngIf="!isLoading">
+    <ion-row class="ion-no-padding ion-justify-content-center row-btn" (click)="onToggleAddressPicker()" *ngIf="!isLoading">
       <ion-col class="button tappable align-self-center category-title">
         <ion-label>כתובת למשלוח:</ion-label>
-        <ion-button class="expand-btn ion-no-margin" color="dark" expand="undefined" size="small" fill="clear" shape="round" (click)="onToggleAddressPicker()">
+        <ion-button class="expand-btn ion-no-margin" color="dark" expand="undefined" size="small" fill="clear" shape="round">
           <ion-icon slot="icon-only" [name]="openAddressPicker ? 'caret-down-outline' : 'caret-back-outline'"></ion-icon>
         </ion-button>
       </ion-col>
     </ion-row>
     <!-- [ngClass]="{'address-open': openAddressPicker, 'address-clos': !openAddressPicker}" -->
-    <ion-row class="ion-no-padding" [@visibilityChanged]="openAddressPicker" *ngIf="!isLoading && openAddressPicker">
+    <ion-row class="ion-no-padding" [@visibilityChanged]="addressPickerState" *ngIf="!isLoading && openAddressPicker">
       <ion-col  class="address-panel">
         <app-address-details-picker (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)"></app-address-details-picker>
+          <ion-item size="auto" lines="none" class="save-delivery-dddress-item">
+            <ion-checkbox class="ion-no-margin" [(ngModel)]="saveDeliveryAddress">שמור כתובת?</ion-checkbox>
+          <ion-label class="ion-padding-start ion-no-margin">שמור כתובת?</ion-label>
+          </ion-item>
       </ion-col>
 
       <!-- <ion-col size="12" size-xl="5" size-lg="5" size-md="5" size-sm="4">
@@ -87,18 +96,18 @@
       </ion-col> -->
     </ion-row>
 
-    <ion-row class="ion-no-padding ion-justify-content-center" (click)="onTogglePaymentDetails()" *ngIf="!isLoading">
+    <ion-row class="ion-no-padding ion-justify-content-center row-btn" (click)="onTogglePaymentDetails()" *ngIf="!isLoading">
       <ion-col class="button tappable align-self-center category-title">
         <ion-label>אמצעי תשלום:</ion-label>
-        <ion-button class="expand-btn ion-no-margin" color="dark" expand="undefined" size="small" fill="clear" shape="round" (click)="onTogglePaymentDetails()">
+        <ion-button class="expand-btn ion-no-margin" color="dark" expand="undefined" size="small" fill="clear" shape="round">
           <ion-icon slot="icon-only" [name]="openPaymentDetails ? 'caret-down-outline' : 'caret-back-outline'"></ion-icon>
         </ion-button>
       </ion-col>
     </ion-row>
 
     <ion-row class="ion-no-padding" *ngIf="!isLoading && openPaymentDetails">
-      <ion-col size="auto"  class="address-panel">
-        <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <ion-col  class="address-panel">
+        <form #paymentForm #f="ngForm" (ngSubmit)="onSubmit(f)">
           <ion-grid [fixed]="true">
 
             <ion-row>
@@ -235,20 +244,6 @@
               </ion-col>
 
             </ion-row>
-
-            <ion-row class="ion-justify-content-center">
-              <ion-col>
-                <ion-button
-                  type="submit"
-                  color="primary"
-                  fill="outline"
-                  expand="block"
-                  [disabled]="!f.valid || !addressIsValid"
-                >
-                בצע תשלום
-                </ion-button>
-              </ion-col>
-            </ion-row>
           </ion-grid>
         </form>
       </ion-col>
@@ -256,3 +251,10 @@
 
   </ion-grid>
 </ion-content>
+
+<ion-footer class="add-participant-footer ion-no-padding">
+  <ion-button expand="full" color="secondary" (click)="onSubmit(form)" class="ion-no-padding" disabled=" !addressIsValid">
+    <ion-icon class="custom-cashier" slot="start"></ion-icon>
+    <ion-label>בצע תשלום</ion-label>
+  </ion-button>
+</ion-footer>

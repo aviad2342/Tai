@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, AnimationController } from '@ionic/angular';
@@ -30,15 +30,19 @@ export class OrderPage implements OnInit {
   order: Order;
   coupon: Coupon;
   address: DeliveryAddress = new DeliveryAddress();
+  @ViewChild('f') form: NgForm;
   addressIsValid = false;
+  openOrderDetails = true;
   openAddressPicker = true;
   openPaymentDetails = true;
+  saveDeliveryAddress = false;
   discountRate  = 0;
   discount = 0.000;
   summaryItems = 0;
   isLoading = false;
   addressPickerState = 'shown';
   paymentDetailsState = 'shown';
+  orderDetailsState = 'shown';
   now = new Date().toISOString();
 
   constructor(
@@ -109,6 +113,12 @@ export class OrderPage implements OnInit {
     this.addressIsValid = isValid;
   }
 
+  onToggleOrderDetails() {
+    // this.openAddressPicker  = this.openAddressPicker ? false : true;
+    this.openOrderDetails  = !this.openOrderDetails;
+    this.orderDetailsState = this.openOrderDetails ? 'shown' : 'hidden';
+  }
+
   onToggleAddressPicker() {
     // this.openAddressPicker  = this.openAddressPicker ? false : true;
     this.openAddressPicker  = !this.openAddressPicker;
@@ -132,6 +142,19 @@ export class OrderPage implements OnInit {
 
   updateTotalOrder() {
     this.order.totalPayment = (this.order.totalItems + this.order.delivery) - this.discount;
+  }
+
+  getDeliveryAddress() {
+    if(this.order.address) {
+      return this.order.address?.street + ' ' +
+      this.order.address?.houseNumber + ', ' +
+      this.order.address?.city + ', ' +
+      this.order.address?.country;
+    }
+  }
+
+  async isValidForm() {
+    return await this?.form.valid;
   }
 
 }

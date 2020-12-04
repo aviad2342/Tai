@@ -108,7 +108,6 @@ async onSelecteHouseNumber() {
   }
   const picker = await this.pickerController.create({
     animated: true,
-    mode: 'ios',
     cssClass: 'house-number-picker',
     backdropDismiss: false,
     columns: [{
@@ -138,13 +137,13 @@ async onSelecteHouseNumber() {
           this.selectedHouseNumberIndex = value.Number.value - 1;
           this.addressPicked.emit(this.selectedAddress);
           this.isValid.emit(true);
-          this.addressService.getZipCode(this.selectedAddress.city, this.selectedAddress.street, this.selectedAddress.houseNumber)
-          .subscribe(zipCode => {
-            console.log(zipCode);
-            this.demo = zipCode;
-            // this.selectedAddress.zipCode = zipCode;
-            // this.addressPicked.emit(this.selectedAddress);
-          });
+          // this.addressService.getZipCode(this.selectedAddress.city, this.selectedAddress.street, this.selectedAddress.houseNumber)
+          // .subscribe(zipCode => {
+          //   console.log(zipCode);
+          //   this.demo = zipCode;
+          //   this.selectedAddress.zipCode = zipCode;
+          //   this.addressPicked.emit(this.selectedAddress);
+          // });
         }
       }
     ]

@@ -84,8 +84,7 @@ export class AddressService {
 
   getPostCitiesPrediction(city: string) {
     return this.http.get<CitiesLocations>(
-      `https://www.israelpost.co.il/zip_data1.nsf/CreateLocationsforAutocompleteJSON?OpenAgent&StartsWith=
-      ${city}`)
+      `https://www.israelpost.co.il/zip_data1.nsf/CreateLocationsforAutocompleteJSON?OpenAgent&StartsWith=${city}`)
       .pipe(map(locations => {
         const cities = locations.locations.map(item => {
           return item.n;
@@ -96,8 +95,7 @@ export class AddressService {
 
   getPostStreetsPrediction(city: string, street: string) {
     return this.http.get<StreetsLocations>(
-      `https://www.israelpost.co.il/zip_data1.nsf/CreateStreetsforAutocompleteJSON?OpenAgent&callback=&Location=
-      ${city}&StartsWith=${street}`)
+      `https://www.israelpost.co.il/zip_data1.nsf/CreateStreetsforAutocompleteJSON?OpenAgent&callback=&Location=${city}&StartsWith=${street}`)
       .pipe(map(locations => {
         const streets = locations.streets.map(item => {
           return item.n;
@@ -108,8 +106,8 @@ export class AddressService {
 
   getPostZipCode(city: string, street: string, house: string, entrance = '') {
     return this.http.get(
-      `https://www.israelpost.co.il/zip_data.nsf/SearchZip?OpenAgent&Location=
-      ${city}&Street=${street}&House=${house}&Entrance=${entrance}`, {responseType: 'text'})
+      // tslint:disable-next-line: max-line-length
+      `https://www.israelpost.co.il/zip_data.nsf/SearchZip?OpenAgent&Location=${city}&Street=${street}&House=${house}&Entrance=${entrance}`, {responseType: 'text'})
       .pipe(tap(zipCode => {
         console.log(zipCode);
         const plainText = zipCode.replace(/<[^>]*>/g, '');
