@@ -3,5 +3,9 @@
   "integrations": {
     "capacitor": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "proxies": [{
+    "path": "/v1",
+    "proxyUrl": "https://www.israelpost.co.il"
+}]
 }

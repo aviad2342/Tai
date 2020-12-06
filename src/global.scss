@@ -89,6 +89,10 @@
 
 }
 
+ion-picker {
+  touch-action: none;
+}
+
 ion-toolbar {
     --background: var(--ion-color-primary);
     --color: var(--ion-color-dark);

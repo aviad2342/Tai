@@ -86,6 +86,7 @@ export class AddressService {
     return this.http.get<CitiesLocations>(
       `https://www.israelpost.co.il/zip_data1.nsf/CreateLocationsforAutocompleteJSON?OpenAgent&StartsWith=${city}`)
       .pipe(map(locations => {
+        console.log(locations);
         const cities = locations.locations.map(item => {
           return item.n;
         });
@@ -110,8 +111,11 @@ export class AddressService {
       `https://www.israelpost.co.il/zip_data.nsf/SearchZip?OpenAgent&Location=${city}&Street=${street}&House=${house}&Entrance=${entrance}`, {responseType: 'text'})
       .pipe(tap(zipCode => {
         console.log(zipCode);
+        const html = document.createElement('div');
+        html.innerHTML = zipCode;
         const plainText = zipCode.replace(/<[^>]*>/g, '');
-        console.log(plainText);
+        console.log(html.innerHTML);
+        console.log(html.innerHTML);
         return zipCode;
       }));
   }

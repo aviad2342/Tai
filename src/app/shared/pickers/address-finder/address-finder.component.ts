@@ -3,6 +3,7 @@ import { PickerController } from '@ionic/angular';
 import { AutoCompleteComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { AddressService } from '../../address.service';
 import { DeliveryAddress } from '../../address.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 export interface PickerColumnOption {
   text?: any;
