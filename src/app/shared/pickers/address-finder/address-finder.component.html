@@ -61,12 +61,12 @@
       [(ngModel)]="this.selectedAddress.apartment" 
       #apartmentCtrl="ngModel"
       required 
-      (click)="onSelecteApartment()">
+      (ionFocus)="onSelecteApartment()">
     </ion-input>
     </ion-col>
 
     <ion-col>
-      <ion-input 
+      <ion-input
       [disabled]="disableHouseNumberPicker"
       placeholder="כניסה"
       class="item-border-input ion-no-padding"
@@ -75,10 +75,9 @@
       [(ngModel)]="this.selectedAddress.entry" 
       #entryCtrl="ngModel"
       required 
-      (ionChange)="onSelecteEntry($event)"
+      (ionFocus)="onSelecteEntry($event)"
       >
     </ion-input>
-    <div [innerHTML]="demo"></div>
     </ion-col>
 
   </ion-row>

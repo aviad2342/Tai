@@ -110,12 +110,6 @@ export class AddressService {
       // tslint:disable-next-line: max-line-length
       `https://www.israelpost.co.il/zip_data.nsf/SearchZip?OpenAgent&Location=${city}&Street=${street}&House=${house}&Entrance=${entrance}`, {responseType: 'text'})
       .pipe(tap(zipCode => {
-        console.log(zipCode);
-        const html = document.createElement('div');
-        html.innerHTML = zipCode;
-        const plainText = zipCode.replace(/<[^>]*>/g, '');
-        console.log(html.innerHTML);
-        console.log(html.innerHTML);
         return zipCode;
       }));
   }

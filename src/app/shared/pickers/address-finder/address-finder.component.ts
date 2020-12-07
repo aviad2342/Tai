@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { PickerController } from '@ionic/angular';
 import { AutoCompleteComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { AddressService } from '../../address.service';
@@ -27,6 +27,8 @@ export class AddressFinderComponent implements OnInit {
 
   @Input() selectedAddress: DeliveryAddress = new DeliveryAddress();
   @Input() isEdit = false;
+
+  @ViewChild('zipel', {read: ElementRef}) zip: ElementRef;
 
   selectedHouseNumberIndex = 0;
   selectedApartmentIndex = 0;
@@ -128,14 +130,6 @@ async onSelecteHouseNumber() {
         cssClass: 'house-number-picker-btn'
       },
       {
-        text: '+100',
-        role: 'null',
-        cssClass: 'house-number-picker-btn',
-        handler: (value: any) => {
-          this.selectedHouseNumberIndex = value.Number.value + 99;
-        }
-      },
-      {
         text: 'אישור',
         cssClass: 'house-number-picker-btn',
         handler: (value: any) => {
@@ -145,13 +139,17 @@ async onSelecteHouseNumber() {
           this.isValid.emit(true);
           this.addressService.getPostZipCode(this.selectedAddress.city, this.selectedAddress.street, this.selectedAddress.houseNumber)
           .subscribe(zipCode => {
-            this.demo = zipCode;
-            // this.selectedAddress.zipCode = zipCode;
-            // this.addressPicked.emit(this.selectedAddress);
+            this.selectedAddress.zipCode = zipCode.match(/RES[0-9]+/)[0].slice(4,11);;
+            this.addressPicked.emit(this.selectedAddress);
           });
         }
       }
     ]
+  });
+  picker.columns[0].options.forEach(element => {
+    delete element.selected;
+    delete element.duration;
+    delete element.transform;
   });
   await picker.present();
 }
@@ -187,6 +185,11 @@ async onSelecteApartment() {
       }
     ]
   });
+  picker.columns[0].options.forEach(element => {
+    delete element.selected;
+    delete element.duration;
+    delete element.transform;
+  });
   await picker.present();
 }
 
@@ -203,6 +206,8 @@ resetAddress() {
   this.selectedAddress.houseNumber = '';
   this.selectedAddress.apartment = '';
   this.selectedAddress.entry = '';
+  this.selectedHouseNumberIndex = 0;
+  this.selectedApartmentIndex = 0;
 }
 
 resetHouseNumber() {
@@ -210,5 +215,7 @@ resetHouseNumber() {
   this.selectedAddress.houseNumber = '';
   this.selectedAddress.apartment = '';
   this.selectedAddress.entry = '';
+  this.selectedHouseNumberIndex = 0;
+  this.selectedApartmentIndex = 0;
 }
 }

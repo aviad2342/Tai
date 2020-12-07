@@ -47,7 +47,7 @@
       [(ngModel)]="this.selectedAddress.houseNumber" 
       #houseNumberCtrl="ngModel"
       required 
-      (click)="onSelecteHouseNumber()">
+      (ionFocus)="onSelecteHouseNumber()">
     </ion-input>
     </ion-col>
 
@@ -61,7 +61,7 @@
       [(ngModel)]="this.selectedAddress.apartment" 
       #apartmentCtrl="ngModel"
       required 
-      (click)="onSelecteApartment()">
+      (ionFocus)="onSelecteApartment()">
     </ion-input>
     </ion-col>
 

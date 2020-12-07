@@ -233,6 +233,11 @@ async openPicker(input: string) {
         }
       ]
     });
+    picker.columns[0].options.forEach(element => {
+      delete element.selected;
+      delete element.duration;
+      delete element.transform;
+    });
     await picker.present();
     // picker.getColumn()
     // picker.addEventListener('ionPickerColChange', async (event: any) => {

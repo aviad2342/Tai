@@ -148,6 +148,11 @@ async onSelecteHouseNumber() {
       }
     ]
   });
+  picker.columns[0].options.forEach(element => {
+    delete element.selected;
+    delete element.duration;
+    delete element.transform;
+  });
   await picker.present();
 }
 
@@ -181,6 +186,11 @@ async onSelecteApartment() {
         }
       }
     ]
+  });
+  picker.columns[0].options.forEach(element => {
+    delete element.selected;
+    delete element.duration;
+    delete element.transform;
   });
   await picker.present();
 }
