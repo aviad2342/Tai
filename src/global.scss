@@ -93,6 +93,20 @@ ion-picker {
   touch-action: none;
 }
 
+.received-payment-cell-class {
+  text-align: center !important;
+}
+
+.datatable-cell-padding {
+  vertical-align: middle !important;
+  padding: 5px !important;
+}
+
+.datatable-header-padding {
+  vertical-align: middle !important;
+  padding: 5px !important;
+}
+
 ion-toolbar {
     --background: var(--ion-color-primary);
     --color: var(--ion-color-dark);

@@ -66,7 +66,7 @@
       <ngx-datatable
       #ordersTable
       [rows]="orders"
-      class="bootstrap"
+      class="bootstrap expandable"
       [rowHeight]="'auto'"
       [headerHeight]="50"
       [footerHeight]="50"
@@ -77,28 +77,61 @@
       [selectionType]="SelectionType.single"
       (select)="onSelect($event)"
     >
-    <ngx-datatable-column name="id" [width]="120" [resizeable]="false">
+    <!-- Row Detail -->
+    <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
+      <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+        <div style="padding-right:35px;">
+          <div><strong>מוצרים</strong></div>
+          <div *ngFor="let item of items"> {{ item.name }}</div>
+        </div>
+      </ng-template>
+    </ngx-datatable-row-detail>
+
+    <ngx-datatable-column
+          [width]="80"
+          [resizeable]="false"
+          [sortable]="false"
+          [draggable]="false"
+          [canAutoResize]="false"
+          cellClass="datatable-cell-padding"
+          headerClass="datatable-header-padding"
+        >
+        <ng-template let-column="column" ngx-datatable-header-template><strong>פרטים</strong></ng-template>
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+            <a
+              href="javascript:void(0)"
+              [class.datatable-icon-left]="!expanded"
+              [class.datatable-icon-down]="expanded"
+              title="הצג/הסתר פרטים"
+              (click)="toggleExpandRow(row)"
+            >
+            </a>
+          </ng-template>
+        </ngx-datatable-column>
+
+    <ngx-datatable-column name="id" headerClass="datatable-header-padding" cellClass="datatable-cell-padding" [width]="120" [resizeable]="false">
       <ng-template let-column="column" ngx-datatable-header-template><strong>מספר הזמנה</strong></ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="date" [sortable]="true" [width]="150" [resizeable]="false">
+    <ngx-datatable-column name="date" headerClass="datatable-header-padding" cellClass="datatable-cell-padding" [sortable]="true" [width]="150" [resizeable]="false">
       <ng-template let-column="column" ngx-datatable-header-template><strong>תאריך הזמנה</strong></ng-template>
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
         {{ row['date'] | date }}
       </ng-template>
     </ngx-datatable-column> 
 
-    <ngx-datatable-column name="totalPayment" [width]="120" [resizeable]="false">
+    <ngx-datatable-column name="totalPayment" headerClass="datatable-header-padding" cellClass="datatable-cell-padding" [width]="120" [resizeable]="false">
       <ng-template let-column="column" ngx-datatable-header-template><strong>סכום ההזמנה</strong></ng-template>
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
         {{ row['totalPayment'] | currency:'ILS' }}
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="receivedPayment" [sortable]="true" [width]="70" [resizeable]="false">
+    <ngx-datatable-column name="receivedPayment" headerClass="datatable-header-padding" cellClass="received-payment-cell-class datatable-cell-padding" [sortable]="true" [width]="130" [resizeable]="false">
       <ng-template let-column="column" ngx-datatable-header-template><strong>התקבל תשלום</strong></ng-template>
        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-        <input type="checkbox" [checked]="row['receivedPayment']" />
+         <ion-checkbox class="cb-payment" [checked]="row['receivedPayment']" disabled="true"></ion-checkbox>
+        <!-- <input type="checkbox" [checked]="row['receivedPayment']" disabled="true" /> -->
        </ng-template>
     </ngx-datatable-column> 
 

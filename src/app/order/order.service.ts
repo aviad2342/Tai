@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
+import { OrderItem } from '../store/item.model';
 import { Order } from './order.model';
 
 @Injectable({
@@ -28,6 +29,13 @@ export class OrderService {
 
     getOrder(id: string) {
       return this.http.get<Order>(`http://localhost:3000/api/order/order/${id}`)
+      .pipe(tap(resDta => {
+        return resDta;
+      }));
+    }
+
+    getOrderItems(id: string) {
+      return this.http.get<OrderItem[]>(`http://localhost:3000/api/order/order/items/${id}`)
       .pipe(tap(resDta => {
         return resDta;
       }));

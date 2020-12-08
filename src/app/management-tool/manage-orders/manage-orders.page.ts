@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
 import { Order } from 'src/app/order/order.model';
 import { OrderService } from 'src/app/order/order.service';
+import { OrderItem } from 'src/app/store/item.model';
 
 @Component({
   selector: 'app-manage-orders',
@@ -24,6 +25,8 @@ export class ManageOrdersPage implements OnInit, OnDestroy {
   SelectionType = SelectionType;
   temp = [];
   selected = [];
+  value='noob';
+  items: OrderItem[] = [];
 
   constructor(
     private orderService: OrderService,
@@ -140,6 +143,32 @@ export class ManageOrdersPage implements OnInit, OnDestroy {
 
   getUserFullName() {
       return this.selected[0]?.firstName + ' ' + this.selected[0]?.lastName;
+    }
+
+  getOrderItems(id: string) {
+    console.log(id);
+      this.orderService.getOrderItems(id).subscribe(items => {
+        this.items = items;
+      }, error => {
+        console.log(error);
+        // const items: OrderItem[] = [];
+        // return items;
+      });
+    }
+
+  toggleExpandRow(row) {
+      this.ordersTable.rowDetail.toggleExpandRow(row);
+    }
+
+  onDetailToggle(event) {
+      // console.log('Detail Toggled', event.value);
+      this.orderService.getOrderItems(event.value.id).subscribe(items => {
+        this.items = items;
+      }, error => {
+        console.log(error);
+        // const items: OrderItem[] = [];
+        // return items;
+      });
     }
 
   ngOnDestroy() {
