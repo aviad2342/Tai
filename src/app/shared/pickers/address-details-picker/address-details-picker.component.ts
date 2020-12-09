@@ -108,6 +108,7 @@ async onSelecteHouseNumber() {
   }
   const picker = await this.pickerController.create({
     animated: true,
+    mode: 'ios',
     cssClass: 'house-number-picker',
     backdropDismiss: false,
     columns: [{

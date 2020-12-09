@@ -50,6 +50,7 @@
     border: 1px solid black;
     border-radius: 7px;
     padding: 6px !important;
+    background: white;
 }
 
 .item-border-input-error {
@@ -72,4 +73,12 @@
     margin-top: 3px;
     margin-bottom: 3px;
     background-color: #deebff;
+}
+
+.save-delivery-address-cb {
+    vertical-align: middle;
+}
+
+.save-delivery-address-lb {
+    padding-right: 7px;
 }

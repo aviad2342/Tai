@@ -85,10 +85,14 @@
     <ion-row class="ion-no-padding" [@visibilityChanged]="addressPickerState" *ngIf="!isLoading && openAddressPicker">
       <ion-col  class="address-panel">
         <app-address-details-picker (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)"></app-address-details-picker>
-          <ion-item size="auto" lines="none" class="save-delivery-dddress-item">
+          <!-- <ion-item size="auto" lines="none" class="save-delivery-dddress-item">
             <ion-checkbox class="ion-no-margin" [(ngModel)]="saveDeliveryAddress">שמור כתובת?</ion-checkbox>
           <ion-label class="ion-padding-start ion-no-margin">שמור כתובת?</ion-label>
-          </ion-item>
+          </ion-item> -->
+          <div class="ion-padding-start">
+            <ion-checkbox class="save-delivery-address-cb" [(ngModel)]="saveDeliveryAddress"></ion-checkbox>
+            <ion-label class="save-delivery-address-lb">שמור כתובת?</ion-label>
+          </div>
       </ion-col>
 
       <!-- <ion-col size="12" size-xl="5" size-lg="5" size-md="5" size-sm="4">

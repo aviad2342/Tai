@@ -25,7 +25,8 @@ export class ManageOrdersPage implements OnInit, OnDestroy {
   SelectionType = SelectionType;
   temp = [];
   selected = [];
-  value='noob';
+  selectOrderdetails: Order;
+  loadingSelectedOrder = false;
   items: OrderItem[] = [];
 
   constructor(
@@ -146,13 +147,16 @@ export class ManageOrdersPage implements OnInit, OnDestroy {
     }
 
   getOrderItems(id: string) {
-    console.log(id);
       this.orderService.getOrderItems(id).subscribe(items => {
         this.items = items;
       }, error => {
         console.log(error);
-        // const items: OrderItem[] = [];
-        // return items;
+      });
+
+      this.orderService.getOrder(id).subscribe(order => {
+        this.selectOrderdetails = order;
+      }, error => {
+        console.log(error);
       });
     }
 
@@ -161,13 +165,18 @@ export class ManageOrdersPage implements OnInit, OnDestroy {
     }
 
   onDetailToggle(event) {
+    this.loadingSelectedOrder = true;
       // console.log('Detail Toggled', event.value);
-      this.orderService.getOrderItems(event.value.id).subscribe(items => {
-        this.items = items;
+      // this.orderService.getOrderItems(event.value.id).subscribe(items => {
+      //   this.items = items;
+      // }, error => {
+      //   console.log(error);
+      // });
+      this.orderService.getOrder(event.value.id).subscribe(order => {
+        this.selectOrderdetails = order;
+        this.loadingSelectedOrder = false;
       }, error => {
         console.log(error);
-        // const items: OrderItem[] = [];
-        // return items;
       });
     }
 

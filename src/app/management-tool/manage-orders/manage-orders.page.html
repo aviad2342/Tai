@@ -80,10 +80,32 @@
     <!-- Row Detail -->
     <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
       <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
-        <div style="padding-right:35px;">
-          <div><strong>מוצרים</strong></div>
-          <div *ngFor="let item of items"> {{ item.name }}</div>
-        </div>
+        
+        <ion-row>
+          <ion-col class="ion-text-center" *ngIf="loadingSelectedOrder">
+            <ion-spinner color="primary"></ion-spinner>
+          </ion-col>
+
+          <ion-col class="ion-padding-start" *ngIf="!loadingSelectedOrder">
+              <div><strong>מוצרים</strong></div>
+              <div *ngFor="let item of selectOrderdetails.items">({{ item.units }}) {{ item.name }}</div>
+          </ion-col>
+
+          <ion-col *ngIf="!loadingSelectedOrder">
+            <ion-label><strong>לקוח</strong></ion-label>
+            <div> {{ selectOrderdetails.customer.firstName +' '+selectOrderdetails.customer.lastName }}</div>
+            <div> {{ selectOrderdetails.customer.email }}</div>
+            <div> {{ selectOrderdetails.customer.phone }}</div>
+          </ion-col>
+
+          <ion-col *ngIf="!loadingSelectedOrder && selectOrderdetails.address">
+            <ion-label><strong>כתובת למשלוח</strong></ion-label>
+            <div> {{ selectOrderdetails.address.street + ' ' + selectOrderdetails.address.houseNumber }}</div>
+            <div> {{ selectOrderdetails.address.city }}</div>
+            <div> {{ selectOrderdetails.address.zipCode }}</div>
+          </ion-col>
+
+        </ion-row>
       </ng-template>
     </ngx-datatable-row-detail>
 
