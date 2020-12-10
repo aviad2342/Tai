@@ -1,8 +1,9 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroupDirective, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, AnimationController } from '@ionic/angular';
+import { filter } from 'rxjs/operators';
 import { AppService } from '../app.service';
 import { AuthService } from '../auth/auth.service';
 import { CartService } from '../cart/cart.service';
@@ -25,17 +26,18 @@ import { OrderService } from './order.service';
   ],
   styleUrls: ['./order.page.scss'],
 })
-export class OrderPage implements OnInit {
+export class OrderPage implements OnInit, AfterViewInit {
 
   order: Order;
   coupon: Coupon;
   address: DeliveryAddress = new DeliveryAddress();
-  @ViewChild('f') form: NgForm;
+  @ViewChild('f', { static: true }) form: NgForm;
   addressIsValid = false;
   openOrderDetails = true;
   openAddressPicker = true;
   openPaymentDetails = true;
   saveDeliveryAddress = false;
+  isFormValid = false;
   discountRate  = 0;
   discount = 0.000;
   summaryItems = 0;
@@ -103,6 +105,21 @@ export class OrderPage implements OnInit {
           }
         );
     });
+    // this.form?.statusChanges
+    //   .pipe(
+    //     filter((status: string) => {console.log(status); return this.form.valid}))
+    //   .subscribe(() => this.onFormValid());
+  }
+
+  ngAfterViewInit() {
+    // this.form?.valueChanges.subscribe(status => {
+    //   console.log(status);
+    //   this.isFormValid = this.form.valid;
+    // });
+  }
+
+  onFormValid() {
+    this.isFormValid = this.form.valid;
   }
 
   onAddressPicked(address: DeliveryAddress) {
@@ -110,6 +127,7 @@ export class OrderPage implements OnInit {
   }
 
   onAddressIsValid(isValid: boolean) {
+    console.log(isValid);
     this.addressIsValid = isValid;
   }
 
@@ -137,6 +155,29 @@ export class OrderPage implements OnInit {
     }
     console.log(new Date(form.value.cardYear).getFullYear().toString());
     console.log((new Date(form.value.cardMonth).getMonth() + 1).toString());
+    const orderToUpdate = new Order(
+      this.order.id,
+      this.order.cartId,
+      new Date(),
+      '',
+      this.order.delivery,
+      this.order.couponCode,
+      this.order.totalItems,
+      this.order.totalPayment,
+      false,
+      'a3nf4jd6',
+      this.order.customer,
+      this.address,
+      this.order.items
+    );
+    this.orderService.updateOrder(orderToUpdate).subscribe(() => {
+      this.cartService.deleteCart(this.order.cartId).subscribe();
+      this.appService.presentToast('ההזמנה בוצעה בהצלחה', true);
+      this.router.navigate(['/tabs/store']);
+    },
+    error => {
+      this.appService.presentToast('לא ניתן להשלים את ההזמנה כעת, אנא נסה מאוחר יותר.', false);
+    });
 
   }
 
@@ -151,10 +192,6 @@ export class OrderPage implements OnInit {
       this.order.address?.city + ', ' +
       this.order.address?.country;
     }
-  }
-
-  async isValidForm() {
-    return await this?.form.valid;
   }
 
 }

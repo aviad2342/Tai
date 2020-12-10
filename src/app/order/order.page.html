@@ -111,7 +111,7 @@
 
     <ion-row class="ion-no-padding" *ngIf="!isLoading && openPaymentDetails">
       <ion-col  class="address-panel">
-        <form #paymentForm #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)">
           <ion-grid [fixed]="true">
 
             <ion-row>
@@ -240,13 +240,16 @@
                 class="item-border-input ion-no-padding"
                 type="text" 
                 name="cardCvv"
+                maxlength="3"
+                min="3"
+                pattern="^\d{3}$"
                 ngModel
-                #houseNumberCtrl="ngModel"
+                #cardCvvCtrl="ngModel"
                 required 
+                [ngClass]="{'item-border-input-error': cardCvvCtrl.touched && !cardCvvCtrl.valid}"
               >
               </ion-input>
               </ion-col>
-
             </ion-row>
           </ion-grid>
         </form>
@@ -257,7 +260,12 @@
 </ion-content>
 
 <ion-footer class="add-participant-footer ion-no-padding">
-  <ion-button expand="full" color="secondary" (click)="onSubmit(form)" class="ion-no-padding ion-no-margin" disabled=" !addressIsValid">
+  <ion-button 
+    expand="full" 
+    color="secondary" 
+    (click)="form.ngSubmit.emit()" 
+    class="ion-no-padding ion-no-margin" 
+    [disabled]="!isFormValid">
     <ion-icon class="custom-cashier" slot="start"></ion-icon>
     <ion-label>בצע תשלום</ion-label>
   </ion-button>
