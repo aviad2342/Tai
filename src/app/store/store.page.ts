@@ -123,7 +123,7 @@ export class StorePage implements OnInit, OnDestroy {
       this.appService.presentToast('חלה תקלה לא ניתן להוסיף את המוצר! נסה שנית מאוחר יותר', false);
     });
   } else {
-    this.cart.items.push(cartItem);
+      this.cart.items.push(cartItem);
       this.itemsAddedToCart = this.cart.items.length;
       this.appService.presentToast('הפריט נשמר בהצלחה', true);
   }

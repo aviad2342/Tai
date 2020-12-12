@@ -1,9 +1,8 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroupDirective, NgForm } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, AnimationController } from '@ionic/angular';
-import { filter } from 'rxjs/operators';
 import { AppService } from '../app.service';
 import { AuthService } from '../auth/auth.service';
 import { CartService } from '../cart/cart.service';
@@ -26,7 +25,7 @@ import { OrderService } from './order.service';
   ],
   styleUrls: ['./order.page.scss'],
 })
-export class OrderPage implements OnInit, AfterViewInit {
+export class OrderPage implements OnInit {
 
   order: Order;
   coupon: Coupon;
@@ -105,21 +104,10 @@ export class OrderPage implements OnInit, AfterViewInit {
           }
         );
     });
-    // this.form?.statusChanges
-    //   .pipe(
-    //     filter((status: string) => {console.log(status); return this.form.valid}))
-    //   .subscribe(() => this.onFormValid());
   }
 
-  ngAfterViewInit() {
-    // this.form?.valueChanges.subscribe(status => {
-    //   console.log(status);
-    //   this.isFormValid = this.form.valid;
-    // });
-  }
-
-  onFormValid() {
-    this.isFormValid = this.form.valid;
+  async onFormValid(valid: boolean) {
+     this.isFormValid = await valid;
   }
 
   onAddressPicked(address: DeliveryAddress) {
@@ -149,12 +137,16 @@ export class OrderPage implements OnInit, AfterViewInit {
     this.paymentDetailsState = this.openPaymentDetails ? 'shown' : 'hidden';
   }
 
+  onSaveOrder() {
+    this.onSubmit(this.form);
+  }
+
   onSubmit(form: NgForm) {
     if (!form.valid || !this.addressIsValid) {
       return;
     }
-    console.log(new Date(form.value.cardYear).getFullYear().toString());
-    console.log((new Date(form.value.cardMonth).getMonth() + 1).toString());
+    // console.log(new Date(form.value.cardYear).getFullYear().toString());
+    // console.log((new Date(form.value.cardMonth).getMonth() + 1).toString());
     const orderToUpdate = new Order(
       this.order.id,
       this.order.cartId,
