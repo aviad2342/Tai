@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { StoreService } from './store.service';
 import { CartItem, Item } from './item.model';
 import { AppService } from '../app.service';
 import { ItemService } from './item.service';
@@ -10,6 +9,8 @@ import { Customer } from '../customer/customer.model';
 import { CartService } from '../cart/cart.service';
 import { Cart } from '../cart/cart.model';
 import { Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+
 
 
 @Component({
@@ -96,24 +97,28 @@ export class StorePage implements OnInit, OnDestroy {
     this.itemsSubscription = this.itemService.items.subscribe(items => {
       this.items = items;
     });
-    console.log(this.authService.getLoggedUserId());
-        this.cartService.getCustomerCart(this.authService.getLoggedUserId()).subscribe(cart => {
+    this.cartService.getCustomerCart(this.authService.getLoggedUserId()).subscribe(cart => {
       if(cart) {
         this.cart = cart;
         this.cartItems = cart.items;
         this.itemsAddedToCart = cart.items.length;
       } else {
-        this.authService.getUserLogged().subscribe(user => {
-          this.cart = new Cart(null, user, [], null);
+        this.authService.getUserLogged().pipe(
+          switchMap(user => {
+          const newCart = new Cart(null, user, this.cartItems, null);
+          return this.cartService.addCart(newCart);
+        })).subscribe(newCart => {
+          this.cart = newCart;
         });
       }
     });
   }
 
+
   onItemAddedToCart(item: Item) {
     const cartItem: CartItem = item;
+    cartItem.itemId = item.id;
     cartItem.units = 1;
-    if(this.cart.id !== null) {
     cartItem.cart = this.cart.id;
     this.cartService.addCartItem(cartItem).subscribe(() => {
       this.cart.items.push(cartItem);
@@ -122,20 +127,12 @@ export class StorePage implements OnInit, OnDestroy {
     }, error => {
       this.appService.presentToast('חלה תקלה לא ניתן להוסיף את המוצר! נסה שנית מאוחר יותר', false);
     });
-  } else {
-      this.cart.items.push(cartItem);
-      this.itemsAddedToCart = this.cart.items.length;
-      this.appService.presentToast('הפריט נשמר בהצלחה', true);
-  }
   }
 
   onGoToCart() {
-    if(this.cart.id === null) {
-      this.cartService.addCart(this.cart).subscribe(newCart => {
-        this.router.navigate(['/', 'cart', newCart.id]);
-      });
-    } else {
-      this.router.navigate(['/', 'cart', this.cart.id]);
+    this.router.navigate(['/', 'cart', this.cart.id]);
+    if (this.itemsSubscription) {
+      this.itemsSubscription.unsubscribe();
     }
   }
 
@@ -143,13 +140,22 @@ export class StorePage implements OnInit, OnDestroy {
     this.isDesktop = this.appService.isDesktop();
     this.itemService.getItems().subscribe();
   }
+
+  ionViewDidLeave() {
+    if (this.itemsSubscription) {
+      this.itemsSubscription.unsubscribe();
+    }
+    this.router.dispose();
+  }
+
+
   getItemByCategory(category: string) {
     const items = this.items.filter(p => p.category === category).slice();
     return items;
   }
 
   itemExistInCart(item: Item) {
-    return this?.cartItems.map(cartItem => cartItem.id).includes(item.id);
+    return this?.cartItems.map(cartItem => cartItem.itemId).includes(item.id);
   }
 
   ngOnDestroy() {

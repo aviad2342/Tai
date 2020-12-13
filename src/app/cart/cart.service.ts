@@ -87,6 +87,7 @@ export class CartService {
         catalogNumber: item.catalogNumber,
         quantity:      item.quantity,
         country:       item.category,
+        itemId:        item.itemId,
         units:         item.units
        };
       return this.http.put<CartItem>(`http://localhost:3000/api/cart/item/${item.id}`,

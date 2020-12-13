@@ -36,6 +36,7 @@ export class CartItem extends Item {
     public catalogNumber: string,
     public quantity: number,
     public category: string,
+    public itemId?: string,
     public units?: number,
     public cart?: string,
     ) {
@@ -66,6 +67,7 @@ export class CartItem extends Item {
      public catalogNumber: string,
      public quantity: number,
      public category: string,
+     public itemId?: string,
      public units?: number,
      public order?: string,
      ) {
