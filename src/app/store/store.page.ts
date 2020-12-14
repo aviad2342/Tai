@@ -11,8 +11,6 @@ import { Cart } from '../cart/cart.model';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
-
-
 @Component({
   selector: 'app-store',
   templateUrl: './store.page.html',
@@ -29,16 +27,16 @@ export class StorePage implements OnInit, OnDestroy {
   isLoading = false;
   private itemsSubscription: Subscription;
   isDesktop: boolean;
-  // categories = ['ספרים', 'הרצאות', 'אביזרים', 'אחר'];
-  categories = [
-    'ספרים',
-    'טיפולים',
-    'כנסים',
-    'קורסים',
-    'מאמרים',
-    'אביזרים',
-    'אחר'
-  ];
+  categories: string[] = [];
+  // categories = [
+  //   'ספרים',
+  //   'טיפולים',
+  //   'כנסים',
+  //   'קורסים',
+  //   'מאמרים',
+  //   'אביזרים',
+  //   'אחר'
+  // ];
 
   sliderConfig = {
     slidesPerView: 1.6,
@@ -96,6 +94,7 @@ export class StorePage implements OnInit, OnDestroy {
   ngOnInit() {
     this.itemsSubscription = this.itemService.items.subscribe(items => {
       this.items = items;
+      this.categories = this.items.map(item => item.category);
     });
     this.cartService.getCustomerCart(this.authService.getLoggedUserId()).subscribe(cart => {
       if(cart) {
@@ -131,9 +130,6 @@ export class StorePage implements OnInit, OnDestroy {
 
   onGoToCart() {
     this.router.navigate(['/', 'cart', this.cart.id]);
-    if (this.itemsSubscription) {
-      this.itemsSubscription.unsubscribe();
-    }
   }
 
   ionViewWillEnter() {
@@ -141,21 +137,29 @@ export class StorePage implements OnInit, OnDestroy {
     this.itemService.getItems().subscribe();
   }
 
-  ionViewDidLeave() {
-    if (this.itemsSubscription) {
-      this.itemsSubscription.unsubscribe();
-    }
-    this.router.dispose();
-  }
-
+  // ionViewDidLeave() {
+  //   if (this.itemsSubscription) {
+  //     this.itemsSubscription.unsubscribe();
+  //   }
+  //   this.router.dispose();
+  // }
 
   getItemByCategory(category: string) {
-    const items = this.items.filter(p => p.category === category).slice();
-    return items;
+    return this.items.filter(p => p.category === category).slice();
   }
 
-  itemExistInCart(item: Item) {
-    return this?.cartItems.map(cartItem => cartItem.itemId).includes(item.id);
+  itemExistInCart(id: string) {
+    let bool: boolean;
+    console.log(this?.cartItems.map(cartItem => cartItem.itemId).find(i => i === id));
+    const ll = this.cartItems.find(i => i.itemId === id);
+    bool = this?.cartItems.map(cartItem => cartItem.itemId).indexOf(id) > -1;
+    console.log(id);
+    console.log(bool);
+    console.log(this?.cartItems.map(cartItem => cartItem.itemId).indexOf(id));
+    return bool;
+    // console.log(this?.cartItems.map(cartItem => cartItem.itemId));
+    // return this.cartItems.filter(i => i.itemId === item.id).length > 0;
+    // return this?.cartItems.map(cartItem => cartItem.itemId).includes(item.id);
   }
 
   ngOnDestroy() {

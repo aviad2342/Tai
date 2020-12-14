@@ -19,7 +19,8 @@ ion-thumbnail {
 
 ion-img {
     border-radius: 7px;
-    object-fit: fill;
+    object-fit: contain;
+    background: black;
 }
 
 ion-item::part(native){

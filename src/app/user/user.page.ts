@@ -23,7 +23,6 @@ export class UserPage implements OnInit, OnDestroy {
   constructor(private userService: UserService, private router: Router, private appService: AppService) { }
 
   ngOnInit() {
-    console.log(this.appService.isRTL());
     this.usersSubscription = this.userService.users.subscribe(users => {
       this.users = users;
     });
