@@ -34,6 +34,13 @@ export class CartService {
       }));
     }
 
+    isItemInCart(customerId: string, itemId: string) {
+      return this.http.get<boolean>(`http://localhost:3000/api/cart/items/${customerId}/${itemId}`)
+      .pipe(tap(resDta => {
+        return resDta;
+      }));
+    }
+
     addCart(cart: Cart) {
       return this.http.post<{id: string}>('http://localhost:3000/api/cart/cart',
       {

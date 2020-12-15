@@ -1,6 +1,6 @@
 <!-- <ion-item lines="none" class="ion-text-center"> -->
-  <ion-card>
-    <ion-card-header>
+  <ion-card class="item-card">
+    <ion-card-header class="ion-no-padding ion-padding-top ion-padding-bottom">
       <ion-card-title>{{ item.name }}</ion-card-title>
     </ion-card-header>
     <ion-thumbnail>
@@ -8,7 +8,7 @@
     </ion-thumbnail>
     <ion-card-content>
       <ion-card-subtitle>{{ item.price | currency:'ILS' }}</ion-card-subtitle>
-      <p>{{ item.description }}</p>
+      <p class="item-description">{{ item.description }}</p>
     </ion-card-content>
     <div>
       <ion-button

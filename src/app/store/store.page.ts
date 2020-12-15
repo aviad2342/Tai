@@ -65,20 +65,19 @@ export class StorePage implements OnInit, OnDestroy {
       },
       480: {
         slidesPerView: 2,
-        spaceBetween: 10
+        spaceBetween: 50
       },
       650: {
         slidesPerView: 3,
-        spaceBetween: 10
+        spaceBetween: 70
       },
       750: {
         slidesPerView: 3,
-        spaceBetween: 10
+        spaceBetween: 70
       },
       1080: {
         slidesPerView: 5,
-        spaceBetween: 3,
-        initialSlide: 1
+        spaceBetween: 100
       }
     }
   };
@@ -94,7 +93,7 @@ export class StorePage implements OnInit, OnDestroy {
   ngOnInit() {
     this.itemsSubscription = this.itemService.items.subscribe(items => {
       this.items = items;
-      this.categories = this.items.map(item => item.category);
+      this.categories = this.items.map(item => item.category).filter((value, index, self) => self.indexOf(value) === index);
     });
     this.cartService.getCustomerCart(this.authService.getLoggedUserId()).subscribe(cart => {
       if(cart) {
@@ -149,14 +148,14 @@ export class StorePage implements OnInit, OnDestroy {
   }
 
   itemExistInCart(id: string) {
-    let bool: boolean;
-    console.log(this?.cartItems.map(cartItem => cartItem.itemId).find(i => i === id));
-    const ll = this.cartItems.find(i => i.itemId === id);
-    bool = this?.cartItems.map(cartItem => cartItem.itemId).indexOf(id) > -1;
-    console.log(id);
-    console.log(bool);
-    console.log(this?.cartItems.map(cartItem => cartItem.itemId).indexOf(id));
-    return bool;
+    // let bool: boolean;
+    // console.log(this?.cartItems.map(cartItem => cartItem.itemId).find(i => i === id));
+    // const ll = this.cartItems.find(i => i.itemId === id);
+    // bool = this?.cartItems.map(cartItem => cartItem.itemId).indexOf(id) > -1;
+    // console.log(id);
+    // console.log(bool);
+    // console.log(this?.cartItems.map(cartItem => cartItem.itemId).indexOf(id));
+    // return bool;
     // console.log(this?.cartItems.map(cartItem => cartItem.itemId));
     // return this.cartItems.filter(i => i.itemId === item.id).length > 0;
     // return this?.cartItems.map(cartItem => cartItem.itemId).includes(item.id);
