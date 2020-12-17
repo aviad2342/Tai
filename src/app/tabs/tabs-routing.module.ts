@@ -80,6 +80,15 @@ const routes: Routes = [
           }
         ]
       },
+      {
+        path: 'menu',
+        children: [
+          {
+          path: '',
+          loadChildren: () => import('../menu-tab/menu-tab.module').then( m => m.MenuTabPageModule), canLoad: [AuthGuard]
+          }
+        ]
+      },
       // {
       //   path: 'tab1',
       //   loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)

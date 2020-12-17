@@ -49,11 +49,15 @@ const routes: Routes = [
   },
   {
     path: 'order/:id',
-    loadChildren: () => import('./order/order.module').then( m => m.OrderPageModule)
+    loadChildren: () => import('./order/order.module').then( m => m.OrderPageModule), canLoad: [AuthGuard]
   },
   {
     path: 'cart/:id',
-    loadChildren: () => import('./cart/cart.module').then( m => m.CartPageModule)
+    loadChildren: () => import('./cart/cart.module').then( m => m.CartPageModule), canLoad: [AuthGuard]
+  },
+  {
+    path: 'menu',
+    loadChildren: () => import('./menu-tab/menu-tab.module').then( m => m.MenuTabPageModule), canLoad: [AuthGuard]
   }
 ];
 @NgModule({

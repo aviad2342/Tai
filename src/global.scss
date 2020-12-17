@@ -79,6 +79,19 @@
   src: url('./assets/fonts/VarelaRound-Regular.ttf');
 }
 
+@font-face {
+  font-family: 'AmaticSC-Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/AmaticSC-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'AmaticSC-Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/AmaticSC-Bold.ttf');
+}
 
 @font-face {
   font-family: 'david_libremedium';
@@ -484,6 +497,40 @@ ion-icon {
     &[class*="toolbar-icon-cashier"] {
       mask-image: url(./assets/icon/cashier.svg);
     }
+
+    &[class*="custom-my-profile"] {
+      mask-image: url(./assets/icon/my-profile.svg);
+    }
+
+    &[class*="toolbar-icon-my-profile"] {
+      mask-image: url(./assets/icon/my-profile.svg);
+    }
+
+    &[class*="custom-my-orders"] {
+      mask-image: url(./assets/icon/my-orders.svg);
+    }
+
+    &[class*="toolbar-icon-my-orders"] {
+      mask-image: url(./assets/icon/my-orders.svg);
+    }
+
+    &[class*="custom-my-calendar"] {
+      mask-image: url(./assets/icon/my-calendar.svg);
+    }
+
+    &[class*="toolbar-icon-my-calendar"] {
+      mask-image: url(./assets/icon/my-calendar.svg);
+    }
+
+    &[class*="custom-my-settings"] {
+      mask-image: url(./assets/icon/my-settings.svg);
+    }
+
+    &[class*="toolbar-icon-my-settings"] {
+      mask-image: url(./assets/icon/my-settings.svg);
+    }
+
+
   
   
   }
