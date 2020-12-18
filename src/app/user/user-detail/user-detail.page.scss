@@ -10,15 +10,24 @@
   }
 
   ion-card {
-    --background: url("../../../assets/background/backgColor.jpg") no-repeat top, #fff;
+    --background: url("../../../assets/background/backgColor.jpg") no-repeat top, rgb(223, 232, 248);
     background-size: 100% 40%;
     position: relative;
     height: 100%;
     width: auto;
 }
 
+ion-card-header {
+  padding-top: 10px;
+}
+
 ion-card-title {
+  font-family: 'Hofesh';
     font-size: xx-large;
+}
+
+ion-item {
+  --background: transparent;
 }
 
 .main-col {
@@ -30,4 +39,8 @@ ion-card-title {
 
 .user-detail-card {
   width: 350px !important;
+}
+
+ion-item::part(native){
+  padding-inline-start: 0;
 }

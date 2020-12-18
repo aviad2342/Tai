@@ -94,6 +94,62 @@
 }
 
 @font-face {
+  font-family: 'Hofesh';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Hofesh.TTF');
+}
+
+@font-face {
+  font-family: 'Petel-bold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Petel-bold.TTF');
+}
+
+@font-face {
+  font-family: 'Yoav';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Yoav.TTF');
+}
+
+@font-face {
+  font-family: 'Yoav-bold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Yoav-bold.TTF');
+}
+
+@font-face {
+  font-family: 'Anka-bold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/ankaclm-bold-webfont.ttf');
+}
+
+@font-face {
+  font-family: 'Haim';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Haim.TTF');
+}
+
+@font-face {
+  font-family: 'Ktav-Yad-Medium';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Ktav-Yad-Medium-Italic.ttf');
+}
+
+@font-face {
+  font-family: 'Ktav-Yad-Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Ktav-Yad-Bold-Italic.ttf');
+}
+
+@font-face {
   font-family: 'david_libremedium';
   src: url('./assets/fonts/davidlibre-medium-webfont.woff2') format('woff2'),
        url('./assets/fonts/davidlibre-medium-webfont.woff') format('woff');

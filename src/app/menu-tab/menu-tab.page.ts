@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
+import { User } from '../user/user.model';
 
 @Component({
   selector: 'app-menu-tab',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuTabPage implements OnInit {
 
-  constructor() { }
+  user: User;
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.getUserLogged().subscribe(user => {
+      this.user = user;
+    });
   }
 
 }

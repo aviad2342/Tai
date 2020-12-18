@@ -8,31 +8,36 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid class="ion-padding">
+  <ion-grid>
     <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-sm="4" offset-sm="1" class="main-col ion-no-padding">
-  <ion-card class="ion-text-center user-detail-card">
+      <ion-col size="12" size-sm="4" class="main-col ion-no-padding">
+  <ion-card class="ion-text-center user-detail-card ion-no-margin">
     <img [src]="this.user?.profilePicture" class="profile-image"/>
     <ion-card-header>
       <ion-card-title size="larg">{{ getUserFullName() }}</ion-card-title>
     </ion-card-header>
+
     <ion-card-content class="ion-no-padding">
-      <ion-item>
+      <ion-item lines="full">
         <ion-icon size="medium" name="at-outline"></ion-icon>
         <ion-label class="ion-padding-start">{{ user?.email }}</ion-label>
       </ion-item>
-      <ion-item>
+
+      <ion-item lines="full">
         <ion-icon size="medium" name="call-outline"></ion-icon>
         <ion-label class="ion-padding-start">{{ user?.phone }}</ion-label>
       </ion-item>
-      <ion-item>
+
+      <ion-item lines="full">
         <ion-icon size="medium" name="home-outline"></ion-icon>
         <ion-label class="ion-padding-start">{{ getAddress() }}</ion-label>
       </ion-item>
-      <ion-item>
-        <ion-icon size="medium" name="calendar-outline"></ion-icon>
+
+      <ion-item lines="full">
+        <ion-icon size="medium" name="hourglass-outline"></ion-icon>
         <ion-label class="ion-padding-start">{{ getUserAge() }}</ion-label>
       </ion-item>
+
     </ion-card-content>
   </ion-card>
 </ion-col>

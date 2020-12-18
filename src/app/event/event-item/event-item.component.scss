@@ -1,10 +1,8 @@
 .event-thumbnail {
-    width: 320px;
     height: 200px;
-    object-fit: fill;
-    padding-bottom: 5px;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
+    object-fit: contain;
+    background: black;
 }
 
 .event-card {
@@ -15,6 +13,23 @@
     --background: #e0e1e4;
 }
 
+ion-card-title {
+    font-family: 'Yoav';
+}
+
+ion-card-subtitle {
+      font-family: 'Yoav';
+      font-size: large;
+}
+
+ion-card-content {
+    font-family: 'Yoav-bold';
+    font-size: large;
+}
+
+.btn-detail {
+    font-family: 'Ktav-Yad-Bold';
+}
 ion-item::part(native){
     --inner-padding-end: 0;
 }

@@ -7,7 +7,7 @@
 <ion-content>
   <ion-list>
 
-    <ion-item button detail="true" routerLink="/tabs/user">
+    <ion-item button detail="true" routerDirection="forward" [routerLink]="['/', 'user', user?.id]">
       <ion-icon src="../../assets/icon/my-profile.svg"></ion-icon>
       <ion-label class="menu-item-label">
         <ion-text>הפרופיל שלי</ion-text>

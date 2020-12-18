@@ -6,17 +6,17 @@
     <ion-card-subtitle>{{ event.date | date }} - {{ event.placeName }}</ion-card-subtitle>
   </ion-card-header>
   <ion-card-content>
-    <p>{{ event.description }}</p>
+    <ion-text>{{ event.description }}</ion-text>
   </ion-card-content>
   
     <ion-button
-    class="ion-no-margin"
+    class="ion-no-margin btn-detail"
       strong="true"
       size="default"
       fill="solid"
       expand="full"
       color="primary"
-      [routerLink]="[ '/', 'tabs', 'event', event.id ]"
+      [routerLink]="[ '/', 'event', event.id ]"
       >פרטים
     <ion-icon name="receipt-outline" slot="start"></ion-icon>
     </ion-button>
