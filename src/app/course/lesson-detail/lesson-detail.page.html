@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button  [defaultHref]="['/', 'course', lesson?.course]"></ion-back-button>
+      <ion-back-button class="app-back-btn" text="חזרה" [defaultHref]="['/', 'tabs', 'course']"></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-no-padding">שיעור</ion-title>
+    <ion-title class="ion-no-padding app-titles">שיעור</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -33,7 +33,7 @@
     </ion-row>
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-sm="6" class="ion-text-center" *ngIf="!isLoading">
-        <ion-button (click)="onPlayVideo()"></ion-button>
+        <ion-button class="play-btn" (click)="onPlayVideo()">נגן שיעור</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

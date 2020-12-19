@@ -9,6 +9,7 @@ ion-card {
 }
 
 ion-card-title {
+    font-family: 'Choco-bold';
     height: 50px;
 }
 
@@ -16,7 +17,14 @@ ion-card-title {
     height: 45px;
 }
 
+ion-card-subtitle {
+      font-family: 'Choco-bold';
+      font-size: large;
+}
+
 ion-card-content {
+    font-family: 'Choco-bold';
+    font-size: large;
     padding-bottom: 0px;
 }
 

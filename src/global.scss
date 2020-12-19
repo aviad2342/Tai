@@ -44,6 +44,7 @@
 @import '../node_modules/@syncfusion/ej2-lists/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-angular-dropdowns/styles/material.css';
 
+/* Custom Fonts */
 @font-face {
   font-family: 'DavidLibre';
   font-style: normal;
@@ -150,6 +151,20 @@
 }
 
 @font-face {
+  font-family: 'Choco-bold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Choco-bold.TTF');
+}
+
+@font-face {
+  font-family: 'Choco';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Choco.TTF');
+}
+
+@font-face {
   font-family: 'david_libremedium';
   src: url('./assets/fonts/davidlibre-medium-webfont.woff2') format('woff2'),
        url('./assets/fonts/davidlibre-medium-webfont.woff') format('woff');
@@ -157,6 +172,35 @@
   font-style: normal;
 
 }
+
+/* Global App Controls CSS And Custom Fonts */
+
+.app-titles {
+  font-family: 'Choco-bold';
+  font-size: x-large;
+}
+
+.app-back-btn {
+  font-family: 'Ktav-Yad-Bold';
+  font-size: large;
+}
+
+.app-detail-labels {
+  font-family: 'Hofesh' !important;
+  font-size: x-large !important; 
+}
+
+.app-user-list-item-labels {
+  font-family: 'Yoav' !important;
+  // font-weight: bolder !important;
+  font-size: xx-large !important; 
+}
+
+.app-submit-buttons {
+  font-family: 'Ktav-Yad-Bold';
+}
+
+/* Global App Appearance CSS And Custom Fonts */
 
 ion-picker {
   touch-action: none;
@@ -277,6 +321,7 @@ input::-webkit-calendar-picker-indicator {
 //   transform: translate3d(-7.5px, 0px, 0px) !important;
 // }
 
+/* App Custom Icons */
 ion-icon {
     &[class*="custom-"] {
       mask-size: contain;

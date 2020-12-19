@@ -9,3 +9,25 @@ div.swiper-pagination.swiper-pagination-bullets.swiper-pagination-bullet
 stroke: #9f0 !important;
 background-color: red($color: #f80202) !important;
 }
+
+ion-card-title {
+    font-family: 'Yoav';
+    font-size: xx-large;
+}
+
+ion-card-subtitle {
+    font-family: 'Yoav';
+    font-size: large;
+}
+
+ion-label {
+    padding-right: 7px;
+}
+
+ion-back-button::part(text){
+    margin-top: 2px;
+}
+
+ion-item::part(native){
+    padding-inline-start: 0;
+}

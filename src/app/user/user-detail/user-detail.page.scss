@@ -23,7 +23,7 @@ ion-card-header {
 
 ion-card-title {
   font-family: 'Hofesh';
-    font-size: xx-large;
+  font-size: xx-large;
 }
 
 ion-item {
@@ -39,6 +39,10 @@ ion-item {
 
 .user-detail-card {
   width: 350px !important;
+}
+
+ion-back-button::part(text){
+  margin-top: 2px;
 }
 
 ion-item::part(native){

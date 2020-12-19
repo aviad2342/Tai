@@ -1,9 +1,9 @@
-<ion-item class="ion-no-padding">
+<ion-item lines="full" class="ion-no-padding">
   <ion-avatar size="medium" slot="start">
     <ion-img [src]="user.profilePicture"></ion-img>
   </ion-avatar>
   <ion-label>
-    <h1>{{ getUserFullName() }}</h1>
+    <h1 class="app-user-list-item-labels">{{ getUserFullName() }}</h1>
     <ion-text color="medium">
       <p>{{ user.email }}</p>
     </ion-text>
