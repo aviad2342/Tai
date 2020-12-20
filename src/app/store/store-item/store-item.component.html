@@ -12,15 +12,17 @@
     </ion-card-content>
     <div>
       <ion-button
+        class="ion-no-margin"
         fill="clear"
         color="primary"
         (click)="onItemSelected()"
         [disabled]='disabled'
       >
       <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
-      <ion-label>הוסף לסל</ion-label>
+      <ion-label class="app-store-item-btn">הוסף לסל</ion-label>
       </ion-button>
       <ion-button
+      class="ion-no-margin"
         fill="clear"
         color="primary"
         [routerLink]="[
@@ -31,7 +33,7 @@
         ]"
       >
       <ion-icon name="receipt-outline" slot="start"></ion-icon>
-      <ion-label>פרטים</ion-label>
+      <ion-label class="app-store-item-btn">פרטים</ion-label>
       </ion-button>
     </div>
   </ion-card>

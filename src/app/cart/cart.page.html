@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button routerLink="/tabs/store" defaultHref="/tabs/store"></ion-back-button>
+      <ion-back-button class="app-back-btn" text="חזרה" [defaultHref]="['/', 'tabs', 'store']"></ion-back-button>
     </ion-buttons>
     <ion-title class="ion-no-padding app-titles">עגלת קניות</ion-title>
     <ion-buttons slot="primary">
@@ -30,14 +30,14 @@
             <ion-thumbnail>
               <ion-img [src]="item?.thumbnail"></ion-img>
             </ion-thumbnail>
-            <ion-label class="ion-no-padding ion-padding-start">
+            <ion-label class="ion-no-padding ion-padding-start app-cart-item-label">
               <h1>{{ item.name }}</h1>
               <ion-text color="medium">
                 <p>{{ item.category }}</p>
               </ion-text>
             </ion-label>
             <div class="units-select">
-            <ion-label class="ion-text-center">
+            <ion-label class="ion-text-center item-price-label">
               <ion-text>
                 {{ (item.price * item.units) | currency:'ILS' }}
               </ion-text>
@@ -64,14 +64,14 @@
     <ion-row class="ion-no-padding ion-justify-content-center">
       <ion-col class="button tappable ion-text-right align-self-center category-title">קופון:</ion-col>
     </ion-row>
-    <ion-row class="">
+    <ion-row class="ion-align-items-center">
       <ion-col class="ion-padding">
         <ion-input class="item-coupon-input" [(ngModel)]="couponCode" autocapitalize="characters"></ion-input>
       </ion-col>
-      <ion-col class="ion-padding coupon-btn">
+      <ion-col class="ion-padding">
         <ion-button color="primary" fill="outline" (click)="onAddCoupon()">
           <ion-icon class="custom-coupons" slot="start"></ion-icon>
-          <ion-label>הפעל קופון</ion-label>
+          <ion-label class="cart-activate-coupons-label">הפעל קופון</ion-label>
         </ion-button>
       </ion-col>
     </ion-row>
@@ -82,45 +82,45 @@
 
     <ion-row class="ion-no-padding">
       <ion-col size="auto" class="ion-text-right">
-        <ion-label>סכום ביניים</ion-label>
+        <ion-label class="cart-summary-title-label">סכום ביניים</ion-label>
       </ion-col>
       <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
       </ion-col>
       <ion-col size="auto" class="ion-text-right">
-        <ion-label>{{ summaryItems | currency:'ILS' }}</ion-label>
+        <ion-label class="cart-summary-price-label">{{ summaryItems | currency:'ILS' }}</ion-label>
       </ion-col>
     </ion-row>
 
     <ion-row class="ion-no-padding">
       <ion-col size="auto" class="ion-text-right">
-        <ion-label>משלוח</ion-label>
+        <ion-label class="cart-summary-title-label">משלוח</ion-label>
       </ion-col>
       <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
       </ion-col>
       <ion-col size="auto" class="ion-text-right">
-        <ion-label>{{ shippingCost | currency:'ILS' }}</ion-label>
+        <ion-label class="cart-summary-price-label">{{ shippingCost | currency:'ILS' }}</ion-label>
       </ion-col>
     </ion-row>
 
     <ion-row class="ion-no-padding" *ngIf="haveDiscount">
       <ion-col size="auto" class="ion-text-right">
-        <ion-label>הנחה ({{ discountRate | percent:'1.0' }})</ion-label>
+        <ion-label class="cart-summary-title-label">הנחה ({{ discountRate | percent:'1.0' }})</ion-label>
       </ion-col>
       <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
       </ion-col>
       <ion-col size="auto" class="ion-text-right">
-        <ion-label>{{ discount | currency:'ILS':'symbol':'1.3-3' }}</ion-label>
+        <ion-label class="cart-summary-price-label">{{ discount | currency:'ILS':'symbol':'1.3-3' }}</ion-label>
       </ion-col>
     </ion-row>
 
     <ion-row class="ion-no-padding">
       <ion-col size="auto" class="ion-text-right">
-        <ion-label>סה'כ לתשלום</ion-label>
+        <ion-label class="cart-summary-title-label">סה'כ לתשלום</ion-label>
       </ion-col>
       <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
       </ion-col>
       <ion-col size="auto" class="ion-text-right">
-        <ion-label>{{ summaryOrder | currency:'ILS' }}</ion-label>
+        <ion-label class="cart-summary-price-label">{{ summaryOrder | currency:'ILS' }}</ion-label>
       </ion-col>
     </ion-row>
 
@@ -130,6 +130,6 @@
 <ion-footer class="add-participant-footer ion-no-padding">
   <ion-button expand="full" color="secondary" (click)="onMoveToPayment()" class="ion-no-padding">
     <ion-icon class="custom-cashier" slot="start"></ion-icon>
-    <ion-label>המשך לתשלום</ion-label>
+    <ion-label class="app-store-item-btn">המשך לתשלום</ion-label>
   </ion-button>
 </ion-footer>

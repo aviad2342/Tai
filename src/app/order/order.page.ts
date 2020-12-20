@@ -19,8 +19,8 @@ import { OrderService } from './order.service';
     trigger('visibilityChanged', [
       state('shown', style({ opacity: 1 })),
       state('hidden', style({ opacity: 0 })),
-      transition('hidden => shown', animate('1s ease-in')),
-      transition('shown => hidden', animate('1s ease-out'))
+      transition('hidden => shown', animate('0.1s ease-in')),
+      transition('shown => hidden', animate('0.1s ease-out'))
     ])
   ],
   styleUrls: ['./order.page.scss'],

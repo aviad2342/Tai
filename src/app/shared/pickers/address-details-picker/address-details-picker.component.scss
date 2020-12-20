@@ -13,17 +13,24 @@ option::-webkit-search-results-decoration {
   }
 
 .city-input {
+    font-family: 'Yoav-bold';
     font-size: large;
 }  
 
 .item-border-input {
     border: 1px solid black;
     border-radius: 7px;
-    font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";
+    font-family: 'Yoav-bold';
+    font-size: large;
     padding: 6px !important;
     background: white;
 }
 
 span {
     background: white;
+}
+
+input {
+    font-family: 'Yoav-bold';
+    font-size: large;
 }

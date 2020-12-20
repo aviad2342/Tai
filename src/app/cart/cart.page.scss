@@ -1,6 +1,7 @@
 
 
 .category-title {
+    font-family: 'Varela Round';
     font-size: larger;
     font-weight: bolder;
     background-color: rgb(223, 223, 223);
@@ -18,6 +19,27 @@ ion-select {
     // background: lightgrey;
     width: 100%;
     justify-content: center;
+}
+
+.item-price-label {
+    font-family: 'Haim';
+    font-size: medium;
+} 
+
+
+.cart-summary-price-label {
+    font-family: 'Haim';
+    font-size: medium;
+}
+
+.cart-summary-title-label {
+    font-family: 'Yoav-bold';
+    font-size: large;
+}
+
+.cart-activate-coupons-label{
+    font-family: 'Yoav-bold';
+    font-size: large;
 }
 
 .units-select-item {
@@ -43,7 +65,7 @@ ion-select::part(icon) {
 }
 
 .item-coupon-input {
-    border: 1px solid black;
+    border: 1px solid var(--ion-color-primary);
     border-radius: 7px;
     text-transform: uppercase;
 }
@@ -53,6 +75,3 @@ ion-select::part(icon) {
     top: -8px;
 }
 
-.coupon-btn {
-    top: -2px;
-}

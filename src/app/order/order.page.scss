@@ -7,6 +7,22 @@
     border: 1px solid rgb(223, 223, 223);
 }
 
+.category-title-label {
+    font-family: 'Choco-bold';
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.order-summary-price-label {
+    font-family: 'Haim';
+    font-size: medium;
+}
+
+.order-summary-title-label {
+    font-family: 'Yoav-bold';
+    font-size: larger;
+}
+
 .dotted-border-bottom {
     border-bottom: 1px dotted black;
     top: -8px;
@@ -47,8 +63,20 @@
 }
 
 .item-border-input {
+    font-family: 'Yoav-bold';
+    font-size: large;
     border: 1px solid black;
-    border-radius: 7px;
+    border-radius: 5px;
+    padding: 6px !important;
+    background: white;
+}
+
+.item-border-cvv-input {
+    font-family: 'Yoav-bold';
+    font-weight: bold;
+    font-size: larger;
+    border: 1px solid black;
+    border-radius: 5px;
     padding: 6px !important;
     background: white;
 }
@@ -80,5 +108,7 @@
 }
 
 .save-delivery-address-lb {
+    font-family: 'Yoav-bold';
+    font-size: larger;
     padding-right: 7px;
 }

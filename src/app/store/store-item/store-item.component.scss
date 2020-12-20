@@ -10,20 +10,23 @@ ion-card {
 
 ion-card-title {
     font-family: 'Choco-bold';
+    font-size: x-large;
     height: 50px;
 }
 
 .item-description {
+    font-family: 'Yoav';
+    font-size: medium;
     height: 45px;
 }
 
 ion-card-subtitle {
-      font-family: 'Choco-bold';
-      font-size: large;
+      font-family: 'Varela Round';
+      font-size: medium;
 }
 
 ion-card-content {
-    font-family: 'Choco-bold';
+    font-family: 'Yoav';
     font-size: large;
     padding-bottom: 0px;
 }

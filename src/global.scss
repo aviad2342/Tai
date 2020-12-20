@@ -165,6 +165,48 @@
 }
 
 @font-face {
+  font-family: 'Abraham';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Abraham-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Anarchy';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Anarchy.TTF');
+}
+
+@font-face {
+  font-family: 'Anarchy-Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Anarchy-Bold.TTF');
+}
+
+@font-face {
+  font-family: 'Eldad';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Eldad.TTF');
+}
+
+@font-face {
+  font-family: 'Eldad-Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Eldad-Bold.TTF');
+}
+
+@font-face {
+  font-family: 'Nehama';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Nehama.ttf');
+}
+
+@font-face {
   font-family: 'david_libremedium';
   src: url('./assets/fonts/davidlibre-medium-webfont.woff2') format('woff2'),
        url('./assets/fonts/davidlibre-medium-webfont.woff') format('woff');
@@ -183,6 +225,21 @@
 .app-back-btn {
   font-family: 'Ktav-Yad-Bold';
   font-size: large;
+}
+
+.app-store-item-btn {
+  font-family: 'Abraham';
+  font-size: medium;
+}
+
+.app-order-pay-btn {
+  font-family: 'Abraham';
+  font-size: larger;
+}
+
+.app-cart-item-label {
+  font-family: 'Yoav-bold' !important;
+  font-size: medium !important;
 }
 
 .app-detail-labels {
@@ -631,7 +688,5 @@ ion-icon {
       mask-image: url(./assets/icon/my-settings.svg);
     }
 
-
-  
   
   }
