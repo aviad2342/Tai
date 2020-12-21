@@ -19,4 +19,8 @@ export class MenuTabPage implements OnInit {
     });
   }
 
+  onLogout() {
+    this.authService.logout();
+  }
+
 }

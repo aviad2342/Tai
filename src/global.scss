@@ -242,6 +242,11 @@
   font-size: medium !important;
 }
 
+.app-input-label {
+  font-family: 'Choco' !important;
+  font-size: large !important;
+}
+
 .app-detail-labels {
   font-family: 'Hofesh' !important;
   font-size: x-large !important; 
@@ -254,6 +259,15 @@
 }
 
 .app-submit-buttons {
+  font-family: 'Ktav-Yad-Bold';
+}
+
+.app-login-btn {
+  font-family: 'Ktav-Yad-Bold';
+  font-size: larger;
+}
+
+.app-register-btn {
   font-family: 'Ktav-Yad-Bold';
 }
 
@@ -654,6 +668,14 @@ ion-icon {
 
     &[class*="toolbar-icon-cashier"] {
       mask-image: url(./assets/icon/cashier.svg);
+    }
+
+    &[class*="custom-register"] {
+      mask-image: url(./assets/icon/register.svg);
+    }
+
+    &[class*="toolbar-icon-register"] {
+      mask-image: url(./assets/icon/register.svg);
     }
 
     &[class*="custom-my-profile"] {

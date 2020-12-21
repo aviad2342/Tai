@@ -58,6 +58,10 @@ const routes: Routes = [
   {
     path: 'menu',
     loadChildren: () => import('./menu-tab/menu-tab.module').then( m => m.MenuTabPageModule), canLoad: [AuthGuard]
+  },
+  {
+    path: 'registration',
+    loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
   }
 ];
 @NgModule({

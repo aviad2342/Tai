@@ -111,7 +111,7 @@ export class UserService {
   }
 
   addUser(user: User) {
-    return this.http.post<{id: string}>('http://localhost:3000/api/user/users',
+    return this.http.post<{id: string}>('http://localhost:3000/api/user/user',
     {
       ...user
     }).
@@ -123,6 +123,17 @@ export class UserService {
       take(1),
       tap(users => {
         this._users.next(users.concat(user));
+      }));
+  }
+
+  registerUser(user: User) {
+    return this.http.post<User>('http://localhost:3000/api/user/register',
+    {
+      ...user
+    }).
+    pipe(
+      tap(newUser => {
+        return newUser;
       }));
   }
 

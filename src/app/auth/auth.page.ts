@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { LoadingController, AlertController, IonInput, IonIcon } from '@ionic/angular';
 import { AuthService } from './auth.service';
 import { NgForm, NgControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -59,6 +59,16 @@ export class AuthPage implements OnInit {
           }
         );
       });
+  }
+
+  togglePasswordVisibility(input: IonInput, icon: IonIcon) {
+    if(input.type === 'password') {
+      input.type = 'text';
+      icon.name = 'eye-outline';
+    } else {
+      input.type = 'password';
+      icon.name = 'eye-off-outline'
+    }
   }
 
   getUserProfilePicture(emailCtrl: NgControl) {
