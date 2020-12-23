@@ -13,14 +13,14 @@ option::-webkit-search-results-decoration {
   }
 
 .city-input {
-    font-family: 'Yoav-bold';
+    font-family: 'Choco';
     font-size: large;
 }  
 
 .item-border-input {
     border: 1px solid black;
     border-radius: 7px;
-    font-family: 'Yoav-bold';
+    font-family: 'Choco';
     font-size: large;
     padding: 6px !important;
     background: white;
@@ -28,17 +28,31 @@ option::-webkit-search-results-decoration {
 
 span {
     background: white;
+    border: 0px;
 }
 
 input {
-    font-family: 'Yoav-bold';
+    font-family: 'Choco';
     font-size: large;
 }
 
-.e-input-group.e-disabled .e-input-group-icon,
+.required-star {
+    vertical-align: super;
+}
+
+// .e-input-group.e-disabled .e-input-group-icon,
+// .e-input-group.e-control-wrapper {
+//   border: 1px solid black !important;
+//   border-radius: 5px;
+//   padding: 3px;
+//   font-size: medium;
+// }
+
+input.e-input,
+textarea.e-input,
+.e-input-group,
 .e-input-group.e-control-wrapper {
-  border: 1px solid black !important;
-  border-radius: 5px;
-  padding: 3px;
-  font-size: medium;
+ font-family: 'Choco' !important;
+  font-size: medium !important;
+  font-weight: 400;
 }

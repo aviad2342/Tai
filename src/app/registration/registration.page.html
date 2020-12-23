@@ -11,7 +11,7 @@
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>
       <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size-sm="4" offset-sm="4">
+        <ion-col size="12" size-sm="4">
           <app-image-picker 
           [showPreview]="this.file" 
           (imagePick)="onImagePicked($event)" 
@@ -24,18 +24,19 @@
       </ion-row>
 
       <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size-sm="4" offset-sm="4">
+        <ion-col size="12" size-sm="4">
           <ion-list>
             <ion-item>
-              <ion-label class="app-input-label" position="floating"> שם <ion-text class="required-star" color="danger">*</ion-text></ion-label>
+              <ion-label class="app-input-label ion-no-margin" position="floating"> שם <ion-text class="required-star" color="danger">*</ion-text></ion-label>
               <ion-input
+              class="ion-no-padding"
                 type="text"
                 ngModel
                 name="firstName"
                 required
                 #firstNameCtrl="ngModel"
               ></ion-input>
-              <ion-icon name="text-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+              <!-- <ion-icon name="text-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon> -->
             </ion-item>
             <ion-label class="ion-padding-start" *ngIf="!firstNameCtrl.valid && firstNameCtrl.touched" color="danger">
               <small> זהו שדה חובה!</small>
@@ -43,7 +44,7 @@
 
 
             <ion-item>
-              <ion-label class="app-input-label" position="floating"> שם משפחה <ion-text class="required-star" color="danger">*</ion-text></ion-label>
+              <ion-label class="app-input-label ion-no-margin" position="floating"> שם משפחה <ion-text class="required-star" color="danger">*</ion-text></ion-label>
               <ion-input
                 type="text"
                 ngModel
@@ -51,14 +52,14 @@
                 required
                 #lastNameCtrl="ngModel"
               ></ion-input>
-              <ion-icon name="text-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+              <!-- <ion-icon name="text-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon> -->
             </ion-item>
             <ion-label class="ion-padding-start" *ngIf="!lastNameCtrl.valid && lastNameCtrl.touched" color="danger">
               <small> זהו שדה חובה!</small>
             </ion-label>
 
             <ion-item>
-              <ion-label class="app-input-label" position="floating"> אימייל <ion-text class="required-star" color="danger">*</ion-text></ion-label>
+              <ion-label class="app-input-label ion-no-margin" position="floating"> אימייל <ion-text class="required-star" color="danger">*</ion-text></ion-label>
               <ion-input
                 type="email"
                 ngModel
@@ -67,14 +68,14 @@
                 email
                 #emailCtrl="ngModel"
               ></ion-input>
-              <ion-icon name="at" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+              <!-- <ion-icon name="at" slot="end" position="floating" class="ion-align-self-center"></ion-icon> -->
             </ion-item>
             <ion-label class="ion-padding-start" *ngIf="!emailCtrl.valid && emailCtrl.touched" color="danger">
               <small> כתובת המייל אינה תקינה!</small>
             </ion-label>
 
             <ion-item>
-              <ion-label class="app-input-label" position="floating"> מספר טלפון <ion-text class="required-star" color="danger">*</ion-text></ion-label>
+              <ion-label class="app-input-label ion-no-margin" position="floating"> מספר טלפון <ion-text class="required-star" color="danger">*</ion-text></ion-label>
               <ion-input
                 type="tel"
                 ngModel
@@ -85,14 +86,14 @@
                 tel
                 #phoneCtrl="ngModel"
               ></ion-input>
-              <ion-icon name="call-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+              <!-- <ion-icon name="call-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon> -->
             </ion-item>
             <ion-label class="ion-padding-start" *ngIf="!phoneCtrl.valid && phoneCtrl.touched" color="danger">
               <small> זהו שדה חובה!</small>
             </ion-label>
 
             <ion-item>
-              <ion-label class="app-input-label" position="floating">סיסמה<ion-text class="required-star" color="danger">*</ion-text></ion-label>
+              <ion-label class="app-input-label ion-no-margin" position="floating">סיסמה<ion-text class="required-star" color="danger">*</ion-text></ion-label>
               <ion-input
                 type="password"
                 ngModel
@@ -101,14 +102,14 @@
                 minlength="6"
                 #passwordCtrl="ngModel"
               ></ion-input>
-              <ion-icon name="eye-off-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+              <!-- <ion-icon name="eye-off-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon> -->
             </ion-item>
             <ion-label class="ion-padding-start" *ngIf="!passwordCtrl.valid && passwordCtrl.touched" color="danger">
               <small> זהו שדה חובה!</small>
             </ion-label>
 
             <ion-item>
-              <ion-label class="app-input-label" position="floating">תאריך לידה<ion-text class="required-star" color="danger">*</ion-text></ion-label>
+              <ion-label class="app-input-label ion-no-margin" position="floating">תאריך לידה<ion-text class="required-star" color="danger">*</ion-text></ion-label>
               <ion-datetime
               display-format="DD/MM/YYYY"
               pickerFormat="DD MMM YY"
@@ -122,7 +123,7 @@
               required
               #dateOfBirthCtrl="ngModel"
             ></ion-datetime>
-              <ion-icon name="calendar-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+              <!-- <ion-icon name="calendar-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon> -->
             </ion-item>
             <ion-label class="ion-padding-start" *ngIf="!dateOfBirthCtrl.valid && dateOfBirthCtrl.touched" color="danger">
               <small> זהו שדה חובה!</small>
@@ -131,20 +132,21 @@
           </ion-list>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col size="12" size-sm="4" offset-sm="4" class="address-picker">
-          <app-address-details-picker (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)"></app-address-details-picker>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-sm="4" class="address-picker">
+          <app-address-form-picker (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)"></app-address-form-picker>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col size="12" size-sm="4" offset-sm="4">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-sm="4">
           <ion-button
+            class="app-register-btn"
             type="submit"
             color="primary"
             expand="block"
             [disabled]="!f.valid || !addressIsValid"
           >
-          הוסף
+          הירשם
           </ion-button>
         </ion-col>
       </ion-row>

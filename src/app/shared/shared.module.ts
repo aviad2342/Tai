@@ -13,6 +13,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { NumberPickerComponent } from './pickers/number-picker/number-picker.component';
 import { AddressDetailsPickerComponent } from './pickers/address-details-picker/address-details-picker.component';
 import { AddressFinderComponent } from './pickers/address-finder/address-finder.component';
+import { AddressFormPickerComponent } from './pickers/address-form-picker/address-form-picker.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AddressFinderComponent } from './pickers/address-finder/address-finder.
     ImageItemComponent,
     NumberPickerComponent,
     AddressDetailsPickerComponent,
-    AddressFinderComponent
+    AddressFinderComponent,
+    AddressFormPickerComponent
   ],
   imports: [CommonModule, IonicModule, IonicSelectableModule, FormsModule, NgxDropzoneModule, AutoCompleteModule],
   exports: [
@@ -32,7 +34,8 @@ import { AddressFinderComponent } from './pickers/address-finder/address-finder.
     ImageItemComponent,
     NumberPickerComponent,
     AddressDetailsPickerComponent,
-    AddressFinderComponent
+    AddressFinderComponent,
+    AddressFormPickerComponent
   ]
 })
 export class SharedModule {}
