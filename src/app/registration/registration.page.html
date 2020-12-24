@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>הרשמה</ion-title>
+    <ion-title class="app-titles ion-align-self-center">הרשמה</ion-title>
     <ion-buttons slot="start">
       <ion-back-button class="app-back-btn" text="חזרה" [defaultHref]="['/', 'auth']"></ion-back-button>
     </ion-buttons>
@@ -137,8 +137,8 @@
           <app-address-form-picker (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)"></app-address-form-picker>
         </ion-col>
       </ion-row>
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size-sm="4">
+      <ion-row class="ion-justify-content-center ion-padding-top">
+        <ion-col class="ion-no-padding" size="12" size-sm="4">
           <ion-button
             class="app-register-btn"
             type="submit"

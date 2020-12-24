@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button routerLink="/manage" defaultHref="/manage"></ion-back-button>
+      <ion-back-button class="app-back-btn" text="חזרה" [defaultHref]="['/', 'manage']"></ion-back-button>
     </ion-buttons>
-    <ion-title>ניהול טיפולים</ion-title>
+    <ion-title class="app-titles">ניהול טיפולים</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -70,7 +70,7 @@
       [rows]="treatments"
       class="bootstrap"
       [messages]="{emptyMessage:'אין נתונים להצגה', totalMessage: 'total', selectedMessage: 'selected'}"
-      [rowHeight]="70"
+      [rowHeight]="'auto'"
       [headerHeight]="50"
       [footerHeight]="50"
       [limit]="50"
@@ -79,7 +79,7 @@
       [selectionType]="SelectionType.single"
       (select)="onSelect($event)"
     >
-    <ngx-datatable-column name="" [sortable]="false" [width]="130" [resizeable]="false">
+    <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="" [sortable]="false" [width]="130" [resizeable]="false">
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
         <ion-thumbnail>
           <ion-img [src]="row['thumbnail']"></ion-img>
@@ -87,11 +87,11 @@
       </ng-template>
     </ngx-datatable-column> 
     
-      <ngx-datatable-column name="treatmentType" [width]="150" [resizeable]="false">
+      <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="treatmentType" [width]="150" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>סוג טיפול</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="therapistName" [width]="200" [resizeable]="false">
+      <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="therapistName" [width]="200" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>שם המטפל</strong></ng-template>
       </ngx-datatable-column>
 

@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button routerLink="/manage" defaultHref="/manage"></ion-back-button>
+      <ion-back-button class="app-back-btn" text="חזרה" [defaultHref]="['/', 'manage']"></ion-back-button>
     </ion-buttons>
-    <ion-title>ניהול מטפלים</ion-title>
+    <ion-title class="app-titles">ניהול מטפלים</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -94,7 +94,7 @@
       [selectionType]="SelectionType.single"
       (select)="onSelect($event)"
     >
-    <ngx-datatable-column name="" [sortable]="false" [width]="120" [resizeable]="false">
+    <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="" [sortable]="false" [width]="120" [resizeable]="false">
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
         <ion-thumbnail>
           <ion-img [src]="row['profilePicture']"></ion-img>
@@ -102,26 +102,26 @@
       </ng-template>
     </ngx-datatable-column> 
     
-      <ngx-datatable-column name="firstName" [width]="150" [resizeable]="false">
+      <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="firstName" [width]="150" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>שם פרטי</strong></ng-template>
         <!-- <ng-template let-value="value" ngx-datatable-cell-template>
           Hi: <strong>{{value}}</strong>
         </ng-template> -->
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="lastName" [width]="150" [resizeable]="false">
+      <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="lastName" [width]="150" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>שם משפחה</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="phone" [width]="180" [resizeable]="false">
+      <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="phone" [width]="180" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>מספר טלפון</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="email" [width]="220" [resizeable]="false">
+      <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="email" [width]="220" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>אימייל</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="city" [sortable]="true" [width]="300" [resizeable]="false">
+      <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="city" [sortable]="true" [width]="300" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>כתובת</strong></ng-template>
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
           <a href="https://www.google.com/maps/place/{{row.street}} {{row.houseNumber}}, {{row.city}}, {{row.country}}">

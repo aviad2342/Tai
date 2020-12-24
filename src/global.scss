@@ -269,8 +269,13 @@
 
 .app-register-btn {
   font-family: 'Ktav-Yad-Bold';
+  font-size: large;
 }
 
+.app-crud-btn-label {
+  font-family: 'Choco';
+  font-size: large;
+}
 /* Global App Appearance CSS And Custom Fonts */
 
 ion-picker {
@@ -284,6 +289,7 @@ ion-picker {
 .datatable-cell-padding {
   vertical-align: middle !important;
   padding: 5px !important;
+  align-self: center;
 }
 
 .datatable-header-padding {

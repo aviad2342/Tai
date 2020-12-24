@@ -3,7 +3,7 @@
     max-width: 95%;
     height: 20rem;
     max-height: 30vh;
-    border: 1px solid var(--ion-color-primary);
+    border: 2px solid var(--ion-color-primary);
     margin: auto;
     display: flex;
     justify-content: center;
@@ -31,4 +31,8 @@
 
 .action-sheet {
   justify-content: center;
+}
+
+.image-picker-label {
+  font-family: 'Ktav-Yad-Bold';
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { AppService } from '../app.service';
 import { Address } from '../shared/address.model';
@@ -21,6 +22,7 @@ export class RegistrationPage implements OnInit {
   imageIsValid = true;
 
   constructor(
+    private router: Router,
     private userService: UserService,
     public appService: AppService
     ) { }
@@ -86,6 +88,7 @@ export class RegistrationPage implements OnInit {
       })
     ).subscribe(() => {
       this.appService.presentToast('המשתמש נשמר בהצלחה', true);
+      this.router.navigate(['/auth']);
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי המשתמש לא נשמרו', false);

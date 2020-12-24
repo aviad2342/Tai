@@ -31,9 +31,11 @@ span {
     border: 0px;
 }
 
-input {
+input::placeholder {
     font-family: 'Choco';
     font-size: large;
+    color: black;
+    --placeholder-color: black;
 }
 
 .required-star {
@@ -52,7 +54,7 @@ input.e-input,
 textarea.e-input,
 .e-input-group,
 .e-input-group.e-control-wrapper {
- font-family: 'Choco' !important;
-  font-size: medium !important;
+//  font-family: 'Choco' !important;
+  font-size: large !important;
   font-weight: 400;
 }

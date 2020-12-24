@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
   <ion-buttons slot="start">
-    <ion-back-button routerLink="/manage" defaultHref="/manage"></ion-back-button>
+    <ion-back-button class="app-back-btn" text="חזרה" [defaultHref]="['/', 'manage']"></ion-back-button>
   </ion-buttons>
-  <ion-title>ניהול מוצרים</ion-title>
+  <ion-title class="app-titles">ניהול מוצרים</ion-title>
 </ion-toolbar>
 </ion-header>
 
@@ -83,7 +83,7 @@
       (activate)="onActivate($event)"
       (select)="onSelect($event)"
     >
-    <ngx-datatable-column name="" [sortable]="false" [width]="100" [resizeable]="false">
+    <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="" [sortable]="false" [width]="100" [resizeable]="false">
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
         <ion-thumbnail>
           <ion-img [src]="row['thumbnail']"></ion-img>
@@ -91,22 +91,22 @@
       </ng-template>
     </ngx-datatable-column> 
 
-      <ngx-datatable-column name="name" [width]="150" [resizeable]="false">
+      <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="name" [width]="250" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>שם המוצר</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="price" [sortable]="true" [width]="120" [resizeable]="false">
+      <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="price" [sortable]="true" [width]="120" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>מחיר</strong></ng-template>
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
           {{ row['price'] | currency:'ILS' }}
         </ng-template>
       </ngx-datatable-column> 
 
-      <ngx-datatable-column name="quantity" [width]="120" [resizeable]="false">
+      <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="quantity" [width]="120" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>כמות</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="category" [width]="120" [resizeable]="false">
+      <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="category" [width]="120" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>קטגוריה</strong></ng-template>
       </ngx-datatable-column>
 
