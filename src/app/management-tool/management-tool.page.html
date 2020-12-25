@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button class="app-back-btn" text="חזרה" [defaultHref]="['/', 'user']"></ion-back-button>
+    <ion-buttons slot="start" *ngIf="isDesktop">
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title class="app-titles">כלי ניהול</ion-title>
   </ion-toolbar>

@@ -3,7 +3,7 @@
     <ion-menu-toggle auto-hide="false">
     <ion-header>
       <ion-toolbar color="primary">
-        <ion-title>
+        <ion-title class="app-titles">
           תפריט
         </ion-title>
       </ion-toolbar>
@@ -14,44 +14,44 @@
       <ion-list>
         <ion-menu-toggle auto-hide="false">
           <ion-item lines="none" routerLink="/event">
-            <ion-icon name="today-outline" slot="start"></ion-icon>
-            <ion-label slot="start">אירועים</ion-label>
+            <ion-icon class="ion-no-margin menu-icon" size="large" name="today-outline" slot="start"></ion-icon>
+            <ion-label class="app-side-menu-label">אירועים</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle auto-hide="false">
           <ion-item lines="none" routerLink="/user">
-            <ion-icon name="people-outline" slot="start"></ion-icon>
-            <ion-label>משתמשים</ion-label>
+            <ion-icon class="ion-no-margin menu-icon" size="large" name="people-outline" slot="start"></ion-icon>
+            <ion-label class="app-side-menu-label">משתמשים</ion-label>
           </ion-item>
         </ion-menu-toggle>
       <ion-menu-toggle auto-hide="false">
         <ion-item lines="none" routerLink="/store">
-          <ion-icon name="pricetags-outline" slot="start"></ion-icon>
-          <ion-label>חנות</ion-label>
+          <ion-icon class="ion-no-margin menu-icon" size="large" name="pricetags-outline" slot="start"></ion-icon>
+          <ion-label class="app-side-menu-label">חנות</ion-label>
         </ion-item>
       </ion-menu-toggle>
     <ion-menu-toggle auto-hide="false">
       <ion-item lines="none" routerLink="/article">
-        <ion-icon name="newspaper-outline" slot="start"></ion-icon>
-        <ion-label>מאמרים</ion-label>
+        <ion-icon class="ion-no-margin menu-icon" size="large" name="newspaper-outline" slot="start"></ion-icon>
+        <ion-label class="app-side-menu-label">מאמרים</ion-label>
       </ion-item>
     </ion-menu-toggle>
     <ion-menu-toggle auto-hide="false">
       <ion-item lines="none" routerLink="/course">
-        <ion-icon class="custom-online-course" slot="start"></ion-icon>
-        <ion-label>קורסים</ion-label>
+        <ion-icon class="custom-online-course ion-no-margin menu-icon" size="large" slot="start"></ion-icon>
+        <ion-label class="app-side-menu-label">קורסים</ion-label>
       </ion-item>
     </ion-menu-toggle>
     <ion-menu-toggle auto-hide="false">
       <ion-item lines="none" routerLink="/manage">
-        <ion-icon class="custom-management" slot="start"></ion-icon>
-        <ion-label>כלי ניהול</ion-label>
+        <ion-icon class="custom-management ion-no-margin menu-icon" size="large" slot="start"></ion-icon>
+        <ion-label class="app-side-menu-label">כלי ניהול</ion-label>
       </ion-item>
     </ion-menu-toggle>
         <ion-menu-toggle auto-hide="false">
           <ion-item lines="none" (click)="onLogout()" button>
-            <ion-icon name="exit" slot="start"></ion-icon>
-            <ion-label>התנתק</ion-label>
+            <ion-icon class="ion-no-margin menu-icon" name="exit" slot="start"></ion-icon>
+            <ion-label class="app-side-menu-label">התנתק</ion-label>
           </ion-item>
         </ion-menu-toggle>
       </ion-list>

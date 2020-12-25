@@ -14,22 +14,22 @@
       <ion-col>
         <ion-button color="primary" (click)="onAddTherapist()">
         <ion-icon name="person-add-outline" slot="start"></ion-icon>
-        <ion-label>הוסף</ion-label>
+        <ion-label class="app-crud-btn-label">הוסף</ion-label>
       </ion-button>
 
       <ion-button color="secondary" (click)="onViewTherapist()" [disabled]="!isRowSelected">
         <ion-icon name="eye-outline" slot="start"></ion-icon>
-        <ion-label>פרופיל</ion-label>
+        <ion-label class="app-crud-btn-label">פרופיל</ion-label>
       </ion-button>
 
       <ion-button color="warning" (click)="onEditTherapist()" [disabled]="!isRowSelected">
         <ion-icon name="create-outline" slot="start"></ion-icon>
-        <ion-label>ערוך</ion-label>
+        <ion-label class="app-crud-btn-label">ערוך</ion-label>
       </ion-button>
 
       <ion-button color="danger" (click)="onDeleteTherapist()" [disabled]="!isRowSelected">
         <ion-icon name="trash-outline" slot="start"></ion-icon>
-        <ion-label>מחק</ion-label>
+        <ion-label class="app-crud-btn-label">מחק</ion-label>
       </ion-button>
 
       </ion-col>

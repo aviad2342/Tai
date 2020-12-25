@@ -1,2 +1,22 @@
 
-  
+.menu-icon {
+    padding-left: 7px;
+    color: black;
+}
+
+ion-item:hover {
+    padding-right: 25px;
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Safari 3-8 */
+    transform: scale(1.3); 
+    transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+    -ms-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -webkit-transition: all 300ms ease;
+  }
+
+  .app-side-menu-label {
+    font-family: 'Choco-bold';
+    font-size: larger;
+  }

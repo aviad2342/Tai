@@ -8,6 +8,14 @@
 
 .manage-tool-tab:hover {
     background-color: rgb(225, 227, 236);
+    -ms-transform: scale(1.1); /* IE 9 */
+    -webkit-transform: scale(1.1); /* Safari 3-8 */
+    transform: scale(1.1); 
+    transition: all 400ms ease;
+    -o-transition: all 400ms ease;
+    -ms-transition: all 400ms ease;
+    -moz-transition: all 400ms ease;
+    -webkit-transition: all 400ms ease;
 }
 
 .manage-tool-tab-label {

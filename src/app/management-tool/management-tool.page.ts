@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-management-tool',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManagementToolPage implements OnInit {
 
-  constructor() { }
+  isDesktop: boolean;
+
+  constructor(private appService: AppService ) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+    this.isDesktop = this.appService.isDesktop();
   }
 
 }
