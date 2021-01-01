@@ -17,6 +17,8 @@ export interface AuthResponseData {
   expiresIn: string;
 }
 
+const LOCALHOST = '10.0.2.2';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -132,7 +134,7 @@ export class AuthService implements OnDestroy {
   login(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        `http://localhost:3000/api/auth/login`,
+        `http://${LOCALHOST}:3000/api/auth/login`,
         { email, password }
       )
       .pipe(tap(this.setUserData.bind(this)));

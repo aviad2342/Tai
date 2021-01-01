@@ -4,6 +4,8 @@ import { BehaviorSubject } from 'rxjs';
 import { take, map, tap, delay, switchMap } from 'rxjs/operators';
 import { User } from './user.model';
 
+const LOCALHOST = '10.0.2.2';
+
 export interface Predictions {
   country: string;
   city: string;
@@ -25,14 +27,14 @@ export class UserService {
   constructor( private http: HttpClient ) { }
 
   getUsers() {
-    return this.http.get<User[]>('http://localhost:3000/api/user/users')
+    return this.http.get<User[]>(`http://${LOCALHOST}:3000/api/user/users`)
     .pipe(tap(resDta => {
       this._users.next(resDta);
     }));
   }
 
   getAllUsers() {
-    return this.http.get('http://localhost:3000/api/user/users')
+    return this.http.get(`http://${LOCALHOST}:3000/api/user/users`)
     .pipe(tap(resDta => {
     }));
   }
@@ -55,7 +57,7 @@ export class UserService {
    getCities(country: string) {
     return this.http.get<any>(
       // tslint:disable-next-line: max-line-length
-      `http://localhost:3000/api/address/cities/${country}`)
+      `http://${LOCALHOST}:3000/api/address/cities/${country}`)
       .pipe(
       map(predictions => {
         const countries: string[] = [];
@@ -86,7 +88,7 @@ export class UserService {
   }
 
   getUser(id: string) {
-    return this.http.get<User>(`http://localhost:3000/api/user/users/${id}`)
+    return this.http.get<User>(`http://${LOCALHOST}:3000/api/user/users/${id}`)
     .pipe(tap(resDta => {
       return resDta;
     }));
@@ -95,7 +97,7 @@ export class UserService {
   getUserByEmail(email: string) {
     return this.http
       .get<User>(
-        `http://localhost:3000/api/user/users/email/${email}`)
+        `http://${LOCALHOST}:3000/api/user/users/email/${email}`)
       .pipe(tap(user => {
         return user;
       }));
@@ -105,13 +107,13 @@ export class UserService {
     const uploadData = new FormData();
     uploadData.append('image', image, fileName);
     return this.http.post<{ imageUrl: string}>(
-      'http://localhost:3000/api/image/upload',
+      `http://${LOCALHOST}:3000/api/image/upload`,
       uploadData
     );
   }
 
   addUser(user: User) {
-    return this.http.post<{id: string}>('http://localhost:3000/api/user/user',
+    return this.http.post<{id: string}>(`http://${LOCALHOST}:3000/api/user/user`,
     {
       ...user
     }).
@@ -127,7 +129,7 @@ export class UserService {
   }
 
   registerUser(user: User) {
-    return this.http.post<User>('http://localhost:3000/api/user/register',
+    return this.http.post<User>(`http://${LOCALHOST}:3000/api/user/register`,
     {
       ...user
     }).
@@ -153,7 +155,7 @@ export class UserService {
       entry: user.entry,
       profilePicture: user.profilePicture
       };
-    return this.http.put(`http://localhost:3000/api/user/users/${user.id}`,
+    return this.http.put(`http://${LOCALHOST}:3000/api/user/users/${user.id}`,
     {
       ...userObj
     }).
@@ -187,7 +189,7 @@ export class UserService {
       entry: user.entry,
       profilePicture: user.profilePicture
       };
-    return this.http.put(`http://localhost:3000/api/user/users/image/${user.id}`,
+    return this.http.put(`http://${LOCALHOST}:3000/api/user/users/image/${user.id}`,
     {
       ...userObj
     }).
@@ -206,7 +208,7 @@ export class UserService {
   }
 
   deleteUser(id: string) {
-    return this.http.delete(`http://localhost:3000/api/user/users/${id}`).
+    return this.http.delete(`http://${LOCALHOST}:3000/api/user/users/${id}`).
     pipe(
       switchMap(resData => {
         return this.getUsers();

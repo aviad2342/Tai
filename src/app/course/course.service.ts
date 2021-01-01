@@ -5,6 +5,8 @@ import { map, take, tap, switchMap } from 'rxjs/operators';
 import { Lesson } from './lesson.model';
 import { HttpClient } from '@angular/common/http';
 
+const LOCALHOST = '10.0.2.2';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -38,21 +40,21 @@ export class CourseService {
 
 // ------------------------------------------ Course Functions --------------------------------------------------
   getCourses() {
-    return this.http.get<Course[]>('http://localhost:3000/api/course/courses')
+    return this.http.get<Course[]>(`http://${LOCALHOST}:3000/api/course/courses`)
     .pipe(tap(resDta => {
       this._courses.next(resDta);
     }));
   }
 
   getCourse(id: string) {
-    return this.http.get<Course>(`http://localhost:3000/api/course/course/${id}`)
+    return this.http.get<Course>(`http://${LOCALHOST}:3000/api/course/course/${id}`)
     .pipe(tap(resDta => {
       return resDta;
     }));
   }
 
   addCourse(course: Course) {
-    return this.http.post<Course>('http://localhost:3000/api/course/course',
+    return this.http.post<Course>(`http://${LOCALHOST}:3000/api/course/course`,
     {
       ...course
     }).
@@ -80,7 +82,7 @@ export class CourseService {
       thumbnail: course.thumbnail,
       courseLessons: course.courseLessons
       };
-    return this.http.put<Course>(`http://localhost:3000/api/course/course/${course.id}`,
+    return this.http.put<Course>(`http://${LOCALHOST}:3000/api/course/course/${course.id}`,
     {
       ...courseObj
     }).
@@ -91,7 +93,7 @@ export class CourseService {
   }
 
   deleteCourse(id: string) {
-    return this.http.delete(`http://localhost:3000/api/course/course/${id}`).
+    return this.http.delete(`http://${LOCALHOST}:3000/api/course/course/${id}`).
     pipe(
       switchMap(resData => {
         return this.getCourses();
@@ -103,14 +105,14 @@ export class CourseService {
 
 
   getCourseLessons(course: string) {
-    return this.http.get<Lesson[]>( `http://localhost:3000/api/lesson/lesson/course/${course}`)
+    return this.http.get<Lesson[]>( `http://${LOCALHOST}:3000/api/lesson/lesson/course/${course}`)
       .pipe(tap(lessons => {
         this._lessons.next(lessons);
       }));
   }
 
   getLessonsOfCourse(id: string) {
-    return this.http.get<Lesson[]>( `http://localhost:3000/api/lesson/lesson/lessons/${id}`)
+    return this.http.get<Lesson[]>( `http://${LOCALHOST}:3000/api/lesson/lesson/lessons/${id}`)
       .pipe(tap(lessons => {
         return lessons;
       }));
@@ -120,7 +122,7 @@ export class CourseService {
     const uploadData = new FormData();
     uploadData.append('image', image, fileName);
     return this.http.post<{ imageUrl: string}>(
-      'http://localhost:3000/api/image/uploadCourseImage',
+      `http://${LOCALHOST}:3000/api/image/uploadCourseImage`,
       uploadData
     );
   }
@@ -137,21 +139,21 @@ export class CourseService {
   // }
 
   getLessons() {
-    return this.http.get<Lesson[]>('http://localhost:3000/api/lesson/lessons')
+    return this.http.get<Lesson[]>(`http://${LOCALHOST}:3000/api/lesson/lessons`)
     .pipe(tap(resDta => {
       this._lessons.next(resDta);
     }));
   }
 
   getLesson(id: string) {
-    return this.http.get<Lesson>(`http://localhost:3000/api/lesson/lesson/${id}`)
+    return this.http.get<Lesson>(`http://${LOCALHOST}:3000/api/lesson/lesson/${id}`)
     .pipe(tap(resDta => {
       return resDta;
     }));
   }
 
   addLesson(lesson: Lesson) {
-    return this.http.post<Lesson>('http://localhost:3000/api/lesson/lesson',
+    return this.http.post<Lesson>('http://${LOCALHOST}:3000/api/lesson/lesson',
     {
       ...lesson
     }).
@@ -171,7 +173,7 @@ export class CourseService {
       thumbnail: lesson.thumbnail,
       course: lesson.course
       };
-    return this.http.put<Lesson>(`http://localhost:3000/api/lesson/lesson/${lesson.id}`,
+    return this.http.put<Lesson>(`http://${LOCALHOST}:3000/api/lesson/lesson/${lesson.id}`,
     {
       ...lessonObj
     }).
@@ -182,7 +184,7 @@ export class CourseService {
   }
 
   reorderLessons(fromId: string, toId: string) {
-    return this.http.get(`http://localhost:3000/api/lesson/lesson/reorder/${fromId}/${toId}`).
+    return this.http.get(`http://${LOCALHOST}:3000/api/lesson/lesson/reorder/${fromId}/${toId}`).
     pipe(
       switchMap(resData => {
         return this.lessons;
@@ -193,7 +195,7 @@ export class CourseService {
   }
 
   deleteLesson(id: string, courseId: string) {
-    return this.http.delete(`http://localhost:3000/api/lesson/lesson/${id}`).
+    return this.http.delete(`http://${LOCALHOST}:3000/api/lesson/lesson/${id}`).
     pipe(
       switchMap(resData => {
         return this.getCourseLessons(courseId);
@@ -204,14 +206,14 @@ export class CourseService {
   }
 
   removeLesson(id: string) {
-    return this.http.delete(`http://localhost:3000/api/lesson/lesson/${id}`).
+    return this.http.delete(`http://${LOCALHOST}:3000/api/lesson/lesson/${id}`).
     pipe( tap(resData => {
         return resData;
       }));
   }
 
   deleteCourseLessons(courseId: string) {
-    return this.http.delete(`http://localhost:3000/api/lesson/lesson/courseId/${courseId}`).
+    return this.http.delete(`http://${LOCALHOST}:3000/api/lesson/lesson/courseId/${courseId}`).
     pipe(
       switchMap(resData => {
         return this.getCourseLessons(courseId);

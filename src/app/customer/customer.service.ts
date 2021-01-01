@@ -4,6 +4,8 @@ import { BehaviorSubject } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
 import { Customer } from './customer.model';
 
+const LOCALHOST = '10.0.2.2';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,14 +21,14 @@ export class CustomerService {
     constructor( private http: HttpClient ) { }
 
     getCustomers() {
-      return this.http.get<Customer[]>('http://localhost:3000/api/customer/customers')
+      return this.http.get<Customer[]>(`http://${LOCALHOST}:3000/api/customer/customers`)
       .pipe(tap(resDta => {
         this._customers.next(resDta);
       }));
     }
 
     getCustomer(id: string) {
-      return this.http.get<Customer>(`http://localhost:3000/api/customer/customer/${id}`)
+      return this.http.get<Customer>(`http://${LOCALHOST}:3000/api/customer/customer/${id}`)
       .pipe(tap(resDta => {
         return resDta;
       }));
@@ -35,7 +37,7 @@ export class CustomerService {
     getCustomerByEmail(email: string) {
       return this.http
         .get<Customer>(
-          `http://localhost:3000/api/customer/customer/email/${email}`)
+          `http://${LOCALHOST}:3000/api/customer/customer/email/${email}`)
         .pipe(tap(customer => {
           return customer;
         }));
@@ -45,13 +47,13 @@ export class CustomerService {
       const uploadData = new FormData();
       uploadData.append('image', image, fileName);
       return this.http.post<{ imageUrl: string}>(
-        'http://localhost:3000/api/image/upload',
+        `http://${LOCALHOST}:3000/api/image/upload`,
         uploadData
       );
     }
 
     addCustomer(customer: Customer) {
-      return this.http.post<{id: string}>('http://localhost:3000/api/customer/customer',
+      return this.http.post<{id: string}>(`http://${LOCALHOST}:3000/api/customer/customer`,
       {
         ...customer
       }).
@@ -83,7 +85,7 @@ export class CustomerService {
         profilePicture: customer.profilePicture,
         orders: customer.orders
         };
-      return this.http.put(`http://localhost:3000/api/customer/customer/${customer.id}`,
+      return this.http.put(`http://${LOCALHOST}:3000/api/customer/customer/${customer.id}`,
       {
         ...customerObj
       }).
@@ -102,7 +104,7 @@ export class CustomerService {
     }
 
     deleteCustomer(id: string) {
-      return this.http.delete(`http://localhost:3000/api/customer/customer/${id}`).
+      return this.http.delete(`http://${LOCALHOST}:3000/api/customer/customer/${id}`).
       pipe(
         switchMap(resData => {
           return this.getCustomers();

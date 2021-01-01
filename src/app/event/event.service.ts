@@ -7,6 +7,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Participant } from './participant.model';
 import { User } from '../user/user.model';
 
+const LOCALHOST = '10.0.2.2';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -46,21 +48,21 @@ export class EventService {Participant
   // }
 
   getEvents() {
-    return this.http.get<Event[]>('http://localhost:3000/api/event/events')
+    return this.http.get<Event[]>(`http://${LOCALHOST}:3000/api/event/events`)
     .pipe(tap(resDta => {
       this._events.next(resDta);
     }));
   }
 
   getEvent(id: string) {
-    return this.http.get<Event>(`http://localhost:3000/api/event/event/${id}`)
+    return this.http.get<Event>(`http://${LOCALHOST}:3000/api/event/event/${id}`)
     .pipe(tap(resDta => {
       return resDta;
     }));
   }
 
   addEvent(event: Event) {
-    return this.http.post<{id: string}>('http://localhost:3000/api/event/event',
+    return this.http.post<{id: string}>(`http://${LOCALHOST}:3000/api/event/event`,
     {
       ...event
     }).
@@ -135,7 +137,7 @@ export class EventService {Participant
        participants:  event.participants,
        speakers:      event.speakers
       };
-    return this.http.put<Event>(`http://localhost:3000/api/event/event/${event.id}`,
+    return this.http.put<Event>(`http://${LOCALHOST}:3000/api/event/event/${event.id}`,
     {
       ...eventObj
     }).
@@ -166,7 +168,7 @@ export class EventService {Participant
        participants:  event.participants,
        speakers:      event.speakers
       };
-    return this.http.put<Event>(`http://localhost:3000/api/event/event/image/${event.id}`,
+    return this.http.put<Event>(`http://${LOCALHOST}:3000/api/event/event/image/${event.id}`,
     {
       ...eventObj
     }).
@@ -177,7 +179,7 @@ export class EventService {Participant
   }
 
   updateEventImages(id: string, images: string[]) {
-    return this.http.put(`http://localhost:3000/api/event/event/images/${id}`,
+    return this.http.put(`http://${LOCALHOST}:3000/api/event/event/images/${id}`,
     {
       images
     }).
@@ -191,7 +193,7 @@ export class EventService {Participant
   }
 
   removeEventImage(id: string, image: string) {
-    return this.http.put<string[]>(`http://localhost:3000/api/event/event/image/remove/${id}`,
+    return this.http.put<string[]>(`http://${LOCALHOST}:3000/api/event/event/image/remove/${id}`,
     {
       image
     }).
@@ -201,7 +203,7 @@ export class EventService {Participant
   }
 
   deleteEvent(id: string) {
-    return this.http.delete(`http://localhost:3000/api/event/event/${id}`).
+    return this.http.delete(`http://${LOCALHOST}:3000/api/event/event/${id}`).
     pipe(
       switchMap(resData => {
         return this.getEvents();
@@ -214,7 +216,7 @@ export class EventService {Participant
   deleteImage(image: string) {
     const imageParam = new HttpParams();
     imageParam.set('image', image);
-    return this.http.delete<{ response: string}>('http://localhost:3000/api/image/deletImage', {params: imageParam}).
+    return this.http.delete<{ response: string}>(`http://${LOCALHOST}:3000/api/image/deletImage`, {params: imageParam}).
     pipe(
       map(resData => {
         return resData.response;
@@ -224,14 +226,14 @@ export class EventService {Participant
   getImage(image: string) {
     const imageParam = new HttpParams();
     imageParam.set('image', image);
-    return this.http.get<File>('http://localhost:3000/api/image/download/image', {params: imageParam}).
+    return this.http.get<File>(`http://${LOCALHOST}:3000/api/image/download/image`, {params: imageParam}).
     pipe(tap(imageFile => {
       return imageFile;
     }));
   }
 
   getImages(id: string) {
-    return this.http.get<string[]>(`http://localhost:3000/api/event/event/images/${id}`).
+    return this.http.get<string[]>(`http://${LOCALHOST}:3000/api/event/event/images/${id}`).
     pipe(tap(images => {
       return images;
     }));
@@ -242,7 +244,7 @@ export class EventService {Participant
     const uploadData = new FormData();
     uploadData.append('image', image, fileName);
     return this.http.post<{ imageUrl: string}>(
-      'http://localhost:3000/api/image/uploadEventImage',
+      `http://${LOCALHOST}:3000/api/image/uploadEventImage`,
       uploadData
     );
   }
@@ -253,7 +255,7 @@ export class EventService {Participant
       uploadData.append('images', photo);
     });
     return this.http.post<string[]>(
-      'http://localhost:3000/api/image/uploadEventePictures',
+      `http://${LOCALHOST}:3000/api/image/uploadEventePictures`,
       uploadData
     ).pipe(
       map(images => {
@@ -265,21 +267,21 @@ export class EventService {Participant
 // ------------------------------------ Speaker Services -----------------------------------
 
   getSpeakers() {
-    return this.http.get<Speaker[]>('http://localhost:3000/api/speaker/speakers')
+    return this.http.get<Speaker[]>(`http://${LOCALHOST}:3000/api/speaker/speakers`)
     .pipe(tap(resDta => {
       this._speakers.next(resDta);
     }));
   }
 
   getSpeaker(id: string) {
-    return this.http.get<Speaker>(`http://localhost:3000/api/speaker/speaker/${id}`)
+    return this.http.get<Speaker>(`http://${LOCALHOST}:3000/api/speaker/speaker/${id}`)
     .pipe(tap(resDta => {
       return resDta;
     }));
   }
 
   addSpeaker(speaker: Speaker) {
-    return this.http.post<Speaker>('http://localhost:3000/api/speaker/speaker',
+    return this.http.post<Speaker>(`http://${LOCALHOST}:3000/api/speaker/speaker`,
     {
       ...speaker
     }).
@@ -297,7 +299,7 @@ export class EventService {Participant
       picture:     speaker.picture,
       event:     speaker.event
       };
-    return this.http.put<Speaker>(`http://localhost:3000/api/speaker/speaker/${speaker.id}`,
+    return this.http.put<Speaker>(`http://${LOCALHOST}:3000/api/speaker/speaker/${speaker.id}`,
     {
       ...speakerObj
     }).
@@ -316,7 +318,7 @@ export class EventService {Participant
       picture:     speaker.picture,
       event:     speaker.event
       };
-    return this.http.put<Speaker>(`http://localhost:3000/api/speaker/speaker/image/${speaker.id}`,
+    return this.http.put<Speaker>(`http://${LOCALHOST}:3000/api/speaker/speaker/image/${speaker.id}`,
     {
       ...speakerObj
     }).
@@ -327,7 +329,7 @@ export class EventService {Participant
   }
 
   deleteSpeaker(id: string) {
-    return this.http.delete(`http://localhost:3000/api/speaker/speaker/${id}`).
+    return this.http.delete(`http://${LOCALHOST}:3000/api/speaker/speaker/${id}`).
     pipe(
       switchMap(resData => {
         return this.getSpeakers();
@@ -349,7 +351,7 @@ export class EventService {Participant
   // }
 
   getEventSpeakers(articleId: string) {
-    return this.http.get<Speaker[]>( `http://localhost:3000/api/speaker/speaker/articleId/${articleId}`)
+    return this.http.get<Speaker[]>( `http://${LOCALHOST}:3000/api/speaker/speaker/articleId/${articleId}`)
       .pipe(tap(speakers => {
         this._speakers.next(speakers);
       }));
@@ -358,7 +360,7 @@ export class EventService {Participant
   getSpeakerByEvent(authorId: string) {
     return this.http
       .get<Speaker[]>(
-        `http://localhost:3000/api/speaker/speaker/authorId/${authorId}`)
+        `http://${LOCALHOST}:3000/api/speaker/speaker/authorId/${authorId}`)
       .pipe(tap(speakers => {
         return speakers;
       }));
@@ -368,7 +370,7 @@ export class EventService {Participant
     const uploadData = new FormData();
     uploadData.append('image', image, fileName);
     return this.http.post<{ imageUrl: string}>(
-      'http://localhost:3000/api/image/uploadSpeakerImage',
+      `http://${LOCALHOST}:3000/api/image/uploadSpeakerImage`,
       uploadData
     );
   }
@@ -376,21 +378,21 @@ export class EventService {Participant
   // ------------------------------------ Participant Services -----------------------------------
 
   getParticipants() {
-    return this.http.get<Participant[]>('http://localhost:3000/api/participant/participants')
+    return this.http.get<Participant[]>(`http://${LOCALHOST}:3000/api/participant/participants`)
     .pipe(tap(resDta => {
       this._participants.next(resDta);
     }));
   }
 
   getParticipant(id: string) {
-    return this.http.get<Participant>(`http://localhost:3000/api/participant/participant/${id}`)
+    return this.http.get<Participant>(`http://${LOCALHOST}:3000/api/participant/participant/${id}`)
     .pipe(tap(resDta => {
       return resDta;
     }));
   }
 
   addParticipant(participant: Participant) {
-    return this.http.post<Participant>('http://localhost:3000/api/participant/participant',
+    return this.http.post<Participant>(`http://${LOCALHOST}:3000/api/participant/participant`,
     {
       ...participant
     }).
@@ -406,7 +408,7 @@ export class EventService {Participant
       picture:     participant.picture,
       eventId:     participant.event
       };
-    return this.http.put<Participant>(`http://localhost:3000/api/participant/participant/${participant.id}`,
+    return this.http.put<Participant>(`http://${LOCALHOST}:3000/api/participant/participant/${participant.id}`,
     {
       ...participantObj
     }).
@@ -418,7 +420,7 @@ export class EventService {Participant
   }
 
   deleteParticipant(id: string) {
-    return this.http.delete(`http://localhost:3000/api/participant/participant/${id}`).
+    return this.http.delete(`http://${LOCALHOST}:3000/api/participant/participant/${id}`).
     pipe(
       switchMap(resData => {
         return this.getParticipants();
@@ -429,7 +431,7 @@ export class EventService {Participant
   }
 
   getEventParticipants(eventId: string) {
-    return this.http.get<Participant[]>( `http://localhost:3000/api/participant/participants/${eventId}`)
+    return this.http.get<Participant[]>( `http://${LOCALHOST}:3000/api/participant/participants/${eventId}`)
       .pipe(tap(participants => {
         return participants;
       }));
@@ -438,14 +440,14 @@ export class EventService {Participant
   getParticipantByEvent(eventId: string) {
     return this.http
       .get<Participant[]>(
-        `http://localhost:3000/api/participant/participant/authorId/${eventId}`)
+        `http://${LOCALHOST}:3000/api/participant/participant/authorId/${eventId}`)
       .pipe(tap(participants => {
         return participants;
       }));
   }
 
   getUsersListToAdd(eventId: string) {
-    return this.http.get<User[]>( `http://localhost:3000/api/participant/participant/usersList/${eventId}`)
+    return this.http.get<User[]>( `http://${LOCALHOST}:3000/api/participant/participant/usersList/${eventId}`)
       .pipe(tap(users => {
         return users;
       }));
@@ -455,7 +457,7 @@ export class EventService {Participant
     const uploadData = new FormData();
     uploadData.append('image', image, fileName);
     return this.http.post<{ imageUrl: string}>(
-      'http://localhost:3000/api/image/uploadParticipantImage',
+      `http://${LOCALHOST}:3000/api/image/uploadParticipantImage`,
       uploadData
     );
   }
