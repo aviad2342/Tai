@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { take, map, tap, delay, switchMap } from 'rxjs/operators';
 import { User } from './user.model';
 
-const LOCALHOST = '10.0.2.2';
+const LOCALHOST = '10.0.0.1';
 
 export interface Predictions {
   country: string;

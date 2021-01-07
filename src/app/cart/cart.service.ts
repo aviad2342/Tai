@@ -5,7 +5,7 @@ import { switchMap, take, tap } from 'rxjs/operators';
 import { CartItem } from '../store/item.model';
 import { Cart } from './cart.model';
 
-const LOCALHOST = '10.0.2.2';
+const LOCALHOST = 'localhost';
 
 @Injectable({
   providedIn: 'root'

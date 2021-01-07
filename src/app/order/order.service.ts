@@ -5,7 +5,7 @@ import { switchMap, take, tap } from 'rxjs/operators';
 import { OrderItem } from '../store/item.model';
 import { Order } from './order.model';
 
-const LOCALHOST = '10.0.2.2';
+const LOCALHOST = 'localhost';
 
 @Injectable({
   providedIn: 'root'

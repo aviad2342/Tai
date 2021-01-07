@@ -44,27 +44,7 @@ export class NewUserPage implements OnInit {
   address: Address = new Address();
   userImage = '../../../assets/images/user-default-image.png';
   file: File;
-  date = new Date();
-  pickerOptions = {
-    mode: 'ios',
-    cssClass: 'date-picker-class',
-    backdropDismiss: false,
-    buttons: [
-      {
-        text: 'ביטול',
-        role: 'cancel',
-        cssClass: 'picker-cancel-btn'
-      },
-      {
-        text: 'אישור',
-        role: 'confirm',
-        cssClass: 'picker-confirm-btn',
-        handler: (value: any) => {
-          // this.date = new Date(value.year.value+'-'+ value.month.value+'-'+ value.day.value);
-        }
-      }
-    ]
-  };
+
 
   constructor(
     private router: Router,

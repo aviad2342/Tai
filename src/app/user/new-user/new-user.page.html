@@ -12,8 +12,8 @@
 <ion-content class="ion-padding">
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>
-      <ion-row>
-        <ion-col size="12" size-sm="4" offset-sm="4">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-xl="5" size-lg="5" size-md="5" size-sm="7">
           <app-image-picker 
           [showPreview]="this.file" 
           (imagePick)="onImagePicked($event)" 
@@ -21,8 +21,8 @@
         </app-image-picker>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col size="12" size-sm="4" offset-sm="4">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-xl="5" size-lg="5" size-md="6" size-sm="7">
           <ion-list>
             <ion-item>
               <ion-label position="floating"> שם <ion-text color="danger">*</ion-text></ion-label>
@@ -123,12 +123,11 @@
               <ion-label position="floating">תאריך לידה<ion-text color="danger">*</ion-text></ion-label>
               <ion-datetime
               display-format="DD/MM/YYYY"
-              pickerFormat="DD MMM YY"
+              pickerFormat="DD MMM YYYY"
               monthNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
               monthShortNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
               ngModel
-              [value]="date"
-              [pickerOptions]="pickerOptions"
+              mode="ios"
               name="dateOfBirth"
               required
               #dateOfBirthCtrl="ngModel"
@@ -139,19 +138,19 @@
               *ngIf="!dateOfBirthCtrl.valid && dateOfBirthCtrl.touched"
               lines="none">
               <ion-label color="danger">
-                Should at least be 6 characters long.
+                זהו שדה חובה!
               </ion-label>
             </ion-item>
           </ion-list>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col size="12" size-sm="4" offset-sm="4" class="address-picker">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-xl="5" size-lg="5" size-md="6" size-sm="7" class="address-picker">
           <app-address-picker (addressPicked)="onAddressPicked($event)"></app-address-picker>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col size="12" size-sm="4" offset-sm="4">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-xl="5" size-lg="5" size-md="6" size-sm="7">
           <ion-button
             type="submit"
             color="primary"

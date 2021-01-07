@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-const LOCALHOST = '10.0.2.2';
+const LOCALHOST = 'localhost';
 
 @Injectable({
   providedIn: 'root'

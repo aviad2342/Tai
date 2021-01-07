@@ -17,7 +17,7 @@ export interface AuthResponseData {
   expiresIn: string;
 }
 
-const LOCALHOST = '10.0.2.2';
+const LOCALHOST = '10.0.0.1';
 
 @Injectable({
   providedIn: 'root'

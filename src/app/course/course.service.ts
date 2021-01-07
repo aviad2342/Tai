@@ -5,7 +5,7 @@ import { map, take, tap, switchMap } from 'rxjs/operators';
 import { Lesson } from './lesson.model';
 import { HttpClient } from '@angular/common/http';
 
-const LOCALHOST = '10.0.2.2';
+const LOCALHOST = 'localhost';
 
 @Injectable({
   providedIn: 'root'
