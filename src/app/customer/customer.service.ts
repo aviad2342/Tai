@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
 import { Customer } from './customer.model';
 
-const LOCALHOST = 'localhost';
+const LOCALHOST = '10.0.0.1';
 
 @Injectable({
   providedIn: 'root'

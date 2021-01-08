@@ -2,6 +2,10 @@
     min-width: 300px;
 }
 
+.store-item-slides {
+    --bullet-background: black;	
+}
+
 .btn-cart {
     --padding-start: 0.5em;
     --padding-end: 0.5em;
@@ -30,12 +34,16 @@
     background-color: rgb(194, 194, 194);
 }
 
-// .store-item {
-//     min-width: max-content;
-//     position: fixed;
-//     top: 0;
-//     right: 0;
-// }
+.swiper-pagination {
+    top: 4px;
+    height: 12px;
+    padding-top: 5px;
+}
+
+
+.store-item {
+    padding-bottom: 10px;
+}
 
 // .item-slide {
 //     height: auto;

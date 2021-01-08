@@ -20,18 +20,20 @@
     </ion-row>
 
     <ion-row class="ion-no-padding">
-      <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2"  class="ion-text-center" *ngIf="isLoading">
+      <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="10"  class="ion-text-center" *ngIf="isLoading">
         <ion-spinner color="primary"></ion-spinner>
       </ion-col>
-      <ion-col size="12" size-xl="12" size-lg="6" size-md="4" size-sm="5" class="ion-no-padding" *ngIf="!isLoading">
+      <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" class="ion-no-padding" *ngIf="!isLoading">
         <ion-list>
           <ion-item-sliding *ngFor="let item of cart.items" #slidingItem>
-          <ion-item lines="inset" detail="false">
+          <ion-item lines="inset" detail="false" [title]="item.name">
             <ion-thumbnail>
               <ion-img [src]="item?.thumbnail"></ion-img>
             </ion-thumbnail>
-            <ion-label class="ion-no-padding ion-padding-start app-cart-item-label">
-              <h1>{{ item.name }}</h1>
+            <ion-label  #il class="ion-no-padding ion-padding-start app-cart-item-label">
+              <div class="scroll-left">
+                <h1>{{ item.name }}</h1>
+              </div>
               <ion-text color="medium">
                 <p>{{ item.category }}</p>
               </ion-text>
@@ -65,10 +67,10 @@
       <ion-col class="button tappable ion-text-right align-self-center category-title">קופון:</ion-col>
     </ion-row>
     <ion-row class="ion-align-items-center">
-      <ion-col class="ion-padding">
+      <ion-col size-xl="7" size-lg="7" size-md="8" size-sm="6" size-xs="6" class="ion-padding">
         <ion-input class="item-coupon-input" [(ngModel)]="couponCode" autocapitalize="characters"></ion-input>
       </ion-col>
-      <ion-col class="ion-padding">
+      <ion-col size-xl="5" size-lg="5" size-md="4" size-sm="6" size-xs="4" class="ion-no-padding">
         <ion-button color="primary" fill="outline" (click)="onAddCoupon()">
           <ion-icon class="custom-coupons" slot="start"></ion-icon>
           <ion-label class="cart-activate-coupons-label">הפעל קופון</ion-label>

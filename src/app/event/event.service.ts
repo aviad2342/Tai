@@ -7,7 +7,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Participant } from './participant.model';
 import { User } from '../user/user.model';
 
-const LOCALHOST = 'localhost';
+const LOCALHOST = '10.0.0.1';
 
 @Injectable({
   providedIn: 'root'

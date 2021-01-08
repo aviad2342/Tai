@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { switchMap, take, tap } from 'rxjs/operators';
 import { Coupon } from './coupon.model';
 
-const LOCALHOST = 'localhost';
+const LOCALHOST = '10.0.0.1';
 
 @Injectable({
   providedIn: 'root'

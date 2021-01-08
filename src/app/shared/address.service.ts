@@ -17,7 +17,7 @@ export interface StreetsLocations {
   streets: Locations[];
 }
 
-const LOCALHOST = 'localhost';
+const LOCALHOST = '10.0.0.1';
 
 @Injectable({
   providedIn: 'root'

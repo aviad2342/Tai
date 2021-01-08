@@ -42,6 +42,10 @@ export class StorePage implements OnInit, OnDestroy {
     slidesPerView: 1.6,
     spaceBetween: 10,
     centeredSlides: true,
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets'
+    },
     breakpoints: {
       150: {
         slidesPerView: 1,
@@ -57,27 +61,51 @@ export class StorePage implements OnInit, OnDestroy {
       },
       250: {
         slidesPerView: 1,
-        spaceBetween: 100
+        spaceBetween: 50
       },
-      320: {
-        slidesPerView: 1.6,
-        spaceBetween: 100
+      300: {
+        slidesPerView: 1.4,
+        spaceBetween: 50
       },
-      480: {
+      380: {
+        slidesPerView: 1.5,
+        spaceBetween: 50
+      },
+      450: {
         slidesPerView: 2,
         spaceBetween: 50
       },
-      650: {
-        slidesPerView: 3,
-        spaceBetween: 70
+      510: {
+        slidesPerView: 2,
+        spaceBetween: 50
       },
-      750: {
+      610: {
+        slidesPerView: 2.5,
+        spaceBetween: 50
+      },
+      700: {
+        slidesPerView: 2.9,
+        spaceBetween: 50
+      },
+      790: {
         slidesPerView: 3,
-        spaceBetween: 70
+        spaceBetween: 50
+      },
+      850: {
+        slidesPerView: 3,
+        spaceBetween: 50
+      },
+      980: {
+        slidesPerView: 3.2,
+        spaceBetween: 50
       },
       1080: {
         slidesPerView: 5,
-        spaceBetween: 100
+        spaceBetween: 50
+      },
+      1300: {
+        slidesPerView: 5,
+        spaceBetween: 50
       }
     }
   };

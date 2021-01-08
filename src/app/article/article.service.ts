@@ -6,7 +6,7 @@ import { Article } from './article.model';
 import { Comment } from './comment.model';
 import { HttpClient } from '@angular/common/http';
 
-const LOCALHOST = 'localhost';
+const LOCALHOST = '10.0.0.1';
 
 @Injectable({
   providedIn: 'root'

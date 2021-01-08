@@ -20,7 +20,7 @@
       <ion-row class="category-banner ion-no-padding ion-justify-content-center">
         <ion-col class="button tappable ion-text-right align-self-center category-title">{{ category }}</ion-col>
       </ion-row>
-      <ion-slides #itemsSlides [options]="sliderConfig">
+      <ion-slides #itemsSlides pager="true" [options]="sliderConfig" class="store-item-slides">
         <ion-slide class="item-slide" *ngFor="let item of getItemByCategory(category)">
             <app-store-item [item]="item" class="store-item" (selectedItem)="onItemAddedToCart($event)"></app-store-item>
         </ion-slide>
