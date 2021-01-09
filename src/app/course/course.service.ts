@@ -153,7 +153,7 @@ export class CourseService {
   }
 
   addLesson(lesson: Lesson) {
-    return this.http.post<Lesson>('http://${LOCALHOST}:3000/api/lesson/lesson',
+    return this.http.post<Lesson>(`http://${LOCALHOST}:3000/api/lesson/lesson`,
     {
       ...lesson
     }).

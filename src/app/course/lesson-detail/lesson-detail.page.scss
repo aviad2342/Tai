@@ -2,7 +2,30 @@ ion-text {
     font-family: 'Yoav';
 }
 
-.play-btn {
-    font-family: 'Choco-bold';
-    font-size: larger;
-}
+ion-icon {
+    font-size: 70px;
+    color: red;
+  }
+
+.video-player {
+    width: 100%;
+    height: 100%;
+    border: 1px solid black ;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: black;
+  }
+
+  .play-btn {
+    position: absolute;
+    top: auto;
+    right: auto;
+  }

@@ -11,10 +11,10 @@
 <!------------------------------------------lesson section -------------------------------------------->
   <ion-grid>
     <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-sm="4" class="ion-text-center" *ngIf="isLoading">
+      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="ion-text-center" *ngIf="isLoading">
         <ion-spinner color="primary"></ion-spinner>
       </ion-col>
-      <ion-col size="12" size-sm="4" class="ion-text-center" *ngIf="!isLoading">
+      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="ion-text-center" *ngIf="!isLoading">
         <div class="course-container ion-padding">
         <ion-text>
           <h1 class="ion-no-margin">{{ lesson?.title }}</h1>
@@ -29,11 +29,21 @@
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center">
-      <div id="video-player"></div>
+      <div id="video-player" *ngIf="!isMobile"></div>
     </ion-row>
     <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-sm="6" class="ion-text-center" *ngIf="!isLoading">
-        <ion-button class="play-btn" (click)="onPlayVideo()">נגן שיעור</ion-button>
+      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="10" class="ion-text-center" *ngIf="!isLoading && isMobile">
+        <div class="video-player">
+          <ion-img
+            role="button"
+            class="image"
+            (click)="onPlayVideo()"
+            [src]="getVideoThumbnail()"
+          ></ion-img>
+          <ion-button fill="clear" class="play-btn" (click)="onPlayVideo()">
+            <ion-icon name="logo-youtube" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>

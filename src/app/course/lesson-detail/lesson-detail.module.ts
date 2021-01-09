@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { LessonDetailPageRoutingModule } from './lesson-detail-routing.module';
 
 import { LessonDetailPage } from './lesson-detail.page';
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { LessonDetailPage } from './lesson-detail.page';
     IonicModule,
     LessonDetailPageRoutingModule
   ],
+  providers: [YoutubeVideoPlayer],
   declarations: [LessonDetailPage]
 })
 export class LessonDetailPageModule {}

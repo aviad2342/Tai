@@ -41,29 +41,34 @@ export class ImagePickerComponent implements OnInit {
   }
 
   onPickImageSource() {
-    this.actionSheetCtrl
-      .create({
-        mode: 'ios',
-        cssClass: 'action-sheet',
-        header: 'בחר מקור',
-        buttons: [
-          {
-            text: 'ספריית תמונות',
-            handler: () => {
-              this.filePickerRef.nativeElement.click();
-            }
-          },
-          {
-            text: 'מצלמה',
-            handler: () => {
-              this.onPickImage();
-            }
-          },
-          { text: 'ביטול', role: 'cancel' }
-        ]
-      }).then(actionSheetEl => {
-        actionSheetEl.present();
-      });
+    if(this.platform.is('mobile')) {
+      this.onPickImage();
+    } else {
+      this.filePickerRef.nativeElement.click();
+    }
+    // this.actionSheetCtrl
+    //   .create({
+    //     mode: 'ios',
+    //     cssClass: 'action-sheet',
+    //     header: 'בחר מקור',
+    //     buttons: [
+    //       {
+    //         text: 'ספריית תמונות',
+    //         handler: () => {
+    //           this.filePickerRef.nativeElement.click();
+    //         }
+    //       },
+    //       {
+    //         text: 'מצלמה',
+    //         handler: () => {
+    //           this.onPickImage();
+    //         }
+    //       },
+    //       { text: 'ביטול', role: 'cancel' }
+    //     ]
+    //   }).then(actionSheetEl => {
+    //     actionSheetEl.present();
+    //   });
   }
 
   onPickImage() {
@@ -75,8 +80,8 @@ export class ImagePickerComponent implements OnInit {
       quality: 50,
       source: CameraSource.Prompt,
       correctOrientation: true,
-      // height: 320,
-      width: 600,
+      height: 350,
+      width: 450,
       resultType: CameraResultType.DataUrl
     })
       .then(image => {

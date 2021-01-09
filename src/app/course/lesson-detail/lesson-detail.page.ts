@@ -16,6 +16,7 @@ export class LessonDetailPage implements OnInit, ViewDidEnter {
 
   lesson :Lesson;
   isLoading = false;
+  isMobile = false;
   deviceWidth: number;
   deviceHeight: number;
 
@@ -25,11 +26,12 @@ export class LessonDetailPage implements OnInit, ViewDidEnter {
     private alertController: AlertController,
     private navController: NavController,
     private platform: Platform,
-    // private youtube: YoutubeVideoPlayer,
+    private youtube: YoutubeVideoPlayer,
     private courseService: CourseService
     ) { }
 
   ngOnInit() {
+    this.isMobile = this.platform.is('mobile');
     this.isLoading = true;
     this.deviceWidth = (this.platform.width() > 650 )? 650 : this.platform.width() - 10;
     this.deviceHeight = (this.platform.height() > 300 )? 360 : 300;
@@ -67,7 +69,11 @@ export class LessonDetailPage implements OnInit, ViewDidEnter {
   }
 
   onPlayVideo() {
-   // this.youtube.openVideo('0VDgZ2OnfAw');
+   this.youtube.openVideo(this.lesson.videoId);
+  }
+
+  getVideoThumbnail(){
+    return `https://img.youtube.com/vi/${this.lesson.videoId}/sddefault.jpg`;
   }
 
   ionViewDidEnter() {
