@@ -27,7 +27,8 @@
             , "core-js/modules/es.reflect.delete-property", "core-js/modules/es.symbol.description", "core-js/modules/es.symbol.iterator"
             , "core-js/modules/es.reflect.apply", "core-js/modules/es.reflect.get-prototype-of", "raf", "@babel/runtime/helpers/slicedToArray"
             , "@babel/runtime/helpers/possibleConstructorReturn", "@babel/runtime/helpers/inherits", "@babel/runtime/helpers/toConsumableArray"
-            , "@babel/runtime/helpers/get", "@babel/runtime/regenerator", "hammerjs", "core-js/modules/es.array.map", "lodash", "core-js/modules/es.reflect.construct", "pako"],
+            , "@babel/runtime/helpers/get", "@babel/runtime/regenerator", "hammerjs", "core-js/modules/es.array.map", "lodash"
+            , "core-js/modules/es.reflect.construct", "pako", "ng2-pdf-viewer"],
             "aot": true,
             "outputPath": "www",
             "index": "src/index.html",

@@ -13,7 +13,7 @@
       <ion-col size="12" size-sm="4" class="ion-text-center" *ngIf="isLoading">
         <ion-spinner color="primary"></ion-spinner>
       </ion-col>
-      <ion-col size="12" size-sm="4" class="ion-text-center" *ngIf="!isLoading">
+      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="ion-text-center" *ngIf="!isLoading">
         <ion-card class="event-card ion-no-margin">
           <app-gallery *ngIf="event.images.length" [images]="event.images"></app-gallery>
           <ion-img *ngIf="!event.images.length" [src]="event.thumbnail" class="course-thumbnail"></ion-img>

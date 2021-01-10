@@ -10,11 +10,11 @@
 <ion-content [scrollEvents]="true" fullscreen="true">
 <!------------------------------------------article section -------------------------------------------->
   <ion-grid>
-    <ion-row>
+    <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="articleIsLoading">
         <ion-spinner color="primary"></ion-spinner>
       </ion-col>
-      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="!articleIsLoading">
+      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="ion-text-center" *ngIf="!articleIsLoading">
         <div class="container ion-padding">
         <ion-text>
           <h1>{{ article?.title }}</h1>
@@ -32,12 +32,26 @@
       </div>
       </ion-col>
     </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="8" class="ion-text-center">
+        <pdf-viewer [src]="article?.pdf" 
+              [render-text]="true"
+              [original-size]="false"
+              [zoom]="1"
+              [zoom-scale]="'page-fit'"
+              [fit-to-page]="false"
+              [show-borders]="true"
+              style="display: block;"
+      ></pdf-viewer>
+      </ion-col>
+    </ion-row>
 <!------------------------------------------comments section -------------------------------------------->
-    <ion-row>
-      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="isLoading">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="ion-text-center" *ngIf="isLoading">
         <ion-spinner color="primary"></ion-spinner>
       </ion-col>
-      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="!isLoading && !articleIsLoading">
+      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="ion-text-center" *ngIf="!isLoading && !articleIsLoading">
         <ion-list>
           <div class="comment-item" *ngFor="let comment of article.comments">
             <app-comment [comment]="comment"></app-comment>

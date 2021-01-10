@@ -8,6 +8,7 @@ import { ArticleDetailPageRoutingModule } from './article-detail-routing.module'
 
 import { ArticleDetailPage } from './article-detail.page';
 import { ArticleSharedModule } from '../article-shared/article-shared.module';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { ArticleSharedModule } from '../article-shared/article-shared.module';
     FormsModule,
     IonicModule,
     ArticleDetailPageRoutingModule,
-    ArticleSharedModule
+    ArticleSharedModule,
+    PdfViewerModule
   ],
   declarations: [ArticleDetailPage]
 })
