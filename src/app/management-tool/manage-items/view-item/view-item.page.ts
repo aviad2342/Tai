@@ -42,7 +42,7 @@ export class ViewItemPage implements OnInit {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.router.navigate(['/manage/items']);
+                      this.navController.navigateBack('/manage/items');
                     }
                   }
                 ]

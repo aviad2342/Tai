@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 
@@ -51,6 +51,7 @@ export class EditUserPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private userService: UserService,
     private navCtrl: NavController,
+    private alertController: AlertController,
     private router: Router,
     public appService: AppService
   ) {}
@@ -80,6 +81,22 @@ export class EditUserPage implements OnInit, OnDestroy {
           date: this.user.date,
           };
         this.form.setValue(userObj);
+      },
+      error => {
+        this.alertController
+          .create({
+            header: 'ישנה תקלה!',
+                message: 'לא ניתן לערוך את המשתמש.',
+            buttons: [
+              {
+                text: 'Okay',
+                handler: () => {
+                  this.navCtrl.navigateBack('/tabs/user');
+                }
+              }
+            ]
+          })
+          .then(alertEl => alertEl.present());
       });
     });
   }
@@ -135,11 +152,11 @@ export class EditUserPage implements OnInit, OnDestroy {
     ).subscribe(() => {
       form.reset();
       this.appService.presentToast('המשתמש נשמר בהצלחה', true);
-      this.router.navigate(['/tabs/user']);
+      this.navCtrl.navigateBack('/tabs/user');
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי המשתמש לא נשמרו', false);
-      this.router.navigate(['/tabs/user']);
+      this.navCtrl.navigateBack('/tabs/user');
     });
 
     } else {
@@ -162,11 +179,11 @@ export class EditUserPage implements OnInit, OnDestroy {
       this.userService.updateUser(userToUpdate).subscribe(() => {
         form.reset();
         this.appService.presentToast('המשתמש נשמר בהצלחה', true);
-        this.router.navigate(['/tabs/user']);
+        this.navCtrl.navigateBack('/tabs/user');
       }, error => {
         form.reset();
         this.appService.presentToast('חלה תקלה פרטי המשתמש לא נשמרו', false);
-        this.router.navigate(['/tabs/user']);
+        this.navCtrl.navigateBack('/tabs/user');
       });
     }
 

@@ -116,11 +116,11 @@ export class EditArticlePage implements OnInit, OnDestroy {
     ).subscribe(() => {
       form.reset();
       this.appService.presentToast('המאמר נשמר בהצלחה', true);
-      this.router.navigate(['/tabs/article']);
+      this.navCtrl.navigateBack('/tabs/article');
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
-      this.router.navigate(['/tabs/article']);
+      this.navCtrl.navigateBack('/tabs/article');
     });
 
     } else {
@@ -141,15 +141,15 @@ export class EditArticlePage implements OnInit, OnDestroy {
       );
       if(this.isEquals(this.article, articleToUpdate)) {
         this.appService.presentToast('המאמר נשמר בהצלחה', true);
-        this.router.navigate(['/tabs/article']);
+        this.navCtrl.navigateBack('/tabs/article');
         return;
       }
       this.articleService.updateArticle(articleToUpdate).subscribe(() => {
         this.appService.presentToast('המאמר נשמר בהצלחה', true);
-        this.router.navigate(['/tabs/article']);
+        this.navCtrl.navigateBack('/tabs/article');
     }, error => {
         this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
-        this.router.navigate(['/tabs/article']);
+        this.navCtrl.navigateBack('/tabs/article');
       });
     }
 
@@ -168,7 +168,7 @@ export class EditArticlePage implements OnInit, OnDestroy {
 
   onCancel() {
     this.appService.presentToast('הפעולה בוטלה', true);
-    this.router.navigate(['/tabs/article']);
+    this.navCtrl.navigateBack('/tabs/article');
   }
 
   ngOnDestroy() {

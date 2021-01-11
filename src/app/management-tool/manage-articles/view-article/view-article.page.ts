@@ -47,7 +47,7 @@ export class ViewArticlePage implements OnInit {
                 {
                   text: 'אישור',
                   handler: () => {
-                    this.router.navigate(['/manage/articles']);
+                    this.navController.navigateBack('/manage/articles');
                   }
                 }
               ]

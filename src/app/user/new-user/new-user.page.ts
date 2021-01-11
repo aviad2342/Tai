@@ -6,6 +6,7 @@ import { User } from '../user.model';
 import { Router } from '@angular/router';
 import { Address } from '../../shared/address.model';
 import { AppService } from '../../app.service';
+import { NavController } from '@ionic/angular';
 
 
 function base64toBlob(base64Data, contentType) {
@@ -49,6 +50,7 @@ export class NewUserPage implements OnInit {
   constructor(
     private router: Router,
     private userService: UserService,
+    private navController: NavController,
     public appService: AppService
     ) { }
 
@@ -108,11 +110,11 @@ export class NewUserPage implements OnInit {
     ).subscribe(() => {
       form.reset();
       this.appService.presentToast('המשתמש נשמר בהצלחה', true);
-      this.router.navigate(['/tabs/user']);
+      this.navController.navigateBack('/tabs/user');
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי המשתמש לא נשמרו', false);
-      this.router.navigate(['/tabs/user']);
+      this.navController.navigateBack('/tabs/user');
     }
     );
   }

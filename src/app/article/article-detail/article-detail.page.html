@@ -10,7 +10,7 @@
 <ion-content [scrollEvents]="true" fullscreen="true">
 <!------------------------------------------article section -------------------------------------------->
   <ion-grid>
-    <ion-row class="ion-justify-content-center">
+    <!-- <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center" *ngIf="articleIsLoading">
         <ion-spinner color="primary"></ion-spinner>
       </ion-col>
@@ -31,10 +31,17 @@
         <ion-textarea><i [innerHTML]="article?.body"></i> </ion-textarea>
       </div>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
 
     <ion-row class="ion-justify-content-center">
-      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="8" class="ion-text-center">
+      <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="8" *ngIf="!articleIsLoading">
+          <iframe  [src]="sanitizer?.bypassSecurityTrustResourceUrl(pdfSrc)" 
+          style="width: 100%; height: 80vh;" type="application/pdf" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-row class="ion-justify-content-center">
+      <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="8" class="ion-text-center">
         <pdf-viewer [src]="article?.pdf" 
               [render-text]="true"
               [original-size]="false"
@@ -45,13 +52,13 @@
               style="display: block;"
       ></pdf-viewer>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
 <!------------------------------------------comments section -------------------------------------------->
     <ion-row class="ion-justify-content-center">
-      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="ion-text-center" *ngIf="isLoading">
+      <ion-col size-xl="8" size-lg="5" size-md="7" size-sm="7" class="ion-text-center" *ngIf="isLoading">
         <ion-spinner color="primary"></ion-spinner>
       </ion-col>
-      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="ion-text-center" *ngIf="!isLoading && !articleIsLoading">
+      <ion-col size-xl="7" size-lg="7" size-md="8" size-sm="7" class="ion-text-center ion-no-padding" *ngIf="!isLoading && !articleIsLoading">
         <ion-list>
           <div class="comment-item" *ngFor="let comment of article.comments">
             <app-comment [comment]="comment"></app-comment>

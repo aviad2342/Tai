@@ -109,7 +109,7 @@ export class EditTherapistPage implements OnInit {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.router.navigate(['/manage/therapists']);
+                      this.navController.navigateBack('/manage/therapists');
                     }
                   }
                 ]
@@ -192,10 +192,10 @@ export class EditTherapistPage implements OnInit {
         })
       ).subscribe(() => {
         this.appService.presentToast('המטפל עודכן בהצלחה', true);
-        this.router.navigate(['/manage/therapists']);
+        this.navController.navigateBack('/manage/therapists');
       }, error => {
         this.appService.presentToast('חלה תקלה פרטי המטפל לא עודכנו', false);
-        this.router.navigate(['/manage/therapists']);
+        this.navController.navigateBack('/manage/therapists');
       });
     } else {
       const therapistToupdate = new Therapist(
@@ -220,10 +220,10 @@ export class EditTherapistPage implements OnInit {
       return this.therapistService.addTherapist(therapistToupdate)
       .subscribe(() => {
         this.appService.presentToast('המטפל עודכן בהצלחה', true);
-        this.router.navigate(['/manage/therapists']);
+        this.navController.navigateBack('/manage/therapists');
       }, error => {
         this.appService.presentToast('חלה תקלה פרטי המטפל לא עודכנו', false);
-        this.router.navigate(['/manage/therapists']);
+        this.navController.navigateBack('/manage/therapists');
       });
     }
 
@@ -241,7 +241,7 @@ export class EditTherapistPage implements OnInit {
 
   onCancel() {
     this.appService.presentToast('הפעולה בוטלה', true);
-    this.router.navigate(['/manage/therapists']);
+    this.navController.navigateBack('/manage/therapists');
   }
 
 }

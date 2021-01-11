@@ -9,6 +9,7 @@ import { AppService } from '../../app.service';
 // import * as Quill from 'quill';
 import * as Quill from 'quill';
 import { QuillFormat, QuillEditorBase, QuillEditorComponent, QuillModules, QuillConfig, QuillService } from 'ngx-quill';
+import { NavController } from '@ionic/angular';
 
 
 function base64toBlob(base64Data, contentType) {
@@ -81,6 +82,7 @@ export class NewArticlePage implements OnInit {
   constructor(
     private articleService: ArticleService,
     private router: Router,
+    private navController: NavController,
     private authService: AuthService,
     public appService: AppService
     ) { }
@@ -169,11 +171,11 @@ export class NewArticlePage implements OnInit {
     ).subscribe(() => {
       form.reset();
       this.appService.presentToast('המאמר נשמר בהצלחה', true);
-      this.router.navigate(['/tabs/article']);
+      this.navController.navigateBack('/tabs/article');
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
-      this.router.navigate(['/tabs/article']);
+      this.navController.navigateBack('/tabs/article');
     });
   }
 

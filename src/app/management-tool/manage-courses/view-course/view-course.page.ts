@@ -44,7 +44,7 @@ export class ViewCoursePage implements OnInit {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.router.navigate(['/manage/courses']);
+                      this.navController.navigateBack('/manage/courses');
                     }
                   }
                 ]

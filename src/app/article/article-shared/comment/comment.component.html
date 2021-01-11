@@ -19,13 +19,13 @@
   </ion-avatar>
   <div class="talk-bubble tri-right round border right-top">
     <div class="talktext">
-    <ion-text>
+    <ion-text class="comment-title">
       <b>{{ comment.authorName }}</b>
     </ion-text>
-    <ion-text>
+    <ion-text class="comment-body">
       <p>{{ comment.body }}</p>
     </ion-text>
-    <ion-text color="medium">
+    <ion-text color="medium" class="comment-date">
     <small>{{ comment.date | date }}</small>
   </ion-text>
     <!-- <p>{{ comment.date | date }}</p> -->

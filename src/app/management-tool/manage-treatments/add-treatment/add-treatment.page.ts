@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SegmentChangeEventDetail } from '@ionic/core';
 import { Router } from '@angular/router';
-import {  ModalController } from '@ionic/angular';
+import {  ModalController, NavController } from '@ionic/angular';
 import { AppService } from '../../../app.service';
 import { TreatmentService } from '../../../treatment/treatment.service';
 import * as utility from '../../../utilities/functions';
@@ -38,6 +38,7 @@ export class AddTreatmentPage implements OnInit {
     private treatmentService: TreatmentService,
     private modalController: ModalController,
     private router: Router,
+    private navController: NavController,
     private appService: AppService
     ) { }
 
@@ -122,11 +123,11 @@ export class AddTreatmentPage implements OnInit {
     ).subscribe(() => {
       form.reset();
       this.appService.presentToast('הטיפול נשמר בהצלחה', true);
-      this.router.navigate(['/manage/treatments']);
+      this.navController.navigateBack('/manage/treatments');
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי הטיפול לא נשמרו', false);
-      this.router.navigate(['/manage/treatments']);
+      this.navController.navigateBack('/manage/treatments');
     }
     );
   }
@@ -138,7 +139,7 @@ export class AddTreatmentPage implements OnInit {
   onCancel() {
     this.form.reset();
     this.appService.presentToast('הפעולה בוטלה', true);
-    this.router.navigate(['/manage/treatments']);
+    this.navController.navigateBack('/manage/treatments');
   }
 
 }

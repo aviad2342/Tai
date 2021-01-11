@@ -42,7 +42,7 @@ export class ViewTherapistPage implements OnInit {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.router.navigate(['/manage/therapists']);
+                      this.navController.navigateBack('/manage/therapists');
                     }
                   }
                 ]

@@ -18,6 +18,7 @@ import '../../../../assets/JavaScript/FrankRuhlLibre-Regular-normal.js';
 import { jsPDF } from 'jspdf';
 import { forkJoin } from 'rxjs';
 import * as utility from '../../../utilities/functions';
+import { NavController } from '@ionic/angular';
 
 
 @Component({
@@ -41,7 +42,7 @@ export class AddArticlePage implements OnInit {
     maxHeight: 'auto',
     defaultParagraphSeparator: '',
     defaultFontName: 'David',
-    defaultFontSize: '4',
+    defaultFontSize: '10',
     fonts: [
       {class: 'DavidLibre', name: 'David'},
       {class: 'FrankRuhlLibre', name: 'Frank'},
@@ -51,7 +52,8 @@ export class AddArticlePage implements OnInit {
     uploadUrl: 'http://localhost:3000/articleBodyImages/',
     toolbarHiddenButtons: [
       ['redo'],
-      ['insertImage', 'insertVideo']
+      ['insertVideo']
+      // ['insertImage', 'insertVideo']
     ]
   }
 
@@ -64,6 +66,7 @@ export class AddArticlePage implements OnInit {
   constructor(
     private articleService: ArticleService,
     private router: Router,
+    private navController: NavController,
     private authService: AuthService,
     public appService: AppService
     ) { }
@@ -234,7 +237,8 @@ export class AddArticlePage implements OnInit {
   onCancel() {
     this.form.reset();
     this.appService.presentToast('הפעולה בוטלה', true);
-    this.router.navigate(['/manage/articles']);
+    // this.router.navigate(['/manage/articles']);
+    this.navController.navigateBack(['/manage/articles']);
   }
 
 }

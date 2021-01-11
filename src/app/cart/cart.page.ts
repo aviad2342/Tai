@@ -43,6 +43,7 @@ export class CartPage implements OnInit {
     private cartService: CartService,
     private route: ActivatedRoute,
     private router: Router,
+    private navController: NavController,
     private alertController: AlertController,
     private couponService: CouponService,
     private orderService: OrderService,
@@ -54,7 +55,7 @@ export class CartPage implements OnInit {
     this.isLoading = true;
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
-        this.router.navigate(['/tabs/store']);
+        this.navController.navigateBack('/tabs/store');
         return;
       }
       this.cartService.getCart(paramMap.get('id')).subscribe(cart => {
@@ -71,7 +72,7 @@ export class CartPage implements OnInit {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.router.navigate(['/tabs/store']);
+                      this.navController.navigateBack('/tabs/store');
                     }
                   }
                 ]
@@ -170,7 +171,8 @@ export class CartPage implements OnInit {
         );
         return this.orderService.updateOrder(orderToUpdate);
       })).subscribe(updateedOrder => {
-        this.router.navigate(['/', 'order', updateedOrder.id]);
+        this.navController.navigateBack(['/', 'order', updateedOrder.id]);
+        // this.router.navigate(['/', 'order', updateedOrder.id]);
       }, error => {
         this.appService.presentToast('חלה תקלה לא ניתן לבצע את ההזמנה כרגע. אנא נסו שנית מאוחר יותר.', false);
       });
@@ -193,7 +195,8 @@ export class CartPage implements OnInit {
       this.orderService.addOrder(newOrder).subscribe(order => {
         this.cart.orderId = order.id;
         this.cartService.updateCart(this.cart).subscribe();
-        this.router.navigate(['/', 'order', order.id]);
+        this.navController.navigateBack(['/', 'order', order.id]);
+        // this.router.navigate(['/', 'order', order.id]);
       }, error => {
         this.appService.presentToast('חלה תקלה לא ניתן לבצע את ההזמנה כרגע. אנא נסו שנית מאוחר יותר.', false);
       });

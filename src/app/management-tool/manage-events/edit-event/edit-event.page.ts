@@ -56,7 +56,7 @@ export class EditEventPage implements OnInit, AfterViewInit {
   constructor(
     private route: ActivatedRoute,
     private eventService: EventService,
-    private navCtrl: NavController,
+    private navController: NavController,
     private router: Router,
     private alertController: AlertController,
     private modalController: ModalController,
@@ -75,7 +75,7 @@ export class EditEventPage implements OnInit, AfterViewInit {
   ngOnInit() {
     this.pageparamMapSubscription = this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
-        this.navCtrl.navigateBack('/manage/events');
+        this.navController.navigateBack('/manage/events');
         return;
       }
       this.isLoading = true;
@@ -106,7 +106,7 @@ export class EditEventPage implements OnInit, AfterViewInit {
           this.event.entry);
       }, error => {
         this.appService.presentToast('חלה תקלה לא ניתן לבצע עריכה! אנא נסה מאוחר יותר.', false);
-        this.router.navigate(['/manage/events']);
+        this.navController.navigateBack('/manage/events');
       });
     });
   }
@@ -159,7 +159,7 @@ onSubmit(form: NgForm) {
     // this.newEventStepper.updateAutoHeight(200);
   }, error => {
     this.appService.presentToast('חלה תקלה פרטי האירוע לא נשמרו', false);
-    this.router.navigate(['/manage/events']);
+    this.navController.navigateBack('/manage/events');
   }
   );
 } else {
@@ -196,7 +196,7 @@ onSubmit(form: NgForm) {
     // this.newEventStepper.updateAutoHeight(200);
   }, error => {
     this.appService.presentToast('חלה תקלה פרטי האירוע לא נשמרו', false);
-    this.router.navigate(['/manage/events']);
+    this.navController.navigateBack('/manage/events');
   });
 }
 }
@@ -358,15 +358,15 @@ onSaveAndExit() {
      }))
    .subscribe(() => {
      this.appService.presentToast('התמונות נוספו בהצלחה', true);
-     this.router.navigate(['/manage/events']);
+     this.navController.navigateBack('/manage/events');
    }, error => {
      this.appService.presentToast('חלה תקלה התמונות לא נשמרו', false);
-     this.router.navigate(['/manage/events']);
+     this.navController.navigateBack('/manage/events');
    });
   }
     this.appService.presentToast('האירוע עודכן בהצלחה', true);
     this.pageparamMapSubscription.unsubscribe();
-    this.router.navigate(['/manage/events']);
+    this.navController.navigateBack('/manage/events');
  }
 
 
@@ -422,7 +422,7 @@ onSaveAndExit() {
 
   onCancel() {
     this.appService.presentToast('הפעולה בוטלה', true);
-     this.router.navigate(['/manage/events']);
+    this.navController.navigateBack('/manage/events');
   }
 
 

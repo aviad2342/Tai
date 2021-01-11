@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SegmentChangeEventDetail } from '@ionic/core';
-import { AlertController, IonIcon, IonInput } from '@ionic/angular';
+import { AlertController, IonIcon, IonInput, NavController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
 import { Therapist } from '../../../therapist/therapist.model';
 import { AppService } from '../../../app.service';
@@ -49,6 +49,7 @@ export class AddTherapistPage implements OnInit {
     private therapistService: TherapistService,
     private alertController: AlertController,
     private router: Router,
+    private navController: NavController,
     private appService: AppService
     ) { }
 
@@ -130,11 +131,11 @@ export class AddTherapistPage implements OnInit {
     ).subscribe(() => {
       form.reset();
       this.appService.presentToast('המטפל נשמר בהצלחה', true);
-      this.router.navigate(['/manage/therapists']);
+      this.navController.navigateBack('/manage/therapists');
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי המטפל לא נשמרו', false);
-      this.router.navigate(['/manage/therapists']);
+      this.navController.navigateBack('/manage/therapists');
     }
     );
   }
@@ -152,7 +153,7 @@ export class AddTherapistPage implements OnInit {
   onCancel() {
     this.form.reset();
     this.appService.presentToast('הפעולה בוטלה', true);
-    this.router.navigate(['/manage/therapists']);
+    this.navController.navigateBack('/manage/therapists');
   }
 
 }

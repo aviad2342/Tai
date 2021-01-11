@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, IonSlides, ModalController } from '@ionic/angular';
+import { AlertController, IonSlides, ModalController, NavController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
 
 import { AddParticipantComponent } from '../add-participant/add-participant.component';
@@ -56,6 +56,7 @@ export class AddEventPage implements OnInit, AfterViewInit {
     private eventService: EventService,
     private modalController: ModalController,
     private router: Router,
+    private navController: NavController,
     private alertController: AlertController,
     public appService: AppService
     ) { }
@@ -129,7 +130,7 @@ onSubmit(form: NgForm) {
     // (ionSlideDidChange)="onSlideChange(stepper)"
   }, error => {
     this.appService.presentToast('חלה תקלה פרטי האירוע לא נשמרו', false);
-    this.router.navigate(['/manage/events']);
+    this.navController.navigateBack('/manage/events');
   }
   );
 }
@@ -262,14 +263,14 @@ onRemove(event) {
      }))
    .subscribe(() => {
      this.appService.presentToast('התמונות נוספו בהצלחה', true);
-     this.router.navigate(['/manage/events']);
+     this.navController.navigateBack('/manage/events');
    }, error => {
      this.appService.presentToast('חלה תקלה התמונות לא נשמרו', false);
-     this.router.navigate(['/manage/events']);
+     this.navController.navigateBack('/manage/events');
    });
   }
   this.appService.presentToast('סיימת בהצלחה את יצירת האירוע', true);
-     this.router.navigate(['/manage/events']);
+  this.navController.navigateBack('/manage/events');
  }
 
  // -------------------------------------------------- Utilities Functions --------------------------------------------------
@@ -304,7 +305,7 @@ onRemove(event) {
 
   onCancel() {
     this.form.reset();
-    this.router.navigate(['/manage/events']);
+    this.navController.navigateBack('/manage/events');
   }
 
 }

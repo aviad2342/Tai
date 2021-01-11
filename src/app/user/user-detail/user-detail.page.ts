@@ -41,7 +41,7 @@ export class UserDetailPage implements OnInit, OnDestroy {
                   {
                     text: 'Okay',
                     handler: () => {
-                      this.router.navigate(['/tabs/user']);
+                      this.navController.navigateBack('/tabs/user');
                     }
                   }
                 ]

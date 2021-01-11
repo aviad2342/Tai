@@ -7,6 +7,7 @@ import { AuthService } from '../../auth/auth.service';
 import { Article } from '../article.model';
 import { Comment } from '../comment.model';
 import { AppService } from '../../app.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 
@@ -24,7 +25,7 @@ export class ArticleDetailPage implements OnInit {
   enterTimestamp: number;
   leaveTimestamp: number;
   articleIsLoading = false;
-  // pdfSrc = 'http://10.0.0.1:3000/articles/1603114736179@articlepdf.pdf';
+  pdfSrc = 'http://10.0.0.1:3000/articles/1603114736179@articlepdf.pdf';
 
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +34,7 @@ export class ArticleDetailPage implements OnInit {
     private articleService: ArticleService,
     private navController: NavController,
     private authService: AuthService,
+    public sanitizer: DomSanitizer,
     public appService: AppService
   ) { }
 
@@ -56,7 +58,7 @@ export class ArticleDetailPage implements OnInit {
                 {
                   text: 'אישור',
                   handler: () => {
-                    this.router.navigate(['/tabs/article']);
+                    this.navController.navigateBack('/tabs/article');
                   }
                 }
               ]

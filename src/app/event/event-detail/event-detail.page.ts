@@ -49,7 +49,7 @@ export class EventDetailPage implements OnInit {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.router.navigate(['/tabs/event']);
+                      this.navController.navigateBack('/tabs/event');
                     }
                   }
                 ]

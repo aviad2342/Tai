@@ -56,7 +56,7 @@ export class LessonDetailPage implements OnInit, ViewDidEnter {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.router.navigate(['/tabs/course']);
+                      this.navController.navigateBack('/tabs/course');
                     }
                   }
                 ]

@@ -57,7 +57,7 @@ export class ViewLessonPage implements OnInit, ViewDidEnter {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.router.navigate(['/manage/courses']);
+                      this.navController.navigateBack('/manage/courses');
                     }
                   }
                 ]

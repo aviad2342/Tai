@@ -1,7 +1,7 @@
 import { AfterContentInit, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SegmentChangeEventDetail } from '@ionic/core';
-import { AlertController, IonInput, IonSegment, IonSlides, ModalController } from '@ionic/angular';
+import { AlertController, IonInput, IonSegment, IonSlides, ModalController, NavController } from '@ionic/angular';
 import { Category, Item } from '../../../store/item.model';
 import { ItemService } from '../../../store/item.service';
 import { Router } from '@angular/router';
@@ -78,6 +78,7 @@ export class AddItemPage implements OnInit, AfterViewInit {
     private modalController: ModalController,
     private alertController: AlertController,
     private router: Router,
+    private navController: NavController,
     private currencyPipe: CurrencyPipe,
     private appService: AppService
     ) { }
@@ -277,12 +278,12 @@ export class AddItemPage implements OnInit, AfterViewInit {
       })).subscribe(() => {
         form.reset();
         this.appService.presentToast('המוצר נשמר בהצלחה', true);
-        this.router.navigate(['/manage/items']);
+        this.navController.navigateBack('/manage/items');
       }, error => {
         console.log(error);
         form.reset();
         this.appService.presentToast('חלה תקלה פרטי המוצר לא נשמרו', false);
-        this.router.navigate(['/manage/items']);
+        this.navController.navigateBack('/manage/items');
       });
     } else {
       if(this.productId === '') {
@@ -302,12 +303,12 @@ export class AddItemPage implements OnInit, AfterViewInit {
       return this.itemService.addItem(itemToAdd).subscribe(() => {
       form.reset();
       this.appService.presentToast('המוצר נשמר בהצלחה', true);
-      this.router.navigate(['/manage/items']);
+      this.navController.navigateBack('/manage/items');
     }, error => {
       console.log(error);
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי המוצר לא נשמרו', false);
-      this.router.navigate(['/manage/items']);
+      this.navController.navigateBack('/manage/items');
     });
     }
 
@@ -335,7 +336,7 @@ export class AddItemPage implements OnInit, AfterViewInit {
   onCancel() {
     this.form.reset();
     this.appService.presentToast('הפעולה בוטלה', true);
-    this.router.navigate(['/manage/items']);
+    this.navController.navigateBack('/manage/items');
   }
 
 }

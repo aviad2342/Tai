@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, ModalController, AlertController } from '@ionic/angular';
+import { IonSlides, ModalController, AlertController, NavController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 import { CourseService } from '../../../course/course.service';
 import { AuthService } from '../../../auth/auth.service';
@@ -40,6 +40,7 @@ export class AddCoursePage implements OnInit {
   constructor(
     private courseService: CourseService,
     private router: Router,
+    private navController: NavController,
     private modalController: ModalController,
     private authService: AuthService,
     private alertController: AlertController,
@@ -108,7 +109,7 @@ export class AddCoursePage implements OnInit {
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי הקורס לא נשמרו', false);
-      this.router.navigate(['/manage/courses']);
+      this.navController.navigateBack('/manage/courses');
     }
     );
   }
@@ -163,7 +164,7 @@ export class AddCoursePage implements OnInit {
   async onSaveAndExit() {
     if(this.course.lessons !== null && this.course.lessons && this.course.lessons.length > 0) {
       this.appService.presentToast('השיעור נשמר בהצלחה', true);
-        this.router.navigate(['/manage/courses']);
+      this.navController.navigateBack('/manage/courses');
     } else {
       const alert = await this.alertController.create({
         cssClass: 'no-class-added-alert',
@@ -179,7 +180,7 @@ export class AddCoursePage implements OnInit {
             handler: () => {
               this.courseService.deleteCourse(this.course.id).subscribe(() => {
                 this.appService.presentToast('בוטלה פעולת השמירה והקורס נמחק!', true);
-                this.router.navigate(['/manage/courses']);
+                this.navController.navigateBack('/manage/courses');
               });
             }
           }, {
@@ -192,7 +193,7 @@ export class AddCoursePage implements OnInit {
             text: 'שמור קורס',
             handler: () => {
               this.appService.presentToast('הקורס נשמר בהצלחה!', true);
-              this.router.navigate(['/manage/courses']);
+              this.navController.navigateBack('/manage/courses');
             }
           }
         ]
@@ -215,7 +216,7 @@ export class AddCoursePage implements OnInit {
   onCancel() {
     this.form.reset();
     this.appService.presentToast('הפעולה בוטלה', true);
-    this.router.navigate(['/manage/courses']);
+    this.navController.navigateBack('/manage/courses');
   }
 
 }

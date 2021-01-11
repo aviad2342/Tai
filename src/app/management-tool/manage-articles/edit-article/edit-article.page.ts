@@ -87,7 +87,7 @@ export class EditArticlePage implements OnInit {
                 {
                   text: 'אישור',
                   handler: () => {
-                    this.router.navigate(['/manage/articles']);
+                    this.navController.navigateBack(['/manage/articles']);
                   }
                 }
               ]
@@ -173,11 +173,11 @@ export class EditArticlePage implements OnInit {
     })).subscribe(() => {
       this.appService.presentToast('המאמר עוכן בהצלחה', true);
       this.form.reset();
-      this.router.navigate(['/manage/articles']);
+      this.navController.navigateBack(['/manage/articles']);
     }, error => {
       this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
       this.form.reset();
-      this.router.navigate(['/manage/articles']);
+      this.navController.navigateBack(['/manage/articles']);
     });
 // --------------------------------------------- Thumbnail Property update ------------------------------------------------
   } else if(this.articleImage && !this.didEditPdf()) {
@@ -204,11 +204,11 @@ export class EditArticlePage implements OnInit {
     ).subscribe(() => {
       this.appService.presentToast('המאמר עוכן בהצלחה', true);
       this.form.reset();
-      this.router.navigate(['/manage/articles']);
+      this.navController.navigateBack(['/manage/articles']);
     }, error => {
       this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
       this.form.reset();
-      this.router.navigate(['/manage/articles']);
+      this.navController.navigateBack(['/manage/articles']);
     });
 // -------------------------------------------------- PDF Property update ------------------------------------------------------
   }  else if(!this.articleImage && this.didEditPdf()) {
@@ -235,17 +235,17 @@ export class EditArticlePage implements OnInit {
         ).subscribe(() => {
           this.appService.presentToast('המאמר עוכן בהצלחה', true);
           this.form.reset();
-          this.router.navigate(['/manage/articles']);
+          this.navController.navigateBack(['/manage/articles']);
         }, error => {
           this.form.reset();
           this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
-          this.router.navigate(['/manage/articles']);
+          this.navController.navigateBack(['/manage/articles']);
         });
 // -------------------------------------------------- No Property update ------------------------------------------------------
     } else {
       this.appService.presentToast('המאמר עוכן בהצלחה', true);
       this.form.reset();
-        this.router.navigate(['/manage/articles']);
+      this.navController.navigateBack(['/manage/articles']);
     }
 
 
@@ -254,7 +254,7 @@ export class EditArticlePage implements OnInit {
   onCancel() {
     this.form.reset();
     this.appService.presentToast('הפעולה בוטלה', true);
-    this.router.navigate(['/manage/articles']);
+    this.navController.navigateBack(['/manage/articles']);
   }
 
   isEquals(article1: Article, article2: Article) {

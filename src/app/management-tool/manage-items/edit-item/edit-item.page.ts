@@ -65,7 +65,7 @@ export class EditItemPage implements OnInit {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.router.navigate(['/manage/items']);
+                      this.navController.navigateBack('/manage/items');
                     }
                   }
                 ]
@@ -117,12 +117,12 @@ export class EditItemPage implements OnInit {
       })).subscribe(() => {
         form.reset();
         this.appService.presentToast('המוצר נשמר בהצלחה', true);
-        this.router.navigate(['/manage/items']);
+        this.navController.navigateBack('/manage/items');
       }, error => {
         console.log(error);
         form.reset();
         this.appService.presentToast('חלה תקלה פרטי המוצר לא נשמרו', false);
-        this.router.navigate(['/manage/items']);
+        this.navController.navigateBack('/manage/items');
       });
     } else {
       const itemToupdate = new Item(
@@ -138,11 +138,11 @@ export class EditItemPage implements OnInit {
       );
       return this.itemService.updateItem(itemToupdate).subscribe(() => {
       this.appService.presentToast('המוצר נשמר בהצלחה', true);
-      this.router.navigate(['/manage/items']);
+      this.navController.navigateBack('/manage/items');
     }, error => {
       console.log(error);
       this.appService.presentToast('חלה תקלה פרטי המוצר לא נשמרו', false);
-      this.router.navigate(['/manage/items']);
+      this.navController.navigateBack('/manage/items');
     });
     }
 
@@ -165,7 +165,7 @@ export class EditItemPage implements OnInit {
 
   onCancel() {
     this.appService.presentToast('הפעולה בוטלה', true);
-    this.router.navigate(['/manage/items']);
+    this.navController.navigateBack('/manage/items');
   }
 
 }

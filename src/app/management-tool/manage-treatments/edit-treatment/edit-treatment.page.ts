@@ -70,7 +70,7 @@ export class EditTreatmentPage implements OnInit {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.router.navigate(['/manage/treatments']);
+                      this.navController.navigateBack('/manage/treatments');
                     }
                   }
                 ]
@@ -146,11 +146,11 @@ export class EditTreatmentPage implements OnInit {
       ).subscribe(() => {
         form.reset();
         this.appService.presentToast('הטיפול עודכן בהצלחה', true);
-        this.router.navigate(['/manage/treatments']);
+        this.navController.navigateBack('/manage/treatments');
       }, error => {
         form.reset();
         this.appService.presentToast('חלה תקלה פרטי הטיפול לא נשמרו', false);
-        this.router.navigate(['/manage/treatments']);
+        this.navController.navigateBack('/manage/treatments');
       });
     } else {
       const treatmentUpdate = new Treatment(
@@ -167,11 +167,11 @@ export class EditTreatmentPage implements OnInit {
       .subscribe(() => {
         form.reset();
         this.appService.presentToast('הטיפול עודכן בהצלחה', true);
-        this.router.navigate(['/manage/treatments']);
+        this.navController.navigateBack('/manage/treatments');
       }, error => {
         form.reset();
         this.appService.presentToast('חלה תקלה פרטי הטיפול לא נשמרו', false);
-        this.router.navigate(['/manage/treatments']);
+        this.navController.navigateBack('/manage/treatments');
       });
     }
   }
@@ -179,7 +179,7 @@ export class EditTreatmentPage implements OnInit {
   onCancel() {
     this.form.reset();
     this.appService.presentToast('הפעולה בוטלה', true);
-    this.router.navigate(['/manage/treatments']);
+    this.navController.navigateBack('/manage/treatments');
   }
 
 }

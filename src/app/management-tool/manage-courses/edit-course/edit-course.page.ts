@@ -52,6 +52,21 @@ export class EditCoursePage implements OnInit {
           description: this.course.description
           };
         this.form.setValue(courseObj);
+      }, error => {
+        this.alertController
+          .create({
+            header: 'ישנה תקלה!',
+            message: 'לא ניתן לערוך את המאמר.',
+            buttons: [
+              {
+                text: 'אישור',
+                handler: () => {
+                  this.navCtrl.navigateBack('/manage/courses');
+                }
+              }
+            ]
+          })
+          .then(alertEl => alertEl.present());
       });
     });
   }
@@ -84,11 +99,11 @@ export class EditCoursePage implements OnInit {
       })
     ).subscribe(newCourse => {
       this.appService.presentToast('הקורס עודכן בהצלחה', true);
-      this.router.navigate(['/manage/courses']);
+      this.navCtrl.navigateBack('/manage/courses');
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה עדכון הקורס נכשל!', false);
-      this.router.navigate(['/manage/courses']);
+      this.navCtrl.navigateBack('/manage/courses');
     }
     );
   } else {
@@ -107,16 +122,16 @@ export class EditCoursePage implements OnInit {
     );
     if( this.isEquals(this.course, courseToUpdate)) {
       this.appService.presentToast('הקורס עודכן בהצלחה', true);
-      this.router.navigate(['/manage/courses']);
+      this.navCtrl.navigateBack('/manage/courses');
       return;
     }
     this.courseService.updateCourse(courseToUpdate).subscribe(newCourse => {
       this.appService.presentToast('הקורס עודכן בהצלחה', true);
-      this.router.navigate(['/manage/courses']);
+      this.navCtrl.navigateBack('/manage/courses');
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה עדכון הקורס נכשל!', false);
-      this.router.navigate(['/manage/courses']);
+      this.navCtrl.navigateBack('/manage/courses');
     }
     );
   }
@@ -244,7 +259,7 @@ export class EditCoursePage implements OnInit {
 
   onCancel() {
     this.appService.presentToast('הפעולה בוטלה', true);
-      this.router.navigate(['/manage/courses']);
+    this.navCtrl.navigateBack('/manage/courses');
   }
 
 }
