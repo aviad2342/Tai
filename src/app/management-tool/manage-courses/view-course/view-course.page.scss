@@ -15,14 +15,22 @@
     margin-bottom: 1px;
 }
 
-.lessons-list {
-    // border-top: 1px solid lightgray;
-    border: 1px solid black;
+// .lessons-list {
+//     border: 1px solid black;
+// }
+
+.course-title {
+    font-family: 'Yoav-bold';
+    font-size: large;
 }
 
 .lessons-item {
     --background: lightgrey;
     padding-bottom: 5px;
+}
+
+.course-lesson-label {
+    font-family: 'Yoav-bold';
 }
 
 .play-icon {

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button routerLink="/manage/courses" defaultHref="/manage/courses"></ion-back-button>
+      <ion-back-button [defaultHref]="['/', 'manage','courses']"></ion-back-button>
     </ion-buttons>
     <ion-title class="ion-no-padding app-titles">קורס</ion-title>
   </ion-toolbar>
@@ -11,25 +11,25 @@
 <!------------------------------------------course section -------------------------------------------->
   <ion-grid>
     <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-sm="8" class="ion-text-center" *ngIf="isLoading">
+      <ion-col size="12" size-xl="3" size-lg="5" size-md="6" size-sm="7" class="ion-text-center" *ngIf="isLoading">
         <ion-spinner color="primary"></ion-spinner>
       </ion-col>
-      <ion-col size="12" size-sm="8" class="ion-text-center" *ngIf="!isLoading">
+      <ion-col size="12" size-xl="8" size-lg="7" size-md="6" size-sm="7" class="ion-text-center" *ngIf="!isLoading">
         <div class="course-container ion-padding">
-        <ion-text>
+        <ion-text class="course-title">
           <h1 class="ion-no-margin">{{ course?.title }}</h1>
         </ion-text>
-        <ion-text>
+        <ion-text class="course-title">
           <h5 class="ion-margin-top">{{ course?.description }}</h5>
         </ion-text>
         <ion-img [src]="course.thumbnail" class="course-thumbnail"></ion-img>
-        <ion-text  class="ion-no-padding">
+        <ion-text  class="ion-no-padding course-title">
           <p class="article-author-date ion-no-margin"> המרצה {{ course.authorName }}</p>
         </ion-text>
-        <ion-text  class="ion-no-padding">
+        <ion-text  class="ion-no-padding course-title">
           <p class="course-author-date"> {{ course?.date | date  }}</p>
         </ion-text>
-        <ion-text color="medium" *ngIf="course?.date !== course?.lastEdit">
+        <ion-text class="course-title" color="medium" *ngIf="course?.date !== course?.lastEdit">
           <small>נערך בתאריך: {{ course?.lastEdit | date }}</small>
         </ion-text>
       </div>
@@ -37,14 +37,14 @@
     </ion-row>
 <!------------------------------------------lessons list -------------------------------------------->
     <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-sm="8" class="ion-text-center" *ngIf="!isLoading">
+      <ion-col size="12" size-xl="6" size-lg="7" size-md="6" size-sm="7" class="ion-text-center" *ngIf="!isLoading">
         <ion-list [lines]="'full'" *ngIf="course.lessons !== null" class="lessons-list">
           <div class="comment-item" *ngFor="let lesson of course.lessons">
             <ion-item class="lessons-item" [routerLink]="['/', 'manage', 'courses', 'lesson', lesson.id]">
               <ion-thumbnail size="medium" slot="start">
                 <ion-img [src]="lesson.thumbnail" class="lesson-thumbnail-image"></ion-img>
               </ion-thumbnail>
-              <ion-label>
+              <ion-label class="course-lesson-label">
                 <h2>שיעור מספר {{ lesson.lessonNumber }}: {{ lesson.title }}</h2>
                 <h3>{{ lesson.description }}</h3>
                 <ion-text color="medium">
