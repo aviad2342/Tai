@@ -29,7 +29,8 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-sm="10" class="ion-text-center" *ngIf="!articleIsLoading">
         <!-- <embed width='100%' height='100%' [src]="sanitizer.bypassSecurityTrustResourceUrl(article.pdf)" type="application/pdf"> -->
-          <iframe [src]="sanitizer?.bypassSecurityTrustResourceUrl(article?.pdf)" width="800px" height="1200px"></iframe>
+          <!-- <iframe [src]="sanitizer?.bypassSecurityTrustResourceUrl(article?.pdf)" width="800px" height="1200px"></iframe> -->
+          <ngx-doc-viewer [url]="article?.pdf" viewer="pdf" style="width:100%;height:50vh;"></ngx-doc-viewer>
           <!-- <object
   [data]="sanitizer.bypassSecurityTrustResourceUrl(article.pdf)"
   type="application/pdf"

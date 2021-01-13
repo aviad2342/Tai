@@ -48,6 +48,7 @@
     "jspdf": "^2.1.1",
     "lodash": "^4.17.20",
     "ng2-pdf-viewer": "^6.3.2",
+    "ngx-doc-viewer": "^1.4.0",
     "ngx-dropzone": "^2.2.2",
     "ngx-image-gallery": "^2.0.5",
     "ngx-quill": "^12.0.1",

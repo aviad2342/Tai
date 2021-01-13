@@ -8,6 +8,7 @@ import { ViewArticlePageRoutingModule } from './view-article-routing.module';
 
 import { ViewArticlePage } from './view-article.page';
 import { ArticleSharedModule } from '../../../article/article-shared/article-shared.module';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { ArticleSharedModule } from '../../../article/article-shared/article-sha
     FormsModule,
     IonicModule,
     ViewArticlePageRoutingModule,
-    ArticleSharedModule
+    ArticleSharedModule,
+    NgxDocViewerModule
   ],
   declarations: [ViewArticlePage]
 })
