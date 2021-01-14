@@ -134,7 +134,7 @@ export class AuthService implements OnDestroy {
   login(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        `http://${LOCALHOST}:3000/api/auth/login`,
+        `https://${LOCALHOST}:3000/api/auth/login`,
         { email, password }
       )
       .pipe(tap(this.setUserData.bind(this)));

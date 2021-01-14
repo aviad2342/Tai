@@ -21,21 +21,21 @@ export class TherapistService {
   constructor( private http: HttpClient ) { }
 
   getTherapists() {
-    return this.http.get<Therapist[]>(`http://${LOCALHOST}:3000/api/therapist/therapists`)
+    return this.http.get<Therapist[]>(`https://${LOCALHOST}:3000/api/therapist/therapists`)
     .pipe(tap(resDta => {
       this._therapists.next(resDta);
     }));
   }
 
   getAllTherapists() {
-    return this.http.get(`http://${LOCALHOST}:3000/api/therapist/therapists`)
+    return this.http.get(`https://${LOCALHOST}:3000/api/therapist/therapists`)
     .pipe(tap(resDta => {
     }));
   }
 
 
   getTherapist(id: string) {
-    return this.http.get<Therapist>(`http://${LOCALHOST}:3000/api/therapist/therapist/${id}`)
+    return this.http.get<Therapist>(`https://${LOCALHOST}:3000/api/therapist/therapist/${id}`)
     .pipe(tap(resDta => {
       return resDta;
     }));
@@ -44,7 +44,7 @@ export class TherapistService {
   getTherapistByEmail(email: string) {
     return this.http
       .get<Therapist>(
-        `http://${LOCALHOST}:3000/api/therapist/therapist/email/${email}`)
+        `https://${LOCALHOST}:3000/api/therapist/therapist/email/${email}`)
       .pipe(tap(therapist => {
         return therapist;
       }));
@@ -54,13 +54,13 @@ export class TherapistService {
     const uploadData = new FormData();
     uploadData.append('image', image, fileName);
     return this.http.post<{ imageUrl: string}>(
-      `http://${LOCALHOST}:3000/api/image/uploadTherapistImage`,
+      `https://${LOCALHOST}:3000/api/image/uploadTherapistImage`,
       uploadData
     );
   }
 
   addTherapist(therapist: Therapist) {
-    return this.http.post<{id: string}>(`http://${LOCALHOST}:3000/api/therapist/therapist`,
+    return this.http.post<{id: string}>(`https://${LOCALHOST}:3000/api/therapist/therapist`,
     {
       ...therapist
     }).
@@ -94,7 +94,7 @@ export class TherapistService {
       resume: therapist.resume,
       admin: therapist.admin
       };
-    return this.http.put(`http://${LOCALHOST}:3000/api/therapist/therapist/${therapist.id}`,
+    return this.http.put(`https://${LOCALHOST}:3000/api/therapist/therapist/${therapist.id}`,
     {
       ...therapistObj
     }).
@@ -131,7 +131,7 @@ export class TherapistService {
       resume: therapist.resume,
       admin: therapist.admin
       };
-    return this.http.put(`http://${LOCALHOST}:3000/api/therapist/therapist/image/${therapist.id}`,
+    return this.http.put(`https://${LOCALHOST}:3000/api/therapist/therapist/image/${therapist.id}`,
     {
       ...therapistObj
     }).
@@ -150,7 +150,7 @@ export class TherapistService {
   }
 
   deleteTherapist(id: string) {
-    return this.http.delete(`http://${LOCALHOST}:3000/api/therapist/therapist/${id}`).
+    return this.http.delete(`https://${LOCALHOST}:3000/api/therapist/therapist/${id}`).
     pipe(
       switchMap(resData => {
         return this.getTherapists();

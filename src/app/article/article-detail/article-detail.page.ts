@@ -25,7 +25,7 @@ export class ArticleDetailPage implements OnInit {
   enterTimestamp: number;
   leaveTimestamp: number;
   articleIsLoading = false;
-  pdfSrc = 'http://10.0.0.1:3000/articles/1603114736179@articlepdf.pdf';
+  pdfSrc = 'https://10.0.0.1:3000/articles/1603114736179@articlepdf.pdf';
 
   constructor(
     private route: ActivatedRoute,

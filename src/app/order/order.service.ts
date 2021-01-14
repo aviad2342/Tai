@@ -23,28 +23,28 @@ export class OrderService {
     constructor( private http: HttpClient ) { }
 
     getOrders() {
-      return this.http.get<Order[]>(`http://${LOCALHOST}:3000/api/order/orders`)
+      return this.http.get<Order[]>(`https://${LOCALHOST}:3000/api/order/orders`)
       .pipe(tap(resDta => {
         this._orders.next(resDta);
       }));
     }
 
     getOrder(id: string) {
-      return this.http.get<Order>(`http://${LOCALHOST}:3000/api/order/order/${id}`)
+      return this.http.get<Order>(`https://${LOCALHOST}:3000/api/order/order/${id}`)
       .pipe(tap(resDta => {
         return resDta;
       }));
     }
 
     getOrderItems(id: string) {
-      return this.http.get<OrderItem[]>(`http://${LOCALHOST}:3000/api/order/order/items/${id}`)
+      return this.http.get<OrderItem[]>(`https://${LOCALHOST}:3000/api/order/order/items/${id}`)
       .pipe(tap(resDta => {
         return resDta;
       }));
     }
 
     addOrder(order: Order) {
-      return this.http.post<Order>(`http://${LOCALHOST}:3000/api/order/order`,
+      return this.http.post<Order>(`https://${LOCALHOST}:3000/api/order/order`,
       {
         ...order
       }).
@@ -68,7 +68,7 @@ export class OrderService {
         address:              order.address,
         items:                order.items,
         };
-      return this.http.put<Order>(`http://${LOCALHOST}:3000/api/order/order/${order.id}`,
+      return this.http.put<Order>(`https://${LOCALHOST}:3000/api/order/order/${order.id}`,
       {
         ...orderObj
       }).
@@ -78,7 +78,7 @@ export class OrderService {
     }
 
     deleteOrder(id: string) {
-      return this.http.delete(`http://${LOCALHOST}:3000/api/order/order/${id}`).
+      return this.http.delete(`https://${LOCALHOST}:3000/api/order/order/${id}`).
       pipe(
         switchMap(resData => {
           return this.getOrders();
@@ -91,7 +91,7 @@ export class OrderService {
     getOrdersByCustomer(customerId: string) {
       return this.http
         .get<Order[]>(
-          `http://${LOCALHOST}:3000/api/order/orders/customer/${customerId}`)
+          `https://${LOCALHOST}:3000/api/order/orders/customer/${customerId}`)
         .pipe(tap(orders => {
           return orders;
         }));
@@ -100,7 +100,7 @@ export class OrderService {
     getOrdersByItem(itemId: string) {
       return this.http
         .get<Order[]>(
-          `http://${LOCALHOST}:3000/api/order/orders/item/${itemId}`)
+          `https://${LOCALHOST}:3000/api/order/orders/item/${itemId}`)
         .pipe(tap(orders => {
           return orders;
         }));

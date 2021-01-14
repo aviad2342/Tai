@@ -44,7 +44,7 @@ export class EditArticlePage implements OnInit {
       {class: 'aharoni', name: 'Aharoni'},
       {class: 'Alef-Regular', name: 'Alef'}
     ],
-    uploadUrl: 'http://localhost:3000/articleBodyImages/',
+    uploadUrl: 'https://10.0.0.1:3000/articleBodyImages/',
     toolbarHiddenButtons: [
       ['redo'],
       ['insertImage', 'insertVideo']

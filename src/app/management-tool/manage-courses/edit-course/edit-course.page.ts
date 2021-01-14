@@ -24,7 +24,7 @@ export class EditCoursePage implements OnInit {
   @ViewChild(IonReorderGroup) reorderGroup: IonReorderGroup;
   updateImage;
   isLoading = false;
-  defaultThumbnail = 'http://localhost:3000/images/filmDefaultImage.jpg';
+  defaultThumbnail = 'https://localhost:3000/images/filmDefaultImage.jpg';
 
   constructor(
     private route: ActivatedRoute,

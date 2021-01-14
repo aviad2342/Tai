@@ -16,7 +16,7 @@ import { AppService } from '../app.service';
 export class AuthPage implements OnInit {
 
   isLoading = false;
-  userProfilePicture = 'http://10.0.0.1:3000/images/user-default-image.png';
+  userProfilePicture = 'https://10.0.0.1:3000/images/user-default-image.png';
   homePage = '/tabs/user'
 
   constructor(

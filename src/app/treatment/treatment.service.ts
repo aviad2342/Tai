@@ -22,21 +22,21 @@ export class TreatmentService {
   constructor( private http: HttpClient ) { }
 
   getTreatments() {
-    return this.http.get<Treatment[]>(`http://${LOCALHOST}:3000/api/treatment/treatments`)
+    return this.http.get<Treatment[]>(`https://${LOCALHOST}:3000/api/treatment/treatments`)
     .pipe(tap(resDta => {
       this._treatments.next(resDta);
     }));
   }
 
   getTreatment(id: string) {
-    return this.http.get<Treatment>(`http://${LOCALHOST}:3000/api/treatment/treatment/${id}`)
+    return this.http.get<Treatment>(`https://${LOCALHOST}:3000/api/treatment/treatment/${id}`)
     .pipe(tap(resDta => {
       return resDta;
     }));
   }
 
   addTreatment(treatment: Treatment) {
-    return this.http.post<Treatment>(`http://${LOCALHOST}:3000/api/treatment/treatment`,
+    return this.http.post<Treatment>(`https://${LOCALHOST}:3000/api/treatment/treatment`,
     {
       ...treatment
     }).
@@ -62,7 +62,7 @@ export class TreatmentService {
       therapistName: treatment.therapistName,
       therapistProfilePicture: treatment.therapistProfilePicture
       };
-    return this.http.put<Treatment>(`http://${LOCALHOST}:3000/api/treatment/treatment/${treatment.id}`,
+    return this.http.put<Treatment>(`https://${LOCALHOST}:3000/api/treatment/treatment/${treatment.id}`,
     {
       ...treatmentObj
     }).
@@ -73,7 +73,7 @@ export class TreatmentService {
   }
 
   deleteTreatment(id: string) {
-    return this.http.delete(`http://${LOCALHOST}:3000/api/treatment/treatment/${id}`).
+    return this.http.delete(`https://${LOCALHOST}:3000/api/treatment/treatment/${id}`).
     pipe(
       switchMap(resData => {
         return this.getTreatments();
@@ -85,7 +85,7 @@ export class TreatmentService {
 
 
   getTreatmentsByTherapist(id: string) {
-    return this.http.get<Treatment[]>( `http://${LOCALHOST}:3000/api/treatment/treatment/therapistId/${id}`)
+    return this.http.get<Treatment[]>( `https://${LOCALHOST}:3000/api/treatment/treatment/therapistId/${id}`)
       .pipe(tap(treatments => {
         return treatments;
       }));
@@ -95,7 +95,7 @@ export class TreatmentService {
     const uploadData = new FormData();
     uploadData.append('image', image, fileName);
     return this.http.post<{ imageUrl: string}>(
-      `http://${LOCALHOST}:3000/api/image/uploadTreatmentImage`,
+      `https://${LOCALHOST}:3000/api/image/uploadTreatmentImage`,
       uploadData
     );
   }
