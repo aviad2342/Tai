@@ -10,6 +10,7 @@ import { Course } from '../../../course/course.model';
 import { Lesson } from '../../../course/lesson.model';
 import { AddLessonComponent } from '../add-lesson/add-lesson.component';
 import * as utility from '../../../utilities/functions';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-add-course',
@@ -22,6 +23,8 @@ export class AddCoursePage implements OnInit {
   @ViewChild('f', { static: true }) form: NgForm;
   course: Course;
   file: File;
+  imageUploaded = '';
+  date = new Date();
   imageFile;
   authorId: string;
   authorName: string;
@@ -82,9 +85,11 @@ export class AddCoursePage implements OnInit {
     if (!form.valid || !this.imageFile) {
       return;
     }
+     console.log(this.date);
     this.courseService.uploadCourseThumbnail(this.imageFile, 'course')
     .pipe(
       switchMap(uploadRes => {
+        this.imageUploaded = uploadRes.imageUrl;
         const courseToAdd = new Course(
           null,
           this.authorId,
@@ -92,8 +97,8 @@ export class AddCoursePage implements OnInit {
           'bb22',
           form.value.title,
           form.value.description,
-          new Date(),
-          new Date(),
+          this.date,
+          this.date,
           uploadRes.imageUrl,
           0,
           []
@@ -107,6 +112,7 @@ export class AddCoursePage implements OnInit {
       this.lessonsIsLoading = false;
       this.newCourseStepper.slideNext();
     }, error => {
+      this.courseService.deleteImage(this.imageUploaded);
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי הקורס לא נשמרו', false);
       this.navController.navigateBack('/manage/courses');

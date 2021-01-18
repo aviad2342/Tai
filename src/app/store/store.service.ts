@@ -4,6 +4,9 @@ import { BehaviorSubject } from 'rxjs';
 
 import { Item } from './item.model';
 import { take, map, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+
+const LOCALHOST = environment.LOCALHOST;
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +33,7 @@ export class StoreService {
   }
 
   getItems() {
-    return this.http.get<Item[]>('https://localhost:3000/api/item/items')
+    return this.http.get<Item[]>(`http://${LOCALHOST}:3000/api/item/items`)
     .pipe(tap(resDta => {
       this._items.next(resDta);
     }));

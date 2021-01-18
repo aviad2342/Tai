@@ -58,34 +58,28 @@
               </ion-col>
       
             </ion-row>
+
+            <ion-row class="ion-justify-content-center">
+              <ion-col size="12" size-xl="10" size-lg="8" size-md="6" size-sm="6">
+                <ion-input type="file" accept="application/pdf, application/msword" (change)="onFileChosen($event)"></ion-input>
+              </ion-col>
+            </ion-row>
       
             <ion-row class="ion-justify-content-center">
               <ion-col size="12" size-xl="10" size-lg="8" size-md="6" size-sm="6">
                 <angular-editor 
                 [config]="editorConfig"
-                required
                 (input)="getInput($event)"
                 [(ngModel)]="htmlContent"
                 [placeholder]="'גוף המאמר'"
                 ngModel 
                 name="body"
                 ></angular-editor>
-                <!-- <h5 class="html-header">HTML Output</h5>
-                <div [innerHTML]="f.value.body"></div>
-                <p [innerHTML]="f.value.body"></p>
-                <div> {{ htmlContent }} </div> -->
               </ion-col>
             </ion-row>
             <br>
             <br>
             <ion-row class="ion-justify-content-center">
-              <!-- <ion-col size="2" size-md="3">
-                <ion-button 
-                color="primary" 
-                expand="block"
-                (click)="readHtml()"
-                >read </ion-button>
-              </ion-col> -->
               <ion-col size="2" size-md="3">
                 <ion-button 
                 color="primary" 

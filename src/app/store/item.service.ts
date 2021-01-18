@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { Item } from './item.model';
 
-const LOCALHOST = '10.0.0.1';
+const LOCALHOST = environment.LOCALHOST;
 
 @Injectable({
   providedIn: 'root'
@@ -31,21 +32,21 @@ export class ItemService {
   // }
 
   getItems() {
-    return this.http.get<Item[]>(`https://${LOCALHOST}:3000/api/item/items`)
+    return this.http.get<Item[]>(`http://${LOCALHOST}:3000/api/item/items`)
     .pipe(tap(resDta => {
       this._items.next(resDta);
     }));
   }
 
   getItem(id: string) {
-    return this.http.get<Item>(`https://${LOCALHOST}:3000/api/item/item/${id}`)
+    return this.http.get<Item>(`http://${LOCALHOST}:3000/api/item/item/${id}`)
     .pipe(tap(resDta => {
       return resDta;
     }));
   }
 
   addItem(item: Item) {
-    return this.http.post<{id: string}>(`https://${LOCALHOST}:3000/api/item/item`,
+    return this.http.post<{id: string}>(`http://${LOCALHOST}:3000/api/item/item`,
     {
       ...item
     }).
@@ -72,7 +73,7 @@ export class ItemService {
        quantity:      item.quantity,
        country:       item.category
       };
-    return this.http.put<Item>(`https://${LOCALHOST}:3000/api/item/item/${item.id}`,
+    return this.http.put<Item>(`http://${LOCALHOST}:3000/api/item/item/${item.id}`,
     {
       ...itemObj
     }).
@@ -83,7 +84,7 @@ export class ItemService {
   }
 
   deleteItem(id: string) {
-    return this.http.delete(`https://${LOCALHOST}:3000/api/item/item/${id}`).
+    return this.http.delete(`http://${LOCALHOST}:3000/api/item/item/${id}`).
     pipe(
       switchMap(resData => {
         return this.getItems();
@@ -97,7 +98,7 @@ export class ItemService {
     const uploadData = new FormData();
     uploadData.append('image', image, fileName);
     return this.http.post<{ imageUrl: string}>(
-      `https://${LOCALHOST}:3000/api/image/uploadItemImage`,
+      `http://${LOCALHOST}:3000/api/image/uploadItemImage`,
       uploadData
     );
   }

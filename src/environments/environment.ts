@@ -5,10 +5,11 @@
 export const environment = {
   production: false,
   googleAPIKey: 'AIzaSyDqb_--ZW9Sn4l75YuinoYD2Fgeu6gQkGY',
-  YouTubeAPIKey: 'AIzaSyDJmTLN9-yieVrbAE91GXKpGxICkRIejwQ'
+  YouTubeAPIKey: 'AIzaSyDJmTLN9-yieVrbAE91GXKpGxICkRIejwQ',
+  LOCALHOST: 'aviadbenhayun.com'
 };
 
-/*
+/*145.14.158.107
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
  *

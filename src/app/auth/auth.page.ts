@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { UserLogged } from './userLogged.model';
 import { UserService } from '../user/user.service';
 import { AppService } from '../app.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-auth',
@@ -16,7 +17,7 @@ import { AppService } from '../app.service';
 export class AuthPage implements OnInit {
 
   isLoading = false;
-  userProfilePicture = 'https://10.0.0.1:3000/images/user-default-image.png';
+  userProfilePicture = `http://${environment.LOCALHOST}:3000/images/user-default-image.png`;
   homePage = '/tabs/user'
 
   constructor(

@@ -25,6 +25,8 @@ export class UserPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.usersSubscription = this.userService.users.subscribe(users => {
       this.users = users;
+    }, error => {
+      console.log(error);
     });
   }
 

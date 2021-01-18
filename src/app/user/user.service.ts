@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { take, map, tap, delay, switchMap } from 'rxjs/operators';
 import { User } from './user.model';
+import { environment } from 'src/environments/environment';
 
-const LOCALHOST = '10.0.0.1';
+const LOCALHOST = environment.LOCALHOST;
 
 export interface Predictions {
   country: string;
@@ -27,14 +28,14 @@ export class UserService {
   constructor( private http: HttpClient ) { }
 
   getUsers() {
-    return this.http.get<User[]>(`https://${LOCALHOST}:3000/api/user/users`)
+    return this.http.get<User[]>(`http://${LOCALHOST}:3000/api/user/users`)
     .pipe(tap(resDta => {
       this._users.next(resDta);
     }));
   }
 
   getAllUsers() {
-    return this.http.get(`https://${LOCALHOST}:3000/api/user/users`)
+    return this.http.get(`http://${LOCALHOST}:3000/api/user/users`)
     .pipe(tap(resDta => {
     }));
   }
@@ -42,7 +43,7 @@ export class UserService {
   getCountries(country: string) {
     return this.http.get<any>(
       // tslint:disable-next-line: max-line-length
-      `https://thingproxy.freeboard.io/fetch/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${country}&types=(cities)&language=he&key=AIzaSyDqb_--ZW9Sn4l75YuinoYD2Fgeu6gQkGY`
+      `http://thingproxy.freeboard.io/fetch/http://maps.googleapis.com/maps/api/place/autocomplete/json?input=${country}&types=(cities)&language=he&key=AIzaSyDqb_--ZW9Sn4l75YuinoYD2Fgeu6gQkGY`
     ).pipe(
       map(predictions => {
         const countries: string[] = [];
@@ -57,7 +58,7 @@ export class UserService {
    getCities(country: string) {
     return this.http.get<any>(
       // tslint:disable-next-line: max-line-length
-      `https://${LOCALHOST}:3000/api/address/cities/${country}`)
+      `http://${LOCALHOST}:3000/api/address/cities/${country}`)
       .pipe(
       map(predictions => {
         const countries: string[] = [];
@@ -72,7 +73,7 @@ export class UserService {
   getAddress() {
     return this.http.get<any>(
       // tslint:disable-next-line: max-line-length
-      `https://thingproxy.freeboard.io/fetch/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=בני&types=(cities)&language=he&key=AIzaSyDqb_--ZW9Sn4l75YuinoYD2Fgeu6gQkGY`
+      `http://thingproxy.freeboard.io/fetch/http://maps.googleapis.com/maps/api/place/autocomplete/json?input=בני&types=(cities)&language=he&key=AIzaSyDqb_--ZW9Sn4l75YuinoYD2Fgeu6gQkGY`
     ).pipe(
       map(predictions => {
         const countries: string[] = [];
@@ -88,7 +89,7 @@ export class UserService {
   }
 
   getUser(id: string) {
-    return this.http.get<User>(`https://${LOCALHOST}:3000/api/user/users/${id}`)
+    return this.http.get<User>(`http://${LOCALHOST}:3000/api/user/user/${id}`)
     .pipe(tap(resDta => {
       return resDta;
     }));
@@ -97,7 +98,7 @@ export class UserService {
   getUserByEmail(email: string) {
     return this.http
       .get<User>(
-        `https://${LOCALHOST}:3000/api/user/users/email/${email}`)
+        `http://${LOCALHOST}:3000/api/user/user/email/${email}`)
       .pipe(tap(user => {
         return user;
       }));
@@ -107,13 +108,13 @@ export class UserService {
     const uploadData = new FormData();
     uploadData.append('image', image, fileName);
     return this.http.post<{ imageUrl: string}>(
-      `https://${LOCALHOST}:3000/api/image/upload`,
+      `http://${LOCALHOST}:3000/api/image/upload`,
       uploadData
     );
   }
 
   addUser(user: User) {
-    return this.http.post<{id: string}>(`https://${LOCALHOST}:3000/api/user/user`,
+    return this.http.post<{id: string}>(`http://${LOCALHOST}:3000/api/user/user`,
     {
       ...user
     }).
@@ -129,7 +130,7 @@ export class UserService {
   }
 
   registerUser(user: User) {
-    return this.http.post<User>(`https://${LOCALHOST}:3000/api/user/register`,
+    return this.http.post<User>(`http://${LOCALHOST}:3000/api/user/register`,
     {
       ...user
     }).
@@ -155,7 +156,7 @@ export class UserService {
       entry: user.entry,
       profilePicture: user.profilePicture
       };
-    return this.http.put(`https://${LOCALHOST}:3000/api/user/users/${user.id}`,
+    return this.http.put(`http://${LOCALHOST}:3000/api/user/user/${user.id}`,
     {
       ...userObj
     }).
@@ -189,7 +190,7 @@ export class UserService {
       entry: user.entry,
       profilePicture: user.profilePicture
       };
-    return this.http.put(`https://${LOCALHOST}:3000/api/user/users/image/${user.id}`,
+    return this.http.put(`http://${LOCALHOST}:3000/api/user/user/image/${user.id}`,
     {
       ...userObj
     }).
@@ -208,7 +209,7 @@ export class UserService {
   }
 
   deleteUser(id: string) {
-    return this.http.delete(`https://${LOCALHOST}:3000/api/user/users/${id}`).
+    return this.http.delete(`http://${LOCALHOST}:3000/api/user/user/${id}`).
     pipe(
       switchMap(resData => {
         return this.getUsers();

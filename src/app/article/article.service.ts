@@ -5,8 +5,9 @@ import { take, map, tap, switchMap } from 'rxjs/operators';
 import { Article } from './article.model';
 import { Comment } from './comment.model';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
-const LOCALHOST = '10.0.0.1';
+const LOCALHOST = environment.LOCALHOST;
 
 @Injectable({
   providedIn: 'root'
@@ -33,28 +34,28 @@ export class ArticleService {
     // ------------------------------------ Comment Services -----------------------------------
 
     getArticles() {
-      return this.http.get<Article[]>(`https://${LOCALHOST}:3000/api/article/articles`)
+      return this.http.get<Article[]>(`http://${LOCALHOST}:3000/api/article/articles`)
       .pipe(tap(resDta => {
         this._articles.next(resDta);
       }));
     }
 
     getArticle(id: string) {
-      return this.http.get<Article>(`https://${LOCALHOST}:3000/api/article/article/${id}`)
+      return this.http.get<Article>(`http://${LOCALHOST}:3000/api/article/article/${id}`)
       .pipe(tap(resDta => {
         return resDta;
       }));
     }
 
     viewArticle(id: string) {
-      return this.http.get<Article>(`https://${LOCALHOST}:3000/api/article/view/${id}`)
+      return this.http.get<Article>(`http://${LOCALHOST}:3000/api/article/view/${id}`)
       .pipe(tap(resDta => {
         return resDta;
       }));
     }
 
     addArticle(article: Article) {
-      return this.http.post<{id: string}>(`https://${LOCALHOST}:3000/api/article/article`,
+      return this.http.post<{id: string}>(`http://${LOCALHOST}:3000/api/article/article`,
       {
         ...article
       }).
@@ -83,7 +84,7 @@ export class ArticleService {
          views: article.views,
          comments: article.comments
         };
-      return this.http.put(`https://${LOCALHOST}:3000/api/article/article/${article.id}`,
+      return this.http.put(`http://${LOCALHOST}:3000/api/article/article/${article.id}`,
       {
         ...articleObj
       }).
@@ -102,7 +103,7 @@ export class ArticleService {
     }
 
     deleteArticle(id: string) {
-      return this.http.delete(`https://${LOCALHOST}:3000/api/article/article/${id}`).
+      return this.http.delete(`http://${LOCALHOST}:3000/api/article/article/${id}`).
       pipe(
         switchMap(resData => {
           return this.getArticles();
@@ -115,7 +116,7 @@ export class ArticleService {
     getArticleByUser(authorId: string) {
       return this.http
         .get<Article>(
-          `https://${LOCALHOST}:3000/api/article/article/authorId/${authorId}`)
+          `http://${LOCALHOST}:3000/api/article/article/authorId/${authorId}`)
         .pipe(tap(article => {
           return article;
         }));
@@ -125,7 +126,7 @@ export class ArticleService {
       const uploadData = new FormData();
       uploadData.append('image', image, fileName);
       return this.http.post<{ imageUrl: string}>(
-        'https://${LOCALHOST}:3000/api/image/uploadArticleImage',
+        `http://${LOCALHOST}:3000/api/image/uploadArticleImage`,
         uploadData
       );
     }
@@ -134,7 +135,7 @@ export class ArticleService {
       const uploadData = new FormData();
       uploadData.append('file', pdf, fileName);
       return this.http.post<{ fileUrl: string}>(
-        'https://${LOCALHOST}:3000/api/article/article/pdf',
+        `http://${LOCALHOST}:3000/api/article/article/pdf`,
         uploadData
       );
     }
@@ -142,21 +143,21 @@ export class ArticleService {
  // ------------------------------------ Comment Services -----------------------------------
 
     getComments() {
-      return this.http.get<Comment[]>(`https://${LOCALHOST}:3000/api/comment/comments`)
+      return this.http.get<Comment[]>(`http://${LOCALHOST}:3000/api/comment/comments`)
       .pipe(tap(resDta => {
         this._comments.next(resDta);
       }));
     }
 
     getComment(id: string) {
-      return this.http.get<Comment>(`https://${LOCALHOST}:3000/api/comment/comment/${id}`)
+      return this.http.get<Comment>(`http://${LOCALHOST}:3000/api/comment/comment/${id}`)
       .pipe(tap(resDta => {
         return resDta;
       }));
     }
 
     addComment(comment: Comment) {
-      return this.http.post<Comment>(`https://${LOCALHOST}:3000/api/comment/comment`,
+      return this.http.post<Comment>(`http://${LOCALHOST}:3000/api/comment/comment`,
       {
         ...comment
       }).
@@ -172,7 +173,7 @@ export class ArticleService {
          body: comment.body,
          date: comment.date,
         };
-      return this.http.put(`https://${LOCALHOST}:3000/api/comment/comment/${comment.id}`,
+      return this.http.put(`http://${LOCALHOST}:3000/api/comment/comment/${comment.id}`,
       {
         ...commentObj
       }).
@@ -186,7 +187,7 @@ export class ArticleService {
     }
 
     deleteComment(id: string) {
-      return this.http.delete(`https://${LOCALHOST}:3000/api/comment/comment/${id}`).
+      return this.http.delete(`http://${LOCALHOST}:3000/api/comment/comment/${id}`).
       pipe(
         switchMap(resData => {
           return this.getComments();
@@ -208,7 +209,7 @@ export class ArticleService {
     // }
 
     getArticleComments(articleId: string) {
-      return this.http.get<Comment[]>( `https://${LOCALHOST}:3000/api/comment/comment/articleId/${articleId}`)
+      return this.http.get<Comment[]>( `http://${LOCALHOST}:3000/api/comment/comment/articleId/${articleId}`)
         .pipe(tap(comments => {
           this._comments.next(comments);
         }));
@@ -217,7 +218,7 @@ export class ArticleService {
     getCommentByUser(authorId: string) {
       return this.http
         .get<Comment[]>(
-          `https://${LOCALHOST}:3000/api/comment/comment/authorId/${authorId}`)
+          `http://${LOCALHOST}:3000/api/comment/comment/authorId/${authorId}`)
         .pipe(tap(comments => {
           return comments;
         }));

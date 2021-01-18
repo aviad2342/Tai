@@ -18,8 +18,10 @@ import '../../../../assets/JavaScript/FrankRuhlLibre-Regular-normal.js';
 import { jsPDF } from 'jspdf';
 import { forkJoin } from 'rxjs';
 import * as utility from '../../../utilities/functions';
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
+import { environment } from '../../../../environments/environment';
 
+const LOCALHOST = environment.LOCALHOST;
 
 @Component({
   selector: 'app-add-article',
@@ -31,6 +33,7 @@ export class AddArticlePage implements OnInit {
   @ViewChild('f', { static: true }) form: NgForm;
   htmlText = '';
   file: File;
+  pdfFile: any;
   author: User;
   htmlContent = '';
   font: any;
@@ -49,13 +52,17 @@ export class AddArticlePage implements OnInit {
       {class: 'aharoni', name: 'Aharoni'},
       {class: 'Alef-Regular', name: 'Alef'}
     ],
-    uploadUrl: 'https://10.0.0.1:3000/articleBodyImages/',
+    uploadUrl: `https://${LOCALHOST}:3000/articleBodyImages/`,
     toolbarHiddenButtons: [
       ['redo'],
       ['insertVideo']
       // ['insertImage', 'insertVideo']
     ]
-  }
+  };
+  MIME_TYPE_MAP: object = {
+    'application/pdf': 'pdf',
+    'application/msword': 'doc'
+};
 
   // pdfOptions: any = {
   //   documentSize: 'A4',
@@ -68,6 +75,7 @@ export class AddArticlePage implements OnInit {
     private router: Router,
     private navController: NavController,
     private authService: AuthService,
+    private alertController: AlertController,
     public appService: AppService
     ) { }
 
@@ -140,6 +148,25 @@ export class AddArticlePage implements OnInit {
     //   doc.save(title);
   }
 
+  onFileChosen(event: Event) {
+    const pickedFile = (event.target as HTMLInputElement).files[0];
+    if (!pickedFile) {
+      return;
+    }
+    if(!this.MIME_TYPE_MAP[pickedFile.type]) {
+      this.onErrorImageType();
+      return;
+    }
+    const fr = new FileReader();
+    fr.onload = () => {
+      const dataUrl = fr.result.toString();
+      // this.selectedImage = dataUrl;
+      // this.imagePick.emit(pickedFile);
+      this.pdfFile = pickedFile;
+    };
+    fr.readAsDataURL(pickedFile);
+  }
+
   generateArticlePdf() {
     const title = this.form.value.title;
     const subject = this.form.value.subtitle;
@@ -160,6 +187,7 @@ export class AddArticlePage implements OnInit {
     });
     let pdfFile;
     pdfFile = doc.output('blob');
+    this.pdfFile = pdfFile;
     return pdfFile;
   }
 
@@ -173,7 +201,7 @@ export class AddArticlePage implements OnInit {
       return;
     }
     const thumbnail = this.articleService.uploadArticleThumbnail(this.form.value.image, 'article');
-    const pdf = this.articleService.addArticlePdf(this.generateArticlePdf(), 'articlePdf');
+    const pdf = this.articleService.addArticlePdf(this.pdfFile, 'articlePdf');
     forkJoin([thumbnail, pdf]).pipe(switchMap(results => {
       const articleToAdd = new Article(
         null,
@@ -195,44 +223,28 @@ export class AddArticlePage implements OnInit {
     })).subscribe(() => {
       form.reset();
       this.appService.presentToast('המאמר נשמר בהצלחה', true);
-      this.router.navigate(['/manage/articles']);
+      this.navController.navigateBack(['/manage/articles']);
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
-      this.router.navigate(['/manage/articles']);
+      this.navController.navigateBack(['/manage/articles']);
     });
 
-
-    // this.articleService.uploadArticleThumbnail(this.form.value.image, 'article')
-    // .pipe(
-    //   switchMap(uploadRes => {
-    //     const articleToAdd = new Article(
-    //       null,
-    //       this.author.id,
-    //       this.author.firstName + ' ' + this.author.lastName,
-    //       'aa11',
-    //       form.value.title,
-    //       form.value.subtitle,
-    //       form.value.body,
-    //       new Date(),
-    //       new Date(),
-    //       uploadRes.imageUrl,
-    //       'PDF',
-    //       0,
-    //       []
-    //     );
-    //     return this.articleService.addArticle(articleToAdd);
-    //   }),
-    // ).subscribe(() => {
-    //   form.reset();
-    //   this.appService.presentToast('המאמר נשמר בהצלחה', true);
-    //   this.router.navigate(['/manage/articles']);
-    // }, error => {
-    //   form.reset();
-    //   this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
-    //   this.router.navigate(['/manage/articles']);
-    // });
   }
+
+  async onErrorImageType() {
+    const alert = await this.alertController.create({
+      cssClass: 'error-file-type-alert',
+      header: 'פורמט קובץ שגוי',
+      message: `אנא בחר קובץ בפורמטים הבאים: pdf, doc, docx`,
+      mode: 'ios',
+      buttons: [{
+          text: 'אישור',
+        }
+      ]
+    });
+    await alert.present();
+}
 
   onCancel() {
     this.form.reset();

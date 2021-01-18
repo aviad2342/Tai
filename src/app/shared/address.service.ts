@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export interface Locations {
   n: string;
@@ -17,7 +18,7 @@ export interface StreetsLocations {
   streets: Locations[];
 }
 
-const LOCALHOST = '10.0.0.1';
+const LOCALHOST = environment.LOCALHOST;
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class AddressService {
 
   getCountries() {
     return this.http.get<string[]>(
-      `https://${LOCALHOST}:3000/api/address/countries`)
+      `http://${LOCALHOST}:3000/api/address/countries`)
       .pipe(tap(countries => {
         return countries;
       }));
@@ -36,7 +37,7 @@ export class AddressService {
 
   getCountriesPrediction(country: string) {
     return this.http.get<string[]>(
-      `https://${LOCALHOST}:3000/api/address/countries/${country}`)
+      `http://${LOCALHOST}:3000/api/address/countries/${country}`)
       .pipe(tap(countries => {
         return countries;
       }));
@@ -44,7 +45,7 @@ export class AddressService {
 
   getCities() {
     return this.http.get<string[]>(
-      `https://${LOCALHOST}:3000/api/address/cities`)
+      `http://${LOCALHOST}:3000/api/address/cities`)
       .pipe(tap(cities => {
         return cities;
       }));
@@ -52,7 +53,7 @@ export class AddressService {
 
   getCitiesPrediction(city: string) {
     return this.http.get<string[]>(
-      `https://${LOCALHOST}:3000/api/address/cities/${city}`)
+      `http://${LOCALHOST}:3000/api/address/cities/${city}`)
       .pipe(tap(cities => {
         return cities;
       }));
@@ -60,7 +61,7 @@ export class AddressService {
 
   getCityStreets(city: string) {
     return this.http.get<string[]>(
-      `https://${LOCALHOST}:3000/api/address/streets/${city}`)
+      `http://${LOCALHOST}:3000/api/address/streets/${city}`)
       .pipe(tap(streets => {
         return streets;
       }));
@@ -68,7 +69,7 @@ export class AddressService {
 
   getStreetsPrediction(city: string, street: string) {
     return this.http.get<string[]>(
-      `https://${LOCALHOST}:3000/api/address/city/streets/${city}/${street}`)
+      `http://${LOCALHOST}:3000/api/address/city/streets/${city}/${street}`)
       .pipe(tap(streets => {
         return streets;
       }));

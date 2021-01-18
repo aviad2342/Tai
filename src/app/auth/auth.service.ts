@@ -6,6 +6,7 @@ import { User } from '../user/user.model';
 import { Plugins } from '@capacitor/core';
 import { UserLogged } from './userLogged.model';
 import { UserService } from '../user/user.service';
+import { environment } from 'src/environments/environment';
 
 export interface AuthResponseData {
   userId: string;
@@ -17,7 +18,7 @@ export interface AuthResponseData {
   expiresIn: string;
 }
 
-const LOCALHOST = '10.0.0.1';
+const LOCALHOST = environment.LOCALHOST;
 
 @Injectable({
   providedIn: 'root'
@@ -134,7 +135,7 @@ export class AuthService implements OnDestroy {
   login(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        `https://${LOCALHOST}:3000/api/auth/login`,
+        `http://${LOCALHOST}:3000/api/auth/login`,
         { email, password }
       )
       .pipe(tap(this.setUserData.bind(this)));

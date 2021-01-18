@@ -2,10 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { CartItem } from '../store/item.model';
 import { Cart } from './cart.model';
 
-const LOCALHOST = '10.0.0.1';
+const LOCALHOST = environment.LOCALHOST;
 
 @Injectable({
   providedIn: 'root'
@@ -23,28 +24,28 @@ export class CartService {
     constructor( private http: HttpClient ) { }
 
     getCart(id: string) {
-      return this.http.get<Cart>(`https://${LOCALHOST}:3000/api/cart/cart/${id}`)
+      return this.http.get<Cart>(`http://${LOCALHOST}:3000/api/cart/cart/${id}`)
       .pipe(tap(resDta => {
         return resDta;
       }));
     }
 
     getCustomerCart(id: string) {
-      return this.http.get<Cart>(`https://${LOCALHOST}:3000/api/cart/cart/customer/${id}`)
+      return this.http.get<Cart>(`http://${LOCALHOST}:3000/api/cart/cart/customer/${id}`)
       .pipe(tap(resDta => {
         return resDta;
       }));
     }
 
     isItemInCart(customerId: string, itemId: string) {
-      return this.http.get<boolean>(`https://${LOCALHOST}:3000/api/cart/items/${customerId}/${itemId}`)
+      return this.http.get<boolean>(`http://${LOCALHOST}:3000/api/cart/items/${customerId}/${itemId}`)
       .pipe(tap(resDta => {
         return resDta;
       }));
     }
 
     addCart(cart: Cart) {
-      return this.http.post<{id: string}>(`https://${LOCALHOST}:3000/api/cart/cart`,
+      return this.http.post<{id: string}>(`http://${LOCALHOST}:3000/api/cart/cart`,
       {
         ...cart
       }).
@@ -60,7 +61,7 @@ export class CartService {
     }
 
     addCartItem(item: CartItem) {
-      return this.http.post<{id: string}>(`https://${LOCALHOST}:3000/api/cart/item`,
+      return this.http.post<{id: string}>(`http://${LOCALHOST}:3000/api/cart/item`,
       {
         ...item
       }).
@@ -76,7 +77,7 @@ export class CartService {
         items:    cart.items,
         orderId: cart.orderId,
         };
-      return this.http.put<Cart>(`https://${LOCALHOST}:3000/api/cart/cart/${cart.id}`,
+      return this.http.put<Cart>(`http://${LOCALHOST}:3000/api/cart/cart/${cart.id}`,
       {
         ...cartObj
       }).
@@ -99,7 +100,7 @@ export class CartService {
         itemId:        item.itemId,
         units:         item.units
        };
-      return this.http.put<CartItem>(`https://${LOCALHOST}:3000/api/cart/item/${item.id}`,
+      return this.http.put<CartItem>(`http://${LOCALHOST}:3000/api/cart/item/${item.id}`,
       {
         ...cartItemObj
       }).
@@ -109,7 +110,7 @@ export class CartService {
     }
 
     deleteCart(id: string) {
-      return this.http.delete(`https://${LOCALHOST}:3000/api/cart/cart/${id}`).
+      return this.http.delete(`http://${LOCALHOST}:3000/api/cart/cart/${id}`).
       pipe(
         tap(resData => {
           return resData;
@@ -117,7 +118,7 @@ export class CartService {
     }
 
     deleteCartItem(id: string) {
-      return this.http.delete(`https://${LOCALHOST}:3000/api/cart/item/${id}`).
+      return this.http.delete(`http://${LOCALHOST}:3000/api/cart/item/${id}`).
       pipe(
         tap(resData => {
           return resData;

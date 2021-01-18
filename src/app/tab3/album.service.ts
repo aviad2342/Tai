@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { Album } from './album.model';
 import { Photo } from './photo.model';
 
@@ -16,7 +17,7 @@ interface PhotoData {
   size: number;
 }
 
-const LOCALHOST = '10.0.0.1';
+const LOCALHOST = environment.LOCALHOST;
 
 @Injectable({
   providedIn: 'root'
@@ -43,21 +44,21 @@ export class AlbumService {
       // ------------------------------------ Comment Services -----------------------------------
 
       getAlbums() {
-        return this.http.get<Album[]>(`https://${LOCALHOST}:3000/api/album/albums`)
+        return this.http.get<Album[]>(`http://${LOCALHOST}:3000/api/album/albums`)
         .pipe(tap(resDta => {
           this._albums.next(resDta);
         }));
       }
 
       getAlbum(id: string) {
-        return this.http.get<Album>(`https://${LOCALHOST}:3000/api/album/album/${id}`)
+        return this.http.get<Album>(`http://${LOCALHOST}:3000/api/album/album/${id}`)
         .pipe(tap(resDta => {
           return resDta;
         }));
       }
 
       addAlbum(album: Album) {
-        return this.http.post<{id: string}>(`https://${LOCALHOST}:3000/api/album/album`,
+        return this.http.post<{id: string}>(`http://${LOCALHOST}:3000/api/album/album`,
         {
           ...album
         }).
@@ -84,7 +85,7 @@ export class AlbumService {
            views: album.views,
            photos: album.photos
           };
-        return this.http.put(`https://${LOCALHOST}:3000/api/album/album/${album.id}`,
+        return this.http.put(`http://${LOCALHOST}:3000/api/album/album/${album.id}`,
         {
           ...albumObj
         }).
@@ -98,7 +99,7 @@ export class AlbumService {
       }
 
       deleteAlbum(id: string) {
-        return this.http.delete(`https://${LOCALHOST}:3000/api/album/album/${id}`).
+        return this.http.delete(`http://${LOCALHOST}:3000/api/album/album/${id}`).
         pipe(
           switchMap(resData => {
             return this.getAlbums();
@@ -111,7 +112,7 @@ export class AlbumService {
       getAlbumByUser(authorId: string) {
         return this.http
           .get<Album>(
-            `https://${LOCALHOST}:3000/api/album/album/authorId/${authorId}`)
+            `http://${LOCALHOST}:3000/api/album/album/authorId/${authorId}`)
           .pipe(tap(album => {
             return album;
           }));
@@ -121,7 +122,7 @@ export class AlbumService {
         const uploadData = new FormData();
         uploadData.append('image', image, fileName);
         return this.http.post<{ imageUrl: string}>(
-          `https://${LOCALHOST}:3000/api/image/uploadArticleImage`,
+          `http://${LOCALHOST}:3000/api/image/uploadArticleImage`,
           uploadData
         );
       }
@@ -129,35 +130,35 @@ export class AlbumService {
    // ------------------------------------ Comment Services -----------------------------------
 
       getPhotos() {
-        return this.http.get<Photo[]>(`https://${LOCALHOST}:3000/api/photo/photos`)
+        return this.http.get<Photo[]>(`http://${LOCALHOST}:3000/api/photo/photos`)
         .pipe(tap(resDta => {
           this._photos.next(resDta);
         }));
       }
 
       getPhotosOfAlbum(id: string) {
-        return this.http.get<Photo[]>(`https://${LOCALHOST}:3000/api/photo/photo/photos/${id}`)
+        return this.http.get<Photo[]>(`http://${LOCALHOST}:3000/api/photo/photo/photos/${id}`)
         .pipe(tap(resDta => {
           this._photos.next(resDta);
         }));
       }
 
       getPhotoAlbum(id: string) {
-        return this.http.get<Album>(`https://${LOCALHOST}:3000/api/photo/photo/album/${id}`)
+        return this.http.get<Album>(`http://${LOCALHOST}:3000/api/photo/photo/album/${id}`)
         .pipe(tap(resDta => {
           return resDta;
         }));
       }
 
       getPhoto(id: string) {
-        return this.http.get<Photo>(`https://${LOCALHOST}:3000/api/photo/photo/${id}`)
+        return this.http.get<Photo>(`http://${LOCALHOST}:3000/api/photo/photo/${id}`)
         .pipe(tap(resDta => {
           return resDta;
         }));
       }
 
       addPhoto(photo: Photo) {
-        return this.http.post<{id: string}>(`https://${LOCALHOST}:3000/api/photo/photo`,
+        return this.http.post<{id: string}>(`http://${LOCALHOST}:3000/api/photo/photo`,
         {
           ...photo
         }).
@@ -179,7 +180,7 @@ export class AlbumService {
            date: photo.date,
            url: photo.url,
           };
-        return this.http.put(`https://${LOCALHOST}:3000/api/photo/photo/${photo.id}`,
+        return this.http.put(`http://${LOCALHOST}:3000/api/photo/photo/${photo.id}`,
         {
           ...photoObj
         }).
@@ -193,7 +194,7 @@ export class AlbumService {
       }
 
       deletePhoto(id: string) {
-        return this.http.delete(`https://${LOCALHOST}:3000/api/photo/photo/${id}`).
+        return this.http.delete(`http://${LOCALHOST}:3000/api/photo/photo/${id}`).
         pipe(
           switchMap(resData => {
             return this.getPhotos();
@@ -204,7 +205,7 @@ export class AlbumService {
       }
 
       deleteAlbumPhotos(albumId: string) {
-        return this.http.delete(`https://${LOCALHOST}:3000/api/photo/photo/articleId/${albumId}`).
+        return this.http.delete(`http://${LOCALHOST}:3000/api/photo/photo/articleId/${albumId}`).
         pipe(
           switchMap(resData => {
             return this.getAlbumPhotos(albumId);
@@ -215,7 +216,7 @@ export class AlbumService {
       }
 
       getAlbumPhotos(articleId: string) {
-        return this.http.get<Photo[]>( `https://${LOCALHOST}:3000/api/comment/comment/articleId/${articleId}`)
+        return this.http.get<Photo[]>( `http://${LOCALHOST}:3000/api/comment/comment/articleId/${articleId}`)
           .pipe(tap(comments => {
             this._photos.next(comments);
           }));
@@ -224,7 +225,7 @@ export class AlbumService {
       getCommentByUser(authorId: string) {
         return this.http
           .get<Photo[]>(
-            `https://${LOCALHOST}:3000/api/comment/comment/authorId/${authorId}`)
+            `http://${LOCALHOST}:3000/api/comment/comment/authorId/${authorId}`)
           .pipe(tap(comments => {
             return comments;
           }));
@@ -236,7 +237,7 @@ export class AlbumService {
           uploadData.append('images', photo);
         });
         return this.http.post<string[]>(
-          `https://${LOCALHOST}:3000/api/image/uploadEventePictures`,
+          `http://${LOCALHOST}:3000/api/image/uploadEventePictures`,
           uploadData
         ).pipe(
           map(images => {
@@ -246,7 +247,7 @@ export class AlbumService {
       }
 
       deleteAlbumPhoto(name: string) {
-        return this.http.delete<{ response: string}>(`https://${LOCALHOST}:3000/api/image/deleteEventImage/${name}`).
+        return this.http.delete<{ response: string}>(`http://${LOCALHOST}:3000/api/image/deleteEventImage/${name}`).
         pipe(
           map(resData => {
             return resData.response;
