@@ -15,6 +15,7 @@ import { AddSpeakerComponent } from '../add-speaker/add-speaker.component';
 import { EditSpeakerComponent } from '../edit-speaker/edit-speaker.component';
 import * as utility from '../../../utilities/functions';
 import Swiper from 'swiper';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-edit-event',
@@ -33,7 +34,7 @@ export class EditEventPage implements OnInit, AfterViewInit {
   address: Address = new Address();
   images;
   swiper: Swiper;
-  defaultPicture = 'http://localhost:3000/images/user-default-image.png';
+  defaultPicture = `http://${environment.LOCALHOST}:3000/images/user-default-image.png@undefined.png`;
   addressIsValid = false;
   isLoading = false;
   lessonsIsLoading = false;

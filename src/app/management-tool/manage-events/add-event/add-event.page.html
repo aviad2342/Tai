@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-no-padding app-titles">הוסף אירוע</ion-title>
+    <ion-title class="ion-no-padding  app-titles">הוסף אירוע</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,7 +12,7 @@
       <form #f="ngForm" (ngSubmit)="onSubmit(f)">
         <ion-grid [fixed]="true">
           <ion-row class="ion-justify-content-center">
-            <ion-col size="12" size-xl="4" size-lg="4" size-md="6" size-sm="6" size-xs="7">
+            <ion-col size="12" size-xl="4" size-lg="5" size-md="6" size-sm="6" size-xs="7">
               <app-image-picker 
               [showPreview]="this.file" 
               (imagePick)="onImagePicked($event)" 
@@ -25,7 +25,7 @@
         </ion-row>
 
           <ion-row class="ion-justify-content-center">
-            <ion-col size="12" size-md="6">
+            <ion-col size="12" size-xl="5" size-lg="6" size-md="6" size-sm="6" size-xs="7">
               <ion-list>
                 
                 <ion-item>
@@ -170,17 +170,15 @@
             </ion-col>   
           </ion-row>
           <ion-row class="ion-justify-content-center">
-            <ion-col size="4">
-              <ion-button 
-              fill="clear" 
+            <ion-col size="12" size-xl="3" size-lg="3" size-md="5" size-sm="6" size-xs="7">
+              <ion-button  
               expand="block"
               (click)="onCancel()"
               >ביטול <ion-icon slot="start" name="close-outline"></ion-icon></ion-button>
             </ion-col>
-            <ion-col size="4">
+            <ion-col size="12" size-xl="3" size-lg="3" size-md="5" size-sm="6" size-xs="7">
               <ion-button 
               type="submit"
-              fill="clear" 
               expand="block"
               [disabled]="!f.valid || !addressIsValid"
               >שמור והמשך <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
@@ -201,7 +199,7 @@
 
         <ion-row class="ion-justify-content-center">
 
-          <ion-col size="12" size="6">
+          <ion-col size="6">
 
             <ion-item lines="none">
               <ion-icon name="mic-outline" slot="end"></ion-icon>
@@ -242,8 +240,7 @@
 
             <ion-row class="ion-justify-content-center">
               <ion-col size="8">
-                <ion-button 
-                fill="clear" 
+                <ion-button  
                 expand="block"
                 (click)="onSaveSpeakers()"
                 >שמור והמשך <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
@@ -264,7 +261,7 @@
 
         <ion-row class="ion-justify-content-center">
 
-          <ion-col size="12" size="6">
+          <ion-col size="6">
 
             <ion-item lines="none">
               <ion-icon name="people-outline" slot="end"></ion-icon>
@@ -309,7 +306,6 @@
             <ion-row class="ion-justify-content-center">
               <ion-col size="8">
                 <ion-button 
-                fill="clear" 
                 expand="block"
                 (click)="onSaveParticipants()"
                 >שמור והמשך <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
@@ -342,8 +338,7 @@
         </ion-row>
           <ion-row class="ion-justify-content-center">
             <ion-col size="8">
-              <ion-button 
-              fill="clear" 
+              <ion-button  
               expand="block"
               (click)="onSaveAndExit()"
               >שמור וסיים <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>

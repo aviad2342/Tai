@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
 export class AuthPage implements OnInit {
 
   isLoading = false;
-  userProfilePicture = `http://${environment.LOCALHOST}:3000/images/user-default-image.png`;
+  userProfilePicture = `http://${environment.LOCALHOST}:3000/images/user-default-image.png@undefined.png`;
   homePage = '/tabs/user'
 
   constructor(

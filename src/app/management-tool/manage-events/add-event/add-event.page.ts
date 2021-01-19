@@ -14,6 +14,7 @@ import { Speaker } from '../../../event/speaker.model';
 import { Address } from '../../../shared/address.model';
 import * as utility from '../../../utilities/functions';
 import Swiper from 'swiper';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-event',
@@ -34,7 +35,7 @@ export class AddEventPage implements OnInit, AfterViewInit {
   addressIsValid = false;
   imageIsValid = true;
   address: Address = new Address();
-  defaultPicture = 'http://10.0.0.1:3000/images/user-default-image.png';
+  defaultPicture = `http://${environment.LOCALHOST}:3000/images/user-default-image.png@undefined.png`;
   userImage = '../../../assets/images/user-default-image.png';
   file: File;
   now = new Date().toISOString();
@@ -263,10 +264,8 @@ onRemove(event) {
      }))
    .subscribe(() => {
      this.appService.presentToast('התמונות נוספו בהצלחה', true);
-     this.navController.navigateBack('/manage/events');
    }, error => {
      this.appService.presentToast('חלה תקלה התמונות לא נשמרו', false);
-     this.navController.navigateBack('/manage/events');
    });
   }
   this.appService.presentToast('סיימת בהצלחה את יצירת האירוע', true);
