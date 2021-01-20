@@ -721,5 +721,21 @@ ion-icon {
       mask-image: url(./assets/icon/my-settings.svg);
     }
 
+    &[class*="custom-pdf-icon"] {
+      mask-image: url(./assets/icon/pdf-icon.svg);
+    }
+
+    &[class*="toolbar-icon-pdf-icon"] {
+      mask-image: url(./assets/icon/pdf-icon.svg);
+    }
+
+    &[class*="custom-word-icon"] {
+      mask-image: url(./assets/icon/word-icon.svg);
+    }
+
+    &[class*="toolbar-icon-word-icon"] {
+      mask-image: url(./assets/icon/word-icon.svg);
+    }
+
   
   }

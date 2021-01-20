@@ -31,9 +31,12 @@ const LOCALHOST = environment.LOCALHOST;
 export class AddArticlePage implements OnInit {
 
   @ViewChild('f', { static: true }) form: NgForm;
+  @ViewChild('filePicker') filePickerRef: ElementRef<HTMLInputElement>;
   htmlText = '';
   file: File;
   pdfFile: any;
+  fileTypeIcon = '';
+  chosenFileName = '';
   author: User;
   htmlContent = '';
   font: any;
@@ -148,6 +151,10 @@ export class AddArticlePage implements OnInit {
     //   doc.save(title);
   }
 
+  onPickFile() {
+    this.filePickerRef.nativeElement.click();
+  }
+
   onFileChosen(event: Event) {
     const pickedFile = (event.target as HTMLInputElement).files[0];
     if (!pickedFile) {
@@ -162,6 +169,7 @@ export class AddArticlePage implements OnInit {
       const dataUrl = fr.result.toString();
       // this.selectedImage = dataUrl;
       // this.imagePick.emit(pickedFile);
+      this.chosenFileName = pickedFile.name;
       this.pdfFile = pickedFile;
     };
     fr.readAsDataURL(pickedFile);

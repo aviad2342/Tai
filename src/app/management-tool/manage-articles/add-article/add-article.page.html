@@ -61,7 +61,17 @@
 
             <ion-row class="ion-justify-content-center">
               <ion-col size="12" size-xl="10" size-lg="8" size-md="6" size-sm="6">
-                <ion-input type="file" accept="application/pdf, application/msword" (change)="onFileChosen($event)"></ion-input>
+                <ion-item lines="none">
+                  <ion-button color="primary" fill="outline" (click)="onPickFile()">
+                    <ion-icon src="../../../../assets/icon/folder-icon.svg" slot="start"></ion-icon>
+                    <ion-label class="file-picker-label">בחר קובץ...</ion-label>
+                  </ion-button>
+                  <ion-label>
+                    <ion-icon [ngClass]="fileTypeIcon"></ion-icon>
+                    <p>{{ chosenFileName }}</p>
+                  </ion-label>
+                  <input #filePicker type="file" accept="application/pdf, application/msword" (change)="onFileChosen($event)"/>
+                </ion-item>
               </ion-col>
             </ion-row>
       
