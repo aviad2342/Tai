@@ -61,21 +61,30 @@
 
             <ion-row class="ion-justify-content-center">
               <ion-col size="12" size-xl="10" size-lg="8" size-md="6" size-sm="6">
-                <ion-item lines="none">
-                  <ion-button color="primary" fill="outline" (click)="onPickFile()">
+                <ion-item lines="none" class="ion-no-padding">
+                  <ion-button color="primary" fill="outline" (click)="onPickFile()" size="default">
                     <ion-icon src="../../../../assets/icon/folder-icon.svg" slot="start"></ion-icon>
                     <ion-label class="file-picker-label">בחר קובץ...</ion-label>
                   </ion-button>
-                  <ion-label>
-                    <ion-icon [ngClass]="fileTypeIcon"></ion-icon>
-                    <p>{{ chosenFileName }}</p>
-                  </ion-label>
-                  <input #filePicker type="file" accept="application/pdf, application/msword" (change)="onFileChosen($event)"/>
+                  <!-- <ion-label class="file-name-label">{{ chosenFileName }} <ion-icon [src]="fileTypeIcon"></ion-icon></ion-label> -->
+                  <ion-note class="file-name-note ion-align-self-center" slot="end">{{ chosenFileName }}</ion-note>
+                  <ion-icon slot="end" class="ion-no-margin ion-align-self-center" [src]="fileTypeIcon"></ion-icon>
+                  <input 
+                  #filePicker 
+                  type="file" 
+                  accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" 
+                  (change)="onFileChosen($event)"/>
                 </ion-item>
               </ion-col>
             </ion-row>
+
+            <ion-row class="ion-justify-content-center" *ngIf="isFileChosen">
+              <ion-col size="12" size-xl="10" size-lg="8" size-md="6" size-sm="6">
+                <ngx-doc-viewer [url]="selectedFileUrl" [viewer]="viewerType" [style]="viewerStyle"></ngx-doc-viewer>
+              </ion-col>
+            </ion-row>
       
-            <ion-row class="ion-justify-content-center">
+            <ion-row class="ion-justify-content-center" *ngIf="!isFileChosen">
               <ion-col size="12" size-xl="10" size-lg="8" size-md="6" size-sm="6">
                 <angular-editor 
                 [config]="editorConfig"

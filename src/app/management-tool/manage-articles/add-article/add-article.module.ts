@@ -10,6 +10,7 @@ import { AddArticlePage } from './add-article.page';
 import { SharedModule } from '../../../shared/shared.module';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     AddArticlePageRoutingModule,
     SharedModule,
-    AngularEditorModule
+    AngularEditorModule,
+    NgxDocViewerModule
   ],
   declarations: [AddArticlePage]
 })

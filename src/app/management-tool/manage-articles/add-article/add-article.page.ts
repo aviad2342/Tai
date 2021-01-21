@@ -35,11 +35,15 @@ export class AddArticlePage implements OnInit {
   htmlText = '';
   file: File;
   pdfFile: any;
+  selectedFileUrl = '';
+  viewerType = 'pdf';
+  viewerStyle = 'width:100%;height:127vh;'
   fileTypeIcon = '';
   chosenFileName = '';
   author: User;
   htmlContent = '';
   font: any;
+  isFileChosen = false;
   imageIsValid = true;
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -64,7 +68,26 @@ export class AddArticlePage implements OnInit {
   };
   MIME_TYPE_MAP: object = {
     'application/pdf': 'pdf',
-    'application/msword': 'doc'
+    'application/msword': 'doc',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx'
+};
+
+MIME_VIEWER: object = {
+  'application/pdf': 'pdf',
+  'application/msword': 'mammoth',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'mammoth'
+};
+
+VIEWER_STYLE: object = {
+  'application/pdf': 'width:100%;height:127vh;',
+  'application/msword': 'width:100%;height:auto;',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'width:100%;height:auto;'
+};
+
+MIME_TYPE_ICON: object = {
+  'application/pdf': '../../../../assets/icon/pdf-icon.svg',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': '../../../../assets/icon/word-icon.svg',
+  'application/msword': '../../../../assets/icon/word-icon.svg'
 };
 
   // pdfOptions: any = {
@@ -157,6 +180,7 @@ export class AddArticlePage implements OnInit {
 
   onFileChosen(event: Event) {
     const pickedFile = (event.target as HTMLInputElement).files[0];
+    this.isFileChosen = true;
     if (!pickedFile) {
       return;
     }
@@ -167,8 +191,10 @@ export class AddArticlePage implements OnInit {
     const fr = new FileReader();
     fr.onload = () => {
       const dataUrl = fr.result.toString();
-      // this.selectedImage = dataUrl;
-      // this.imagePick.emit(pickedFile);
+      this.viewerType = this.MIME_VIEWER[pickedFile.type];
+      this.viewerStyle = this.VIEWER_STYLE[pickedFile.type];
+      this.selectedFileUrl = dataUrl;
+      this.fileTypeIcon = this.MIME_TYPE_ICON[pickedFile.type];
       this.chosenFileName = pickedFile.name;
       this.pdfFile = pickedFile;
     };

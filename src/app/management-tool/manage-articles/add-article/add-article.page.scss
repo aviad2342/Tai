@@ -5,5 +5,15 @@
 
   .file-picker-label {
     font-family: 'Ktav-Yad-Bold';
-    font-size: larger;
+    overflow: inherit;
+  }
+
+  .file-name-label {
+    font-size: large;
+  }
+
+  .file-name-note {
+    padding-left: 5px;
+    padding-top: 10px;
+    font-size: medium;
   }
