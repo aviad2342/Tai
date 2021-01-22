@@ -10,6 +10,7 @@ import { Treatment } from '../../../treatment/treatment.model';
 import { switchMap } from 'rxjs/operators';
 import { Therapist } from '../../../therapist/therapist.model';
 import { AddTherapistComponent } from '../add-therapist/add-therapist.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-treatment',
@@ -24,7 +25,7 @@ export class AddTreatmentPage implements OnInit {
   didSelecteTreatmentType = true;
   imageIsValid = true;
   treatmentType = '';
-  therapistPicture = 'http://localhost:3000/Images/user-default-image.png';
+  therapistPicture = `http://${environment.LOCALHOST}:3000/images/user-default-image.png@undefined.png`;
   therapistName = '';
   therapist: Therapist;
   typesOfTreatments = utility.typesOfTreatments;

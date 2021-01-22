@@ -11,7 +11,7 @@
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>
       <ion-row class="ion-justify-content-center">
-        <ion-col size-xl="2" size-lg="4" size-md="6" size-sm="7">
+        <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7">
           <app-image-picker 
           [showPreview]="this.file" 
           (imagePick)="onImagePicked($event)" 
@@ -24,7 +24,7 @@
       </ion-row>
 
       <ion-row class="ion-justify-content-center">
-        <ion-col size-xl="3" size-lg="4" size-md="6" size-sm="7">
+        <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7">
           <ion-list>
             <ion-item>
               <ion-label class="app-input-label ion-no-margin" position="floating"> שם <ion-text class="required-star" color="danger">*</ion-text></ion-label>
@@ -133,12 +133,12 @@
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center">
-        <ion-col size-xl="3" size-lg="4" size-md="6" size-sm="7" class="address-picker">
+        <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="address-picker">
           <app-address-form-picker (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)"></app-address-form-picker>
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center ion-padding-top">
-        <ion-col class="ion-no-padding" size-xl="3" size-lg="4" size-md="6" size-sm="7">
+        <ion-col class="ion-no-padding" size-xl="4" size-lg="5" size-md="6" size-sm="7">
           <ion-button
             class="app-register-btn"
             type="submit"

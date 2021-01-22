@@ -67,8 +67,9 @@
                     <ion-label class="file-picker-label">בחר קובץ...</ion-label>
                   </ion-button>
                   <!-- <ion-label class="file-name-label">{{ chosenFileName }} <ion-icon [src]="fileTypeIcon"></ion-icon></ion-label> -->
-                  <ion-note class="file-name-note ion-align-self-center" slot="end">{{ chosenFileName }}</ion-note>
-                  <ion-icon slot="end" class="ion-no-margin ion-align-self-center" [src]="fileTypeIcon"></ion-icon>
+                  <ion-icon slot="end" class="ion-no-margin ion-align-self-center remove-file-icon" name="close-circle" (click)="onRermoveFile()" *ngIf="isFileChosen"></ion-icon>
+                  <ion-note class="file-name-note ion-align-self-center ion-no-margin" slot="end" *ngIf="isFileChosen">{{ chosenFileName }}</ion-note>
+                  <ion-icon slot="end" class="ion-no-margin ion-align-self-center" [src]="fileTypeIcon" *ngIf="isFileChosen"></ion-icon>
                   <input 
                   #filePicker 
                   type="file" 

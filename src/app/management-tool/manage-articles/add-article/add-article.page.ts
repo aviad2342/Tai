@@ -16,7 +16,7 @@ import '../../../../assets/JavaScript/aharoniclm-book-webfont-normal.js';
 import '../../../../assets/JavaScript/Alef-Regular-normal.js';
 import '../../../../assets/JavaScript/FrankRuhlLibre-Regular-normal.js';
 import { jsPDF } from 'jspdf';
-import { forkJoin } from 'rxjs';
+import { forkJoin, from } from 'rxjs';
 import * as utility from '../../../utilities/functions';
 import { AlertController, NavController } from '@ionic/angular';
 import { environment } from '../../../../environments/environment';
@@ -43,6 +43,7 @@ export class AddArticlePage implements OnInit {
   author: User;
   htmlContent = '';
   font: any;
+  naab = '';
   isFileChosen = false;
   imageIsValid = true;
   editorConfig: AngularEditorConfig = {
@@ -128,7 +129,6 @@ MIME_TYPE_ICON: object = {
       imageFile = imageData;
     }
     this.file = imageFile;
-    this.form.value.image = imageFile;
   }
 
   getInput(event) {
@@ -178,6 +178,14 @@ MIME_TYPE_ICON: object = {
     this.filePickerRef.nativeElement.click();
   }
 
+  onRermoveFile() {
+    this.isFileChosen = false;
+    this.filePickerRef.nativeElement.value = '';
+    this.chosenFileName = '';
+    this.fileTypeIcon = '';
+    this.pdfFile = null;
+  }
+
   onFileChosen(event: Event) {
     const pickedFile = (event.target as HTMLInputElement).files[0];
     this.isFileChosen = true;
@@ -222,7 +230,6 @@ MIME_TYPE_ICON: object = {
     let pdfFile;
     pdfFile = doc.output('blob');
     this.pdfFile = pdfFile;
-    return pdfFile;
   }
 
   onSubmit(form: NgForm) {
@@ -230,11 +237,15 @@ MIME_TYPE_ICON: object = {
     if (!form.valid) {
       return;
     }
-    if (!this.form.value.image) {
+    if (!this.file) {
       this.imageIsValid = false;
       return;
     }
-    const thumbnail = this.articleService.uploadArticleThumbnail(this.form.value.image, 'article');
+    if (!this.pdfFile || this.pdfFile === null) {
+      this.onNoFileChosen();
+      return;
+    }
+    const thumbnail = this.articleService.uploadArticleThumbnail(this.file , 'article');
     const pdf = this.articleService.addArticlePdf(this.pdfFile, 'articlePdf');
     forkJoin([thumbnail, pdf]).pipe(switchMap(results => {
       const articleToAdd = new Article(
@@ -278,6 +289,20 @@ MIME_TYPE_ICON: object = {
       ]
     });
     await alert.present();
+}
+
+async onNoFileChosen() {
+  const alert = await this.alertController.create({
+    cssClass: 'error-file-type-alert',
+    header: 'לא נבחר קובץ',
+    message: `עליך לכתוב או להעלות המאמר תחילה!`,
+    mode: 'ios',
+    buttons: [{
+        text: 'אישור',
+      }
+    ]
+  });
+  await alert.present();
 }
 
   onCancel() {
