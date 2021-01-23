@@ -6,7 +6,7 @@ import { User } from '../user/user.model';
 import { Plugins } from '@capacitor/core';
 import { UserLogged } from './userLogged.model';
 import { UserService } from '../user/user.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 
 export interface AuthResponseData {
   userId: string;

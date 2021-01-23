@@ -11,7 +11,7 @@
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>
       <ion-row class="ion-justify-content-center">
-        <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7">
+        <ion-col size-xl="2" size-lg="3" size-md="6" size-sm="7">
           <app-image-picker 
           [showPreview]="this.file" 
           (imagePick)="onImagePicked($event)" 
@@ -24,7 +24,7 @@
       </ion-row>
 
       <ion-row class="ion-justify-content-center">
-        <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7">
+        <ion-col size-xl="3" size-lg="4" size-md="6" size-sm="7">
           <ion-list>
             <ion-item>
               <ion-label class="app-input-label ion-no-margin" position="floating"> שם <ion-text class="required-star" color="danger">*</ion-text></ion-label>
@@ -75,6 +75,41 @@
             </ion-label>
 
             <ion-item>
+              <ion-label class="app-input-label ion-no-margin" position="floating">סיסמה<ion-text class="required-star" color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="password"
+                ngModel
+                name="password"
+                required
+                minlength="6"
+                #passwordCtrl="ngModel"
+              ></ion-input>
+              <!-- <ion-icon name="eye-off-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon> -->
+            </ion-item>
+            <ion-label class="ion-padding-start" *ngIf="!passwordCtrl.valid && passwordCtrl.touched" color="danger">
+              <small> זהו שדה חובה!</small>
+            </ion-label>
+
+            <ion-item>
+              <ion-label class="app-input-label ion-no-margin" position="floating">אישור סיסמא<ion-text class="required-star" color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="password"
+                ngModel
+                name="verifyPassword"
+                required
+                minlength="6"
+                #verifyPasswordCtrl="ngModel"
+              ></ion-input>
+              <!-- <ion-icon name="eye-off-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon> -->
+            </ion-item>
+            <ion-label 
+            class="ion-padding-start" 
+            *ngIf="!verifyPasswordCtrl.valid && verifyPasswordCtrl.touched && passwordCtrl.value != verifyPasswordCtrl.value" 
+            color="danger">
+              <small> הסיסמאות אינן תואמות!</small>
+            </ion-label>
+
+            <ion-item>
               <ion-label class="app-input-label ion-no-margin" position="floating"> מספר טלפון <ion-text class="required-star" color="danger">*</ion-text></ion-label>
               <ion-input
                 type="tel"
@@ -89,22 +124,6 @@
               <!-- <ion-icon name="call-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon> -->
             </ion-item>
             <ion-label class="ion-padding-start" *ngIf="!phoneCtrl.valid && phoneCtrl.touched" color="danger">
-              <small> זהו שדה חובה!</small>
-            </ion-label>
-
-            <ion-item>
-              <ion-label class="app-input-label ion-no-margin" position="floating">סיסמה<ion-text class="required-star" color="danger">*</ion-text></ion-label>
-              <ion-input
-                type="password"
-                ngModel
-                name="password"
-                required
-                minlength="6"
-                #passwordCtrl="ngModel"
-              ></ion-input>
-              <!-- <ion-icon name="eye-off-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon> -->
-            </ion-item>
-            <ion-label class="ion-padding-start" *ngIf="!passwordCtrl.valid && passwordCtrl.touched" color="danger">
               <small> זהו שדה חובה!</small>
             </ion-label>
 
@@ -133,12 +152,12 @@
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center">
-        <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="address-picker">
+        <ion-col size-xl="3" size-lg="4" size-md="6" size-sm="7" class="address-picker">
           <app-address-form-picker (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)"></app-address-form-picker>
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center ion-padding-top">
-        <ion-col class="ion-no-padding" size-xl="4" size-lg="5" size-md="6" size-sm="7">
+        <ion-col class="ion-no-padding" size-xl="3" size-lg="4" size-md="6" size-sm="7">
           <ion-button
             class="app-register-btn"
             type="submit"
