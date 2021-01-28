@@ -9,7 +9,7 @@
     <ion-grid>
 
       <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size="4">
+        <ion-col size="12" size-xl="3" size-lg="4" size-md="5" size-sm="6">
           <app-image-picker 
           [showPreview]="this.file" 
           (imagePick)="onImagePicked($event)" 
@@ -22,7 +22,7 @@
       </ion-row>
 
       <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size="6">
+        <ion-col size="12" size-xl="4" size-lg="5" size-md="6" size-sm="7">
           <ion-list>
 
             <ion-item>
@@ -168,19 +168,19 @@
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size="6" class="address-picker">
+        <ion-col size="12" size-xl="4" size-lg="5" size-md="6" size-sm="7" class="address-picker">
           <app-address-picker (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)"></app-address-picker>
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center">
-        <ion-col size="3">
+        <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="4">
           <ion-button 
           color="primary"
           expand="block"
           (click)="onCancel()"
           >ביטול</ion-button>
         </ion-col>
-        <ion-col size="3">
+        <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="4">
           <ion-button
             type="submit"
             color="primary"

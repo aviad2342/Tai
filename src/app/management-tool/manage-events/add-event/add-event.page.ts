@@ -35,7 +35,7 @@ export class AddEventPage implements OnInit, AfterViewInit {
   addressIsValid = false;
   imageIsValid = true;
   address: Address = new Address();
-  defaultPicture = `http://${environment.LOCALHOST}:3000/images/user-default-image.png@undefined.png`;
+  defaultPicture = `http://${environment.LOCALHOST}:3000/images/user-default-image.png`;
   userImage = '../../../assets/images/user-default-image.png';
   file: File;
   now = new Date().toISOString();

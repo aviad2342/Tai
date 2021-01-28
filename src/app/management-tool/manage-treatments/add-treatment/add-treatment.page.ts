@@ -25,7 +25,7 @@ export class AddTreatmentPage implements OnInit {
   didSelecteTreatmentType = true;
   imageIsValid = true;
   treatmentType = '';
-  therapistPicture = `http://${environment.LOCALHOST}:3000/images/user-default-image.png@undefined.png`;
+  therapistPicture = `http://${environment.LOCALHOST}:3000/images/user-default-image.png`;
   therapistName = '';
   therapist: Therapist;
   typesOfTreatments = utility.typesOfTreatments;

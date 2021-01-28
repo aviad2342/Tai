@@ -34,7 +34,7 @@ export class EditEventPage implements OnInit, AfterViewInit {
   address: Address = new Address();
   images;
   swiper: Swiper;
-  defaultPicture = `http://${environment.LOCALHOST}:3000/images/user-default-image.png@undefined.png`;
+  defaultPicture = `http://${environment.LOCALHOST}:3000/images/user-default-image.png`;
   addressIsValid = false;
   isLoading = false;
   lessonsIsLoading = false;
