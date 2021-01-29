@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { AlertController, NavController, IonContent } from '@ionic/angular';
+import { AlertController, NavController, IonContent, Platform } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { ArticleService } from '../article.service';
@@ -8,6 +8,7 @@ import { Article } from '../article.model';
 import { Comment } from '../comment.model';
 import { AppService } from '../../app.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
 
 
 
@@ -22,14 +23,17 @@ export class ArticleDetailPage implements OnInit {
   @ViewChild(IonContent) content: IonContent;
   addComment = false;
   isLoading = false;
+  isMobile = false;
+  viewerType = 'google';
+  viewerStyle = 'width:100%;height:127vh;'
   enterTimestamp: number;
   leaveTimestamp: number;
   articleIsLoading = false;
-  pdfSrc = 'https://10.0.0.1:3000/articles/1603114736179@articlepdf.pdf';
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    private platform: Platform,
+    private document: DocumentViewer,
     private alertController: AlertController,
     private articleService: ArticleService,
     private navController: NavController,
@@ -39,6 +43,7 @@ export class ArticleDetailPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isMobile = this.platform.is('mobile');
     this.articleIsLoading = true;
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {

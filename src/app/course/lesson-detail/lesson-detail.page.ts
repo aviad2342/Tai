@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController, Platform, ViewDidEnter } from '@ionic/angular';
 import { CourseService } from '../course.service';
@@ -6,13 +6,14 @@ import { Lesson } from '../lesson.model';
 import { Capacitor, Plugins } from '@capacitor/core';
 import { YoutubePlayerWeb } from 'capacitor-youtube-player';
 import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lesson-detail',
   templateUrl: './lesson-detail.page.html',
   styleUrls: ['./lesson-detail.page.scss'],
 })
-export class LessonDetailPage implements OnInit, ViewDidEnter {
+export class LessonDetailPage implements OnInit {
 
   lesson :Lesson;
   isLoading = false;
@@ -46,6 +47,11 @@ export class LessonDetailPage implements OnInit, ViewDidEnter {
       this.courseService.getLesson(paramMap.get('id')).subscribe(lesson => {
             this.lesson = lesson;
             this.isLoading = false;
+            if (Capacitor.platform === 'web') {
+              this.initializeYoutubePlayerPluginWeb();
+            } else { // Native
+              // this.initializeYoutubePlayerPluginNative();
+            }
           },
           error => {
             this.alertController
@@ -56,6 +62,7 @@ export class LessonDetailPage implements OnInit, ViewDidEnter {
                   {
                     text: 'אישור',
                     handler: () => {
+                      this.isLoading = true;
                       this.navController.navigateBack('/tabs/course');
                     }
                   }
@@ -76,13 +83,16 @@ export class LessonDetailPage implements OnInit, ViewDidEnter {
     return `https://img.youtube.com/vi/${this.lesson.videoId}/sddefault.jpg`;
   }
 
-  ionViewDidEnter() {
-    if (Capacitor.platform === 'web') {
-      this.initializeYoutubePlayerPluginWeb();
-    } else { // Native
-      this.initializeYoutubePlayerPluginNative();
-    }
-  }
+  // ngAfterViewInit() {
+  //   this.lessonSubscription = this.courseService.lesson.subscribe(lesson => {
+  //     this.lesson = lesson;
+  //     if (Capacitor.platform === 'web') {
+  //       this.initializeYoutubePlayerPluginWeb();
+  //     } else { // Native
+  //       this.initializeYoutubePlayerPluginNative();
+  //     }
+  //   });
+  // }
 
 
   async initializeYoutubePlayerPluginWeb() {

@@ -19,6 +19,9 @@ export class CourseService {
   // tslint:disable-next-line: variable-name
   private _lessons = new BehaviorSubject<Lesson[]>([]);
 
+  // tslint:disable-next-line: variable-name
+  private _lesson = new BehaviorSubject<Lesson>(null);
+
 
   get courses() {
     return this._courses.asObservable();
@@ -26,6 +29,10 @@ export class CourseService {
 
   get lessons() {
     return this._lessons.asObservable();
+  }
+
+  get lesson() {
+    return this._lesson.asObservable();
   }
 
   constructor( private http: HttpClient ) { }
@@ -149,7 +156,15 @@ export class CourseService {
   getLesson(id: string) {
     return this.http.get<Lesson>(`http://${LOCALHOST}:3000/api/lesson/lesson/${id}`)
     .pipe(tap(resDta => {
+      this._lesson.next(resDta);
       return resDta;
+    }));
+  }
+
+  viewLesson(id: string) {
+    return this.http.get<Lesson>(`http://${LOCALHOST}:3000/api/lesson/lesson/${id}`)
+    .pipe(tap(resDta => {
+      this._lesson.next(resDta);
     }));
   }
 
