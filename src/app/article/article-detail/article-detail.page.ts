@@ -8,7 +8,7 @@ import { Article } from '../article.model';
 import { Comment } from '../comment.model';
 import { AppService } from '../../app.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 
 
 
@@ -33,7 +33,7 @@ export class ArticleDetailPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private platform: Platform,
-    private document: DocumentViewer,
+    private previewAnyFile: PreviewAnyFile,
     private alertController: AlertController,
     private articleService: ArticleService,
     private navController: NavController,
@@ -75,6 +75,9 @@ export class ArticleDetailPage implements OnInit {
 
   }
 
+  onViewArticle() {
+    this.previewAnyFile.preview(this.article?.pdf);
+  }
   ionViewDidEnter() {
     this.enterTimestamp = Date.now()/1000;
   }
