@@ -18,7 +18,7 @@
   <ion-grid>
     <ion-row class="ion-justify-content-center">
       <ion-col size-xl="3" size-lg="5" size-md="6" size-sm="7">
-        <ion-list>
+        <ion-list *ngIf="users.length > 0">
           <ion-item-sliding *ngFor="let user of users" #slidingItem>
             <app-user-item [user]="user" [routerLink]="['/', 'tabs', 'user', user.id]"></app-user-item>
               <ion-item-options side="start">

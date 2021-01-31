@@ -87,6 +87,37 @@ textarea.e-input,
   // background: inherit;
   color: var(--ion-color-dark, black) !important;
    background-image: none; 
-   border: 1px solid  lightgrey;
+   border: 0px solid  lightgrey;
    border-width: 0 0 1px 0;
+}
+
+.e-input-group:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left).e-disabled,
+.e-input-group.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error).e-disabled
+  .e-input-in-wrap,
+.e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left).e-disabled,
+.e-input-group.e-control-wrapper.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error).e-disabled
+  .e-input-in-wrap::placeholder {
+  // background: inherit;
+  color: var(--ion-color-dark, black) !important;
+}
+
+.e-input[disabled],
+.e-input-group .e-input[disabled],
+.e-input-group.e-control-wrapper .e-input[disabled],
+.e-input-group.e-disabled,
+.e-input-group.e-control-wrapper.e-disabled,
+.e-float-input input[disabled],
+.e-float-input.e-control-wrapper input[disabled],
+.e-float-input textarea[disabled],
+.e-float-input.e-control-wrapper textarea[disabled],
+.e-float-input.e-disabled,
+.e-float-input.e-control-wrapper.e-disabled {
+  -webkit-text-fill-color: var(--ion-color-dark, black) !important;
+  background: transparent;
+  color: var(--ion-color-dark, black) !important;
+  background-image: none; 
+  background-position: bottom -1px left 0;
+  background-repeat: repeat-x;
+  background-size: 4px 1px;
+  border-bottom-color: lightgray;
 }

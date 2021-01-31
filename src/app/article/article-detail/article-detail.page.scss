@@ -40,6 +40,7 @@ h3 {
     padding-right: 10px;
     font-family: 'Yoav-bold';
     font-size: large;
+    --placeholder-color: var(--ion-color-dark, black) !important;
 }
 
 // .article-chat-box-input {
