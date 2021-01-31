@@ -64,6 +64,20 @@ textarea.e-input,
   font-weight: 400;
 }
 
+.e-input-group input.e-input,
+.e-input-group textarea.e-input,
+.e-input-group input.e-input:hover:not(.e-success):not(.e-warning):not(.e-error):not([disabled]):not(:focus),
+.e-input-group textarea.e-input:hover:not(.e-success):not(.e-warning):not(.e-error):not([disabled]),
+.e-input-group.e-control-wrapper input.e-input,
+.e-input-group.e-control-wrapper textarea.e-input,
+.e-input-group.e-control-wrapper input.e-input:hover:not(.e-success):not(.e-warning):not(.e-error):not([disabled]):not(:focus),
+.e-input-group.e-control-wrapper textarea.e-input:hover:not(.e-success):not(.e-warning):not(.e-error):not([disabled]) {
+  color: var(--ion-color-dark, black) !important;
+   background-image: none; 
+   border: 0px solid lightgrey;
+   border-width: 0 0 0px 0;
+}
+
 .e-input-group:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left).e-disabled,
 .e-input-group.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error).e-disabled
   .e-input-in-wrap,
@@ -73,6 +87,6 @@ textarea.e-input,
   // background: inherit;
   color: var(--ion-color-dark, black) !important;
    background-image: none; 
-   border: 1px solid;
-    border-width: 0 0 1px 0;
+   border: 1px solid  lightgrey;
+   border-width: 0 0 1px 0;
 }
