@@ -37,6 +37,12 @@ input::placeholder {
   // color: black !important;
 }
 
+input {
+  font-family: 'Choco' !important;
+  font-size: large !important;
+  color: var(--ion-color-dark, black) !important;
+}
+
 .required-star {
   vertical-align: super;
 }
