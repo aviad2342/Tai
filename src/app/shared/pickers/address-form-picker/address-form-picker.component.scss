@@ -75,7 +75,7 @@ textarea.e-input,
   color: var(--ion-color-dark, black) !important;
    background-image: none; 
    border: 0px solid lightgrey;
-   border-width: 0 0 0px 0;
+   border-width: 0 0 1px 0;
 }
 
 .e-input-group:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left).e-disabled,
