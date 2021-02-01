@@ -14,3 +14,7 @@
 // .address-picker {
 //     padding-right: 23px;
 // }
+
+ion-item {
+  --inner-padding-end: 0 !important;
+}

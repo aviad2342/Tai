@@ -121,3 +121,9 @@ textarea.e-input,
   background-size: 4px 1px;
   border-bottom-color: lightgray;
 }
+
+ion-item::part(native){
+  --inner-padding-end: 0;
+  padding-right: 0px;
+  padding-left: 15px;
+}
