@@ -29,10 +29,10 @@
           <ion-item-sliding *ngFor="let user of users">
             <app-user-item [user]="user" [routerLink]="['/', 'tabs', 'user', user.id]"></app-user-item>
               <ion-item-options side="start">
-                <ion-item-option type="button" mode="ios" color="tertiary" expandable="true" (click)="onEdit(user.id)">
+                <ion-item-option type="button" mode="ios" color="tertiary" (click)="onEdit(user.id)">
                   <ion-icon slot="icon-only" name="create-outline"></ion-icon>
                 </ion-item-option>
-                <ion-item-option type="button" mode="ios" color="danger" expandable="true" (click)="onDelete(user.id)">
+                <ion-item-option type="button" mode="ios" color="danger" (click)="onDelete(user.id)">
                   <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
                 </ion-item-option>
               </ion-item-options>
