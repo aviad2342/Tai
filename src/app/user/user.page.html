@@ -16,17 +16,24 @@
 <ion-content class="ion-padding">
 
   <ion-grid>
-    <ion-row class="ion-justify-content-center">
+
+    <ion-row class="ion-justify-content-center" *ngIf="isLoading">
+      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="ion-text-center" >
+        <ion-spinner color="primary"></ion-spinner>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
       <ion-col size-xl="3" size-lg="5" size-md="6" size-sm="7">
-        <ion-list *ngIf="users.length > 0">
-          <ion-item-sliding *ngFor="let user of users" #slidingItem>
+        <ion-list #dynamicList>
+          <ion-item-sliding *ngFor="let user of users">
             <app-user-item [user]="user" [routerLink]="['/', 'tabs', 'user', user.id]"></app-user-item>
               <ion-item-options side="start">
-                <ion-item-option type="button" mode="ios" color="tertiary" (click)="onEdit(user.id, slidingItem)">
-                  <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+                <ion-item-option type="button" mode="ios" color="tertiary" expandable="true" (click)="onEdit(user.id)">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
                 </ion-item-option>
-                <ion-item-option type="button" mode="ios" color="danger" (click)="onDelete(user.id, slidingItem)">
-                  <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                <ion-item-option type="button" mode="ios" color="danger" expandable="true" (click)="onDelete(user.id)">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
                 </ion-item-option>
               </ion-item-options>
           </ion-item-sliding>
