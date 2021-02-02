@@ -26,14 +26,14 @@
     <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
       <ion-col size-xl="3" size-lg="5" size-md="6" size-sm="7">
         <ion-list #dynamicList>
-          <ion-item-sliding *ngFor="let user of users">
+          <ion-item-sliding  *ngFor="let user of users">
             <app-user-item [user]="user" [routerLink]="['/', 'tabs', 'user', user.id]"></app-user-item>
               <ion-item-options side="start">
-                <ion-item-option type="button" mode="ios" color="tertiary" (click)="onEdit(user.id)">
-                  <ion-icon slot="end" name="create-outline"></ion-icon>
+                <ion-item-option dir="rtl" type="button" mode="ios" color="tertiary" (click)="onEdit(user.id)">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
                 </ion-item-option>
-                <ion-item-option type="button" mode="ios" color="danger" (click)="onDelete(user.id)">
-                  <ion-icon slot="end" name="trash-outline"></ion-icon>
+                <ion-item-option dir="rtl" type="button" mode="ios" color="danger" (click)="onDelete(user.id)">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
                 </ion-item-option>
               </ion-item-options>
           </ion-item-sliding>
