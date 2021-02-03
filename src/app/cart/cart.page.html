@@ -25,8 +25,8 @@
       </ion-col>
       <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" class="ion-no-padding" *ngIf="!isLoading">
         <ion-list>
-          <ion-item-sliding *ngFor="let item of cart.items" #slidingItem>
-          <ion-item lines="inset" detail="false" [title]="item.name">
+          <ion-item-sliding [dir]="slidingDir" *ngFor="let item of cart.items" #slidingItem>
+          <ion-item [dir]="itemDir" lines="inset" detail="false" [title]="item.name">
             <ion-thumbnail>
               <ion-img [src]="item?.thumbnail"></ion-img>
             </ion-thumbnail>
@@ -53,7 +53,7 @@
           </div>
         </ion-item>
         <ion-item-options side="end">
-          <ion-item-option color="danger" (click)="onRemoveItem(item)">
+          <ion-item-option [dir]="itemDir" color="danger" (click)="onRemoveItem(item)">
             <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
           </ion-item-option>
         </ion-item-options>

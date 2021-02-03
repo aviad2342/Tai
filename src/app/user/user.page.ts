@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import { User } from './user.model';
-import { AlertController, IonItemSliding, IonList } from '@ionic/angular';
+import { AlertController, IonItemSliding, IonList, Platform } from '@ionic/angular';
 import { AppService } from '../app.service';
 
 
@@ -21,15 +21,22 @@ export class UserPage implements OnInit, OnDestroy {
   private usersSubscription: Subscription;
   isDesktop: boolean;
   isLoading = false;
+  slidingDir = '';
+  itemDir = '';
 
   constructor(
     private userService: UserService,
     private router: Router,
+    private platform: Platform,
     private appService: AppService,
     private alertController: AlertController
     ) { }
 
   ngOnInit() {
+    if (this.platform.is('ios')) {
+      this.slidingDir = 'ltr';
+      this.itemDir = 'rtl';
+    }
     this.isLoading = true;
     this.usersSubscription = this.userService.users.subscribe(users => {
       this.users = users;

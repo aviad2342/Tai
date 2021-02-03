@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, IonItemSliding, NavController } from '@ionic/angular';
+import { AlertController, IonItemSliding, NavController, Platform } from '@ionic/angular';
 import { range } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AppService } from '../app.service';
@@ -34,6 +34,8 @@ export class CartPage implements OnInit {
   discount = 0.000;
   summaryOrder = 0;
   haveDiscount = false;
+  slidingDir = '';
+  itemDir = '';
   units: number[] = [1,2,3,4,5,6,7,8,9,10];
   itemUnitsSelectOptions = {
     cssClass: 'select-units-style',
@@ -42,7 +44,7 @@ export class CartPage implements OnInit {
   constructor(
     private cartService: CartService,
     private route: ActivatedRoute,
-    private router: Router,
+    private platform: Platform,
     private navController: NavController,
     private alertController: AlertController,
     private couponService: CouponService,
@@ -52,6 +54,10 @@ export class CartPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    if (this.platform.is('ios')) {
+      this.slidingDir = 'ltr';
+      this.itemDir = 'rtl';
+    }
     this.isLoading = true;
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
