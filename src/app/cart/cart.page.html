@@ -15,15 +15,21 @@
 <ion-content>
   <ion-grid [fixed]="true">
 
+    <ion-row class="ion-no-padding" *ngIf="isLoading">
+      <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="10"  class="ion-text-center">
+        <ion-spinner color="primary"></ion-spinner>
+      </ion-col>
+    </ion-row>
+
     <ion-row class="ion-no-padding ion-justify-content-center">
       <ion-col class="button tappable ion-text-right align-self-center category-title">פריטים בעגלה:</ion-col>
     </ion-row>
 
-    <ion-row class="ion-no-padding">
-      <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="10"  class="ion-text-center" *ngIf="isLoading">
-        <ion-spinner color="primary"></ion-spinner>
+    <ion-row class="ion-no-padding" *ngIf="!isLoading">
+      <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="10"  class="ion-text-center" *ngIf="cartIsEmpty">
+        <h1>העגלה ריקה!</h1>
       </ion-col>
-      <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" class="ion-no-padding" *ngIf="!isLoading">
+      <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" class="ion-no-padding" *ngIf="!cartIsEmpty">
         <ion-list>
           <ion-item-sliding [dir]="slidingDir" *ngFor="let item of cart.items" #slidingItem>
           <ion-item [dir]="itemDir" lines="inset" detail="false" [title]="item.name">
@@ -53,7 +59,7 @@
           </div>
         </ion-item>
         <ion-item-options side="end">
-          <ion-item-option [dir]="itemDir" color="danger" (click)="onRemoveItem(item)">
+          <ion-item-option [dir]="itemDir" color="danger" (click)="onRemoveItem(item, slidingItem)">
             <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
           </ion-item-option>
         </ion-item-options>

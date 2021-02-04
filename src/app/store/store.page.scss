@@ -34,15 +34,19 @@
     background-color: rgb(194, 194, 194);
 }
 
+.swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: -9px 4px !important;
+}
+
 .swiper-pagination {
-    top: 4px;
+    top: 4px !important;
     height: 12px;
     padding-top: 5px;
 }
 
 
 .store-item {
-    padding-bottom: 10px;
+    padding-bottom: 20px;
 }
 
 // .item-slide {

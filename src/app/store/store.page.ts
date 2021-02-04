@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CartItem, Item } from './item.model';
 import { AppService } from '../app.service';
@@ -10,6 +10,7 @@ import { CartService } from '../cart/cart.service';
 import { Cart } from '../cart/cart.model';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-store',
@@ -26,6 +27,7 @@ export class StorePage implements OnInit, OnDestroy {
   customer: Customer;
   isLoading = false;
   private itemsSubscription: Subscription;
+  private cartSubscription: Subscription;
   isDesktop: boolean;
   categories: string[] = [];
   // categories = [
@@ -112,18 +114,20 @@ export class StorePage implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private navController: NavController,
     private cartService: CartService,
     private authService: AuthService,
     private appService: AppService,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private ngZone: NgZone
     ) { }
 
   ngOnInit() {
     this.itemsSubscription = this.itemService.items.subscribe(items => {
       this.items = items;
-      this.categories = this.items.map(item => item.category).filter((value, index, self) => self.indexOf(value) === index);
+      this.categories = items.map(item => item.category).filter((value, index, self) => self.indexOf(value) === index);
     });
-    this.cartService.getCustomerCart(this.authService.getLoggedUserId()).subscribe(cart => {
+    this.cartSubscription = this.cartService.cart.subscribe(cart => {
       if(cart) {
         this.cart = cart;
         this.cartItems = cart.items;
@@ -138,7 +142,28 @@ export class StorePage implements OnInit, OnDestroy {
         });
       }
     });
+    // this.cartService.getCustomerCart(this.authService.getLoggedUserId()).subscribe(cart => {
+    //   if(cart) {
+    //     this.cart = cart;
+    //     this.cartItems = cart.items;
+    //     this.itemsAddedToCart = cart.items.length;
+    //   } else {
+    //     this.authService.getUserLogged().pipe(
+    //       switchMap(user => {
+    //       const newCart = new Cart(null, user, this.cartItems, null);
+    //       return this.cartService.addCart(newCart);
+    //     })).subscribe(newCart => {
+    //       this.cart = newCart;
+    //     });
+    //   }
+    // });
   }
+
+  // changePlaying() {
+  //   this.ngZone.run(() => {
+  //     this.playing = true;
+  //   });
+  // }
 
 
   onItemAddedToCart(item: Item) {
@@ -156,20 +181,16 @@ export class StorePage implements OnInit, OnDestroy {
   }
 
   onGoToCart() {
-    this.router.navigate(['/', 'cart', this.cart.id]);
+    this.navController.navigateRoot(['/', 'cart', this.cart.id]);
+    // this.router.navigate(['/', 'cart', this.cart.id]);
   }
 
   ionViewWillEnter() {
     this.isDesktop = this.appService.isDesktop();
     this.itemService.getItems().subscribe();
+    this.cartService.getCustomerCart(this.authService.getLoggedUserId()).subscribe();
   }
 
-  // ionViewDidLeave() {
-  //   if (this.itemsSubscription) {
-  //     this.itemsSubscription.unsubscribe();
-  //   }
-  //   this.router.dispose();
-  // }
 
   getItemByCategory(category: string) {
     return this.items.filter(p => p.category === category).slice();
@@ -192,6 +213,9 @@ export class StorePage implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.itemsSubscription) {
       this.itemsSubscription.unsubscribe();
+    }
+    if (this.cartSubscription) {
+      this.cartSubscription.unsubscribe();
     }
   }
 

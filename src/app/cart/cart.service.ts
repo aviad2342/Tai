@@ -26,6 +26,14 @@ export class CartService {
     getCart(id: string) {
       return this.http.get<Cart>(`http://${LOCALHOST}:3000/api/cart/cart/${id}`)
       .pipe(tap(resDta => {
+        this._cart.next(resDta);
+        return resDta;
+      }));
+    }
+
+    getCartItems(id: string) {
+      return this.http.get<CartItem[]>(`http://${LOCALHOST}:3000/api/cartItem/cartItems/cart/${id}`)
+      .pipe(tap(resDta => {
         return resDta;
       }));
     }
@@ -33,6 +41,7 @@ export class CartService {
     getCustomerCart(id: string) {
       return this.http.get<Cart>(`http://${LOCALHOST}:3000/api/cart/cart/customer/${id}`)
       .pipe(tap(resDta => {
+        this._cart.next(resDta);
         return resDta;
       }));
     }
@@ -53,10 +62,9 @@ export class CartService {
         switchMap(resData => {
           return this.getCart(resData.id);
         }),
-        take(1),
-        switchMap(newCart => {
+        tap(newCart => {
           this._cart.next(newCart);
-          return this._cart;
+          return newCart;
         }));
     }
 
@@ -117,11 +125,15 @@ export class CartService {
         }));
     }
 
-    deleteCartItem(id: string) {
+    deleteCartItem(id: string, cartId: string ) {
       return this.http.delete(`http://${LOCALHOST}:3000/api/cart/item/${id}`).
       pipe(
-        tap(resData => {
-          return resData;
+        switchMap(resData => {
+          return this.getCart(cartId);
+        }),
+        tap(cart => {
+          this._cart.next(cart);
+          return cart;
         }));
     }
 }

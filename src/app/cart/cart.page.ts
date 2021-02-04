@@ -34,6 +34,7 @@ export class CartPage implements OnInit {
   discount = 0.000;
   summaryOrder = 0;
   haveDiscount = false;
+  cartIsEmpty = false;
   slidingDir = '';
   itemDir = '';
   units: number[] = [1,2,3,4,5,6,7,8,9,10];
@@ -96,9 +97,14 @@ export class CartPage implements OnInit {
     });
   }
 
-  onRemoveItem(item: CartItem) {
-    this.cartService.deleteCartItem(item.id).subscribe(() => {
-      this.cart.items.splice(this.cart.items.indexOf(item), 1);
+  onRemoveItem(item: CartItem, itemSliding: IonItemSliding) {
+    itemSliding.close();
+    this.cartService.deleteCartItem(item.id, this.cart.id).subscribe(() => {
+      const index: number = this.cart.items.indexOf(item);
+      this.cart.items.splice(index, 1);
+      if(this.cart.items.length === 0) {
+        this.cartIsEmpty = true;
+      }
     this.updateTotalOrder();
     }, error => {
       this.appService.presentToast('חלה תקלה לא ניתן למחוק את המוצר! נסה שנית מאוחר יותר', false);
