@@ -111,6 +111,7 @@ export class AddTreatmentPage implements OnInit {
       switchMap(uploadRes => {
         const treatmentToAdd = new Treatment(
           null,
+          form.value.treatmentName,
           this.treatmentType,
           form.value.description,
           uploadRes.imageUrl,

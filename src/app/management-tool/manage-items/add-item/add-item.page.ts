@@ -32,6 +32,7 @@ registerLocaleData(localeHe, 'he-HE');
 export class AddItemPage implements OnInit, AfterViewInit {
 
   item: Item;
+  items: Item[];
   events: Event[];
   courses: Course[];
   articles: Article[];
@@ -85,6 +86,9 @@ export class AddItemPage implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.selectedCategory = this.categories.BOOKS;
+    this.itemService.getItems().subscribe(items => {
+      this.items = items
+    });
   }
 
   onSlideChange(ItemSlides: IonSlides) {
@@ -208,7 +212,7 @@ export class AddItemPage implements OnInit, AfterViewInit {
     this.selectedThumbnail = treatment.thumbnail;
     this.productId = treatment.id;
     const treatmentObj = {
-      name:        treatment.treatmentType,
+      name:        treatment.treatmentName,
       description: treatment.description,
       price:       '',
       quantity:    1000,

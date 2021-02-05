@@ -3,34 +3,42 @@
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="['/', 'manage','treatments']"></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-no-padding app-titles">מוצר</ion-title>
+    <ion-title class="ion-no-padding app-titles">פרטי הטיפול</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content color="light-gray">
   <ion-grid [fixed]="true">
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-xl="5" size-lg="3" size-md="3" size-sm="3" class="ion-text-center" *ngIf="isLoading">
+
+    <ion-row class="ion-justify-content-center" *ngIf="isLoading">
+      <ion-col size="12" size-xl="5" size-lg="3" size-md="3" size-sm="3" class="ion-text-center">
         <ion-spinner color="primary"></ion-spinner>
       </ion-col>
-      <ion-col size="12" size-xl="5" size-lg="3" size-md="3" size-sm="3" class="main-col" *ngIf="!isLoading">
+    </ion-row> 
+
+    <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
+      <ion-col size="12" size-xl="5" size-lg="3" size-md="3" size-sm="3" class="main-col">
         <ion-card class="user-detail-card">
           <ion-img [src]="this.treatment?.thumbnail"></ion-img>
-          <ion-card-header>
-            <ion-card-title size="larg"> <strong>סוג הטיפול:</strong> {{ treatment?.treatmentType }}</ion-card-title>
+          <ion-card-header class="ion-text-center">
+            <ion-card-title size="larg"> <strong>שם הטיפול: </strong>{{ treatment?.treatmentName }} </ion-card-title>
+            <ion-card-subtitle><strong>סוג הטיפול: </strong>{{ treatment?.treatmentType }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            {{ treatment?.description }}
+            <ion-text class="treatment-description-text">
+              <ion-label class="ion-padding-start"> <strong>תיאור הטיפול: </strong></ion-label>
+              <p class="ion-padding-start">{{ treatment?.description }}</p>
+            </ion-text>
           </ion-card-content>
           <ion-item lines="none" class="ion-no-padding">
-            <ion-label class="ion-padding-start"> <strong>מטפל: </strong></ion-label>
+            <ion-label class="ion-padding-start treatment-description-text"> <strong>מטפל: </strong></ion-label>
           </ion-item>
 
-          <ion-item button (click)="onTherapistDetail()" detail>
+          <ion-item button (click)="onTherapistDetail($event)" detail>
             <ion-avatar size="medium" slot="start">
               <ion-img [src]="treatment?.therapistProfilePicture"></ion-img>
             </ion-avatar>
-            <ion-label>
+            <ion-label class="treatment-description-text">
               <strong>
               {{ treatment?.therapistName }}
               </strong>

@@ -55,6 +55,7 @@ export class TreatmentService {
 
   updateTreatment(treatment: Treatment) {
     const treatmentObj = {
+      treatmentName: treatment.treatmentName,
       treatmentType: treatment.treatmentType,
       description: treatment.description,
       thumbnail: treatment.thumbnail,

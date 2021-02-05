@@ -237,6 +237,11 @@
   font-size: medium;
 }
 
+.app-submit-cancel-btn {
+  font-family: 'Abraham';
+  font-size: large;
+}
+
 .app-order-pay-btn {
   font-family: 'Abraham';
   font-size: larger;
@@ -280,6 +285,39 @@
   font-family: 'Choco';
   font-size: large;
 }
+
+.treatments-types-option {
+  text-align: center !important;
+  border-bottom: 1px solid lightgray !important;
+  font-family: 'Choco';
+  font-size: larger !important;
+}
+
+.treatments-types-option:hover {
+  opacity: 0.8;
+  font-size: x-large !important;
+    -ms-transform: scale(1.0); /* IE 9 */
+    -webkit-transform: scale(1.0); /* Safari 3-8 */
+    transform: scale(1.0); 
+    transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+    -ms-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -webkit-transition: all 300ms ease;
+}
+
+.select-types-alert {
+  font-family: 'Choco';
+}
+
+.alert-radio-group.sc-ion-alert-ios {
+  max-height: 350px;
+}
+
+.alert-title.sc-ion-alert-ios {
+  font-size: x-large;
+}
+
 /* Global App Appearance CSS And Custom Fonts */
 
 ion-picker {
@@ -342,6 +380,7 @@ ion-tab-bar{
 .therapist-detail-popover {
   --width: 420px;
   --max-width: 420px;
+  // top: -70px;
 }
 
 .select-units-style {

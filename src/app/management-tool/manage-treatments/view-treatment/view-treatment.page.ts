@@ -55,12 +55,13 @@ export class ViewTreatmentPage implements OnInit {
     });
   }
 
-  async onTherapistDetail() {
+  async onTherapistDetail(ev: any) {
     const popover = await this.popoverController.create({
       component: TherapistDetailComponent,
       cssClass: 'therapist-detail-popover',
       animated: true,
       mode: 'ios',
+      event: ev,
       backdropDismiss: false,
       componentProps: {
         id: this.treatment.therapistId

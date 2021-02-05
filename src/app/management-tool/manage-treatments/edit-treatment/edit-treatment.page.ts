@@ -57,6 +57,7 @@ export class EditTreatmentPage implements OnInit {
             this.therapistName = treatment.therapistName;
             this.therapistPicture = treatment.therapistProfilePicture;
             const treatmentObj = {
+              treatmentName :this.treatment.treatmentName,
               description: this.treatment.description
               };
             this.form.setValue(treatmentObj);
@@ -133,6 +134,7 @@ export class EditTreatmentPage implements OnInit {
         switchMap(uploadRes => {
           const treatmentUpdate = new Treatment(
             this.treatment.id,
+            form.value.treatmentName,
             this.treatmentType,
             form.value.description,
             uploadRes.imageUrl,
@@ -155,6 +157,7 @@ export class EditTreatmentPage implements OnInit {
     } else {
       const treatmentUpdate = new Treatment(
         this.treatment.id,
+        form.value.treatmentName,
         this.treatmentType,
         form.value.description,
         this.treatment.thumbnail,

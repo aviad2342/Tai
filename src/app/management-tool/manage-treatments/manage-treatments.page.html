@@ -19,7 +19,7 @@
 
       <ion-button color="secondary" (click)="onViewTreatment()" [disabled]="!isRowSelected">
         <ion-icon name="eye-outline" slot="start"></ion-icon>
-        <ion-label class="app-crud-btn-label">פרופיל</ion-label>
+        <ion-label class="app-crud-btn-label">פרטים</ion-label>
       </ion-button>
 
       <ion-button color="warning" (click)="onEditTreatment()" [disabled]="!isRowSelected">
@@ -87,8 +87,12 @@
       </ng-template>
     </ngx-datatable-column> 
     
+      <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="treatmentName" [width]="150" [resizeable]="false">
+        <ng-template let-column="column" ngx-datatable-header-template><strong>שם הטיפול</strong></ng-template>
+      </ngx-datatable-column>
+    
       <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="treatmentType" [width]="150" [resizeable]="false">
-        <ng-template let-column="column" ngx-datatable-header-template><strong>סוג טיפול</strong></ng-template>
+        <ng-template let-column="column" ngx-datatable-header-template><strong>סוג הטיפול</strong></ng-template>
       </ngx-datatable-column>
 
       <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="therapistName" [width]="200" [resizeable]="false">

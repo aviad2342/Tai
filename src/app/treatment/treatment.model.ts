@@ -3,6 +3,7 @@ export class Treatment {
 
     constructor(
       public id: string,
+      public treatmentName: string,
       public treatmentType: string,
       public description: string,
       public thumbnail: string,

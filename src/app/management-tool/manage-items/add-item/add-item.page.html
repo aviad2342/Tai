@@ -1,15 +1,15 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-no-padding app-titles">הוספת מוצר</ion-title>
+    <ion-title class="app-titles">הוספת מוצר</ion-title>
   </ion-toolbar>
   <ion-segment #categorySegment [scrollable]="true" (ionChange)="onCategoryChosen($event)" [value]="categories.BOOKS" class="add-participant-segment">
-    <ion-segment-button [value]="categories.BOOKS">{{ categories.BOOKS }}</ion-segment-button>
-    <ion-segment-button [value]="categories.TREATMENTS">{{ categories.TREATMENTS }}</ion-segment-button>
-    <ion-segment-button [value]="categories.CONFERENCES">{{ categories.CONFERENCES }}</ion-segment-button>
-    <ion-segment-button [value]="categories.COURSES">{{ categories.COURSES }}</ion-segment-button>
-    <ion-segment-button [value]="categories.ARTICLES">{{ categories.ARTICLES }}</ion-segment-button>
-    <ion-segment-button [value]="categories.ACCESSORIES">{{ categories.ACCESSORIES }}</ion-segment-button>
-    <ion-segment-button [value]="categories.OTHER">{{ categories.OTHER }}</ion-segment-button>
+    <ion-segment-button class="category-segment-option" [value]="categories.BOOKS">{{ categories.BOOKS }}</ion-segment-button>
+    <ion-segment-button class="category-segment-option" [value]="categories.TREATMENTS">{{ categories.TREATMENTS }}</ion-segment-button>
+    <ion-segment-button class="category-segment-option" [value]="categories.CONFERENCES">{{ categories.CONFERENCES }}</ion-segment-button>
+    <ion-segment-button class="category-segment-option" [value]="categories.COURSES">{{ categories.COURSES }}</ion-segment-button>
+    <ion-segment-button class="category-segment-option" [value]="categories.ARTICLES">{{ categories.ARTICLES }}</ion-segment-button>
+    <ion-segment-button class="category-segment-option" [value]="categories.ACCESSORIES">{{ categories.ACCESSORIES }}</ion-segment-button>
+    <ion-segment-button class="category-segment-option" [value]="categories.OTHER">{{ categories.OTHER }}</ion-segment-button>
   </ion-segment>
 </ion-header>
 
@@ -145,7 +145,8 @@
                     <ion-card class="treatment-card">
                       <ion-img [src]="treatment.thumbnail" class="treatment-thumbnail"></ion-img>
                       <ion-card-header>
-                        <ion-card-title>{{ treatment.treatmentType }}</ion-card-title>
+                        <ion-card-title>{{ treatment.treatmentName }}</ion-card-title>
+                        <ion-card-subtitle>{{ treatment.treatmentType}}</ion-card-subtitle>
                       </ion-card-header>
                       <ion-card-content>
                         <p>{{ treatment.description }}</p>
@@ -266,7 +267,7 @@
       </ion-button>
     </ion-col>
     <ion-col size-sm="2" size-xs="5" class="ion-text-center">
-      <ion-button color="primary" fill="outline" (click)="onDoneAdding()">
+      <ion-button [disabled]="!f.valid" color="primary" fill="outline" (click)="onDoneAdding()">
         <ion-label>שמור</ion-label>
       </ion-button>
     </ion-col>
