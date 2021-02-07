@@ -42,10 +42,7 @@ export class ViewTreatmentPage implements OnInit {
                 message: 'לא ניתן להציג את הטיפול.',
                 buttons: [
                   {
-                    text: 'אישור',
-                    handler: () => {
-                      this.router.navigate(['/manage/treatments']);
-                    }
+                    text: 'אישור'
                   }
                 ]
               })

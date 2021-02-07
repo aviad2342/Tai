@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content color="light-gray">
-  <ion-grid [fixed]="true">
+  <ion-grid>
 
     <ion-row class="ion-justify-content-center" *ngIf="isLoading">
       <ion-col size="12" size-xl="5" size-lg="3" size-md="3" size-sm="3" class="ion-text-center">
@@ -17,7 +17,7 @@
     </ion-row> 
 
     <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
-      <ion-col size="12" size-xl="5" size-lg="3" size-md="3" size-sm="3" class="main-col">
+      <ion-col size-xl="5" size-lg="5" size-md="6" size-sm="7" class="main-col">
         <ion-card class="user-detail-card">
           <ion-img [src]="this.treatment?.thumbnail"></ion-img>
           <ion-card-header class="ion-text-center">

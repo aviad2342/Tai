@@ -14,7 +14,7 @@ import { Speaker } from '../../../event/speaker.model';
 import { Address } from '../../../shared/address.model';
 import * as utility from '../../../utilities/functions';
 import Swiper from 'swiper';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-add-event',
@@ -36,12 +36,8 @@ export class AddEventPage implements OnInit, AfterViewInit {
   imageIsValid = true;
   address: Address = new Address();
   defaultPicture = `http://${environment.LOCALHOST}:3000/images/user-default-image.png`;
-  userImage = '../../../assets/images/user-default-image.png';
   file: File;
   now = new Date().toISOString();
-  // date: Date;
-  // beginsAt: Date;
-  // endsAt: Date;
 
   slideOpts = {
     allowSlidePrev: false,
@@ -56,7 +52,6 @@ export class AddEventPage implements OnInit, AfterViewInit {
   constructor(
     private eventService: EventService,
     private modalController: ModalController,
-    private router: Router,
     private navController: NavController,
     private alertController: AlertController,
     public appService: AppService

@@ -112,7 +112,7 @@ export class AddItemPage implements OnInit, AfterViewInit {
     case this.categories.TREATMENTS:
       if(!this.treatments) {
         this.treatmentService.getTreatments().subscribe(treatments => {
-          this.treatments = treatments;
+          this.treatments = treatments.filter(t => this.items.map(i => i.productId).indexOf(t.id, 0) === -1);
           this.isTreatment = true;
           this.addItemSlides.slideTo(1, 500);
         });
@@ -123,7 +123,7 @@ export class AddItemPage implements OnInit, AfterViewInit {
     case this.categories.CONFERENCES:
       if(!this.events) {
         this.eventService.getEvents().subscribe(events => {
-          this.events = events;
+          this.events = events.filter(t => this.items.map(i => i.productId).indexOf(t.id, 0) === -1);
           this.isEvent = true;
           this.addItemSlides.slideTo(2, 500);
         });
@@ -134,7 +134,7 @@ export class AddItemPage implements OnInit, AfterViewInit {
     case this.categories.COURSES:
       if(!this.courses) {
         this.courseService.getCourses().subscribe(courses => {
-          this.courses = courses;
+          this.courses = courses.filter(t => this.items.map(i => i.productId).indexOf(t.id, 0) === -1);
           this.isCourse = true;
           this.addItemSlides.slideTo(3, 500);
         });
@@ -145,7 +145,7 @@ export class AddItemPage implements OnInit, AfterViewInit {
      case this.categories.ARTICLES:
        if(!this.articles) {
         this.articleService.getArticles().subscribe(articles => {
-          this.articles = articles;
+          this.articles = articles.filter(t => this.items.map(i => i.productId).indexOf(t.id, 0) === -1);
           this.isArticle = true;
           this.addItemSlides.slideTo(4, 500);
         });

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-no-padding  app-titles">הוסף אירוע</ion-title>
+    <ion-title class="app-titles">הוסף אירוע</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,9 +10,9 @@
     <ion-slide class="slide-step">
 
       <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-        <ion-grid [fixed]="true">
+        <ion-grid>
           <ion-row class="ion-justify-content-center">
-            <ion-col size="12" size-xl="4" size-lg="5" size-md="6" size-sm="6" size-xs="7">
+            <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="7">
               <app-image-picker 
               [showPreview]="this.file" 
               (imagePick)="onImagePicked($event)" 
@@ -25,7 +25,7 @@
         </ion-row>
 
           <ion-row class="ion-justify-content-center">
-            <ion-col size="12" size-xl="5" size-lg="6" size-md="6" size-sm="6" size-xs="7">
+            <ion-col size-xl="8" size-lg="8" size-md="7" size-sm="7" size-xs="7">
               <ion-list>
                 
                 <ion-item>

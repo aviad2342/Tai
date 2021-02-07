@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Output, Input, ElementRef, EventEmitter } from '@angular/core';
 import { Plugins, Capacitor, CameraSource, CameraResultType} from '@capacitor/core';
-import { ActionSheetController, AlertController, Platform } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-image-picker',
@@ -22,16 +22,10 @@ export class ImagePickerComponent implements OnInit {
 
   constructor(
     private platform: Platform,
-    private actionSheetCtrl: ActionSheetController,
     private alertController: AlertController,
     ) { }
 
   ngOnInit() {
-    // console.log('Mobile:', this.platform.is('mobile'));
-    // console.log('Hybrid:', this.platform.is('hybrid'));
-    // console.log('iOS:', this.platform.is('ios'));
-    // console.log('Android:', this.platform.is('android'));
-    // console.log('Desktop:', this.platform.is('desktop'));
     if (
       (this.platform.is('mobile') && !this.platform.is('hybrid')) ||
       this.platform.is('desktop')
