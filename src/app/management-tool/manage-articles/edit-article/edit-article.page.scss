@@ -1,0 +1,24 @@
+input[type='file'] {
+    display: none;
+  }
+
+  .file-picker-label {
+    font-family: 'Ktav-Yad-Bold';
+    overflow: inherit;
+  }
+
+  .file-name-label {
+    font-size: large;
+  }
+
+  .file-name-note {
+    padding-left: 5px;
+    padding-top: 10px;
+    font-size: medium;
+  }
+
+  .remove-file-icon:hover {
+    opacity: 1;
+    color: black;
+    cursor: pointer;
+  }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
@@ -14,6 +14,9 @@ import '../../../../assets/JavaScript/aharoniclm-book-webfont-normal.js';
 import '../../../../assets/JavaScript/Alef-Regular-normal.js';
 import '../../../../assets/JavaScript/FrankRuhlLibre-Regular-normal.js';
 import * as utility from '../../../utilities/functions';
+import { environment } from 'src/environments/environment';
+
+const LOCALHOST = environment.LOCALHOST;
 
 @Component({
   selector: 'app-edit-article',
@@ -24,12 +27,20 @@ export class EditArticlePage implements OnInit {
 
   article: Article;
   @ViewChild('f', { static: true }) form: NgForm;
+  @ViewChild('filePicker') filePickerRef: ElementRef<HTMLInputElement>;
+  pdfFile: any;
   isLoading = false;
   htmlContent = '';
   htmlText = '';
+  selectedFileUrl = '';
+  viewerType = 'pdf';
+  viewerStyle = 'width:100%;height:127vh;'
+  fileTypeIcon = '';
+  chosenFileName = '';
   articleImage;
   articleIsLoading = false;
   imageIsValid = true;
+  isFileChosen = false;
   editorConfig: AngularEditorConfig = {
     editable: true,
     height: 'auto',
@@ -44,12 +55,35 @@ export class EditArticlePage implements OnInit {
       {class: 'aharoni', name: 'Aharoni'},
       {class: 'Alef-Regular', name: 'Alef'}
     ],
-    uploadUrl: 'https://10.0.0.1:3000/articleBodyImages/',
+    uploadUrl: `https://${LOCALHOST}:3000/articleBodyImages/`,
     toolbarHiddenButtons: [
       ['redo'],
       ['insertImage', 'insertVideo']
     ]
   }
+  MIME_TYPE_MAP: object = {
+    'application/pdf': 'pdf',
+    'application/msword': 'doc',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx'
+  };
+
+  MIME_VIEWER: object = {
+  'application/pdf': 'pdf',
+  'application/msword': 'mammoth',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'mammoth'
+  };
+
+  VIEWER_STYLE: object = {
+  'application/pdf': 'width:100%;height:127vh;',
+  'application/msword': 'width:100%;height:auto;',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'width:100%;height:auto;'
+  };
+
+  MIME_TYPE_ICON: object = {
+  'application/pdf': '../../../../assets/icon/pdf-icon.svg',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': '../../../../assets/icon/word-icon.svg',
+  'application/msword': '../../../../assets/icon/word-icon.svg'
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -69,12 +103,13 @@ export class EditArticlePage implements OnInit {
       }
       this.articleService.getArticle(paramMap.get('id')).subscribe(article => {
         this.article = article;
+        this.selectedFileUrl = article.pdf;
         this.articleIsLoading = false;
+        this.chosenFileName = article.pdf.split('@')[1];
         this.htmlText = article.body;
         const articleObj = {
           title:    article.title,
-          subtitle: article.subtitle,
-          body:     article.body // mybe replace with html content
+          subtitle: article.subtitle
           };
         this.form.setValue(articleObj);
       },
@@ -96,6 +131,41 @@ export class EditArticlePage implements OnInit {
         }
       );
     });
+  }
+
+  onPickFile() {
+    this.filePickerRef.nativeElement.click();
+  }
+
+  onRermoveFile() {
+    this.isFileChosen = false;
+    this.filePickerRef.nativeElement.value = '';
+    this.chosenFileName = '';
+    this.fileTypeIcon = '';
+    this.pdfFile = null;
+  }
+
+  onFileChosen(event: Event) {
+    const pickedFile = (event.target as HTMLInputElement).files[0];
+    this.isFileChosen = true;
+    if (!pickedFile) {
+      return;
+    }
+    if(!this.MIME_TYPE_MAP[pickedFile.type]) {
+      this.onErrorImageType();
+      return;
+    }
+    const fr = new FileReader();
+    fr.onload = () => {
+      const dataUrl = fr.result.toString();
+      this.viewerType = this.MIME_VIEWER[pickedFile.type];
+      this.viewerStyle = this.VIEWER_STYLE[pickedFile.type];
+      this.selectedFileUrl = dataUrl;
+      this.fileTypeIcon = this.MIME_TYPE_ICON[pickedFile.type];
+      this.chosenFileName = pickedFile.name;
+      this.pdfFile = pickedFile;
+    };
+    fr.readAsDataURL(pickedFile);
   }
 
   onImagePicked(imageData: string | File) {
@@ -149,9 +219,9 @@ export class EditArticlePage implements OnInit {
       return;
     }
 // ------------------------------------------- Thumbnail And PDF Property update -------------------------------------------------
-    if (this.articleImage && this.didEditPdf()) {
+    if (this.articleImage && this.isFileChosen) {
     const thumbnail = this.articleService.uploadArticleThumbnail(this.articleImage, 'article');
-    const pdf = this.articleService.addArticlePdf(this.generateArticlePdf(), 'articlePdf');
+    const pdf = this.articleService.addArticlePdf(this.pdfFile, 'articlePdf');
     forkJoin([thumbnail, pdf]).pipe(switchMap(results => {
       const articleToupdate = new Article(
         this.article.id,
@@ -180,7 +250,7 @@ export class EditArticlePage implements OnInit {
       this.navController.navigateBack(['/manage/articles']);
     });
 // --------------------------------------------- Thumbnail Property update ------------------------------------------------
-  } else if(this.articleImage && !this.didEditPdf()) {
+  } else if(this.articleImage && !this.isFileChosen) {
         this.articleService.uploadArticleThumbnail(this.articleImage, 'article')
       .pipe(
         switchMap(uploadRes => {
@@ -211,8 +281,8 @@ export class EditArticlePage implements OnInit {
       this.navController.navigateBack(['/manage/articles']);
     });
 // -------------------------------------------------- PDF Property update ------------------------------------------------------
-  }  else if(!this.articleImage && this.didEditPdf()) {
-          this.articleService.addArticlePdf(this.generateArticlePdf(), 'articlePdf')
+  }  else if(!this.articleImage && this.isFileChosen) {
+          this.articleService.addArticlePdf(this.pdfFile, 'articlePdf')
           .pipe(
             switchMap(uploadRes => {
             const articleToupdate = new Article(
@@ -247,9 +317,21 @@ export class EditArticlePage implements OnInit {
       this.form.reset();
       this.navController.navigateBack(['/manage/articles']);
     }
-
-
   }
+
+  async onErrorImageType() {
+    const alert = await this.alertController.create({
+      cssClass: 'error-file-type-alert',
+      header: 'פורמט קובץ שגוי',
+      message: `אנא בחר קובץ בפורמטים הבאים: pdf, doc, docx`,
+      mode: 'ios',
+      buttons: [{
+          text: 'אישור',
+        }
+      ]
+    });
+    await alert.present();
+}
 
   onCancel() {
     this.form.reset();

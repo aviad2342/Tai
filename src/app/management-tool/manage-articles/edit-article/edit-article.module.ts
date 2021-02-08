@@ -9,6 +9,7 @@ import { EditArticlePageRoutingModule } from './edit-article-routing.module';
 import { EditArticlePage } from './edit-article.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     IonicModule,
     EditArticlePageRoutingModule,
     SharedModule,
-    AngularEditorModule
+    AngularEditorModule,
+    NgxDocViewerModule
   ],
   declarations: [EditArticlePage]
 })

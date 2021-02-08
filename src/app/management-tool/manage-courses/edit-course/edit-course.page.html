@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-no-padding app-titles">עריכת קורס</ion-title>
+    <ion-title class="app-titles">עריכת קורס</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,7 +8,7 @@
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>
       <ion-row class="ion-justify-content-center">
-        <ion-col size="4">
+        <ion-col size-xl="2.5" size-lg="4" size-md="5" size-sm="6"  class="ion-text-center">
           <app-image-picker 
           [selectedImage]="this.course?.thumbnail"
           [showPreview]="true" 
@@ -18,7 +18,7 @@
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center">
-        <ion-col size="6">
+        <ion-col size-xl="4" size-lg="6" size-md="6" size-sm="7" class="ion-text-center">
           <ion-list>
             <ion-item>
               <ion-label position="floating"> כותרת <ion-text color="danger">*</ion-text></ion-label>
@@ -57,11 +57,15 @@
           </ion-list>
         </ion-col>
       </ion-row>
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size-sm="8" class="ion-text-center" *ngIf="isLoading">
+
+      <ion-row class="ion-justify-content-center" *ngIf="isLoading">
+        <ion-col size="12" size-sm="8" class="ion-text-center">
           <ion-spinner color="primary"></ion-spinner>
         </ion-col>
-        <ion-col size="12" size-sm="8" class="ion-text-center" *ngIf="!isLoading">
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
+        <ion-col size-xl="6" size-lg="9" size-md="10" size-sm="10" class="ion-text-center">
           <ion-list *ngIf="course?.lessons !== null">
             <ion-reorder-group id="reorder" (ionItemReorder)="onReorder($event)" disabled="false">
             <div class="comment-item" *ngFor="let lesson of course.lessons">
@@ -69,7 +73,7 @@
                 <ion-thumbnail size="medium" slot="start">
                   <ion-img [src]="lesson.thumbnail" class="lesson-thumbnail-image"></ion-img>
                 </ion-thumbnail>
-                <ion-label>
+                <ion-label class="lesson-item">
                   <h2>שיעור מספר {{ lesson.lessonNumber }}: {{ lesson.title }}</h2>
                   <h3>{{ lesson.description }}</h3>
                   <ion-text color="medium">
@@ -78,11 +82,11 @@
                 </ion-label>
                 <ion-button color="warning" fill="outline" slot="end" (click)="onEditLesson(lesson)">
                   <ion-icon name="create-outline" ></ion-icon>&nbsp;
-                  <ion-label>ערוך</ion-label>
+                  <ion-label class="edit-remove-label">ערוך</ion-label>
                 </ion-button>
                 <ion-button color="danger" fill="outline" slot="end" (click)="onRemoveLesson(lesson.id)">
                   <ion-icon name="trash-outline"></ion-icon>&nbsp;
-                  <ion-label>הסר</ion-label>
+                  <ion-label class="edit-remove-label">הסר</ion-label>
                 </ion-button>
                 <ion-reorder slot="end"></ion-reorder>
               </ion-item>
@@ -92,9 +96,9 @@
                   <ion-img class="default-thumbnail-image" [src]="defaultThumbnail"></ion-img>
                 </ion-thumbnail>
 
-                <ion-button (click)="onAddLesson()" slot="end">
+                <ion-button (click)="onAddLesson()" fill="outline" slot="start">
                   <ion-icon class="custom-new-video" slot="start"></ion-icon>
-                  <ion-label>הוסף שיעור</ion-label>
+                  <ion-label class="edit-remove-label">הוסף שיעור</ion-label>
                 </ion-button>
 
             </ion-item>
@@ -105,20 +109,22 @@
       <br>
       <br>
       <ion-row class="ion-justify-content-center">
-        <ion-col size="4">
+        <ion-col size-xl="2" size-lg="3" size-md="3" size-sm="3" size-xs="6" class="ion-text-center">
           <ion-button 
+          class="app-submit-cancel-btn"
           fill="outline" 
           expand="block"
           (click)="onCancel()"
-          >ביטול</ion-button>
+          ><ion-label class="ion-padding"> ביטול </ion-label></ion-button>
         </ion-col>
-        <ion-col size="4">
+        <ion-col size-xl="2" size-lg="3" size-md="3" size-sm="3" size-xs="6" class="ion-text-center">
           <ion-button 
+          class="app-submit-cancel-btn"
           type="submit"
           fill="outline" 
           expand="block"
           [disabled]="!f.valid"
-          >שמור</ion-button>
+          ><ion-label class="ion-padding"> שמור </ion-label></ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

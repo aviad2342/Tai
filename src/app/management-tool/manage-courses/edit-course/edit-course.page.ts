@@ -24,7 +24,7 @@ export class EditCoursePage implements OnInit {
   @ViewChild(IonReorderGroup) reorderGroup: IonReorderGroup;
   updateImage;
   isLoading = false;
-  defaultThumbnail = 'https://localhost:3000/images/filmDefaultImage.jpg';
+  defaultThumbnail = 'https://www.geirangerfjord.no/upload/images/2018_general/film-and-vid.jpg';
 
   constructor(
     private route: ActivatedRoute,

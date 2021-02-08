@@ -5,15 +5,15 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-grid>
+  <!-- <ion-grid>
     <ion-row class="ion-justify-content-center">
-      <ion-col size="7">
+      <ion-col size="7"> -->
         <form #f="ngForm" (ngSubmit)="onSubmit(f)">
 
           <ion-grid>
       
             <ion-row class="ion-justify-content-center">
-              <ion-col size="4" size-lg="4" size-md="6" size-sm="6">
+              <ion-col size-xl="2.5" size-lg="4" size-md="5" size-sm="6"  class="ion-text-center">
                 <app-image-picker 
                 [selectedImage]="article?.thumbnail"
                 [showPreview]="true" 
@@ -24,10 +24,10 @@
             </ion-row>
       
             <ion-row class="ion-justify-content-center">
-              <ion-col size="6" size-md="6">
+              <ion-col size-xl="3" size-lg="6" size-md="6" size-sm="7" class="ion-text-center">
                 <ion-list>
       
-                  <ion-item class="ion-text-center">
+                  <ion-item>
                     <ion-label position="floating"> כותרת <ion-text color="danger">*</ion-text></ion-label>
                     <ion-input
                       type="text"
@@ -41,7 +41,7 @@
                   <small>זהו שדה חובה!</small>
                 </ion-label>
       
-                  <ion-item class="ion-text-center">
+                  <ion-item>
                     <ion-label position="floating"> תת כותרת <ion-text color="danger">*</ion-text></ion-label>
                     <ion-input
                       type="text"
@@ -60,9 +60,35 @@
               </ion-col>
       
             </ion-row>
-      
+
             <ion-row class="ion-justify-content-center">
-              <ion-col size="10" size-md="12">
+              <ion-col size-xl="6" size-lg="8" size-md="10" size-sm="12" class="ion-text-center">
+                <ion-item lines="none" class="ion-no-padding">
+                  <ion-button color="primary" fill="outline" (click)="onPickFile()" size="default">
+                    <ion-icon src="../../../../assets/icon/folder-icon.svg" slot="start"></ion-icon>
+                    <ion-label class="file-picker-label">בחר קובץ...</ion-label>
+                  </ion-button>
+                  <!-- <ion-label class="file-name-label">{{ chosenFileName }} <ion-icon [src]="fileTypeIcon"></ion-icon></ion-label> -->
+                  <ion-icon slot="end" class="ion-no-margin ion-align-self-center remove-file-icon" name="close-circle" (click)="onRermoveFile()"></ion-icon>
+                  <ion-note class="file-name-note ion-align-self-center ion-no-margin" slot="end">{{ chosenFileName }}</ion-note>
+                  <ion-icon slot="end" class="ion-no-margin ion-align-self-center" [src]="fileTypeIcon"></ion-icon>
+                  <input 
+                  #filePicker 
+                  type="file" 
+                  accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" 
+                  (change)="onFileChosen($event)"/>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="ion-justify-content-center">
+              <ion-col size-xl="6" size-lg="8" size-md="10" size-sm="12">
+                <ngx-doc-viewer [url]="selectedFileUrl" [viewer]="viewerType" [style]="viewerStyle"></ngx-doc-viewer>
+              </ion-col>
+            </ion-row>
+      
+            <!-- <ion-row class="ion-justify-content-center">
+              <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="7" class="ion-text-center">
                 <angular-editor 
                 [config]="editorConfig"
                 required
@@ -75,17 +101,21 @@
               </ion-col>
             </ion-row>
             <br>
+            <br> -->
+            <br>
             <br>
             <ion-row class="ion-justify-content-center">
-              <ion-col size="2" size-md="3">
+              <ion-col size-xl="2" size-lg="3" size-md="3" size-sm="3" size-xs="6" class="ion-text-center">
                 <ion-button 
+                class="app-submit-cancel-btn"
                 color="primary" 
                 expand="block"
                 (click)="onCancel()"
                 >ביטול </ion-button>
               </ion-col>
-              <ion-col size="2" size-md="3">
+              <ion-col size-xl="2" size-lg="3" size-md="3" size-sm="3" size-xs="6" class="ion-text-center">
                 <ion-button
+                class="app-submit-cancel-btn"
                   type="submit"
                   color="primary"
                   expand="block"
@@ -97,9 +127,9 @@
           </ion-grid>
       
         </form>
-      </ion-col>
+      <!-- </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
 
 
 

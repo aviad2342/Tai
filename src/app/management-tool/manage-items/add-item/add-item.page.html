@@ -22,7 +22,7 @@
             <ion-grid [fixed]="true">
     
               <ion-row class="ion-justify-content-center">
-                <ion-col size="12" size-xl="4" size-lg="4" size-md="6" size-sm="6" size-xs="7">
+                <ion-col size="12" size-xl="4" size-lg="4" size-md="5" size-sm="6" size-xs="7">
                   <app-image-picker 
                   [selectedImage]="this?.selectedThumbnail"
                   [showPreview]="isImageselected" 
@@ -33,7 +33,7 @@
               </ion-row>
     
               <ion-row class="ion-justify-content-center">
-                <ion-col size="12" size-xl="6" size-lg="4" size-md="6" size-sm="6" size-xs="8">
+                <ion-col size="12" size-xl="5" size-lg="5" size-md="6" size-sm="7" size-xs="8">
                   <ion-list>
     
                     <ion-item>
@@ -45,7 +45,7 @@
                         required
                         #nameCtrl="ngModel"
                       ></ion-input>
-                      <ion-icon name="text-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+                      <ion-icon slot="end" position="floating" class="custom-writing-icon ion-align-self-center"></ion-icon>
                     </ion-item>
                     <ion-item
                     *ngIf="!nameCtrl.valid && nameCtrl.touched"
@@ -261,14 +261,14 @@
 
 <ion-footer class="add-item-footer">
   <ion-row class="ion-justify-content-center">
-    <ion-col size-sm="2" size-xs="5" class="ion-text-center">
-      <ion-button color="primary" fill="outline" (click)="onCancel()">
-        <ion-label>ביטול</ion-label>
+    <ion-col size-xl="3" size-lg="4" size-md="5" size-sm="6" class="ion-text-center">
+      <ion-button class="app-submit-cancel-btn" color="primary" fill="outline" (click)="onCancel()">
+        <ion-label class="ion-padding">ביטול</ion-label>
       </ion-button>
     </ion-col>
-    <ion-col size-sm="2" size-xs="5" class="ion-text-center">
-      <ion-button [disabled]="!f.valid" color="primary" fill="outline" (click)="onDoneAdding()">
-        <ion-label>שמור</ion-label>
+    <ion-col size-xl="3" size-lg="4" size-md="5" size-sm="6" class="ion-text-center">
+      <ion-button class="app-submit-cancel-btn" [disabled]="!f.valid" color="primary" fill="outline" (click)="onDoneAdding()">
+        <ion-label class="ion-padding">שמור</ion-label>
       </ion-button>
     </ion-col>
   </ion-row>

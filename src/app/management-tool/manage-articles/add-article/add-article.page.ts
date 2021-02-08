@@ -43,7 +43,6 @@ export class AddArticlePage implements OnInit {
   author: User;
   htmlContent = '';
   font: any;
-  naab = '';
   isFileChosen = false;
   imageIsValid = true;
   editorConfig: AngularEditorConfig = {

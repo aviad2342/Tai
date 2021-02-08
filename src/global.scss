@@ -345,7 +345,7 @@ ion-toolbar {
 }
 
 ion-back-button {
-  color: black;
+  color: var(--ion-color-dark);
 }
 
 ion-tab-bar{
@@ -773,6 +773,14 @@ ion-icon {
 
     &[class*="toolbar-icon-word-icon"] {
       mask-image: url(./assets/icon/word-icon.svg);
+    }
+
+    &[class*="custom-writing-icon"] {
+      mask-image: url(./assets/icon/writing.svg);
+    }
+
+    &[class*="toolbar-writing-icon"] {
+      mask-image: url(./assets/icon/writing.svg);
     }
 
   
