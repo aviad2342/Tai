@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="isDesktop">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="app-home-page-title">שלום {{ user?.firstName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <div class="scroll-item">
+        <p *ngFor="let update of updates" >hjfjfhh</p>
+        <!-- <a href="#">{{ update.description }}</a> -->
+      </div>
+    </ion-row>
+  </ion-grid>
+
+  <div class="slider ion-justify-content-center">
+    <div class="slide-track">
+      <div class="slide" *ngFor="let update of updates">
+        <a href="#">{{ update.description }}</a>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

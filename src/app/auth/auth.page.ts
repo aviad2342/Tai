@@ -18,7 +18,7 @@ export class AuthPage implements OnInit {
 
   isLoading = false;
   userProfilePicture = `http://${environment.LOCALHOST}:3000/images/user-default-image.png`;
-  homePage = '/tabs/user'
+  homePage = '/tabs/home'
 
   constructor(
     private authService: AuthService,
@@ -32,7 +32,7 @@ export class AuthPage implements OnInit {
   ngOnInit() {
     console.log(new Date());
     if(this.appService.isDesktop()) {
-      this.homePage = '/user';
+      this.homePage = '/home';
     }
   }
 

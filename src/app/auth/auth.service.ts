@@ -66,6 +66,10 @@ export class AuthService implements OnDestroy {
     );
   }
 
+  get user() {
+    return this._user.asObservable();
+  }
+
   public getLoggedUserId() {
     return this.loggedUserId;
   }

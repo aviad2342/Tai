@@ -13,6 +13,12 @@
     <ion-content>
       <ion-list>
         <ion-menu-toggle auto-hide="false">
+          <ion-item lines="none" routerLink="/home">
+            <ion-icon class="ion-no-margin menu-icon" size="large" name="home-outline" slot="start"></ion-icon>
+            <ion-label class="app-side-menu-label">בית</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="false">
           <ion-item lines="none" routerLink="/event">
             <ion-icon class="ion-no-margin menu-icon" size="large" name="today-outline" slot="start"></ion-icon>
             <ion-label class="app-side-menu-label">אירועים</ion-label>

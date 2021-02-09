@@ -36,6 +36,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'home',
+        children: [
+          {
+          path: '',
+          loadChildren: () => import('../home/home.module').then( m => m.HomePageModule), canLoad: [AuthGuard]
+          }
+        ]
+      },
+      {
         path: 'user',
         children: [
           {
@@ -115,14 +124,14 @@ const routes: Routes = [
       // },
       {
         path: '',
-        redirectTo: '/tabs/user',
+        redirectTo: '/tabs/home',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/user',
+    redirectTo: '/tabs/home',
     pathMatch: 'full'
   }
 ];

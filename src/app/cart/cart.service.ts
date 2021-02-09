@@ -60,10 +60,11 @@ export class CartService {
       }).
       pipe(
         switchMap(resData => {
-          return this.getCart(resData.id);
+          cart.id = resData.id
+          this._cart.next(cart);
+          return this.cart;
         }),
         tap(newCart => {
-          this._cart.next(newCart);
           return newCart;
         }));
     }
