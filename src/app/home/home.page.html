@@ -8,21 +8,14 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <div class="scroll-item">
-        <p *ngFor="let update of updates" >hjfjfhh</p>
-        <!-- <a href="#">{{ update.description }}</a> -->
-      </div>
-    </ion-row>
-  </ion-grid>
+  <ion-slides class="update-slides ion-no-margin" [options]="slideOpts" *ngIf="updates">
+    <ion-slide *ngFor="let update of updates">
+      <a class="update-text" href="#" >{{ update.description }} </a>
+    </ion-slide>
+  </ion-slides>
 
-  <div class="slider ion-justify-content-center">
-    <div class="slide-track">
-      <div class="slide" *ngFor="let update of updates">
-        <a href="#">{{ update.description }}</a>
-      </div>
-    </div>
-  </div>
+<!-- <div class="marquee">
+  <span><a class="ion-padding-end" *ngFor="let update of updates" href="#" >{{ update.description }} </a></span>
+</div> -->
 
 </ion-content>

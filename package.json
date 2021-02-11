@@ -39,6 +39,7 @@
     "@types/swiper": "^5.4.0",
     "add": "^2.0.6",
     "canvg": "^3.0.6",
+    "capacitor-video-player": "^2.4.5-2",
     "capacitor-youtube-player": "^1.0.0-alpha.1-52",
     "cordova": "^10.0.0",
     "cordova-plugin-file": "^6.0.2",

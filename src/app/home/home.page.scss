@@ -1,71 +1,38 @@
 
-.scroll-item {
-    position: relative;
-    width: 100%;
-    height: 50px;
-    overflow: hidden;
-   }
-
-.scroll-item p{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    line-height: 50px;
-    text-align: center;
-    /* Starting position */
-    -moz-transform:translateX(100%);
-    -webkit-transform:translateX(100%);	
-    transform:translateX(100%);
-    /* Apply animation to this element */	
-    -moz-animation: scroll-item 10s linear infinite;
-    -webkit-animation: scroll-item 10s linear infinite;
-    animation: scroll-item 10s linear infinite;
-   }
-
-   @mixin white-gradient {
-	background: linear-gradient(to right,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
-}
-
-$animationSpeed: 40s;
-
-// Animation
-@keyframes scroll {
-	0% { transform: translateX(0); }
-	100% { transform: translateX(calc(-250px * 7))}
-}
-
-
-// Styling
-.slider {
-	background: white;
-	box-shadow: 0 10px 20px -5px rgba(0, 0, 0, .125);
-	height: 50px;
-	margin: auto;
-	overflow:hidden;
-	position: relative;
+.marquee {
+	margin: 0 auto;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	position: absolute;
+  }
+  
+  .marquee span {
+	display: inline-block;
 	width: auto;
-	
-	
-	&::after {
-		right: 0;
-		top: 0;
-		transform: rotateZ(180deg);
+	animation: marquee 10s linear infinite;
+  }
+  
+  
+  @keyframes marquee {
+	0% {
+	  transform: translateX(100%);
 	}
+	100% {
+		-moz-transform:translateX(-100%);
+		-webkit-transform:translateX(-100%);	
+		transform:translateX(calc(-100% - 100%));
+	}
+  }
 
-	&::before {
-		left: 0;
-		top: 0;
-	}
-	
-	.slide-track {
-		animation: scroll $animationSpeed linear infinite;
-		display: flex;
-		width: calc(250px * 14);
-	}
-	
-	.slide {
-		height: 100px;
-		width: 250px;
-	}
-}
+  .update-slides {
+	  background-color: rgb(238, 230, 230);
+  }
+
+  .update-text {
+	  font-family: 'Yoav';
+	  font-size: large;
+	  text-decoration: none;
+	  padding: 4px 0px 4px 0px;
+  }
+  

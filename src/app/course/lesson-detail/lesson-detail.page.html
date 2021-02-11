@@ -28,7 +28,13 @@
       </div>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-justify-content-center" *ngIf="!isLoading && !isMobile">
+    <ion-row class="ion-justify-content-center">
+      <ion-button fill="clear" class="play-btn" (click)="play()">
+        <ion-icon name="logo-youtube" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-row>
+    <div #fullscreen id="fullscreen" slot="fixed"></div>
+    <!-- <ion-row class="ion-justify-content-center" *ngIf="!isLoading && !isMobile">
       <div id="video-player"></div>
     </ion-row>
     <ion-row class="ion-justify-content-center">
@@ -45,6 +51,6 @@
           </ion-button>
         </div>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
   </ion-grid>
 </ion-content>

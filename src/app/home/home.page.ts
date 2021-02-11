@@ -16,7 +16,24 @@ export class HomePage implements OnInit, OnDestroy {
   isDesktop: boolean;
   user: UserLogged;
   updates: Update[];
+  isLoadingUpdates = false;
   private updatesSubscription: Subscription;
+  sliderOne: any;
+  slideOpts = {
+    initialSlide: 0,
+    slidesPerView: 'auto',
+    autoplay: true,
+    speed: 1000,
+    loop: true,
+    loopedSlides: null,
+    allowTouchMove: false,
+    autoHeight: true,
+    direction: 'vertical',
+    effect: 'cube',
+    cubeEffect: {
+      slideShadows: false,
+    },
+  };
 
   constructor(
     private authService: AuthService,
@@ -28,8 +45,15 @@ export class HomePage implements OnInit, OnDestroy {
      this.authService.user.subscribe(user => {
       this.user = user;
      });
+     this.isLoadingUpdates = true;
      this.updatesSubscription = this.homeService.updates.subscribe( updates => {
        this.updates = updates;
+       this.sliderOne = {
+        isBeginningSlide: true,
+        isEndSlide: false,
+        slidesItems: updates
+      };
+       this.isLoadingUpdates = false;
      });
   }
 

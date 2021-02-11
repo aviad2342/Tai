@@ -6,20 +6,22 @@ import { Lesson } from '../lesson.model';
 import { Capacitor, Plugins } from '@capacitor/core';
 import { YoutubePlayerWeb } from 'capacitor-youtube-player';
 import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
-import { Subscription } from 'rxjs';
+import * as PluginsLibrary from 'capacitor-video-player';
+const { CapacitorVideoPlayer,Device } = Plugins;
 
 @Component({
   selector: 'app-lesson-detail',
   templateUrl: './lesson-detail.page.html',
   styleUrls: ['./lesson-detail.page.scss'],
 })
-export class LessonDetailPage implements OnInit {
+export class LessonDetailPage implements OnInit, AfterViewInit {
 
   lesson :Lesson;
   isLoading = false;
   isMobile = false;
   deviceWidth: number;
   deviceHeight: number;
+  videoPlayer: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -47,11 +49,11 @@ export class LessonDetailPage implements OnInit {
       this.courseService.getLesson(paramMap.get('id')).subscribe(lesson => {
             this.lesson = lesson;
             this.isLoading = false;
-            if (Capacitor.platform === 'web') {
-              this.initializeYoutubePlayerPluginWeb();
-            } else { // Native
-              // this.initializeYoutubePlayerPluginNative();
-            }
+            // if (Capacitor.platform === 'web') {
+            //   this.initializeYoutubePlayerPluginWeb();
+            // } else { // Native
+            //   // this.initializeYoutubePlayerPluginNative();
+            // }
           },
           error => {
             this.alertController
@@ -73,6 +75,27 @@ export class LessonDetailPage implements OnInit {
         );
 
     });
+  }
+
+  async ngAfterViewInit() {
+    const info = await Device.getInfo();
+    if (info.platform === 'ios' || info.platform === 'android') {
+      this.videoPlayer = CapacitorVideoPlayer;
+      console.log('mob');
+    } else {
+      console.log('web');
+      this.videoPlayer = PluginsLibrary.CapacitorVideoPlayer
+    }
+  }
+
+  async play() {
+    const res: any = await this.videoPlayer.initPlayer({ mode: 'fullscreen', url: 'https://www.youtube.com/watch?v=7T7EItoCd2E&ab_channel=ZwagandHeiz' });
+    // document.addEventListener('jeepCapVideoPlayerPlay', (e: CustomEvent) => {
+    //    console.log('Event jeepCapVideoPlayerPlay ', e.detail) }, false);
+    // document.addEventListener('jeepCapVideoPlayerPause', (e: CustomEvent) => {
+    //    console.log('Event jeepCapVideoPlayerPause ', e.detail) }, false);
+    // document.addEventListener('jeepCapVideoPlayerEnded', (e: CustomEvent) => {
+    //    console.log('Event jeepCapVideoPlayerEnded ', e.detail) }, false);
   }
 
   onPlayVideo() {
