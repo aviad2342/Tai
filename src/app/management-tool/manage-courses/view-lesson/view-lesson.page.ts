@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController, ViewDidEnter } from '@ionic/angular';
 import { Capacitor, Plugins } from '@capacitor/core';
 import { CourseService } from '../../../course/course.service';
-import { YoutubePlayerWeb } from 'capacitor-youtube-player';
+// import { YoutubePlayerWeb } from 'capacitor-youtube-player';
 import { Lesson } from '../../../course/lesson.model';
 
 
@@ -70,65 +70,65 @@ export class ViewLessonPage implements OnInit, ViewDidEnter {
   }
 
   playClass(lesson: Lesson) {
-    this.lesson = lesson;
-    this.destroyYoutubePlayerPluginWeb();
-    this.initializeYoutubePlayerPluginWeb();
-    if(lesson.lessonNumber >= this.lessons.length) {
-      this.hesNextClass = false;
-    } else {
-      this.hesNextClass = true;
-    }
-    if(lesson.lessonNumber === 1) {
-      this.hesPrevious = false;
-    } else {
-      this.hesPrevious = true;
-    }
+    // this.lesson = lesson;
+    // this.destroyYoutubePlayerPluginWeb();
+    // this.initializeYoutubePlayerPluginWeb();
+    // if(lesson.lessonNumber >= this.lessons.length) {
+    //   this.hesNextClass = false;
+    // } else {
+    //   this.hesNextClass = true;
+    // }
+    // if(lesson.lessonNumber === 1) {
+    //   this.hesPrevious = false;
+    // } else {
+    //   this.hesPrevious = true;
+    // }
   }
 
   onNextClass() {
-    this.hesPrevious = true;
-    this.lesson = this.lessons[this.lesson.lessonNumber];
-    if(this.lesson.lessonNumber === this.lessons.length) {
-      this.hesNextClass = false;
-    }
-    this.destroyYoutubePlayerPluginWeb();
-    this.initializeYoutubePlayerPluginWeb();
+    // this.hesPrevious = true;
+    // this.lesson = this.lessons[this.lesson.lessonNumber];
+    // if(this.lesson.lessonNumber === this.lessons.length) {
+    //   this.hesNextClass = false;
+    // }
+    // this.destroyYoutubePlayerPluginWeb();
+    // this.initializeYoutubePlayerPluginWeb();
   }
 
   onPreviousClass() {
-    this.hesNextClass = true;
-    this.lesson = this.lessons[this.lesson.lessonNumber - 2];
-    if(this.lesson.lessonNumber === 1) {
-      this.hesPrevious = false;
-    }
-    this.destroyYoutubePlayerPluginWeb();
-    this.initializeYoutubePlayerPluginWeb();
+    // this.hesNextClass = true;
+    // this.lesson = this.lessons[this.lesson.lessonNumber - 2];
+    // if(this.lesson.lessonNumber === 1) {
+    //   this.hesPrevious = false;
+    // }
+    // this.destroyYoutubePlayerPluginWeb();
+    // this.initializeYoutubePlayerPluginWeb();
   }
 
   ionViewDidEnter() {
-    if (Capacitor.platform === 'web') {
-      this.initializeYoutubePlayerPluginWeb();
-    } else { // Native
-      this.initializeYoutubePlayerPluginNative();
-    }
+    // if (Capacitor.platform === 'web') {
+    //   this.initializeYoutubePlayerPluginWeb();
+    // } else { // Native
+    //   // this.initializeYoutubePlayerPluginNative();
+    // }
   }
 
 
-  async initializeYoutubePlayerPluginWeb() {
-    const options = {playerId: 'youtube-player', playerSize: {width: 640, height: 360},
-    videoId: `${this.lesson.videoId}?rel=0&showinfo=0&modestbranding=1&playsinline=1&`};
-    const result  = await YoutubePlayerWeb.initialize(options);
-  }
+  // async initializeYoutubePlayerPluginWeb() {
+  //   const options = {playerId: 'youtube-player', playerSize: {width: 640, height: 360},
+  //   videoId: `${this.lesson.videoId}?rel=0&showinfo=0&modestbranding=1&playsinline=1&`};
+  //   const result  = await YoutubePlayerWeb.initialize(options);
+  // }
 
-  async destroyYoutubePlayerPluginWeb() {
-    const result = await YoutubePlayerWeb.destroy('youtube-player');
-    // console.log('destroyYoutubePlayer', result);
-  }
+  // async destroyYoutubePlayerPluginWeb() {
+  //   const result = await YoutubePlayerWeb.destroy('youtube-player');
+  //   // console.log('destroyYoutubePlayer', result);
+  // }
 
-  async initializeYoutubePlayerPluginNative() {
-    const { YoutubePlayer } = Plugins;
-    const options = {width: 640, height: 360, videoId: `${this.lesson.videoId}?rel=0&showinfo=0&modestbranding=1&playsinline=1&`};
-    const playerReady = await YoutubePlayer.initialize(options);
-  }
+  // async initializeYoutubePlayerPluginNative() {
+  //   const { YoutubePlayer } = Plugins;
+  //   const options = {width: 640, height: 360, videoId: `${this.lesson.videoId}?rel=0&showinfo=0&modestbranding=1&playsinline=1&`};
+  //   const playerReady = await YoutubePlayer.initialize(options);
+  // }
 
 }

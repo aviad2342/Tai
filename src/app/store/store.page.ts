@@ -128,19 +128,22 @@ export class StorePage implements OnInit, OnDestroy {
       this.categories = items.map(item => item.category).filter((value, index, self) => self.indexOf(value) === index);
     });
     this.cartSubscription = this.cartService.cart.subscribe(cart => {
-      if(cart) {
-        this.cart = cart;
-        this.cartItems = cart.items;
-        this.itemsAddedToCart = cart.items.length;
-      } else {
-        this.authService.getUserLogged().pipe(
-          switchMap(user => {
-          const newCart = new Cart(null, user, this.cartItems, null);
-          return this.cartService.addCart(newCart);
-        })).subscribe(newCart => {
-          this.cart = newCart;
-        });
-      }
+      this.cart = cart;
+      // if(cart) {
+      //   console.log(cart.id);
+      //   this.cart = cart;
+      //   this.cartItems = cart.items;
+      //   this.itemsAddedToCart = cart.items.length;
+      // } else {
+      //   console.log('bla');
+      //   this.authService.getUserLogged().pipe(
+      //     switchMap(user => {
+      //     const newCart = new Cart(null, user, this.cartItems, null);
+      //     return this.cartService.addCart(newCart);
+      //   })).subscribe(newCart => {
+      //     this.cart = newCart;
+      //   });
+      // }
     });
     // this.cartService.getCustomerCart(this.authService.getLoggedUserId()).subscribe(cart => {
     //   if(cart) {
@@ -188,7 +191,21 @@ export class StorePage implements OnInit, OnDestroy {
   ionViewWillEnter() {
     this.isDesktop = this.appService.isDesktop();
     this.itemService.getItems().subscribe();
-    this.cartService.getCustomerCart(this.authService.getLoggedUserId()).subscribe();
+    this.cartService.getCustomerCart(this.authService.getLoggedUserId()).subscribe(cart => {
+      if(cart) {
+        this.cart = cart;
+        this.cartItems = cart.items;
+        this.itemsAddedToCart = cart.items.length;
+      } else {
+        this.authService.getUserLogged().pipe(
+          switchMap(user => {
+          const newCart = new Cart(null, user, this.cartItems, null);
+          return this.cartService.addCart(newCart);
+        })).subscribe(newCart => {
+          this.cart = newCart;
+        });
+      }
+    });
   }
 
 

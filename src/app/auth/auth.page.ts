@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 import { LoadingController, AlertController, IonInput, IonIcon } from '@ionic/angular';
 import { AuthService } from './auth.service';
 import { NgForm, NgControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { UserLogged } from './userLogged.model';
 import { UserService } from '../user/user.service';
 import { AppService } from '../app.service';
 import { environment } from 'src/environments/environment';

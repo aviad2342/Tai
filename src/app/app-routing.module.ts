@@ -61,7 +61,7 @@ const routes: Routes = [
   },
   {
     path: 'registration',
-    loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule), canLoad: [AuthGuard]
+    loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
   },
   {
     path: 'home',

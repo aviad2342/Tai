@@ -10,11 +10,14 @@
 <ion-content fullscreen="true">
 <!------------------------------------------lesson section -------------------------------------------->
   <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="ion-text-center" *ngIf="isLoading">
+    <ion-row class="ion-justify-content-center" *ngIf="isLoading">
+      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="ion-text-center">
         <ion-spinner color="primary"></ion-spinner>
       </ion-col>
-      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="ion-text-center" *ngIf="!isLoading">
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
+      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="ion-text-center">
         <div class="course-container ion-padding">
         <ion-text>
           <h1 class="ion-no-margin">{{ lesson?.title }}</h1>
@@ -28,13 +31,7 @@
       </div>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-justify-content-center">
-      <ion-button fill="clear" class="play-btn" (click)="play()">
-        <ion-icon name="logo-youtube" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-row>
-    <div #fullscreen id="fullscreen" slot="fixed"></div>
-    <!-- <ion-row class="ion-justify-content-center" *ngIf="!isLoading && !isMobile">
+    <ion-row class="ion-justify-content-center" *ngIf="!isLoading && !isMobile">
       <div id="video-player"></div>
     </ion-row>
     <ion-row class="ion-justify-content-center">
@@ -51,6 +48,6 @@
           </ion-button>
         </div>
       </ion-col>
-    </ion-row> -->
+    </ion-row>
   </ion-grid>
 </ion-content>
