@@ -4,6 +4,7 @@ import { AlertController, NavController, Platform } from '@ionic/angular';
 import { CourseService } from '../course.service';
 import { Lesson } from '../lesson.model';
 import { Capacitor, Plugins } from '@capacitor/core';
+import { VideoPlayer } from '@ionic-native/video-player/ngx';
 // import { YoutubePlayerWeb } from 'capacitor-youtube-player';
 import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
 
@@ -26,6 +27,7 @@ export class LessonDetailPage implements OnInit {
     private navController: NavController,
     private platform: Platform,
     private youtube: YoutubeVideoPlayer,
+    private videoPlayer: VideoPlayer,
     private courseService: CourseService
     ) { }
 
@@ -72,7 +74,8 @@ export class LessonDetailPage implements OnInit {
 
 
   onPlayVideo() {
-   this.youtube.openVideo(this.lesson.videoId);
+    this.videoPlayer.play('https://www.youtube.com/watch?v=SLD9xzJ4oeU&ab_channel=TopMovieClips');
+    // this.youtube.openVideo(this.lesson.videoId);
   }
 
   getVideoThumbnail(){

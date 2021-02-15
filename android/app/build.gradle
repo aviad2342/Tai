@@ -5,7 +5,7 @@ android {
     defaultConfig {
         applicationId "com.tai.wos"
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion 26
+        targetSdkVersion targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -28,7 +28,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.appcompat:appcompat:1.2.0"
     implementation project(':capacitor-android')
-    testImplementation "junit:junit:4.13.1"
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation "androidx.test.ext:junit:1.1.2"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
     implementation project(':capacitor-cordova-android-plugins')
