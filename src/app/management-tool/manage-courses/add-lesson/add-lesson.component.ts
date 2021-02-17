@@ -14,6 +14,7 @@ export class AddLessonComponent implements OnInit {
 
   @Input() id: string;
   @Input() lessonNumber: number;
+  videoId = '';
   thumbnail = 'https://www.geirangerfjord.no/upload/images/2018_general/film-and-vid.jpg';
 
 
@@ -27,7 +28,9 @@ export class AddLessonComponent implements OnInit {
 
   onUrlChange(event) {
     if(event.detail.value && this.thumbnail !==  event.detail.value) {
-      this.thumbnail = this.getVideoThumbnail(this.getVideoID(event.detail.value));
+     this.videoId = this.getVideoID(event.detail.value);
+     console.log(this.videoId);
+      // this.thumbnail = this.getVideoThumbnail(this.getVideoID(event.detail.value));
     }
   }
 
@@ -35,16 +38,16 @@ export class AddLessonComponent implements OnInit {
     if (!form.valid) {
       return;
     }
-    const videoId =  this.getVideoID(form.value.videoURL);
+    // const videoId =  this.getVideoID(form.value.videoURL);
     const lessonToAdd = new Lesson(
       null,
-      videoId,
+      this.videoId,
       form.value.videoURL,
       this.lessonNumber,
       form.value.title,
       form.value.description,
       new Date(),
-      this.getVideoThumbnail(videoId),
+      this.thumbnail,
       this.id,
     );
     this.courseService.addLesson(lessonToAdd).subscribe(lesson => {
@@ -60,13 +63,17 @@ export class AddLessonComponent implements OnInit {
 
   getVideoID(videoURL: string){
     if(videoURL.includes('v=')) {
+      this.thumbnail = `https://img.youtube.com/vi/${videoURL.split('v=')[1].split('&')[0]}/sddefault.jpg`;
       return videoURL.split('v=')[1].split('&')[0];
     } else if(videoURL.includes('/embed/')) {
+      this.thumbnail = `https://img.youtube.com/vi/${videoURL.split('/embed/')[videoURL.split('/embed/').length - 1]}/sddefault.jpg`;
       return videoURL.split('/embed/')[videoURL.split('/embed/').length - 1];
     } else if(videoURL.includes('vimeo')) {
-      this.courseService.getVimeoVideoId(videoURL).subscribe(videoId => {
-        return videoId;
+      this.courseService.getVimeoVideoThumbnail(videoURL.replace('https://vimeo.com/', '')).subscribe(thumbnail => {
+        this.thumbnail = thumbnail;
+        // return videoURL.replace('https://vimeo.com/', '');
       });
+      return videoURL.replace('https://vimeo.com/', '');
     }
   }
 

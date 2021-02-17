@@ -15,8 +15,8 @@
     <param name="android-package" value="com.mostafa.previewanyfile.PreviewAnyFile"/>
   </feature>
 
-  <feature name="VideoPlayer">
-    <param name="android-package" value="com.moust.cordova.videoplayer.VideoPlayer"/>
+  <feature name="StreamingMedia">
+    <param name="android-package" value="com.hutchind.cordova.plugins.streamingmedia.StreamingMedia"/>
   </feature>
 
   <feature name="YoutubeVideoPlayer">

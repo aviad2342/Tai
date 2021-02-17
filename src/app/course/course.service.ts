@@ -247,11 +247,11 @@ export class CourseService {
       }));
   }
 
-  getVimeoVideoThumbnail(url: string) {
-    return this.http.get<{thumbnail_url: string}>(`http://vimeo.com/api/oembed.json?url=${url}`).
+  getVimeoVideoThumbnail(videoId: string) {
+    return this.http.get<{thumbnail_large: string}>(`https://vimeo.com/api/v2/video/${videoId}.json`).
     pipe(
       map(resData => {
-        return resData.thumbnail_url;
+        return resData[0].thumbnail_large;
       }));
   }
 

@@ -31,37 +31,19 @@
       </div>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-justify-content-center" *ngIf="!isLoading && !isMobile">
-      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="10" class="ion-text-center">
-        <vm-player 
-        theme="dark"
-        style="--vm-player-theme: #5396e2;"
-    >
-    <!-- <vm-vimeo cookies="true" video-id="336812660"></vm-vimeo> -->
-    
-    <vm-youtube cookies="false" poster="https://www.youtube.com/watch?v=SLD9xzJ4oeU" video-id="SLD9xzJ4oeU" autoplay="false"></vm-youtube>
-        <!-- <vm-video
-        cross-origin="true"
-        [poster]="lesson?.thumbnail"
-      >
-        <source 
-        data-src="https://www.youtube.com/watch?v=SLD9xzJ4oeU" 
-          type="youtube"
-        />
-        <track 
-          default 
-          kind="subtitles" 
-          src="https://media.vimejs.com/subs/english.vtt" 
-          srclang="en" 
-          label="English" 
-        />
-      </vm-video> -->
-      
-      <vm-default-ui></vm-default-ui>
-      </vm-player>
-      </ion-col>
+    <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
+        <iframe
+          [src]="sanitizer.bypassSecurityTrustResourceUrl(this?.embedVideo)"
+          frameborder="0"
+          webkitallowfullscreen
+          mozallowfullscreen
+          allowfullscreen
+          [width]="deviceWidth" 
+          [height]="deviceHeight"
+        ></iframe>
+        
     </ion-row>
-    <ion-row class="ion-justify-content-center" *ngIf="!isLoading && isMobile">
+    <!-- <ion-row class="ion-justify-content-center" *ngIf="!isLoading && isMobile">
       <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="10" class="ion-text-center">
         <div class="video-player">
           <ion-img
@@ -75,6 +57,6 @@
           </ion-button>
         </div>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
   </ion-grid>
 </ion-content>
