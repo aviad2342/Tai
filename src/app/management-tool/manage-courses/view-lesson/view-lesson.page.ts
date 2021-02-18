@@ -5,6 +5,7 @@ import { Capacitor, Plugins } from '@capacitor/core';
 import { CourseService } from '../../../course/course.service';
 // import { YoutubePlayerWeb } from 'capacitor-youtube-player';
 import { Lesson } from '../../../course/lesson.model';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 
 @Component({
@@ -16,13 +17,14 @@ export class ViewLessonPage implements OnInit, ViewDidEnter {
 
   lesson :Lesson;
   lessons :Lesson[];
+  embedVideo: SafeResourceUrl;
   isLoading = false;
   hesNextClass = false;
   hesPrevious = false;
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    public sanitizer: DomSanitizer,
     private alertController: AlertController,
     private navController: NavController,
     private courseService: CourseService
@@ -37,6 +39,7 @@ export class ViewLessonPage implements OnInit, ViewDidEnter {
       }
       this.courseService.getLesson(paramMap.get('id')).subscribe(lesson => {
             this.lesson = lesson;
+            this.embedVideo = this.getVideoUrl(lesson.videoURL);
             this.isLoading = false;
             this.courseService.getLessonsOfCourse(paramMap.get('id')).subscribe(lessons => {
               this.lessons = lessons;
@@ -69,6 +72,14 @@ export class ViewLessonPage implements OnInit, ViewDidEnter {
     });
   }
 
+  getVideoUrl(videoUrl: string) {
+    if (videoUrl.includes('youtube')) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'+ this.lesson.videoId);
+    } else if (videoUrl.includes('vimeo')) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl('https://player.vimeo.com/video/'+ this.lesson.videoId);
+    }
+  }
+
   playClass(lesson: Lesson) {
     // this.lesson = lesson;
     // this.destroyYoutubePlayerPluginWeb();
@@ -86,23 +97,21 @@ export class ViewLessonPage implements OnInit, ViewDidEnter {
   }
 
   onNextClass() {
-    // this.hesPrevious = true;
-    // this.lesson = this.lessons[this.lesson.lessonNumber];
-    // if(this.lesson.lessonNumber === this.lessons.length) {
-    //   this.hesNextClass = false;
-    // }
-    // this.destroyYoutubePlayerPluginWeb();
-    // this.initializeYoutubePlayerPluginWeb();
+    this.hesPrevious = true;
+    this.lesson = this.lessons[this.lesson.lessonNumber];
+    this.embedVideo = this.getVideoUrl(this.lesson.videoURL);
+    if(this.lesson.lessonNumber === this.lessons.length) {
+      this.hesNextClass = false;
+    }
   }
 
   onPreviousClass() {
-    // this.hesNextClass = true;
-    // this.lesson = this.lessons[this.lesson.lessonNumber - 2];
-    // if(this.lesson.lessonNumber === 1) {
-    //   this.hesPrevious = false;
-    // }
-    // this.destroyYoutubePlayerPluginWeb();
-    // this.initializeYoutubePlayerPluginWeb();
+    this.hesNextClass = true;
+    this.lesson = this.lessons[this.lesson.lessonNumber - 2];
+    this.embedVideo = this.getVideoUrl(this.lesson.videoURL);
+    if(this.lesson.lessonNumber === 1) {
+      this.hesPrevious = false;
+    }
   }
 
   ionViewDidEnter() {

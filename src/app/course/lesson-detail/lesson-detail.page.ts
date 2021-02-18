@@ -7,7 +7,7 @@ import { Capacitor, Plugins } from '@capacitor/core';
 // import { YoutubePlayerWeb } from 'capacitor-youtube-player';
 import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
 import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 
 @Component({
@@ -18,7 +18,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class LessonDetailPage implements OnInit {
 
   lesson :Lesson;
-  embedVideo = '';
+  embedVideo: SafeResourceUrl;
   isLoading = false;
   isMobile = false;
   deviceWidth: number;
@@ -97,9 +97,9 @@ export class LessonDetailPage implements OnInit {
 
   getVideoUrl(videoUrl: string) {
     if (videoUrl.includes('youtube')) {
-      return 'https://www.youtube.com/embed/'+ this.lesson.videoId;
+      return this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'+ this.lesson.videoId);
     } else if (videoUrl.includes('vimeo')) {
-      return 'https://player.vimeo.com/video/'+ this.lesson.videoId;
+      return this.sanitizer.bypassSecurityTrustResourceUrl('https://player.vimeo.com/video/'+ this.lesson.videoId);
     }
   }
 

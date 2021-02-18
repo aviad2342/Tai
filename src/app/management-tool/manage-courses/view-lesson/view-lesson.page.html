@@ -51,7 +51,17 @@
       </ion-col>
       <ion-col size="7" size-xl="7" size-lg="7" size-md="7" size-sm="7" *ngIf="!isLoading">
         <div class="video-player-panel">
-          <div id="youtube-player"></div>
+          <iframe
+          [src]="this?.embedVideo"
+          frameborder="0"
+          allow="autoplay; encrypted-media"
+          allowfullscreen="true"
+          webkitallowfullscreen="true"
+          mozallowfullscreen="true"
+          msallowfullscreen="true"
+          style="height: 360px; width: 639px; margin-top: 47px; border-radius: 5px;"
+        ></iframe>
+          <!-- <div id="youtube-player"></div> -->
         </div>
           <ion-row class="row-arrow-buttons">
             <ion-col>

@@ -32,16 +32,29 @@
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
-        <iframe
+        <!-- <iframe
           [src]="sanitizer.bypassSecurityTrustResourceUrl(this?.embedVideo)"
           frameborder="0"
-          webkitallowfullscreen
-          mozallowfullscreen
-          allowfullscreen
+          allow="autoplay; encrypted-media"
+          allowfullscreen="true"
+          webkitallowfullscreen="true"
+          mozallowfullscreen="true"
+          msallowfullscreen="true"
+          [width]="deviceWidth" 
+          [height]="deviceHeight"
+        ></iframe> -->
+
+        <iframe
+          [src]="this?.embedVideo"
+          frameborder="0"
+          allow="autoplay; encrypted-media"
+          allowfullscreen="true"
+          webkitallowfullscreen="true"
+          mozallowfullscreen="true"
+          msallowfullscreen="true"
           [width]="deviceWidth" 
           [height]="deviceHeight"
         ></iframe>
-        
     </ion-row>
     <!-- <ion-row class="ion-justify-content-center" *ngIf="!isLoading && isMobile">
       <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="10" class="ion-text-center">
