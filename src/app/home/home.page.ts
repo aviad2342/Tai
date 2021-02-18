@@ -60,6 +60,11 @@ export class HomePage implements OnInit, OnDestroy {
   ionViewWillEnter() {
     this.isDesktop = this.appService.isDesktop();
     this.homeService.getUpdates().subscribe();
+    this.sliderOne = {
+      isBeginningSlide: true,
+      isEndSlide: false,
+      slidesItems: this.updates
+    };
   }
 
   ngOnDestroy() {
