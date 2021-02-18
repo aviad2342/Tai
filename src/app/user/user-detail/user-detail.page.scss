@@ -21,9 +21,14 @@ ion-card-header {
   padding-top: 10px;
 }
 
+ion-card-content {
+  color: var(--ion-color-dark);
+}
+
 ion-card-title {
   font-family: 'Hofesh';
   font-size: xx-large;
+  color: var(--ion-color-dark);
 }
 
 ion-item {
