@@ -48,7 +48,9 @@
     <ion-row class="ion-justify-content-center" *ngIf="!articleIsLoading && isMobile">
       <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="8" class="ion-text-center">
         <pdf-viewer [src]="article?.pdf" 
-              [original-size]="false"
+              [render-text]="true"
+              [render-text-mode]="2"
+              [original-size]="true"
               [zoom]="1"
               [zoom-scale]="'page-fit'"
               [fit-to-page]="false"
