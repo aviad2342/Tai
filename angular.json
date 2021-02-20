@@ -28,7 +28,7 @@
             , "core-js/modules/es.reflect.apply", "core-js/modules/es.reflect.get-prototype-of", "raf", "@babel/runtime/helpers/slicedToArray"
             , "@babel/runtime/helpers/possibleConstructorReturn", "@babel/runtime/helpers/inherits", "@babel/runtime/helpers/toConsumableArray"
             , "@babel/runtime/helpers/get", "@babel/runtime/regenerator", "hammerjs", "core-js/modules/es.array.map", "lodash"
-            , "core-js/modules/es.reflect.construct", "pako", "ng2-pdf-viewer", "@vime/core"],
+            , "core-js/modules/es.reflect.construct", "pako", "ng2-pdf-viewer", "@vime/core", "pdfjs-dist/es5/build/pdf", "pdfjs-dist/es5/web/pdf_viewer"],
             "aot": true,
             "outputPath": "www",
             "index": "src/index.html",

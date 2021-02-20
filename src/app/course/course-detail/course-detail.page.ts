@@ -12,6 +12,7 @@ import { CourseService } from '../course.service';
 export class CourseDetailPage implements OnInit {
 
   course :Course;
+  activeUrl = '';
   isLoading = false;
 
   constructor(
@@ -23,6 +24,7 @@ export class CourseDetailPage implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.activeUrl = this.router.url;
     this.isLoading = true;
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
@@ -34,6 +36,7 @@ export class CourseDetailPage implements OnInit {
             this.isLoading = false;
           },
           error => {
+            if (this.router.isActive(this.activeUrl, false)) {
             this.alertController
               .create({
                 header: 'ישנה תקלה!',
@@ -42,12 +45,15 @@ export class CourseDetailPage implements OnInit {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.navController.navigateBack('/tabs/course');
+                      if (this.router.isActive(this.activeUrl, false)) {
+                        this.navController.navigateBack('/tabs/course');
+                      }
                     }
                   }
                 ]
               })
               .then(alertEl => alertEl.present());
+            }
           }
         );
     });

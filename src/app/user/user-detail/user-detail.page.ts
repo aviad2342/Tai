@@ -14,6 +14,8 @@ import { User } from '../user.model';
 export class UserDetailPage implements OnInit, OnDestroy {
 
   user: User;
+  activeUrl = '';
+  isLoading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,6 +26,8 @@ export class UserDetailPage implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
+    this.activeUrl = this.router.url;
+    this.isLoading = true;
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
         this.navController.navigateBack('/tabs/user');
@@ -31,22 +35,27 @@ export class UserDetailPage implements OnInit, OnDestroy {
       }
       this.userService.getUser(paramMap.get('id')).subscribe(user => {
             this.user = user;
+            this.isLoading = false;
           },
           error => {
+            if (this.router.isActive(this.activeUrl, false)) {
             this.alertController
               .create({
                 header: 'An error ocurred!',
                 message: 'Could not load place.',
                 buttons: [
                   {
-                    text: 'Okay',
+                    text: 'אישור',
                     handler: () => {
-                      this.navController.navigateBack('/tabs/user');
+                      if (this.router.isActive(this.activeUrl, false)) {
+                        this.navController.navigateBack('/tabs/user');
+                      }
                     }
                   }
                 ]
               })
               .then(alertEl => alertEl.present());
+            }
           }
         );
     });

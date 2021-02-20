@@ -120,7 +120,7 @@ export class EditArticlePage implements OnInit, OnDestroy {
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי המאמר לא נשמרו', false);
-      this.navCtrl.navigateBack('/tabs/article');
+      // this.navCtrl.navigateBack('/tabs/article');
     });
 
     } else {

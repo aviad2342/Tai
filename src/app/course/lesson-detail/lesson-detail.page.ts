@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController, Platform } from '@ionic/angular';
 import { CourseService } from '../course.service';
 import { Lesson } from '../lesson.model';
@@ -18,6 +18,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class LessonDetailPage implements OnInit {
 
   lesson :Lesson;
+  activeUrl = '';
   embedVideo: SafeResourceUrl;
   isLoading = false;
   isMobile = false;
@@ -41,6 +42,7 @@ export class LessonDetailPage implements OnInit {
     private alertController: AlertController,
     private navController: NavController,
     private platform: Platform,
+    private router: Router,
     public sanitizer: DomSanitizer,
     private youtube: YoutubeVideoPlayer,
     private streamingMedia: StreamingMedia,
@@ -48,6 +50,7 @@ export class LessonDetailPage implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.activeUrl = this.router.url;
     this.isMobile = this.platform.is('mobile');
     this.isLoading = true;
     this.deviceWidth = (this.platform.width() > 650 )? 650 : this.platform.width();
@@ -68,6 +71,7 @@ export class LessonDetailPage implements OnInit {
             }
           },
           error => {
+            if (this.router.isActive(this.activeUrl, false)) {
             this.alertController
               .create({
                 header: 'ישנה תקלה!',
@@ -76,13 +80,16 @@ export class LessonDetailPage implements OnInit {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.isLoading = true;
-                      this.navController.navigateBack('/tabs/course');
+                      if (this.router.isActive(this.activeUrl, false)) {
+                        this.isLoading = true;
+                        this.navController.navigateBack('/tabs/course');
+                      }
                     }
                   }
                 ]
               })
               .then(alertEl => alertEl.present());
+            }
           }
         );
 

@@ -58,7 +58,7 @@
     "jspdf": "^2.1.1",
     "lodash": "^4.17.20",
     "mammoth": "^1.4.16",
-    "ng2-pdf-viewer": "^6.3.2",
+    "ng2-pdf-viewer": "^6.4.0",
     "ngx-doc-viewer": "^1.4.0",
     "ngx-dropzone": "^2.2.2",
     "ngx-image-gallery": "^2.0.5",

@@ -7,7 +7,7 @@ import { AuthService } from '../../auth/auth.service';
 import { Article } from '../article.model';
 import { Comment } from '../comment.model';
 import { AppService } from '../../app.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 
 
@@ -20,6 +20,8 @@ import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 export class ArticleDetailPage implements OnInit {
 
   article: Article;
+  activeUrl = '';
+  articlePdf: SafeResourceUrl;
   @ViewChild(IonContent) content: IonContent;
   addComment = false;
   isLoading = false;
@@ -33,6 +35,7 @@ export class ArticleDetailPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private platform: Platform,
+    private router: Router,
     private previewAnyFile: PreviewAnyFile,
     private alertController: AlertController,
     private articleService: ArticleService,
@@ -43,6 +46,7 @@ export class ArticleDetailPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.activeUrl = this.router.url;
     this.isMobile = this.platform.is('mobile');
     this.articleIsLoading = true;
     this.route.paramMap.subscribe(paramMap => {
@@ -52,9 +56,11 @@ export class ArticleDetailPage implements OnInit {
       }
       this.articleService.viewArticle(paramMap.get('id')).subscribe(article => {
         this.article = article;
+        this.articlePdf = this.sanitizer.bypassSecurityTrustResourceUrl(article.pdf);
         this.articleIsLoading = false;
       },
         error => {
+          if (this.router.isActive(this.activeUrl, false)) {
           this.alertController
             .create({
               header: 'ישנה תקלה!',
@@ -63,16 +69,18 @@ export class ArticleDetailPage implements OnInit {
                 {
                   text: 'אישור',
                   handler: () => {
-                    this.navController.navigateBack('/tabs/article');
+                    if (this.router.isActive(this.activeUrl, false)) {
+                      this.navController.navigateBack('/tabs/article');
+                    }
                   }
                 }
               ]
             })
             .then(alertEl => alertEl.present());
+          }
         }
       );
     });
-
   }
 
   onViewArticle() {

@@ -12,6 +12,7 @@ import { Event } from '../event.model';
 export class EventDetailPage implements OnInit {
 
   event: Event;
+  activeUrl = '';
   isLoading = false;
 
   speakerSlideOptions = {
@@ -30,6 +31,7 @@ export class EventDetailPage implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.activeUrl = this.router.url;
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
         this.navController.navigateBack('/tabs/event');
@@ -41,6 +43,7 @@ export class EventDetailPage implements OnInit {
             this.isLoading = false;
           },
           error => {
+            if (this.router.isActive(this.activeUrl, false)) {
             this.alertController
               .create({
                 header: 'ישנה תקלה!',
@@ -49,12 +52,16 @@ export class EventDetailPage implements OnInit {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.navController.navigateBack('/tabs/event');
+                      if (this.router.isActive(this.activeUrl, false)) {
+                        this.isLoading = true;
+                        this.navController.navigateBack('/tabs/event');
+                      }
                     }
                   }
                 ]
               })
               .then(alertEl => alertEl.present());
+            }
           }
         );
     });
