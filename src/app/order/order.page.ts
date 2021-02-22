@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, AnimationController } from '@ionic/angular';
+import { AlertController, AnimationController, NavController } from '@ionic/angular';
 import { AppService } from '../app.service';
 import { AuthService } from '../auth/auth.service';
 import { CartService } from '../cart/cart.service';
@@ -28,6 +28,7 @@ import { OrderService } from './order.service';
 export class OrderPage implements OnInit {
 
   order: Order;
+  activeUrl = '';
   coupon: Coupon;
   address: DeliveryAddress = new DeliveryAddress();
   @ViewChild('f', { static: true }) form: NgForm;
@@ -50,6 +51,7 @@ export class OrderPage implements OnInit {
     private cartService: CartService,
     private route: ActivatedRoute,
     private router: Router,
+    private navController: NavController,
     private alertController: AlertController,
     private couponService: CouponService,
     private orderService: OrderService,
@@ -59,10 +61,11 @@ export class OrderPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.activeUrl = this.router.url;
     this.isLoading = true;
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
-        this.router.navigate(['/tabs/store']);
+        this.navController.navigateBack('/tabs/store');
         return;
       }
       this.orderService.getOrder(paramMap.get('id')).subscribe(order => {
@@ -87,6 +90,7 @@ export class OrderPage implements OnInit {
             }
           },
           error => {
+            if (this.router.isActive(this.activeUrl, false)) {
             this.alertController
               .create({
                 header: 'ישנה תקלה!',
@@ -95,12 +99,15 @@ export class OrderPage implements OnInit {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.router.navigate(['/tabs/store']);
+                      if (this.router.isActive(this.activeUrl, false)) {
+                        this.navController.navigateBack('/tabs/store');
+                      }
                     }
                   }
                 ]
               })
               .then(alertEl => alertEl.present());
+            }
           }
         );
     });

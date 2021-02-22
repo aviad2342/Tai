@@ -1,12 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
 import { AppService } from '../app.service';
 import { Address } from '../shared/address.model';
 import { User } from '../user/user.model';
 import { UserService } from '../user/user.service';
 import * as utility from '../utilities/functions';
+import { Registered } from './registered.model';
+import { RegistrationService } from './registration.service';
 
 @Component({
   selector: 'app-registration',
@@ -23,7 +26,8 @@ export class RegistrationPage implements OnInit {
 
   constructor(
     private router: Router,
-    private userService: UserService,
+    private navController: NavController,
+    private registrationService: RegistrationService,
     public appService: AppService
     ) { }
 
@@ -65,10 +69,10 @@ export class RegistrationPage implements OnInit {
       this.imageIsValid = false;
       return;
     }
-    this.userService.uploadImage(this.file, form.value.email)
+    this.registrationService.uploadImage(this.file, form.value.email)
     .pipe(
       switchMap(uploadRes => {
-        const userToAdd = new User(
+        const userToRegister = new Registered(
           null,
           form.value.firstName,
           form.value.lastName,
@@ -82,16 +86,21 @@ export class RegistrationPage implements OnInit {
           this.address.houseNumber,
           this.address.apartment,
           this.address.entry,
-          uploadRes.imageUrl
+          uploadRes.imageUrl,
+          new Date(),
+          null,
+          null,
+          false,
+          false
         );
-        return this.userService.addUser(userToAdd);
+        return this.registrationService.registerUser(userToRegister);
       })
     ).subscribe(() => {
-      this.appService.presentToast('המשתמש נשמר בהצלחה', true);
-      this.router.navigate(['/auth']);
+      this.appService.presentToast('נרשמת בהצלחה, מייל ישלח אליך להפעלת החשבון.', true);
+      this.navController.navigateBack('/auth');
     }, error => {
       form.reset();
-      this.appService.presentToast('חלה תקלה פרטי המשתמש לא נשמרו', false);
+      this.appService.presentToast('חלה תקלה ההרשמה נכשלה!', false);
     }
     );
   }
