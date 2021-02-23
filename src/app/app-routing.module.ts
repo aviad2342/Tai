@@ -66,6 +66,10 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule), canLoad: [AuthGuard]
+  },
+  {
+    path: 'verification',
+    loadChildren: () => import('./verification/verification.module').then( m => m.VerificationPageModule)
   }
 ];
 @NgModule({

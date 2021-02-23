@@ -5,6 +5,17 @@ import { switchMap, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Registered } from './registered.model';
 
+export interface AuthResponseData {
+  id: string;
+  firstName: string;
+  lastName: string;
+  verified: boolean;
+  alreadyVerified: boolean;
+  userSaved: boolean;
+  UpdateRegisteredUser: boolean;
+  notRegistered: boolean;
+}
+
 const LOCALHOST = environment.LOCALHOST;
 
 @Injectable({
@@ -29,6 +40,13 @@ export class RegistrationService {
 
   getRegisteredUser(id: string) {
     return this.http.get<Registered>(`http://${LOCALHOST}:3000/api/register/user/${id}`)
+    .pipe(tap(resDta => {
+      return resDta;
+    }));
+  }
+
+  verifyRegisteredUser(token: string) {
+    return this.http.get<AuthResponseData>(`http://${LOCALHOST}:3000/api/register/verify/${token}`)
     .pipe(tap(resDta => {
       return resDta;
     }));
