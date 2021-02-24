@@ -9,6 +9,7 @@ export interface AuthResponseData {
   id: string;
   firstName: string;
   lastName: string;
+  success: boolean;
   verified: boolean;
   alreadyVerified: boolean;
   userSaved: boolean;
