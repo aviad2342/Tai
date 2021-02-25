@@ -33,12 +33,13 @@
 
     <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
       <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="ion-text-center" >
+        <!-- <a href="intent://scan/#Intent;scheme=com.tai.wos;package=com.tai.wos;end">Click this link to launch you app from web</a> -->
         <ion-button 
               class="authentication-button"
+              [href]="moveToAuthPageRef"
               type="submit"
               fill="clear"
               expand="block"
-              (click)="onMoveToAuthPage()"
               >המשך להתחברות 
               <ion-icon slot="start" src="../../assets/icon/authentication.svg"></ion-icon>
               <ion-icon slot="end" size="small" name="arrow-forward"></ion-icon></ion-button>

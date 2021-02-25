@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
 import { AuthResponseData, RegistrationService } from '../registration/registration.service';
-import { Plugins } from '@capacitor/core';
 
-const { App } = Plugins;
 
 @Component({
   selector: 'app-verification',
@@ -17,6 +15,7 @@ export class VerificationPage implements OnInit {
   isLoading = false;
   verificationSuccess = false;
   verificationMassage = '';
+  moveToAuthPageRef = '';
 
   constructor(
     private router: Router,
@@ -27,6 +26,11 @@ export class VerificationPage implements OnInit {
     ) { }
 
   ngOnInit() {
+    if(this.platform.is('mobile')) {
+      this.moveToAuthPageRef = 'intent://scan/#Intent;scheme=com.tai.wos;package=com.tai.wos;end';
+    } else {
+      this.moveToAuthPageRef = '/auth';
+    }
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('token')) {
         this.navController.navigateRoot('/auth');
@@ -57,10 +61,7 @@ export class VerificationPage implements OnInit {
 
   async onMoveToAuthPage() {
     if(this.platform.is('mobile')) {
-      const canOpen = await App.canOpenUrl({ url: 'com.tai.wos' });
-      if(canOpen) {
-        await App.openUrl({ url: 'com.tai.wos' });
-      }
+        // this.navController.navigateRoot('intent://scan/#Intent;scheme=com.tai.wos;package=com.tai.wos;end');
     } else {
       this.navController.navigateRoot('/auth');
     }
