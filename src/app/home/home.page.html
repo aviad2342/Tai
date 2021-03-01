@@ -8,14 +8,5 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides class="update-slides ion-no-margin" [options]="slideOpts" *ngIf="updates">
-    <ion-slide *ngFor="let update of updates">
-      <a class="update-text" href="#" >{{ update.description }} </a>
-    </ion-slide>
-  </ion-slides>
-
-<!-- <div class="marquee">
-  <span><a class="ion-padding-end" *ngFor="let update of updates" href="#" >{{ update.description }} </a></span>
-</div> -->
-
+  <app-home-updates></app-home-updates>
 </ion-content>

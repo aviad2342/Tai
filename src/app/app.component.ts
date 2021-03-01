@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { Plugins, Capacitor, AppState } from '@capacitor/core';
-import { Router } from '@angular/router';
+import { Router, RouterEvent } from '@angular/router';
 import { AuthService } from './auth/auth.service';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -18,6 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private authSubscription: Subscription;
   private previousAuthState = false;
+  selectedPath = '';
 
   constructor(
     private platform: Platform,
@@ -27,6 +28,11 @@ export class AppComponent implements OnInit, OnDestroy {
     // private statusBar: StatusBar
   ) {
     this.initializeApp();
+    this.router.events.subscribe((event: RouterEvent) => {
+      if (event && event.url) {
+        this.selectedPath = event.url;
+      }
+    });
   }
 
   initializeApp() {

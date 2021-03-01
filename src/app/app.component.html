@@ -13,43 +13,43 @@
     <ion-content>
       <ion-list>
         <ion-menu-toggle auto-hide="false">
-          <ion-item lines="none" routerLink="/home">
+          <ion-item lines="none" routerLink="/home" [class.active-item]="selectedPath.startsWith('/home')">
             <ion-icon class="ion-no-margin menu-icon" size="large" name="home-outline" slot="start"></ion-icon>
             <ion-label class="app-side-menu-label">בית</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle auto-hide="false">
-          <ion-item lines="none" routerLink="/event">
+          <ion-item lines="none" routerLink="/event" [class.active-item]="selectedPath.startsWith('/event')">
             <ion-icon class="ion-no-margin menu-icon" size="large" name="today-outline" slot="start"></ion-icon>
             <ion-label class="app-side-menu-label">אירועים</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle auto-hide="false">
-          <ion-item lines="none" routerLink="/user">
+          <ion-item lines="none" routerLink="/user" [class.active-item]="selectedPath.startsWith('/user')">
             <ion-icon class="ion-no-margin menu-icon" size="large" name="people-outline" slot="start"></ion-icon>
             <ion-label class="app-side-menu-label">משתמשים</ion-label>
           </ion-item>
         </ion-menu-toggle>
       <ion-menu-toggle auto-hide="false">
-        <ion-item lines="none" routerLink="/store">
+        <ion-item lines="none" routerLink="/store" [class.active-item]="selectedPath.startsWith('/store')">
           <ion-icon class="ion-no-margin menu-icon" size="large" name="pricetags-outline" slot="start"></ion-icon>
           <ion-label class="app-side-menu-label">חנות</ion-label>
         </ion-item>
       </ion-menu-toggle>
     <ion-menu-toggle auto-hide="false">
-      <ion-item lines="none" routerLink="/article">
+      <ion-item lines="none" routerLink="/article" [class.active-item]="selectedPath.startsWith('/article')">
         <ion-icon class="ion-no-margin menu-icon" size="large" name="newspaper-outline" slot="start"></ion-icon>
         <ion-label class="app-side-menu-label">מאמרים</ion-label>
       </ion-item>
     </ion-menu-toggle>
     <ion-menu-toggle auto-hide="false">
-      <ion-item lines="none" routerLink="/course">
+      <ion-item lines="none" routerLink="/course" [class.active-item]="selectedPath.startsWith('/course')">
         <ion-icon class="custom-online-course ion-no-margin menu-icon" size="large" slot="start"></ion-icon>
         <ion-label class="app-side-menu-label">קורסים</ion-label>
       </ion-item>
     </ion-menu-toggle>
     <ion-menu-toggle auto-hide="false">
-      <ion-item lines="none" routerLink="/manage">
+      <ion-item lines="none" routerLink="/manage" [class.active-item]="selectedPath.startsWith('/manage')">
         <ion-icon class="custom-management ion-no-margin menu-icon" size="large" slot="start"></ion-icon>
         <ion-label class="app-side-menu-label">כלי ניהול</ion-label>
       </ion-item>
