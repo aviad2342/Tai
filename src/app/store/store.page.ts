@@ -26,6 +26,8 @@ export class StorePage implements OnInit, OnDestroy {
   cart: Cart;
   customer: Customer;
   isLoading = false;
+  didAddItem = false;
+  badgeColor = 'danger';
   private itemsSubscription: Subscription;
   private cartSubscription: Subscription;
   isDesktop: boolean;
@@ -170,6 +172,12 @@ export class StorePage implements OnInit, OnDestroy {
 
 
   onItemAddedToCart(item: Item) {
+    this.didAddItem = true;
+    this.badgeColor = 'success';
+    setTimeout(()=>{
+      this.didAddItem = false;
+      this.badgeColor = 'danger';
+    }, 3000)
     const cartItem: CartItem = item;
     cartItem.itemId = item.id;
     cartItem.units = 1;

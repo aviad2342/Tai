@@ -14,6 +14,7 @@ import { NumberPickerComponent } from './pickers/number-picker/number-picker.com
 import { AddressDetailsPickerComponent } from './pickers/address-details-picker/address-details-picker.component';
 import { AddressFinderComponent } from './pickers/address-finder/address-finder.component';
 import { AddressFormPickerComponent } from './pickers/address-form-picker/address-form-picker.component';
+import { NgxIonicImageViewerModule } from 'ngx-ionic-image-viewer';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,15 @@ import { AddressFormPickerComponent } from './pickers/address-form-picker/addres
     AddressFinderComponent,
     AddressFormPickerComponent
   ],
-  imports: [CommonModule, IonicModule, IonicSelectableModule, FormsModule, NgxDropzoneModule, AutoCompleteModule],
+  imports: [
+      CommonModule,
+      IonicModule,
+      IonicSelectableModule,
+      FormsModule,
+      NgxDropzoneModule,
+      AutoCompleteModule,
+      NgxIonicImageViewerModule
+    ],
   exports: [
     ImagePickerComponent,
     AddressPickerComponent,

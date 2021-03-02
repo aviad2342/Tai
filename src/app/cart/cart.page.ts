@@ -106,6 +106,7 @@ export class CartPage implements OnInit {
         this.cartIsEmpty = true;
       }
     this.updateTotalOrder();
+    this.appService.presentToast('המוצר הוסר בהצלחה', true);
     }, error => {
       this.appService.presentToast('חלה תקלה לא ניתן למחוק את המוצר! נסה שנית מאוחר יותר', false);
     });

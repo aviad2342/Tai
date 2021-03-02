@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, ModalController } from '@ionic/angular';
+import { ViewerModalComponent } from 'ngx-ionic-image-viewer';
 
 @Component({
   selector: 'app-gallery',
@@ -23,7 +24,9 @@ export class GalleryComponent implements OnInit {
     autoplay: true
   };
 
-  constructor() { }
+  constructor(
+    public modalController: ModalController
+  ) { }
 
   ngOnInit() {
     this.sliderOne = {
@@ -56,5 +59,19 @@ export class GalleryComponent implements OnInit {
       slideView.isEnd().then((istrue) => {
         object.isEndSlide = istrue;
       });
+    }
+
+    async ViewImage(image: string) {
+      const modal = await this.modalController.create({
+        component: ViewerModalComponent,
+        componentProps: {
+          src: image,
+          scheme: 'dark'
+        },
+        cssClass: 'ion-img-viewer',
+        keyboardClose: true,
+        showBackdrop: true
+      });
+      return await modal.present();
     }
 }
