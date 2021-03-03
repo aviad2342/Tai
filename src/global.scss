@@ -789,5 +789,12 @@ ion-icon {
       mask-image: url(./assets/icon/writing.svg);
     }
 
+    &[class*="custom-discount"] {
+      mask-image: url(./assets/icon/discount.svg);
+    }
+
+    &[class*="toolbar-discount-icon"] {
+      mask-image: url(./assets/icon/discount.svg);
+    }
   
   }

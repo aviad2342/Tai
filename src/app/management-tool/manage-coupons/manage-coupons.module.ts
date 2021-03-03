@@ -4,21 +4,19 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ManageItemsPageRoutingModule } from './manage-items-routing.module';
+import { ManageCouponsPageRoutingModule } from './manage-coupons-routing.module';
 
-import { ManageItemsPage } from './manage-items.page';
+import { ManageCouponsPage } from './manage-coupons.page';
 import { NgxDatatableModule } from 'projects/swimlane/ngx-datatable/src/public-api';
-import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ManageItemsPageRoutingModule,
-    NgxDatatableModule,
-    SharedModule
+    ManageCouponsPageRoutingModule,
+    NgxDatatableModule
   ],
-  declarations: [ManageItemsPage]
+  declarations: [ManageCouponsPage]
 })
-export class ManageItemsPageModule {}
+export class ManageCouponsPageModule {}

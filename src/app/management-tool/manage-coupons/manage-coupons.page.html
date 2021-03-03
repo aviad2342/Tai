@@ -1,0 +1,119 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button class="app-back-btn" text="חזרה" [defaultHref]="['/', 'manage']"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="app-titles">ניהול קופונים</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <!---------------------------------- Action Buttons -------------------------------------------------->
+        <ion-row>
+          <ion-col>
+            <ion-button color="primary" (click)="onAddCoupon()">
+            <ion-icon class="custom-online-course" slot="start"></ion-icon>
+            <ion-label class="app-crud-btn-label">הוסף</ion-label>
+          </ion-button>
+    
+          <ion-button color="secondary" (click)="onViewCoupon()" [disabled]="!isRowSelected">
+            <ion-icon name="eye-outline" slot="start"></ion-icon>
+            <ion-label class="app-crud-btn-label">פרטים</ion-label>
+          </ion-button>
+    
+          <ion-button color="warning" (click)="onEditCoupon()" [disabled]="!isRowSelected">
+            <ion-icon name="create-outline" slot="start"></ion-icon>
+            <ion-label class="app-crud-btn-label">ערוך</ion-label>
+          </ion-button>
+    
+          <ion-button color="danger" (click)="onDeleteCoupon()" [disabled]="!isRowSelected">
+            <ion-icon name="trash-outline" slot="start"></ion-icon>
+            <ion-label class="app-crud-btn-label">מחק</ion-label>
+          </ion-button>
+    
+          </ion-col>
+        </ion-row>
+    <!---------------------------------- filtering inputs -------------------------------------------------->
+        <ion-row>    
+          <ion-col size="12" size-xl="4" size-lg="4" size-md="6" size-sm="8" class="ion-padding-end">
+            <ion-segment color="dark" value="all" mode="ios" (ionChange)="filterValidCoupons($event)">
+              <ion-segment-button class="filter-coupons-segment-button" value="all">
+                <ion-label class="segment-label">הצג את כל הקופונים</ion-label>
+              </ion-segment-button>
+              <ion-segment-button class="filter-coupons-segment-button" value="valid">
+                <ion-label class="segment-label">הצג קופונים בתוקף</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+    
+        </ion-row>
+    <!------------------------------------------ courses datatable -------------------------------------------------->
+        <ion-row>
+          
+          <ngx-datatable
+          #itemsTable
+          [rows]="coupons"
+          class="bootstrap"
+          [rowHeight]="'auto'"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [messages]="{emptyMessage:'אין נתונים להצגה', totalMessage: 'total', selectedMessage: 'selected'}"
+          [limit]="50"
+          [columnMode]="columnMode.standard"
+          [selected]="selected"
+          [selectionType]="SelectionType.single"
+          [sorts]="[{ prop: 'category', dir: 'aesc' }]"
+          (activate)="onActivate($event)"
+          (select)="onSelect($event)"
+        >
+        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="code" [width]="150" [resizeable]="false">
+          <ng-template let-column="column" ngx-datatable-header-template><strong>קוד קופון</strong></ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="date" [sortable]="true" [width]="150" [resizeable]="false">
+          <ng-template let-column="column" ngx-datatable-header-template><strong>תאריך הוספה</strong></ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ row['date'] | date }}
+          </ng-template>
+        </ngx-datatable-column> 
+
+        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="expirationDate" [sortable]="true" [width]="150" [resizeable]="false">
+          <ng-template let-column="column" ngx-datatable-header-template><strong>בתוקף עד</strong></ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ row['expirationDate'] | date }}
+          </ng-template>
+        </ngx-datatable-column> 
+    
+        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="quantity" [width]="120" [resizeable]="false">
+          <ng-template let-column="column" ngx-datatable-header-template><strong>יתרה לניצול</strong></ng-template>
+        </ngx-datatable-column>
+    
+          <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="discount" [sortable]="true" [width]="120" [resizeable]="false">
+            <ng-template let-column="column" ngx-datatable-header-template><strong>אחוז הנחה</strong></ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ row['discount'] | percent:'1.0' }}
+            </ng-template>
+          </ngx-datatable-column> 
+    
+          <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="singleItem" [width]="220" [resizeable]="false">
+            <ng-template let-column="column" ngx-datatable-header-template><strong>סוג</strong></ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ row['singleItem'] ? 'מוצר בודד' : 'כל ההזמנה' }}
+            </ng-template>
+          </ngx-datatable-column>
+    
+          <ngx-datatable-footer #datatableFooter>
+            <ng-template ngx-datatable-footer-template 
+            let-rowCount="rowCount"
+            let-selectedCount="selectedCount"
+            >
+            <div>&nbsp;נבחר {{ selectedCount }}  מתוך {{ rowCount }} קופונים </div>
+            </ng-template>
+          </ngx-datatable-footer>
+        </ngx-datatable>
+    
+        </ion-row>
+    
+      </ion-grid>
+</ion-content>

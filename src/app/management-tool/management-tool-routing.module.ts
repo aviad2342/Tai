@@ -43,6 +43,10 @@ const routes: Routes = [
   {
     path: 'customers',
     loadChildren: () => import('./manage-customers/manage-customers.module').then( m => m.ManageCustomersPageModule)
+  },
+  {
+    path: 'coupons',
+    loadChildren: () => import('./manage-coupons/manage-coupons.module').then( m => m.ManageCouponsPageModule)
   }
 ];
 

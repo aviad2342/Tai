@@ -116,11 +116,11 @@ export class CartPage implements OnInit {
     this.couponService.getCoupon(this.couponCode).subscribe(coupon => {
       if(coupon) {
         this.coupon = coupon;
-        if(coupon.customers.includes(this.authService.getLoggedUserId())) {
-          this.appService.presentToast('הקופון נוצל בעבר!', false);
-          this.couponCode = '';
-          return;
-        }
+        // if(coupon.customers.includes(this.authService.getLoggedUserId())) {
+        //   this.appService.presentToast('הקופון נוצל בעבר!', false);
+        //   this.couponCode = '';
+        //   return;
+        // }
         if(coupon.expirationDate < new Date()) {
           this.appService.presentToast('פג תוקופו של קופון זה!', false);
           this.couponCode = '';
