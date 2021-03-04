@@ -3,10 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController, Platform } from '@ionic/angular';
 import { CourseService } from '../course.service';
 import { Lesson } from '../lesson.model';
-import { Capacitor, Plugins } from '@capacitor/core';
-// import { YoutubePlayerWeb } from 'capacitor-youtube-player';
-import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
-import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 
@@ -24,13 +20,6 @@ export class LessonDetailPage implements OnInit {
   isMobile = false;
   deviceWidth: number;
   deviceHeight: number;
-  options: StreamingVideoOptions = {
-    successCallback: () => { console.log('Video played') },
-    errorCallback: (e) => { console.log('Error streaming') },
-    orientation: 'landscape',
-    shouldAutoClose: true,
-    controls: false
-  };
   @HostListener('window:resize', ['$event'])
      onResize(event) {
       this.deviceWidth = (this.platform.width() > 650 )? 650 : this.platform.width();
@@ -44,8 +33,6 @@ export class LessonDetailPage implements OnInit {
     private platform: Platform,
     private router: Router,
     public sanitizer: DomSanitizer,
-    private youtube: YoutubeVideoPlayer,
-    private streamingMedia: StreamingMedia,
     private courseService: CourseService
     ) { }
 
@@ -64,11 +51,6 @@ export class LessonDetailPage implements OnInit {
             this.lesson = lesson;
             this.embedVideo = this.getVideoUrl(lesson.videoURL);
             this.isLoading = false;
-            if (Capacitor.platform === 'web') {
-              // this.initializeYoutubePlayerPluginWeb();
-            } else { // Native
-              // this.initializeYoutubePlayerPluginNative();
-            }
           },
           error => {
             if (this.router.isActive(this.activeUrl, false)) {
@@ -97,10 +79,6 @@ export class LessonDetailPage implements OnInit {
   }
 
 
-  onPlayVideo() {
-    this.streamingMedia.playVideo('http://clips.vorwaerts-gmbh.de/VfE_html5.mp4', this.options);
-    // this.youtube.openVideo(this.lesson.videoId);
-  }
 
   getVideoUrl(videoUrl: string) {
     if (videoUrl.includes('youtube')) {
@@ -113,23 +91,6 @@ export class LessonDetailPage implements OnInit {
   getVideoThumbnail(){
     return `https://img.youtube.com/vi/${this.lesson.videoId}/sddefault.jpg`;
   }
-
-  // async initializeYoutubePlayerPluginWeb() {
-  //   const options = {playerId: 'video-player', playerSize: {width: this.deviceWidth, height: 300},
-  //   videoId: `${this.lesson.videoId}?rel=0&showinfo=0&modestbranding=1&playsinline=1&`};
-  //   const result  = await YoutubePlayerWeb.initialize(options);
-  // }
-
-  // async destroyYoutubePlayerPluginWeb() {
-  //   const result = await YoutubePlayerWeb.destroy('youtube-player');
-  //   console.log('destroyYoutubePlayer', result);
-  // }
-
-  // async initializeYoutubePlayerPluginNative() {
-  //   const { YoutubePlayer } = Plugins;
-  //   const options = {width: 640, height: 360, videoId: `${this.lesson.videoId}?rel=0&showinfo=0&modestbranding=1&playsinline=1&`};
-  //   const playerReady = await YoutubePlayer.initialize(options);
-  // }
 
 
 }

@@ -1,0 +1,13 @@
+
+.coupon-item-segment-button {
+    font-family: 'Abraham';
+    font-size: large;
+}
+
+ion-segment {
+    background-color: lightgrey;
+}
+
+.coupon-item-segment-button::part(indicator-background) {
+    background-color: rgb(177, 199, 228);
+}

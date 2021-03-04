@@ -796,5 +796,21 @@ ion-icon {
     &[class*="toolbar-discount-icon"] {
       mask-image: url(./assets/icon/discount.svg);
     }
+
+    &[class*="custom-coupon-percent"] {
+      mask-image: url(./assets/icon/coupon-percent.svg);
+    }
+
+    &[class*="toolbar-coupon-percent-icon"] {
+      mask-image: url(./assets/icon/coupon-percent.svg);
+    }
+
+    &[class*="custom-promo-code"] {
+      mask-image: url(./assets/icon/promo-code.svg);
+    }
+
+    &[class*="toolbar-promo-code-icon"] {
+      mask-image: url(./assets/icon/promo-code.svg);
+    }
   
   }

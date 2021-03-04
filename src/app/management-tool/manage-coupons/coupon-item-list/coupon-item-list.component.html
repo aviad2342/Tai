@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-no-padding app-titles">בחירת מוצר</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="onEmptyExit()">
+        <ion-icon slot="icon-only" name="close-outline" class="toolbar-icon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col>
+        <ion-virtual-scroll
+        [items]="items"
+        approxItemHeight="60px"
+      >
+      <ion-item *virtualItem="let item">
+        <ion-thumbnail size="medium" slot="start">
+          <ion-img [src]="item?.thumbnail"></ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ item?.name }}</h2>
+          <ion-text color="medium">
+            <p>מחיר: {{ item?.price | currency:'ILS':'symbol':'1.2-2'}}</p>
+          </ion-text>
+          <ion-text color="medium">
+            <p>קטגוריה: {{ item?.category}}</p>
+          </ion-text>
+        </ion-label>
+        <ion-button color="primary" fill="outline" slot="end" (click)="close(item)">
+          <ion-icon src="../../../../assets/icon/add-product.svg"></ion-icon>
+          <ion-label class="select-btn" >בחר מוצר</ion-label>
+        </ion-button>
+      </ion-item>
+      </ion-virtual-scroll>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
