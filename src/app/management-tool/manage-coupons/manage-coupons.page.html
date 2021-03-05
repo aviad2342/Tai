@@ -69,6 +69,9 @@
         >
         <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="code" [width]="150" [resizeable]="false">
           <ng-template let-column="column" ngx-datatable-header-template><strong>קוד קופון</strong></ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ row['code'] | uppercase }}
+          </ng-template>
         </ngx-datatable-column>
 
         <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="date" [sortable]="true" [width]="150" [resizeable]="false">
@@ -92,11 +95,11 @@
           <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="discount" [sortable]="true" [width]="120" [resizeable]="false">
             <ng-template let-column="column" ngx-datatable-header-template><strong>אחוז הנחה</strong></ng-template>
             <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-              {{ row['discount'] | percent:'1.0' }}
+              {{ row['discount'] / 100 | percent:'1.0' }}
             </ng-template>
           </ngx-datatable-column> 
     
-          <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="singleItem" [width]="220" [resizeable]="false">
+          <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="singleItem" [width]="150" [resizeable]="false">
             <ng-template let-column="column" ngx-datatable-header-template><strong>סוג</strong></ng-template>
             <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
               {{ row['singleItem'] ? 'מוצר בודד' : 'כל ההזמנה' }}

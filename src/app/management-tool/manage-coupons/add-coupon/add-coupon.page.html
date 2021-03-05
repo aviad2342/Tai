@@ -15,7 +15,10 @@
             <ion-item>
               <ion-label position="floating"> קוד קופון <ion-text color="danger">*</ion-text></ion-label>
               <ion-input
+                class="coupon-code-input"
                 type="text"
+                autocapitalize="characters"
+                [pattern]="'^[0-9a-zA-Z \-\']+'"
                 ngModel
                 name="code"
                 required
@@ -23,13 +26,9 @@
               ></ion-input>
               <ion-icon slot="end" position="floating" class="custom-promo-code ion-align-self-center"></ion-icon>
             </ion-item>
-            <ion-item
-            *ngIf="!codeCtrl.valid && codeCtrl.touched"
-            lines="none">
-            <ion-label color="danger">
-              זהו שדה חובה!
-            </ion-label>
-          </ion-item>
+              <ion-label *ngIf="!codeCtrl.valid && codeCtrl.touched" color="danger">
+                <small>זהו שדה חובה! יש להקליד מספרים ואותיות באנגלית בלבד!</small>
+              </ion-label>
 
             <ion-item>
               <ion-label position="floating">בתוקף עד<ion-text color="danger">*</ion-text></ion-label>
@@ -72,12 +71,12 @@
               <ion-item>
                 <ion-label position="floating"> הנחה (באחוזים) <ion-text color="danger">*</ion-text></ion-label>
                 <ion-input
-                  #price
+                  #percent
                   type="number"
                   inputmode="numeric"
                   [ngModel]='amount'
-                  (ionBlur)="getPrice(price)"
-                  (ionFocus)="setPrice(price)"
+                  (ionBlur)="getPercent(percent)"
+                  (ionFocus)="setPercent(percent)"
                   name="discount"
                   value="string"
                   required
@@ -97,9 +96,9 @@
               </ion-item>
 
               <ion-item *ngIf="singleItem">
-                <ion-avatar size="medium" slot="start">
+                <ion-thumbnail size="medium" slot="start">
                   <ion-img [src]="itemThumbnail"></ion-img>
-                </ion-avatar>
+                </ion-thumbnail>
                 <ion-label>
                   <strong>
                     {{ item?.name }}
@@ -113,8 +112,8 @@
                   <ion-label>הוסף מוצר</ion-label>
                 </ion-button>    
                 <ion-button color="danger" fill="outline" slot="end" (click)="onRemoveItem()" *ngIf="item">
-                  <ion-icon name="person-remove-outline" ></ion-icon>&nbsp;&nbsp;
-                  <ion-label>הסר מוצר </ion-label>
+                  <ion-icon src="../../../../assets/icon/remove-item.svg" slot="start"></ion-icon>&nbsp;&nbsp;
+                  <ion-label>הסר מוצר</ion-label>
                 </ion-button>
               </ion-item>
               <ion-label *ngIf="singleItem && noItemPicked" color="danger">
@@ -127,7 +126,7 @@
       <ion-row class="ion-justify-content-center">
         <ion-col size-xl="1.5" size-lg="2.5" size-md="3" size-sm="3.5" size-xs="4">
           <ion-button
-            class="app-submit-buttons"
+            class="app-submit-cancel-btn"
             color="primary"
             expand="block"
             (click)="onCancel()"
@@ -137,7 +136,7 @@
         </ion-col>
         <ion-col size-xl="1.5" size-lg="2.5" size-md="3" size-sm="3.5" size-xs="4">
           <ion-button
-            class="app-submit-buttons"
+            class="app-submit-cancel-btn"
             type="submit"
             color="primary"
             expand="block"

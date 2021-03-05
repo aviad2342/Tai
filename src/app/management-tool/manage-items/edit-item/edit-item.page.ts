@@ -102,7 +102,7 @@ export class EditItemPage implements OnInit {
       this.itemService.uploadItemThumbnail(this.selectedImage, 'Item')
       .pipe(
         switchMap(uploadRes => {
-        const itemToupdate = new Item(
+        const itemToUpdate = new Item(
           this.item.id,
           this.item.productId,
           form.value.name,
@@ -113,7 +113,7 @@ export class EditItemPage implements OnInit {
           form.value.quantity,
           this.item.category
         );
-        return this.itemService.updateItem(itemToupdate);
+        return this.itemService.updateItem(itemToUpdate);
       })).subscribe(() => {
         form.reset();
         this.appService.presentToast('המוצר נשמר בהצלחה', true);

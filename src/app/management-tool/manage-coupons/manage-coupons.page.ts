@@ -62,7 +62,7 @@ export class ManageCouponsPage implements OnInit, OnDestroy {
       let temp;
       if (val === 'valid') {
         temp = this.temp.filter((d)=> {
-          return d.expirationDate > new Date();
+          return d.expirationDate >= new Date();
          });
       }
       if (val === 'all') {

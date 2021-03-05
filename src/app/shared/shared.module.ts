@@ -15,6 +15,7 @@ import { AddressDetailsPickerComponent } from './pickers/address-details-picker/
 import { AddressFinderComponent } from './pickers/address-finder/address-finder.component';
 import { AddressFormPickerComponent } from './pickers/address-form-picker/address-form-picker.component';
 import { NgxIonicImageViewerModule } from 'ngx-ionic-image-viewer';
+import { DateCountdownComponent } from './date-countdown/date-countdown.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { NgxIonicImageViewerModule } from 'ngx-ionic-image-viewer';
     NumberPickerComponent,
     AddressDetailsPickerComponent,
     AddressFinderComponent,
-    AddressFormPickerComponent
+    AddressFormPickerComponent,
+    DateCountdownComponent
   ],
   imports: [
       CommonModule,
@@ -44,7 +46,8 @@ import { NgxIonicImageViewerModule } from 'ngx-ionic-image-viewer';
     NumberPickerComponent,
     AddressDetailsPickerComponent,
     AddressFinderComponent,
-    AddressFormPickerComponent
+    AddressFormPickerComponent,
+    DateCountdownComponent
   ]
 })
 export class SharedModule {}

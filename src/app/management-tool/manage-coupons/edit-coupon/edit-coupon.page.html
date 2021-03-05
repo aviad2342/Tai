@@ -1,9 +1,148 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>edit-coupon</ion-title>
+    <ion-title class="app-titles">הוספת קופון</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-grid>
 
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-xl="3" size-lg="5" size-md="6" size-sm="7" size-xs="8">
+          <ion-list>
+
+            <ion-item>
+              <ion-label position="floating"> קוד קופון <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                class="coupon-code-input"
+                type="text"
+                ngModel
+                name="code"
+                #codeCtrl="ngModel"
+                disabled="true"
+              ></ion-input>
+              <ion-icon slot="end" position="floating" class="custom-promo-code ion-align-self-center"></ion-icon>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">בתוקף עד<ion-text color="danger">*</ion-text></ion-label>
+                <ion-datetime
+                  display-format="DD/MM/YYYY"
+                  pickerFormat="DD MMM YYYY"
+                  monthNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
+                  monthShortNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
+                  ngModel
+                  max="2025-12-29"
+                  [min]="now"
+                  doneText="אישור"
+                  cancelText="ביטול"
+                  mode="ios"
+                  name="expirationDate"
+                  required
+                  #expirationDateCtrl="ngModel"
+                ></ion-datetime>
+                  <ion-icon name="calendar-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+              <ion-label *ngIf="!expirationDateCtrl.valid && expirationDateCtrl.touched" color="danger">
+                <small>זהו שדה חובה!</small>
+              </ion-label>
+
+              <ion-item>
+                <ion-label position="floating"> כמות <ion-text color="danger">*</ion-text></ion-label>
+                <ion-input
+                  type="number"
+                  ngModel
+                  name="quantity"
+                  required
+                  #quantityCtrl="ngModel"
+                ></ion-input>
+                <ion-icon slot="end" position="floating" class="custom-packages"></ion-icon>
+              </ion-item>
+              <ion-label *ngIf="!quantityCtrl.valid && quantityCtrl.touched" color="danger">
+                <small>זהו שדה חובה!</small>
+              </ion-label>
+
+              <ion-item>
+                <ion-label position="floating"> הנחה (באחוזים) <ion-text color="danger">*</ion-text></ion-label>
+                <ion-input
+                  #discount
+                  type="text"
+                  inputmode="numeric"
+                  [ngModel]='amount'
+                  (ionBlur)="getPercent(discount)"
+                  (ionFocus)="setPercent(discount)"
+                  name="discount"
+                  value="number"
+                  required
+                  #discountCtrl="ngModel"
+                ></ion-input>
+                <ion-icon slot="end" position="floating" class="custom-coupon-percent ion-align-self-center"></ion-icon>
+              </ion-item>
+              <ion-label *ngIf="!discountCtrl.valid && discountCtrl.touched" color="danger">
+                <small>זהו שדה חובה!</small>
+              </ion-label>
+
+              <ion-item>
+                <ion-segment #SingleItemSegment mode="ios" (ionChange)="isSingleItem($event)" value="singleItem" class="add-item-segment">
+                  <ion-segment-button class="coupon-item-segment-button" value="singleItem">הנחה עבור מוצר</ion-segment-button>
+                  <ion-segment-button class="coupon-item-segment-button" value="fullOrder">הנחה עבור הזמנה</ion-segment-button>
+                </ion-segment>
+              </ion-item>
+
+              <ion-item *ngIf="singleItem">
+                <ion-thumbnail size="medium" slot="start">
+                  <ion-img [src]="this?.itemThumbnail"></ion-img>
+                </ion-thumbnail>
+                <ion-label>
+                  <strong>
+                    {{ item?.name }}
+                  </strong>
+                  <ion-text color="medium">
+                    <p>{{ item?.price | currency:'ILS':'symbol':'1.3-3'}}</p>
+                  </ion-text>
+                </ion-label>
+                <ion-button fill="outline" slot="end" (click)="onChooseItem()" *ngIf="!item">
+                  <ion-icon src="../../../../assets/icon/add-product.svg" slot="start"></ion-icon>
+                  <ion-label>הוסף מוצר</ion-label>
+                </ion-button>    
+                <ion-button color="danger" fill="outline" slot="end" (click)="onRemoveItem()" *ngIf="item">
+                  <ion-icon src="../../../../assets/icon/remove-item.svg" slot="start"></ion-icon>&nbsp;&nbsp;
+                  <ion-label>הסר מוצר</ion-label>
+                </ion-button>
+              </ion-item>
+              <ion-label *ngIf="singleItem && noItemPicked" color="danger">
+                <small>לא נבחר מוצר!</small>
+              </ion-label>
+
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-xl="1.5" size-lg="2.5" size-md="3" size-sm="3.5" size-xs="4">
+          <ion-button
+            class="app-submit-cancel-btn"
+            color="primary"
+            expand="block"
+            (click)="onCancel()"
+          >
+          ביטול
+          </ion-button>
+        </ion-col>
+        <ion-col size-xl="1.5" size-lg="2.5" size-md="3" size-sm="3.5" size-xs="4">
+          <ion-button
+            class="app-submit-cancel-btn"
+            type="submit"
+            color="primary"
+            expand="block"
+            [disabled]="!f.valid"
+          >
+          עדכן
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </form>
+ 
 </ion-content>

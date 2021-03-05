@@ -10,6 +10,7 @@ import { Order } from '../order/order.model';
 import { OrderService } from '../order/order.service';
 import { Coupon } from '../store/coupon.model';
 import { CouponService } from '../store/coupon.service';
+import { CouponUsers } from '../store/couponUsers.model';
 import { CartItem } from '../store/item.model';
 import { Cart } from './cart.model';
 import { CartService } from './cart.service';
@@ -26,6 +27,7 @@ export class CartPage implements OnInit {
   @ViewChild('slidingItem') slidingItem: IonItemSliding;
   slidingItems: IonItemSliding[] = [];
   coupon: Coupon;
+  couponUsers: CouponUsers[]
   summaryItems = 0;
   shippingCost = 0;
   couponCode = '';
@@ -116,11 +118,16 @@ export class CartPage implements OnInit {
     this.couponService.getCoupon(this.couponCode).subscribe(coupon => {
       if(coupon) {
         this.coupon = coupon;
-        // if(coupon.customers.includes(this.authService.getLoggedUserId())) {
-        //   this.appService.presentToast('הקופון נוצל בעבר!', false);
-        //   this.couponCode = '';
-        //   return;
-        // }
+        this.couponService.getCustomerCoupons(this.authService.getLoggedUserId()).subscribe(couponUsers => {
+          if(couponUsers) {
+            this.couponUsers = couponUsers;
+            if(couponUsers.map(c => c.couponCode).includes(this.coupon.code)) {
+              this.appService.presentToast('הקופון נוצל בעבר!', false);
+              this.couponCode = '';
+              return;
+            }
+          }
+        });
         if(coupon.expirationDate < new Date()) {
           this.appService.presentToast('פג תוקופו של קופון זה!', false);
           this.couponCode = '';

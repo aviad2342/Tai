@@ -1,9 +1,24 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>view-coupon</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="['/', 'manage','coupons']"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-no-padding app-titles">פרטי קופון</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center" *ngIf="isLoading">
+      <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2"  class="ion-text-center">
+        <ion-spinner color="primary"></ion-spinner>
+      </ion-col>
+    </ion-row>
 
+    <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
+      <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2"  class="ion-text-center">
+        <app-date-countdown [end]="coupon.expirationDate"></app-date-countdown>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

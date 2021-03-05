@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { CommonModule, PercentPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
@@ -14,6 +14,10 @@ import { EditCouponPage } from './edit-coupon.page';
     FormsModule,
     IonicModule,
     EditCouponPageRoutingModule
+  ],
+  providers: [
+    PercentPipe,
+    { provide: LOCALE_ID, useValue: 'he-HE' }
   ],
   declarations: [EditCouponPage]
 })

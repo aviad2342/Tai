@@ -41,7 +41,7 @@ export class AddCouponPage implements OnInit {
       return;
     }
 
-    if (this.singleItem && !this.item) {
+    if (this.singleItem && (!this.item || this.item === null)) {
       this.noItemPicked = true;
       return;
     }
@@ -52,7 +52,7 @@ export class AddCouponPage implements OnInit {
       form.value.expirationDate,
       form.value.quantity,
       this.singleItem,
-      form.value.discount
+      +this.prevAmount,
     );
 
     if (this.singleItem) {
@@ -66,24 +66,24 @@ export class AddCouponPage implements OnInit {
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי הקופון לא נשמרו', false);
-      this.navController.navigateBack('/manage/coupons');
+      // this.navController.navigateBack('/manage/coupons');
     }
     );
   }
 
-  getCurrency(amount: number=0) {
+  getPercentage(amount: number=0) {
     return this.percentPipe.transform(amount/ 100, '1.0');
   }
 
-  setPrice(priceCtrl: IonInput) {
-    priceCtrl.type = 'number';
+  setPercent(percent: IonInput) {
+    percent.type = 'number';
     this.amount = this.prevAmount;
   }
 
-  getPrice(priceCtrl: IonInput) {
-    priceCtrl.type = 'text';
+  getPercent(percent: IonInput) {
+    percent.type = 'text';
     this.prevAmount = this.form.value.discount;
-    this.amount  = this.getCurrency(+this.form.value.discount);
+    this.amount  = this.getPercentage(+this.form.value.discount);
   }
 
   isSingleItem(event: CustomEvent<SegmentChangeEventDetail>) {
@@ -104,7 +104,6 @@ export class AddCouponPage implements OnInit {
     });
      modal.onDidDismiss<Item>().then( data => {
       if(data.data !== null  && data.data ) {
-        console.log(data);
         this.item = data.data;
         this.itemThumbnail = this.item.thumbnail;
         this.noItemPicked = false;
@@ -112,7 +111,11 @@ export class AddCouponPage implements OnInit {
     });
     return await modal.present();
   }
-  onRemoveItem() {}
+  onRemoveItem() {
+    this.item = null;
+    this.noItemPicked = true;
+    this.itemThumbnail = 'https://img.icons8.com/plasticine/2x/product.png';
+  }
 
   onCancel() {
     this.form.reset();
