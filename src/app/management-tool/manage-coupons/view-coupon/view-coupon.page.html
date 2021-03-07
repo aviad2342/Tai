@@ -16,9 +16,34 @@
     </ion-row>
 
     <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
-      <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2"  class="ion-text-center">
+      <div class="coupon-panel">
+
+        <div class="coupon-code">
+          <ion-icon src="../../../../assets/icon/scissors.svg" class="scissors-icon"></ion-icon>
+          <h1>{{ coupon?.code | uppercase }}</h1>
+        </div>
+
+        <div class="coupon-expiration-date">
+          <p>בתוקף עד: {{ coupon?.expirationDate | date }}</p>
+        </div>
+
+        <div class="coupon-discount">
+          <h1>{{ coupon?.discount / 100 | percent:'1.0' }}</h1>
+        </div>
+
+        <div class="date-countdown">
+          <app-date-countdown [end]="coupon.expirationDate"></app-date-countdown>
+        </div>
+
+        <div class="coupon-quantity">
+          <p>נותרו לשימוש: {{ coupon?.quantity }}</p>
+        </div>
+
+      </div>
+      <!-- <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2"  class="ion-text-center">
+        
         <app-date-countdown [end]="coupon.expirationDate"></app-date-countdown>
-      </ion-col>
+      </ion-col> -->
     </ion-row>
   </ion-grid>
 </ion-content>

@@ -9,12 +9,12 @@
     <ion-col class="ion-no-padding time-header">ימים</ion-col>
   </ion-row>
   <ion-row class="ion-justify-content-center">
-    <ion-col class="ion-no-padding time">{{ displayCountdown().s }}</ion-col>
-    <ion-col class="ion-no-padding">:</ion-col>
-    <ion-col class="ion-no-padding time">{{ displayCountdown().m }}</ion-col>
-    <ion-col class="ion-no-padding">:</ion-col>
-    <ion-col class="ion-no-padding time">{{ displayCountdown().h }}</ion-col>
-    <ion-col class="ion-no-padding">:</ion-col>
-    <ion-col class="ion-no-padding time">{{ displayCountdown().d }}</ion-col>
+    <ion-col [ngClass]="alertTimer" class="ion-no-padding time">{{ displayCountdown().s }}</ion-col>
+    <ion-col [ngClass]="alertTimer" class="ion-no-padding">:</ion-col>
+    <ion-col [ngClass]="alertTimer" class="ion-no-padding time">{{ displayCountdown().m }}</ion-col>
+    <ion-col [ngClass]="alertTimer" class="ion-no-padding">:</ion-col>
+    <ion-col [ngClass]="alertTimer" class="ion-no-padding time">{{ displayCountdown().h }}</ion-col>
+    <ion-col [ngClass]="alertTimer" class="ion-no-padding">:</ion-col>
+    <ion-col [ngClass]="alertTimer" class="ion-no-padding time">{{ displayCountdown().d }}</ion-col>
   </ion-row>
 </ion-grid>

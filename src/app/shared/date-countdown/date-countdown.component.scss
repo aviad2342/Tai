@@ -5,3 +5,27 @@
 .time {
     font-family: 'Yoav-bold';
 }
+
+.time-over {
+    color: var(--ion-color-danger);
+}
+
+.time-alret {
+    color: var(--ion-color-warning);
+}
+
+.time-blink-1 {
+    animation: blinker 2s linear infinite;
+    color: var(--ion-color-danger);
+  }
+
+.time-blink-2 {
+    animation: blinker 1s linear infinite;
+    color: var(--ion-color-danger);
+  }  
+  
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }

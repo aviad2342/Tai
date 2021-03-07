@@ -1,0 +1,80 @@
+.coupon-panel {
+    position: relative;
+    background: url("../../../../assets/background/coupon-background-image.jpg") no-repeat top, #fff;
+    background-size: 100% 100%;
+    height: 450px;
+    width: 960px;
+    min-width: 960px;
+    text-align: center;
+}
+
+.date-countdown {
+    position: absolute;
+    width: 160px;
+    top: 304px;
+    right: 521px;
+}
+
+.coupon-discount {
+    position: absolute;
+    width: 145px;
+    top: 180px;
+    right: 100px;
+}
+
+.coupon-discount h1 {
+    font-family: 'Anka-bold';
+    font-size: 68px;
+    margin: 0;
+}
+
+.coupon-code {
+    position: absolute;
+    width: 386px;
+    top: 133px;
+    right: 412px;
+    color: aliceblue;
+    border: 2px dotted;
+}
+
+.coupon-code h1 {
+    font-family: inherit;
+    font-size: 60px;
+    margin: 0;
+}
+
+.coupon-code .scissors-icon {
+    position: absolute;
+    top: -9px;
+    right: 380px;
+    font-size: medium;
+    margin: 0;
+}
+
+.coupon-expiration-date {
+    position: absolute;
+    width: 338px;
+    top: 275px;
+    right: 433px;
+    color: aliceblue;
+}
+
+.coupon-expiration-date p {
+    font-family: 'Haim';
+    font-size: larger;
+    margin: 0;
+}
+
+.coupon-quantity {
+    position: absolute;
+    width: 338px;
+    top: 375px;
+    right: 433px;
+    color: aliceblue;
+}
+
+.coupon-quantity p {
+    font-family: 'Haim';
+    font-size: larger;
+    margin: 0;
+}
