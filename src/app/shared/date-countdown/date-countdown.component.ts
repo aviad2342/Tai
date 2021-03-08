@@ -22,14 +22,17 @@ export class DateCountdownComponent implements OnInit, AfterViewChecked {
     const n: any = new Date(this.now);
     const t: any = d - n;
     const days = Math.floor(t / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((t % (1000 * 60)) / 1000);
 
-    if (days <= 0) {
+    if (days <= 0 && hours <= 0 && minutes <= 0 && seconds <= 0) {
       this.alertTimer = 'time-over';
-    } else if (days <= 1) {
+    } else if (days <= 0) {
       this.alertTimer = 'time-blink-2';
-    } else if (days <= 2) {
+    } else if (days <= 1) {
       this.alertTimer = 'time-blink-1';
-    } else if (days <= 3) {
+    } else if (days <= 2) {
       this.alertTimer = 'time-alret';
     } else {
       this.alertTimer = '';

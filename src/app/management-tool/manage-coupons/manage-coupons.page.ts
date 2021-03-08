@@ -61,7 +61,7 @@ export class ManageCouponsPage implements OnInit, OnDestroy {
       const val = event.target.value;
       let temp;
       if (val === 'valid') {
-        temp = this.temp.filter((d)=> {
+        temp = this.temp.filter((d: Coupon)=> {
           return d.expirationDate >= new Date();
          });
       }

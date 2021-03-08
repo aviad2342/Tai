@@ -40,10 +40,18 @@
         </div>
 
       </div>
-      <!-- <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2"  class="ion-text-center">
-        
-        <app-date-countdown [end]="coupon.expirationDate"></app-date-countdown>
-      </ion-col> -->
+    </ion-row>
+    <ion-row class="ion-justify-content-center" *ngIf="item">
+        <ion-item lines="none" class="item-panel">
+          <ion-thumbnail class="ion-no-margin thumbnail-border">
+            <ion-img [src]="item?.thumbnail"></ion-img>
+          </ion-thumbnail>
+          <ion-text>
+            <h1 class="ion-no-margin">{{ item?.name }}</h1>
+            <h3 class="ion-no-margin">{{ item?.description }}</h3>
+            <p class="ion-no-margin">מחיר: {{ item?.price | currency:'ILS' }}</p>
+          </ion-text>
+        </ion-item>
     </ion-row>
   </ion-grid>
 </ion-content>

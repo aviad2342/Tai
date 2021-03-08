@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule, PercentPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -19,7 +19,8 @@ import { SharedModule } from '../../../shared/shared.module';
   ],
   providers: [
     PercentPipe,
-    { provide: LOCALE_ID, useValue: 'he-HE' }
+    { provide: LOCALE_ID, useValue: 'he-HE' },
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'he-HE'}
   ],
   declarations: [ViewCouponPage]
 })

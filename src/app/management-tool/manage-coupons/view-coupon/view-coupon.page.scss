@@ -78,3 +78,32 @@
     font-size: larger;
     margin: 0;
 }
+
+.item-panel {
+    width: 960px;
+    min-width: 960px;
+    border-top: 1px dotted black;
+    --background: lightgrey;
+}
+
+.thumbnail-border {
+    border: 1px solid black;
+}
+
+.item-panel h1 {
+    font-family: 'Choco-bold';
+    font-size: larger;
+    padding-right: 5px;
+}
+
+.item-panel h3 {
+    font-family: 'Choco-bold';
+    font-size: large;
+    padding-right: 5px;
+}
+
+.item-panel p {
+    font-family: 'Choco-bold';
+    font-size: medium;
+    padding-right: 5px;
+}
