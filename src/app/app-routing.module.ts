@@ -70,6 +70,10 @@ const routes: Routes = [
   {
     path: 'verification',
     loadChildren: () => import('./verification/verification.module').then( m => m.VerificationPageModule)
+  },
+  {
+    path: 'testimony',
+    loadChildren: () => import('./testimony/testimony.module').then( m => m.TestimonyPageModule)
   }
 ];
 @NgModule({

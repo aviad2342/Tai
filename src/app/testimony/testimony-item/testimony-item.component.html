@@ -1,0 +1,35 @@
+<ion-item *ngIf="right">
+  <div class="right-chat-bubble">
+    <div class="testimony-content">
+      <ion-text>
+        <p>{{ testimony.content }}</p>
+      </ion-text>
+    </div>
+    <div class="testimony-date">
+      <p>{{ testimony.date | date }}</p>
+    </div>
+    <div class="testimony-picture-right">
+      <ion-avatar>
+        <ion-img [src]="testimony.picture"></ion-img>
+      </ion-avatar>
+    </div>
+  </div>
+</ion-item>
+
+<ion-item *ngIf="!right">
+  <div class="left-chat-bubble">
+    <div class="testimony-content">
+      <ion-text>
+        <p>{{ testimony.content }}</p>
+      </ion-text>
+    </div>
+    <div class="testimony-date">
+      <p>{{ testimony.date | date }}</p>
+    </div>
+    <div class="testimony-picture">
+      <ion-avatar>
+        <ion-img [src]="testimony.picture"></ion-img>
+      </ion-avatar>
+    </div>
+  </div>
+</ion-item>

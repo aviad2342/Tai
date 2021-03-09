@@ -1,0 +1,93 @@
+
+ion-item {
+    --min-height: 250px;
+}
+
+.right-chat-bubble {
+    position: relative;
+    background: url("../../../assets/background/chat-bubbles-right.png") no-repeat top, #fff;
+    background-size: 100% 100%;
+    height: 285px;
+    width: 350px;
+    min-width: 340px;
+    text-align: center;
+}
+
+.left-chat-bubble {
+    position: relative;
+    background: url("../../../assets/background/bubble-left.png") no-repeat top, #fff;
+    background-size: 100% 100%;
+    height: 285px;
+    width: 350px;
+    min-width: 340px;
+    margin-right: auto;
+    text-align: center;
+}
+
+.testimony-content {
+    position: absolute;
+    width: 231px;
+    top: 50px;
+    right: 57px;
+}
+
+.testimony-content p {
+    font-family: 'Choco-bold';
+    font-size: medium;
+    margin: 0;
+}
+
+.testimony-content p::before {
+    content: '"';
+    font-size: larger;
+    font-family: 'Anka-bold';
+}
+
+.testimony-content p::after {
+    content: '"';
+    font-size: larger;
+    font-family: 'Anka-bold';
+}
+
+.testimony-date {
+    position: absolute;
+    width: 150px;
+    top: 204px;
+    right: 97px;
+}
+
+.testimony-date p {
+    font-family: 'Choco';
+    font-size: medium;
+    margin: 0;
+}
+
+.testimony-picture {
+    position: absolute;
+    width: 65px;
+    top: 226px;
+    right: 278px;
+}
+
+.testimony-picture ion-avatar {
+    width: 60px;
+    height: 55px;
+    border: 2px solid black;
+}
+
+.testimony-picture-right {
+    position: absolute;
+    width: 65px;
+    top: 227px;
+    right: 5px;
+}
+
+.testimony-picture-right ion-avatar {
+    width: 60px;
+    height: 55px;
+    border: 2px solid black;
+}
+
+ion-item::part(native){
+    padding-inline-start: 0;
+}

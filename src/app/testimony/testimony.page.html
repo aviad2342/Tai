@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="isDesktop">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-no-padding app-titles">עדויות</ion-title>
+    <ion-icon class="title-icon" slot="start" name="today-outline"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid [fixed]="true">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-xl="6" size-lg="6" size-md="7" size-sm="8" class="ion-text-center">
+        <ion-list>
+          <div *ngFor="let testimony of testimonies; index as i;">
+            <app-testimony-item [testimony]="testimony" [index]="i"></app-testimony-item>
+          </div>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
