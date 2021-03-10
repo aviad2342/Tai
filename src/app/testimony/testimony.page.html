@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title class="ion-no-padding app-titles">עדויות</ion-title>
-    <ion-icon class="title-icon" slot="start" name="today-outline"></ion-icon>
+    <ion-icon class="title-icon toolbar-icon-speaker" slot="start"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -21,3 +21,36 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="light">
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="comment-form">
+      <ion-row class="ion-align-items-center ion-justify-content-center ion-no-padding">
+        <ion-col size-lg="1" size-md="1" size-sm="2" size-xs="2" class="ion-no-padding">
+          <ion-button
+          class="ion-no-margin btn-send"
+          type="submit"
+          color="primary"
+          fill="clear"
+          expand="block"
+          [disabled]="!f.valid">
+        <ion-icon name="send" class="ion-no-margin send-icon" slot="start"></ion-icon>
+        </ion-button>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="6" size-md="7" size-sm="10" size-xs="9">
+          <ion-textarea
+            auto-grow="false"
+            ngModel
+            name="body"
+            autosize
+            maxRows="4"
+            required
+            #bodyCtrl="ngModel"
+            placeholder="הוסף עדות"
+            class="comment-input"
+          ></ion-textarea>
+        </ion-col>
+      </ion-row>
+   </form>
+  </ion-toolbar>
+  </ion-footer>

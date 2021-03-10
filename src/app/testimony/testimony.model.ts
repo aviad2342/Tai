@@ -6,7 +6,8 @@ export class Testimony {
       public lastName: string,
       public date: Date,
       public content: string,
-      public picture: string
+      public picture: string,
+      public approved: boolean
     ) {}
 
   }

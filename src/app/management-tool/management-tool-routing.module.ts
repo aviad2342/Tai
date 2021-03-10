@@ -47,6 +47,10 @@ const routes: Routes = [
   {
     path: 'coupons',
     loadChildren: () => import('./manage-coupons/manage-coupons.module').then( m => m.ManageCouponsPageModule)
+  },
+  {
+    path: 'testimonies',
+    loadChildren: () => import('./manage-testimonies/manage-testimonies.module').then( m => m.ManageTestimoniesPageModule)
   }
 ];
 

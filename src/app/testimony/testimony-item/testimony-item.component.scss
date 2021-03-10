@@ -1,11 +1,21 @@
 
 ion-item {
     --min-height: 250px;
+    padding-bottom: 5px;
+    --border-radius: 23px;
+}
+
+.right-item {
+    --background: rgb(220 235 249);
+}
+
+.left-item {
+    --background: rgb(224 224 224)
 }
 
 .right-chat-bubble {
     position: relative;
-    background: url("../../../assets/background/chat-bubbles-right.png") no-repeat top, #fff;
+    background: url("../../../assets/background/chat-bubbles-right.png") no-repeat top, transparent;
     background-size: 100% 100%;
     height: 285px;
     width: 350px;
@@ -15,7 +25,7 @@ ion-item {
 
 .left-chat-bubble {
     position: relative;
-    background: url("../../../assets/background/bubble-left.png") no-repeat top, #fff;
+    background: url("../../../assets/background/bubble-left.png") no-repeat top, transparent;
     background-size: 100% 100%;
     height: 285px;
     width: 350px;

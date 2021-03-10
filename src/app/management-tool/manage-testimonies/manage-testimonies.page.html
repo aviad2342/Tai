@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button class="app-back-btn" text="חזרה" [defaultHref]="['/', 'manage']"></ion-back-button>
     </ion-buttons>
-    <ion-title class="app-titles">ניהול קופונים</ion-title>
+    <ion-title class="app-titles">ניהול עדויות</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +13,7 @@
         <ion-row>
           <ion-col>
             <ion-button color="primary" (click)="onAddCoupon()">
-            <ion-icon class="custom-coupons" slot="start"></ion-icon>
+            <ion-icon class="custom-speaker" slot="start"></ion-icon>
             <ion-label class="app-crud-btn-label">הוסף</ion-label>
           </ion-button>
     
@@ -37,12 +37,12 @@
     <!---------------------------------- filtering inputs -------------------------------------------------->
         <ion-row>    
           <ion-col size-xl="3" size-lg="4" size-md="6" size-sm="8" class="ion-padding-end">
-            <ion-segment color="dark" value="all" mode="ios" (ionChange)="filterValidCoupons($event)">
+            <ion-segment color="dark" value="all" mode="ios" (ionChange)="filterApprovedTestimonies($event)">
               <ion-segment-button class="filter-coupons-segment-button" value="all">
-                <ion-label class="segment-label">הצג את כל הקופונים</ion-label>
+                <ion-label class="segment-label">הצג את כל העדויות</ion-label>
               </ion-segment-button>
-              <ion-segment-button class="filter-coupons-segment-button" value="valid">
-                <ion-label class="segment-label">הצג קופונים בתוקף</ion-label>
+              <ion-segment-button class="filter-coupons-segment-button" value="approved">
+                <ion-label class="segment-label">הצג העדויות מאושרות</ion-label>
               </ion-segment-button>
             </ion-segment>
           </ion-col>
@@ -52,8 +52,8 @@
         <ion-row>
           
           <ngx-datatable
-          #itemsTable
-          [rows]="coupons"
+          #testimoniesTable
+          [rows]="testimonies"
           class="bootstrap"
           [rowHeight]="'auto'"
           [headerHeight]="50"
@@ -67,51 +67,43 @@
           (activate)="onActivate($event)"
           (select)="onSelect($event)"
         >
-        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="code" [width]="150" [resizeable]="false">
-          <ng-template let-column="column" ngx-datatable-header-template><strong>קוד קופון</strong></ng-template>
+
+        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="" [sortable]="false" [width]="120" [resizeable]="false">
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-            {{ row['code'] | uppercase }}
+            <ion-thumbnail>
+              <ion-img [src]="row['picture']"></ion-img>
+            </ion-thumbnail>
           </ng-template>
+        </ngx-datatable-column> 
+
+        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="firstName" [width]="160" [resizeable]="false">
+          <ng-template let-column="column" ngx-datatable-header-template><strong>שם פרטי</strong></ng-template>
+        </ngx-datatable-column>
+  
+        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="lastName" [width]="160" [resizeable]="false">
+          <ng-template let-column="column" ngx-datatable-header-template><strong>שם משפחה</strong></ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="date" [sortable]="true" [width]="150" [resizeable]="false">
+        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="date" [sortable]="true" [width]="160" [resizeable]="false">
           <ng-template let-column="column" ngx-datatable-header-template><strong>תאריך הוספה</strong></ng-template>
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
             {{ row['date'] | date }}
           </ng-template>
         </ngx-datatable-column> 
 
-        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="expirationDate" [sortable]="true" [width]="150" [resizeable]="false">
-          <ng-template let-column="column" ngx-datatable-header-template><strong>בתוקף עד</strong></ng-template>
+        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="approved" [width]="100" [resizeable]="false">
+          <ng-template let-column="column" ngx-datatable-header-template><strong>אושר</strong></ng-template>
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-            {{ row['expirationDate'] | date }}
+            {{ row['approved'] ? 'לא' : 'כן' }}
           </ng-template>
-        </ngx-datatable-column> 
-    
-        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="quantity" [width]="120" [resizeable]="false">
-          <ng-template let-column="column" ngx-datatable-header-template><strong>יתרה לניצול</strong></ng-template>
         </ngx-datatable-column>
-    
-          <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="discount" [sortable]="true" [width]="120" [resizeable]="false">
-            <ng-template let-column="column" ngx-datatable-header-template><strong>אחוז הנחה</strong></ng-template>
-            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-              {{ row['discount'] / 100 | percent:'1.0' }}
-            </ng-template>
-          </ngx-datatable-column> 
-    
-          <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="singleItem" [width]="150" [resizeable]="false">
-            <ng-template let-column="column" ngx-datatable-header-template><strong>סוג</strong></ng-template>
-            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-              {{ row['singleItem'] ? 'מוצר בודד' : 'כל ההזמנה' }}
-            </ng-template>
-          </ngx-datatable-column>
     
           <ngx-datatable-footer #datatableFooter>
             <ng-template ngx-datatable-footer-template 
             let-rowCount="rowCount"
             let-selectedCount="selectedCount"
             >
-            <div>&nbsp;נבחר {{ selectedCount }}  מתוך {{ rowCount }} קופונים </div>
+            <div>&nbsp;נבחר {{ selectedCount }}  מתוך {{ rowCount }} עדויות </div>
             </ng-template>
           </ngx-datatable-footer>
         </ngx-datatable>

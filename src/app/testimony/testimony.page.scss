@@ -1,0 +1,68 @@
+.comment-item {
+    padding-bottom: 5px;
+    min-height: 100%;
+    width: 100%;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.article-author-date {
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    font-family: 'Yoav';
+}
+.comment-form {
+    border: 1px solid transparent;
+}
+
+h1 {
+    font-family: 'Yoav-bold';
+}
+
+h3 {
+    font-family: 'Yoav';
+}
+
+
+.comment-input {
+    width: 100%;
+    max-width: 500px;
+    min-width: 230px;
+    border: 1px solid var(--ion-color-primary);
+    border-radius: 10px;
+    background: #fff;
+    resize: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: 'Yoav-bold';
+    font-size: large;
+    --placeholder-color: var(--ion-color-dark, black) !important;
+}
+
+// .article-chat-box-input {
+//     margin-right: 0;
+// }
+
+ion-row {
+    min-width: 300px;
+}
+
+.btn-send {
+    --padding-start: 0.5em;
+    --padding-end: 0.5em;
+}
+
+.btn-send::part(native) {
+    border: 2px solid;
+    border-radius: 25px;
+    width: 50px;
+    height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.send-icon {
+    font-size: 26px;
+}

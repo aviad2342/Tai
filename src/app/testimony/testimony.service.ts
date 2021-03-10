@@ -14,10 +14,10 @@ export class TestimonyService {
 
   // tslint:disable-next-line: variable-name
   private _testimonies = new BehaviorSubject<Testimony[]>([
-    new Testimony('1','אביעד', 'בן חיון', new Date('9-10-2021'), 'היום היו הרבה בחורות בים.', 'http://aviadbenhayun.com:3000/images/aviad2342@walla.com.jpg'),
-    new Testimony('2','אבריל', 'ליון', new Date('9-10-2021'), 'הפסימי מתלונן על הרוח, האופטימי מצפה שהיא תשתנה, החכם מכוון את המפרש בהתאם', 'http://aviadbenhayun.com:3000/therapistImages/1611841244314@avrill.jpg'),
-    new Testimony('3','שירן', 'גרמן', new Date('10-10-2021'), 'אל תתפללו לחיים קלים יותר, וודאו שאתם נעשים חזקים יותר', 'http://aviadbenhayun.com:3000/images/shiran.german@gmail.com.jpg'),
-    new Testimony('4','מור', 'שמעוני', new Date('10-10-2021'), 'יש רק שתי דרכים לחיות, אחת היא לחשוב ששום דבר אינו קסום, השניה היא לחשוב שהכל קסום', 'http://aviadbenhayun.com:3000/images/tw.spider@gmail.com.jpg')
+    new Testimony('1','אביעד', 'בן חיון', new Date('9-10-2021'), 'היום היו הרבה בחורות בים.', 'http://aviadbenhayun.com:3000/images/aviad2342@walla.com.jpg', false),
+    new Testimony('2','אבריל', 'ליון', new Date('9-10-2021'), 'הפסימי מתלונן על הרוח, האופטימי מצפה שהיא תשתנה, החכם מכוון את המפרש בהתאם', 'http://aviadbenhayun.com:3000/therapistImages/1611841244314@avrill.jpg', true),
+    new Testimony('3','שירן', 'גרמן', new Date('10-10-2021'), 'אל תתפללו לחיים קלים יותר, וודאו שאתם נעשים חזקים יותר', 'http://aviadbenhayun.com:3000/images/shiran.german@gmail.com.jpg', false),
+    new Testimony('4','מור', 'שמעוני', new Date('10-10-2021'), 'יש רק שתי דרכים לחיות, אחת היא לחשוב ששום דבר אינו קסום, השניה היא לחשוב שהכל קסום', 'http://aviadbenhayun.com:3000/images/tw.spider@gmail.com.jpg', true)
   ]);
 
   get testimonies() {
@@ -34,21 +34,21 @@ export class TestimonyService {
   }
 
   getTestimonies() {
-    return this.http.get<Testimony[]>(`http://${LOCALHOST}:3000/api/coupon/coupons`)
+    return this.http.get<Testimony[]>(`http://${LOCALHOST}:3000/api/testimony/testimonies`)
     .pipe(tap(resDta => {
       this._testimonies.next(resDta);
     }));
   }
 
   getTestimony(id: string) {
-    return this.http.get<Testimony>(`http://${LOCALHOST}:3000/api/coupon/coupon/${id}`)
+    return this.http.get<Testimony>(`http://${LOCALHOST}:3000/api/testimony/testimony/${id}`)
     .pipe(tap(resDta => {
       return resDta;
     }));
   }
 
   addTestimony(testimony: Testimony) {
-    return this.http.post<Testimony>(`http://${LOCALHOST}:3000/api/coupon/coupon`,
+    return this.http.post<Testimony>(`http://${LOCALHOST}:3000/api/testimony/testimony`,
     {
       ...testimony
     }).
@@ -70,9 +70,10 @@ export class TestimonyService {
       lastName:  testimony.lastName,
       date:      testimony.date,
       content:   testimony.content,
-      picture:   testimony.picture
+      picture:   testimony.picture,
+      approved:  testimony.approved
       };
-    return this.http.put<Testimony>(`http://${LOCALHOST}:3000/api/coupon/coupon/${testimony.id}`,
+    return this.http.put<Testimony>(`http://${LOCALHOST}:3000/api/testimony/testimony/${testimony.id}`,
     {
       ...testimonyObj
     }).
@@ -91,7 +92,7 @@ export class TestimonyService {
   }
 
   deleteCoupon(id: string) {
-    return this.http.delete(`http://${LOCALHOST}:3000/api/coupon/coupon/${id}`).
+    return this.http.delete(`http://${LOCALHOST}:3000/api/testimony/testimony/${id}`).
     pipe(
       switchMap(resData => {
         return this.getTestimonies();
@@ -100,4 +101,14 @@ export class TestimonyService {
         this._testimonies.next(testimonies.filter(t => t.id !== id));
       }));
   }
+
+  uploadImage(image: File, fileName: string) {
+    const uploadData = new FormData();
+    uploadData.append('image', image, fileName);
+    return this.http.post<{ imageUrl: string}>(
+      `http://${LOCALHOST}:3000/api/image/uploadTestimonyImage`,
+      uploadData
+    );
+  }
+
 }
