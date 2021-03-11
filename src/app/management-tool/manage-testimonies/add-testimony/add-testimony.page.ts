@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
-import { switchMap } from 'rxjs/operators';
+import { IonTextarea, ModalController, NavController } from '@ionic/angular';
+import { switchMap, timeout } from 'rxjs/operators';
 import { AppService } from 'src/app/app.service';
 import { Testimony } from 'src/app/testimony/testimony.model';
 import { TestimonyService } from 'src/app/testimony/testimony.service';
@@ -15,14 +15,17 @@ import * as utility from '../../../utilities/functions';
 export class AddTestimonyPage implements OnInit {
 
   @ViewChild('f', { static: true }) form: NgForm;
-
+  maxlength = 160;
+  testimonyLength = 0;
   file: File;
   imageselected = false;
+  imageValid = true;
 
 
   constructor(
     private testimonyService: TestimonyService,
     public appService: AppService,
+    private navController: NavController,
     private modalController: ModalController
     ) { }
 
@@ -48,14 +51,22 @@ export class AddTestimonyPage implements OnInit {
     this.file = imageFile;
   }
 
+  onTestimonyType(event: any) {
+    this.testimonyLength = event.detail.value.length;
+  }
+
 
   onSubmit(form: NgForm) {
     form.value.image = this.file;
     if (!form.valid) {
       return;
     }
+    if (!this.imageselected) {
+      this.imageValid = false;
+      return;
+    }
     if (!this.file) {
-      this.imageselected = false;
+      this.imageValid = false;
       return;
     }
     this.testimonyService.uploadImage(this.file, 'testimony')
@@ -65,7 +76,7 @@ export class AddTestimonyPage implements OnInit {
           null,
           form.value.firstName,
           form.value.lastName,
-          form.value.date,
+          new Date(),
           form.value.content,
           uploadRes.imageUrl,
           true
@@ -74,11 +85,18 @@ export class AddTestimonyPage implements OnInit {
       })
     ).subscribe(() => {
       form.reset();
-      this.appService.presentToast('המשתמש נשמר בהצלחה', true);
+      this.appService.presentToast('העדות נשמרה בהצלחה', true);
+      this.navController.navigateBack('/manage/testimonies');
     }, error => {
       form.reset();
-      this.appService.presentToast('חלה תקלה פרטי המשתמש לא נשמרו', false);
+      this.appService.presentToast('חלה תקלה פרטי העדות לא נשמרו', false);
     }
     );
+  }
+
+  onCancel() {
+    this.form.reset();
+    this.appService.presentToast('הפעולה בוטלה', true);
+    this.navController.navigateBack('/manage/testimonies');
   }
 }

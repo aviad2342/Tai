@@ -13,12 +13,7 @@ const LOCALHOST = environment.LOCALHOST;
 export class TestimonyService {
 
   // tslint:disable-next-line: variable-name
-  private _testimonies = new BehaviorSubject<Testimony[]>([
-    new Testimony('1','אביעד', 'בן חיון', new Date('9-10-2021'), 'היום היו הרבה בחורות בים.', 'http://aviadbenhayun.com:3000/images/aviad2342@walla.com.jpg', false),
-    new Testimony('2','אבריל', 'ליון', new Date('9-10-2021'), 'הפסימי מתלונן על הרוח, האופטימי מצפה שהיא תשתנה, החכם מכוון את המפרש בהתאם', 'http://aviadbenhayun.com:3000/therapistImages/1611841244314@avrill.jpg', true),
-    new Testimony('3','שירן', 'גרמן', new Date('10-10-2021'), 'אל תתפללו לחיים קלים יותר, וודאו שאתם נעשים חזקים יותר', 'http://aviadbenhayun.com:3000/images/shiran.german@gmail.com.jpg', false),
-    new Testimony('4','מור', 'שמעוני', new Date('10-10-2021'), 'יש רק שתי דרכים לחיות, אחת היא לחשוב ששום דבר אינו קסום, השניה היא לחשוב שהכל קסום', 'http://aviadbenhayun.com:3000/images/tw.spider@gmail.com.jpg', true)
-  ]);
+  private _testimonies = new BehaviorSubject<Testimony[]>([]);
 
   get testimonies() {
     return this._testimonies.asObservable();
@@ -91,7 +86,7 @@ export class TestimonyService {
       }));
   }
 
-  deleteCoupon(id: string) {
+  deleteTestimony(id: string) {
     return this.http.delete(`http://${LOCALHOST}:3000/api/testimony/testimony/${id}`).
     pipe(
       switchMap(resData => {

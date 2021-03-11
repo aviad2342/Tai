@@ -24,17 +24,14 @@ export class TestimonyPage implements OnInit, OnDestroy {
      ) { }
 
   ngOnInit() {
-    this.testimoniesSubscription = this.testimonyService.getAllTestimonies().subscribe(testimonies => {
+    this.testimoniesSubscription = this.testimonyService.testimonies.subscribe(testimonies => {
       this.testimonies = testimonies.filter(t => t.approved);
     });
-    // this.testimoniesSubscription = this.testimonyService.testimonies.subscribe(testimonies => {
-    //   this.testimonies = testimonies;
-    // });
   }
 
   ionViewWillEnter() {
     this.isDesktop = this.appService.isDesktop();
-    // this.testimonyService.getTestimonies().subscribe();
+    this.testimonyService.getTestimonies().subscribe();
   }
 
   onSubmit(form: NgForm) {

@@ -1,9 +1,31 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>view-testimony</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button class="app-back-btn" text="חזרה" [defaultHref]="['/', 'manage','testimonies']"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-no-padding app-titles">פרטי עדות</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center" *ngIf="isLoading">
+      <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2"  class="ion-text-center">
+        <ion-spinner color="primary"></ion-spinner>
+      </ion-col>
+    </ion-row>
 
+    <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
+      <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2"  class="ion-text-center">
+        <ion-item>
+          <ion-avatar class="ion-no-margin">
+            <ion-img [src]="testimony?.picture"></ion-img>
+          </ion-avatar>
+          <ion-label class="content-label ion-no-margin">
+            <p>{{ testimony?.content }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

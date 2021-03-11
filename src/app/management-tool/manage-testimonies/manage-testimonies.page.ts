@@ -64,22 +64,22 @@ export class ManageTestimoniesPage implements OnInit, OnDestroy {
      this.testimonies = temp;
       }
 
-  async onAddCoupon() {
+  async onAddTestimony() {
     this.selectedTestimonyId = null;
     this.isRowSelected = false;
     this.selected = [];
     this.router.navigate(['manage', 'testimonies', 'new']);
   }
 
-  async onViewCoupon() {
+  async onViewTestimony() {
     this.router.navigate(['manage', 'testimonies', 'view', this.selectedTestimonyId]);
   }
 
-  async onEditCoupon() {
+  async onEditTestimony() {
     this.router.navigate(['manage', 'testimonies', 'edit', this.selectedTestimonyId]);
   }
 
-  async onDeleteCoupon() {
+  async onDeleteTestimony() {
       const alert = await this.alertController.create({
         cssClass: 'delete-testimonies-alert',
         header: 'אישור מחיקת העדות',
@@ -95,7 +95,7 @@ export class ManageTestimoniesPage implements OnInit, OnDestroy {
           }, {
             text: 'אישור',
             handler: () => {
-              this.testimonyService.deleteCoupon(this.selectedTestimonyId).subscribe( () => {
+              this.testimonyService.deleteTestimony(this.selectedTestimonyId).subscribe( () => {
                 this.isRowSelected = false;
                 this.selectedTestimonyId = null;
                 this.selected = [];
@@ -111,13 +111,13 @@ export class ManageTestimoniesPage implements OnInit, OnDestroy {
   }
 
   onSelect({ selected }) {
-    if(this.selectedTestimonyId === selected[0].code) {
+    if(this.selectedTestimonyId === selected[0].id) {
       this.selected = [];
       this.selectedTestimonyId = '';
       this.isRowSelected = false;
     } else {
       this.isRowSelected = true;
-      this.selectedTestimonyId = selected[0].code;
+      this.selectedTestimonyId = selected[0].id;
     }
   }
 

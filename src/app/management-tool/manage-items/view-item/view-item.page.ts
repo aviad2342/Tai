@@ -13,6 +13,7 @@ export class ViewItemPage implements OnInit {
 
   item: Item;
   isLoading = false;
+  activeUrl = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -23,6 +24,7 @@ export class ViewItemPage implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.activeUrl = this.router.url;
     this.isLoading = true;
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
@@ -34,6 +36,7 @@ export class ViewItemPage implements OnInit {
             this.isLoading = false;
           },
           error => {
+            if (this.router.isActive(this.activeUrl, false)) {
             this.alertController
               .create({
                 header: 'ישנה תקלה!',
@@ -42,12 +45,15 @@ export class ViewItemPage implements OnInit {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.navController.navigateBack('/manage/items');
+                      if (this.router.isActive(this.activeUrl, false)) {
+                        this.navController.navigateBack('/manage/items');
+                      }
                     }
                   }
                 ]
               })
               .then(alertEl => alertEl.present());
+            }
           }
         );
     });

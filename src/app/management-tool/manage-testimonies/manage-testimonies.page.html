@@ -12,22 +12,22 @@
     <!---------------------------------- Action Buttons -------------------------------------------------->
         <ion-row>
           <ion-col>
-            <ion-button color="primary" (click)="onAddCoupon()">
+            <ion-button color="primary" (click)="onAddTestimony()">
             <ion-icon class="custom-speaker" slot="start"></ion-icon>
             <ion-label class="app-crud-btn-label">הוסף</ion-label>
           </ion-button>
     
-          <ion-button color="secondary" (click)="onViewCoupon()" [disabled]="!isRowSelected">
+          <ion-button color="secondary" (click)="onViewTestimony()" [disabled]="!isRowSelected">
             <ion-icon name="eye-outline" slot="start"></ion-icon>
             <ion-label class="app-crud-btn-label">פרטים</ion-label>
           </ion-button>
     
-          <ion-button color="warning" (click)="onEditCoupon()" [disabled]="!isRowSelected">
+          <ion-button color="warning" (click)="onEditTestimony()" [disabled]="!isRowSelected">
             <ion-icon name="create-outline" slot="start"></ion-icon>
             <ion-label class="app-crud-btn-label">ערוך</ion-label>
           </ion-button>
     
-          <ion-button color="danger" (click)="onDeleteCoupon()" [disabled]="!isRowSelected">
+          <ion-button color="danger" (click)="onDeleteTestimony()" [disabled]="!isRowSelected">
             <ion-icon name="trash-outline" slot="start"></ion-icon>
             <ion-label class="app-crud-btn-label">מחק</ion-label>
           </ion-button>
@@ -92,9 +92,9 @@
         </ngx-datatable-column> 
 
         <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="approved" [width]="100" [resizeable]="false">
-          <ng-template let-column="column" ngx-datatable-header-template><strong>אושר</strong></ng-template>
+          <ng-template let-column="column" ngx-datatable-header-template><strong>סטטוס</strong></ng-template>
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-            {{ row['approved'] ? 'לא' : 'כן' }}
+            {{ row['approved'] ? 'אושר' : 'לא אושר' }}
           </ng-template>
         </ngx-datatable-column>
     
