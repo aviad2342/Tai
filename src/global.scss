@@ -812,5 +812,13 @@ ion-icon {
     &[class*="toolbar-promo-code-icon"] {
       mask-image: url(./assets/icon/promo-code.svg);
     }
+
+    &[class*="custom-group"] {
+      mask-image: url(./assets/icon/group.svg);
+    }
+
+    &[class*="toolbar-group-icon"] {
+      mask-image: url(./assets/icon/group.svg);
+    }
   
   }

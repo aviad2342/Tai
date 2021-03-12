@@ -8,10 +8,10 @@ import { ManageUsersPageRoutingModule } from './manage-users-routing.module';
 
 import { ManageUsersPage } from './manage-users.page';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { AddUserComponent } from './add-user/add-user.component';
+import { AddUserComponent } from './addd-user/add-user.component';
 import { SharedModule } from '../../shared/shared.module';
-import { ViewUserComponent } from './view-user/view-user.component';
-import { EditUserComponent } from './edit-user/edit-user.component';
+import { ViewUserComponent } from './vieww-user/view-user.component';
+import { EditUserComponent } from './editt-user/edit-user.component';
 
 @NgModule({
   imports: [

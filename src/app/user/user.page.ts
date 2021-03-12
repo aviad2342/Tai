@@ -79,7 +79,7 @@ export class UserPage implements OnInit, OnDestroy {
           text: 'אישור',
           handler: () => {
             this.userService.deleteUser(id).subscribe( () => {
-              this.appService.presentToast('המשתמש נשמר בהצלחה', true);
+              this.appService.presentToast('המשתמש נמחק בהצלחה', true);
             }, error => {
               this.appService.presentToast('חלה תקלה לא ניתן למחוק את המשתמש כעת!', false);
             });

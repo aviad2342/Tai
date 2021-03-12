@@ -45,13 +45,13 @@ export class EditItemPage implements OnInit {
       }
       this.itemService.getItem(paramMap.get('id')).subscribe(item => {
             this.item = item;
-            const eventObj = {
+            const itemObj = {
               name:        this.item.name,
               description: this.item.description,
               price:       this.getCurrency(this.item.price),
               quantity:    this.item.quantity,
               };
-            this.form.setValue(eventObj);
+            this.form.setValue(itemObj);
             this.amount = this.getCurrency(this.item.price);
             this.prevAmount = this.item.price.toString();
             this.isLoading = false;
@@ -119,10 +119,7 @@ export class EditItemPage implements OnInit {
         this.appService.presentToast('המוצר נשמר בהצלחה', true);
         this.navController.navigateBack('/manage/items');
       }, error => {
-        console.log(error);
-        form.reset();
         this.appService.presentToast('חלה תקלה פרטי המוצר לא נשמרו', false);
-        this.navController.navigateBack('/manage/items');
       });
     } else {
       const itemToupdate = new Item(

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
-import { Testimony } from 'src/app/testimony/testimony.model';
-import { TestimonyService } from 'src/app/testimony/testimony.service';
+import { AlertController, IonCheckbox, NavController } from '@ionic/angular';
+import { AppService } from '../../../app.service';
+import { Testimony } from '../../../testimony/testimony.model';
+import { TestimonyService } from '../../../testimony/testimony.service';
 
 @Component({
   selector: 'app-view-testimony',
@@ -18,6 +19,7 @@ export class ViewTestimonyPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    public appService: AppService,
     private alertController: AlertController,
     private navController: NavController,
     private testimonyService: TestimonyService,
@@ -57,6 +59,19 @@ export class ViewTestimonyPage implements OnInit {
           }
         );
     });
+  }
+
+  onTestimonyApproved() {
+    this.testimonyService.updateTestimony(this.testimony).subscribe(() => {
+      if(this.testimony.approved) {
+        this.appService.presentToast('העדות אושרה בהצלחה', true);
+      } else {
+        this.appService.presentToast('אישור העדות הוסר בהצלחה', true);
+      }
+    }, error => {
+      this.appService.presentToast('חלה תקלה פרטי העדות לא נשמרו', false);
+    });
+
   }
 
 }

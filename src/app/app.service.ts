@@ -6,7 +6,10 @@ import { Platform, ToastController } from '@ionic/angular';
 })
 export class AppService {
 
-  constructor(private platform: Platform, public toastController: ToastController) { }
+  constructor(
+    private platform: Platform,
+    public toastController: ToastController
+    ) { }
 
   isDesktop() {
     return this.platform.is('desktop');

@@ -1,14 +1,49 @@
 
-.content-label {
-    background: aliceblue;
-    border-radius: 5px 5px 0px 5px;
-    margin-bottom: auto;
+.card-image {
+    width: fit-content;
+    max-height: 400px;
+    object-fit: contain;
+    background: black;
+    border-bottom: 1px solid black;
 }
 
-ion-avatar {
-    border-radius: 0px 35px 35px 35px;
-    background: aliceblue;
-    margin-top: 24px;
-    width: 70px;
-    height: 70px;
+ion-card {
+    background: lavender;
+    border: 2px solid black;
+}
+
+ion-card-title {
+    font-family: 'Yoav-bold';
+    color: var(--ion-color-dark);
+    font-size: xx-large;
+}
+
+ion-card-subtitle {
+    font-family: 'Yoav-bold';
+    font-size: large;
+}
+
+ion-card-content {
+    font-family: 'Yoav-bold';
+    font-size: large;
+}
+
+ion-card-content::before {
+    content: '"';
+    font-size: larger;
+    font-family: 'Anka-bold';
+    vertical-align: middle;
+}
+
+ion-card-content::after {
+    content: '"';
+    font-size: larger;
+    font-family: 'Anka-bold';
+    vertical-align: middle;
+}
+
+.testimony-approved-label {
+    font-family: 'Yoav-bold';
+    font-size: large;
+    padding-right: 5px;
 }

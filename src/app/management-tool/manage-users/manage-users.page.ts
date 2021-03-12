@@ -2,12 +2,13 @@ import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@ang
 import { ColumnMode, DatatableComponent, SelectionType } from '../../../../projects/swimlane/ngx-datatable/src/public-api';
 import { UserService } from '../../user/user.service';
 import { ModalController, AlertController } from '@ionic/angular';
-import { AddUserComponent } from './add-user/add-user.component';
+import { AddUserComponent } from './addd-user/add-user.component';
 import { Subscription } from 'rxjs';
 import { User } from '../../user/user.model';
-import { ViewUserComponent } from './view-user/view-user.component';
-import { EditUserComponent } from './edit-user/edit-user.component';
+import { ViewUserComponent } from './vieww-user/view-user.component';
+import { EditUserComponent } from './editt-user/edit-user.component';
 import { AppService } from '../../app.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class ManageUsersPage implements OnInit, OnDestroy {
     private userservice: UserService,
     private modalController: ModalController,
     private alertController: AlertController,
+    private router: Router,
     private appservice: AppService
     ) { }
 
@@ -54,50 +56,65 @@ export class ManageUsersPage implements OnInit, OnDestroy {
   }
 
   async onAddUser() {
-    this.selected = []
     this.selectedUserId = null;
     this.isRowSelected = false;
-    const modal = await this.modalController.create({
-      component: AddUserComponent,
-      cssClass: 'add-user-modal',
-      backdropDismiss: false,
-      animated: true
-    },);
-    return await modal.present();
+    this.selected = [];
+    this.router.navigate(['manage', 'users', 'new']);
   }
 
   async onViewUser() {
-    const modal = await this.modalController.create({
-      component: ViewUserComponent,
-      cssClass: 'view-user-modal',
-      animated: true,
-      componentProps: {
-        id: this.selectedUserId
-      }
-    });
-    return await modal.present();
+    this.router.navigate(['manage', 'users', 'view', this.selectedUserId]);
   }
 
   async onEditUser() {
-    const modal = await this.modalController.create({
-      component: EditUserComponent,
-      cssClass: 'edit-user-modal',
-      backdropDismiss: false,
-      animated: true,
-      componentProps: {
-        id: this.selectedUserId
-      }
-    });
-     modal.onDidDismiss<User>().then( data => {
-      if(data.data !== null  && data.data ) {
-        this.selected = [];
-        this.selected.push(data.data);
-        // this.selected[0] = this.users.find(u => u.id === this.selectedUserId);
-        // this.isRowSelected = true;
-      }
-    });
-    return await modal.present();
+    this.router.navigate(['manage', 'users', 'edit', this.selectedUserId]);
   }
+
+  // async onAddUser() {
+  //   this.selected = []
+  //   this.selectedUserId = null;
+  //   this.isRowSelected = false;
+  //   const modal = await this.modalController.create({
+  //     component: AddUserComponent,
+  //     cssClass: 'add-user-modal',
+  //     backdropDismiss: false,
+  //     animated: true
+  //   },);
+  //   return await modal.present();
+  // }
+
+  // async onViewUser() {
+  //   const modal = await this.modalController.create({
+  //     component: ViewUserComponent,
+  //     cssClass: 'view-user-modal',
+  //     animated: true,
+  //     componentProps: {
+  //       id: this.selectedUserId
+  //     }
+  //   });
+  //   return await modal.present();
+  // }
+
+  // async onEditUser() {
+  //   const modal = await this.modalController.create({
+  //     component: EditUserComponent,
+  //     cssClass: 'edit-user-modal',
+  //     backdropDismiss: false,
+  //     animated: true,
+  //     componentProps: {
+  //       id: this.selectedUserId
+  //     }
+  //   });
+  //    modal.onDidDismiss<User>().then( data => {
+  //     if(data.data !== null  && data.data ) {
+  //       this.selected = [];
+  //       this.selected.push(data.data);
+  //       // this.selected[0] = this.users.find(u => u.id === this.selectedUserId);
+  //       // this.isRowSelected = true;
+  //     }
+  //   });
+  //   return await modal.present();
+  // }
 
   async onDeleteUser() {
       const alert = await this.alertController.create({
@@ -180,10 +197,6 @@ export class ManageUsersPage implements OnInit, OnDestroy {
       return d.city.toLowerCase().indexOf(val) !== -1 || !val;
   });
     this.users = temp;
-  }
-
-  getUserFullName() {
-    return this.selected[0]?.firstName + ' ' + this.selected[0]?.lastName;
   }
 
   ngOnDestroy() {

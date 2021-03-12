@@ -16,14 +16,20 @@
     </ion-row>
 
     <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
-      <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2"  class="ion-text-center">
-        <ion-item>
-          <ion-avatar class="ion-no-margin">
-            <ion-img [src]="testimony?.picture"></ion-img>
-          </ion-avatar>
-          <ion-label class="content-label ion-no-margin">
-            <p>{{ testimony?.content }}</p>
-          </ion-label>
+      <ion-col size-xl="4" size-lg="6" size-md="8" size-sm="10"  class="ion-text-center">
+        <ion-card>
+          <img class="card-image" [src]="testimony?.picture" />
+          <ion-card-header>
+            <ion-card-title>{{ testimony.firstName + ' ' + testimony.lastName}}</ion-card-title>
+            <ion-card-subtitle>{{ testimony.date | date}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            {{ testimony?.content }}
+          </ion-card-content>
+        </ion-card>
+        <ion-item lines="none">
+          <ion-checkbox (ionChange)="onTestimonyApproved()" mode="ios" color="primary" class="ion-no-margin" [(ngModel)]="testimony.approved" slot="start"></ion-checkbox>
+          <ion-label class="ion-no-margin testimony-approved-label">אישור פרסום</ion-label>
         </ion-item>
       </ion-col>
     </ion-row>
