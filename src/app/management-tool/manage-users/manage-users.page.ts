@@ -2,11 +2,8 @@ import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@ang
 import { ColumnMode, DatatableComponent, SelectionType } from '../../../../projects/swimlane/ngx-datatable/src/public-api';
 import { UserService } from '../../user/user.service';
 import { ModalController, AlertController } from '@ionic/angular';
-import { AddUserComponent } from './addd-user/add-user.component';
 import { Subscription } from 'rxjs';
 import { User } from '../../user/user.model';
-import { ViewUserComponent } from './vieww-user/view-user.component';
-import { EditUserComponent } from './editt-user/edit-user.component';
 import { AppService } from '../../app.service';
 import { Router } from '@angular/router';
 
@@ -23,7 +20,6 @@ export class ManageUsersPage implements OnInit, OnDestroy {
   selectedUserId;
   private usersSubscription: Subscription;
   @ViewChild('usersTable') usersTable: DatatableComponent;
-	tableStyle = 'dark';
   isRowSelected = false;
   columnMode = ColumnMode;
   SelectionType = SelectionType;

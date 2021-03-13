@@ -50,6 +50,7 @@ export class AddressFormPickerComponent implements OnInit {
     if(this.isEdit) {
       this.enableStreetPicker = true;
       this.disableHouseNumberPicker = false;
+      this.isValid.emit(true);
     }
     this.houseNumber.splice(0, 1);
     this.houseNumber.forEach(element => {
@@ -77,6 +78,7 @@ onSelectedCity(event) {
 
 onFilteringCity(event) {
   this.resetAddress();
+  this.isValid.emit(false);
   this.cities.showSpinner();
   if(event.text !== '') {
     this.addressService.getCitiesPrediction(event.text).subscribe(cities => {
@@ -93,6 +95,7 @@ onSelectedStreet(event) {
 
 onFilteringStreet(event) {
   this.resetHouseNumber();
+  this.isValid.emit(false);
   if(event.text !== '') {
     this.streets.showSpinner();
     this.addressService.getStreetsPrediction( this.selectedAddress.city, event.text).subscribe(streets => {
@@ -121,14 +124,6 @@ async onSelecteHouseNumber() {
         text: 'ביטול',
         role: 'cancel',
         cssClass: 'house-number-picker-btn'
-      },
-      {
-        text: '+100',
-        role: 'null',
-        cssClass: 'house-number-picker-btn',
-        handler: (value: any) => {
-          this.selectedHouseNumberIndex = value.Number.value + 99;
-        }
       },
       {
         text: 'אישור',

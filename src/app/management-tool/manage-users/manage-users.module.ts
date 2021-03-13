@@ -8,10 +8,8 @@ import { ManageUsersPageRoutingModule } from './manage-users-routing.module';
 
 import { ManageUsersPage } from './manage-users.page';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { AddUserComponent } from './addd-user/add-user.component';
 import { SharedModule } from '../../shared/shared.module';
-import { ViewUserComponent } from './vieww-user/view-user.component';
-import { EditUserComponent } from './editt-user/edit-user.component';
+
 
 @NgModule({
   imports: [
@@ -23,7 +21,7 @@ import { EditUserComponent } from './editt-user/edit-user.component';
     ReactiveFormsModule,
     SharedModule
   ],
-  declarations: [ManageUsersPage, AddUserComponent, ViewUserComponent, EditUserComponent],
+  declarations: [ManageUsersPage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class ManageUsersPageModule {}
