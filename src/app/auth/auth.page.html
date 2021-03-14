@@ -87,16 +87,31 @@
      </form>
 
      <ion-row class="ion-justify-content-center">
-      <ion-col size-xl="3" size-lg="5" size-md="6" size-sm="7" class="ion-text-center">
+      <ion-col size-xl="3" size-lg="5" size-md="6" size-sm="7" class="ion-text-center ion-no-padding">
         <ion-button
           title="הרשמה"
           fill="clear"
           color="primary"
           [routerLink]="['/','registration']"
-      >
-      <ion-icon class="custom-register" slot="start"></ion-icon>
-      <ion-label class="app-register-btn">הרשמה</ion-label>
-      </ion-button>
+        >
+         <ion-icon class="custom-register" slot="start"></ion-icon>
+         <ion-label class="app-register-btn">הרשמה</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-xl="3" size-lg="5" size-md="6" size-sm="7" class="ion-text-center ion-no-padding">
+        <ion-button
+          class="ion-no-margin"
+          title="הרשמה"
+          fill="clear"
+          color="primary"
+          [routerLink]="['/','forgotpassword']"
+        >
+         <ion-icon class="custom-password" slot="start"></ion-icon>
+         <ion-label class="forgot-password-btn">שכחת סיסמה?</ion-label>
+        </ion-button>
       </ion-col>
     </ion-row>
     </ion-grid>

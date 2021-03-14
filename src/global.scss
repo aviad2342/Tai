@@ -820,5 +820,14 @@ ion-icon {
     &[class*="toolbar-group-icon"] {
       mask-image: url(./assets/icon/group.svg);
     }
+
+    &[class*="custom-password"] {
+      mask-image: url(./assets/icon/password.svg);
+    }
+
+    &[class*="toolbar-password-icon"] {
+      mask-image: url(./assets/icon/password.svg);
+    }
+  
   
   }

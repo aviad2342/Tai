@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { IonInput, NavController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
 import { AppService } from '../app.service';
 import { Address } from '../shared/address.model';
@@ -23,11 +23,14 @@ export class RegistrationPage implements OnInit {
   address: Address = new Address();
   addressIsValid = false;
   imageIsValid = true;
+  emailIsValid = true;
+  emailErrorLabel = 'כתובת המייל אינה תקינה!';
 
   constructor(
     private router: Router,
     private navController: NavController,
     private registrationService: RegistrationService,
+    private userSrvice: UserService,
     public appService: AppService
     ) { }
 
@@ -65,6 +68,11 @@ export class RegistrationPage implements OnInit {
     if (!form.valid) {
       return;
     }
+
+    if (!this.emailIsValid) {
+      return;
+    }
+
     if (!this.file) {
       this.imageIsValid = false;
       return;
@@ -103,6 +111,18 @@ export class RegistrationPage implements OnInit {
       this.appService.presentToast('חלה תקלה ההרשמה נכשלה!', false);
     }
     );
+  }
+
+  onVerifyEmail(event) {
+    this.userSrvice.getUserByEmail(event.target.value).subscribe( user => {
+      if (user) {
+        this.emailIsValid = false;
+        this.emailErrorLabel = 'כתובת המייל קיימת!!';
+      } else {
+        this.emailIsValid = true;
+        this.emailErrorLabel = 'כתובת המייל אינה תקינה!';
+      }
+    });
   }
 
 }
