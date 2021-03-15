@@ -5,7 +5,7 @@ import { PasswordResetPage } from './password-reset.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':email',
     component: PasswordResetPage
   }
 ];

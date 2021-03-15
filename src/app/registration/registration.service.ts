@@ -93,5 +93,12 @@ export class RegistrationService {
       }));
   }
 
+  resetUserPassword(email: string) {
+    return this.http.post<boolean>(`http://${LOCALHOST}:3000/api/register/user/email`, email)
+    .pipe(tap(emailSent => {
+        return emailSent;
+    }));
+  }
+
 
 }
