@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { PasswordReset } from '../user/password-reset.model';
 import { Registered } from './registered.model';
 
 export interface AuthResponseData {
@@ -34,22 +35,22 @@ export class RegistrationService {
 
   getRegisteredUsers() {
     return this.http.get<Registered[]>(`http://${LOCALHOST}:3000/api/register/users`)
-    .pipe(tap(resDta => {
-      this._registeredUsers.next(resDta);
+    .pipe(tap(resData => {
+      this._registeredUsers.next(resData);
     }));
   }
 
   getRegisteredUser(id: string) {
     return this.http.get<Registered>(`http://${LOCALHOST}:3000/api/register/user/${id}`)
-    .pipe(tap(resDta => {
-      return resDta;
+    .pipe(tap(resData => {
+      return resData;
     }));
   }
 
   verifyRegisteredUser(token: string) {
     return this.http.get<AuthResponseData>(`http://${LOCALHOST}:3000/api/register/verify/${token}`)
-    .pipe(tap(resDta => {
-      return resDta;
+    .pipe(tap(resData => {
+      return resData;
     }));
   }
 
@@ -93,10 +94,12 @@ export class RegistrationService {
       }));
   }
 
-  resetUserPassword(email: string) {
-    return this.http.post<boolean>(`http://${LOCALHOST}:3000/api/register/user/email`, email)
-    .pipe(tap(emailSent => {
-        return emailSent;
+  resetUserPassword(passwordReset: PasswordReset) {
+    return this.http.post<PasswordReset>(`http://${LOCALHOST}:3000/api/register/user/resetpassword`,
+     {
+       ...passwordReset
+    }).pipe(tap(resData => {
+        return resData;
     }));
   }
 

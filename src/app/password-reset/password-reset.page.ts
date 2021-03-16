@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonIcon, IonInput, NavController, Platform } from '@ionic/angular';
+import { switchMap } from 'rxjs/operators';
+import { PasswordReset } from '../user/password-reset.model';
 import { User } from '../user/user.model';
 import { UserService } from '../user/user.service';
 
@@ -12,6 +14,7 @@ import { UserService } from '../user/user.service';
 })
 export class PasswordResetPage implements OnInit {
 
+  passwordReset: PasswordReset;
   user: User;
   isLoading = false;
   userOldPassword = '';
@@ -38,7 +41,16 @@ export class PasswordResetPage implements OnInit {
         this.navController.navigateRoot('/auth');
         return;
       }
-      this.userService.getUserByEmail(paramMap.get('email')).subscribe(user => {
+      this.userService.getPasswordReset(paramMap.get('email')).pipe(
+        switchMap(passwordReset => {
+          this.passwordReset = passwordReset;
+          if (passwordReset.expirationDate > new Date()) {
+            this.isLoading = false;
+            this.resetSuccess = false;
+            this.resetMassage = 'פג התוקף של קישור זה! יש לשלוח בקשה חוזרת לאיפוס הסיסמה.';
+          }
+          return this.userService.getUserByEmail(passwordReset.email);
+        })).subscribe(user => {
         this.user = user;
         this.userOldPassword = user.password;
       },
@@ -68,8 +80,8 @@ export class PasswordResetPage implements OnInit {
     }
 
     this.user.password = form.value.password;
-    this.userService.updateUser(this.user).subscribe( user => {
-      if (user.password !== this.userOldPassword) {
+    this.userService.updateUserPassword(this.user, this.passwordReset.token).subscribe( passwordReset => {
+      if (passwordReset.success) {
         this.resetSuccess = true;
         this.resetMassage = 'הסיסמה שונתה בהצלחה!';
       }

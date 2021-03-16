@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { take, map, tap, delay, switchMap } from 'rxjs/operators';
 import { User } from './user.model';
 import { environment } from 'src/environments/environment';
+import { PasswordReset } from './password-reset.model';
 
 const LOCALHOST = environment.LOCALHOST;
 
@@ -217,6 +218,37 @@ export class UserService {
       tap(users => {
         this._users.next(users.filter(u => u.id !== id));
       }));
+  }
+
+  getPasswordReset(token: string) {
+    return this.http.get<PasswordReset>(`http://${LOCALHOST}:3000/api/user/resetpassword/${token}`)
+    .pipe(tap(resDta => {
+      return resDta;
+    }));
+  }
+
+  updateUserPassword(user: User, token: string) {
+    const userObj = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phone: user.phone,
+      password: user.password,
+      date: user.date,
+      country: user.country,
+      city: user.city,
+      street: user.street,
+      houseNumber: user.houseNumber,
+      apartment: user.apartment,
+      entry: user.entry,
+      profilePicture: user.profilePicture
+      };
+    return this.http.put<PasswordReset>(`http://${LOCALHOST}:3000/api/user/user/${user.id}/${token}`,
+    {
+      ...userObj
+    }).pipe(tap(resDta => {
+      return resDta;
+    }));
   }
 
 }
