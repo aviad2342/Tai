@@ -9,6 +9,7 @@ export class PasswordReset {
       public expirationDate: Date,
       public emailSent?: boolean,
       public success?: boolean,
+      public activated?: boolean
     ) {}
 
   }

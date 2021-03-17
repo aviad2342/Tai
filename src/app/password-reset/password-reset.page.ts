@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonIcon, IonInput, NavController, Platform } from '@ionic/angular';
+import { throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { AppService } from '../app.service';
 import { PasswordReset } from '../user/password-reset.model';
 import { User } from '../user/user.model';
 import { UserService } from '../user/user.service';
@@ -16,14 +18,15 @@ export class PasswordResetPage implements OnInit {
 
   passwordReset: PasswordReset;
   user: User;
-  isLoading = false;
+  isDone = false;
+  linkExpired: boolean;
   userOldPassword = '';
   moveToAuthPageRef = '';
-  resetSuccess = false;
   resetMassage = '';
 
   constructor(
     private router: Router,
+    public appService: AppService,
     private navController: NavController,
     private route: ActivatedRoute,
     private userService: UserService,
@@ -43,11 +46,28 @@ export class PasswordResetPage implements OnInit {
       }
       this.userService.getPasswordReset(paramMap.get('email')).pipe(
         switchMap(passwordReset => {
+          if (!passwordReset) {
+            this.linkExpired = true;
+            this.resetMassage = 'ישנה תקלה! אנא נסה מאוחר יותר.';
+            this.isDone = true;
+            return throwError(new Error(this.resetMassage));
+          }
+
+          if (passwordReset.activated) {
+            this.linkExpired = true;
+            this.resetMassage = 'קישור זה היה בשימוש בעבר! יש לשלוח בקשה חוזרת לאיפוס הסיסמה.';
+            this.isDone = true;
+            return throwError(new Error(this.resetMassage));
+          }
+
           this.passwordReset = passwordReset;
-          if (passwordReset.expirationDate > new Date()) {
-            this.isLoading = false;
-            this.resetSuccess = false;
+          const now = Date.parse(new Date().toISOString());
+          const expirationDate = Date.parse(passwordReset.expirationDate.toString());
+          if (expirationDate < now) {
+            this.linkExpired = true;
             this.resetMassage = 'פג התוקף של קישור זה! יש לשלוח בקשה חוזרת לאיפוס הסיסמה.';
+            this.isDone = true;
+            return throwError(new Error(this.resetMassage));
           }
           return this.userService.getUserByEmail(passwordReset.email);
         })).subscribe(user => {
@@ -55,9 +75,9 @@ export class PasswordResetPage implements OnInit {
         this.userOldPassword = user.password;
       },
         error => {
-          this.isLoading = false;
-          this.resetSuccess = false;
-          this.resetMassage = 'ישנה תקלה! אנא נסה מאוחר יותר.';
+          this.linkExpired = true;
+          this.resetMassage = error.message;
+          this.isDone = true;
         }
       );
     });
@@ -82,12 +102,17 @@ export class PasswordResetPage implements OnInit {
     this.user.password = form.value.password;
     this.userService.updateUserPassword(this.user, this.passwordReset.token).subscribe( passwordReset => {
       if (passwordReset.success) {
-        this.resetSuccess = true;
-        this.resetMassage = 'הסיסמה שונתה בהצלחה!';
+        this.appService.presentToast('העדות נשמרה בהצלחה', true);
+        this.isDone = true;
+      } else {
+        this.linkExpired = true;
+        this.resetMassage = 'ישנה תקלה! הסיסמה לא שונתה..';
+        this.isDone = true;
       }
     }, error => {
-      this.resetSuccess = false;
+      this.linkExpired = true;
       this.resetMassage = 'ישנה תקלה! אנא נסה שנית מאוחר יותר.';
+      this.isDone = true;
     }
     );
   }

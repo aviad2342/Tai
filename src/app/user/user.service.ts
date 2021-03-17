@@ -243,7 +243,7 @@ export class UserService {
       entry: user.entry,
       profilePicture: user.profilePicture
       };
-    return this.http.put<PasswordReset>(`http://${LOCALHOST}:3000/api/user/user/${user.id}/${token}`,
+    return this.http.put<PasswordReset>(`http://${LOCALHOST}:3000/api/user/password/${user.id}/${token}`,
     {
       ...userObj
     }).pipe(tap(resDta => {

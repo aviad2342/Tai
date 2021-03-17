@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { throwError } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { AppService } from '../app.service';
 import { RegistrationService } from '../registration/registration.service';
 import { PasswordReset } from '../user/password-reset.model';
@@ -13,7 +15,7 @@ import { UserService } from '../user/user.service';
 })
 export class ForgotPasswordPage implements OnInit {
 
-  userEmail: string;
+  userEmail = '';
   passwordReset: PasswordReset;
   user: User
   emailIsValid = true;
@@ -33,33 +35,35 @@ export class ForgotPasswordPage implements OnInit {
   ngOnInit() {
   }
 
-  onVerifyEmail(event) {
-    this.userSrvice.getUserByEmail(event.target.value).subscribe( user => {
-      if (!user) {
-        this.emailIsValid = false;
-        this.emailErrorLabel = 'כתובת המייל אינה קיימת!!';
-      } else {
-        this.user = user;
-        this.emailIsValid = true;
-        this.emailErrorLabel = 'כתובת המייל אינה תקינה!';
-      }
-    });
+  onFocusEmail() {
+    this.emailIsValid = true;
+    this.emailErrorLabel = 'כתובת המייל אינה תקינה!';
   }
 
   onResetPassword() {
     this.retrieveData = true;
-    const date: Date = new Date();
-    const passwordReset = new PasswordReset(
-      null,
-      this.user.firstName,
-      this.user.lastName,
-      this.user.email,
-      new Date(),
-      new Date(date.setDate(date.getDate() + 3)),
-      false,
-      false
+    this.userSrvice.getUserByEmail(this.userEmail).pipe(
+      switchMap(user => {
+        if (!user) {
+          this.emailIsValid = false;
+          this.emailErrorLabel = 'כתובת המייל אינה קיימת!';
+          return throwError(new Error(this.emailErrorLabel));
+        }
+        const date: Date = new Date();
+        const passwordReset = new PasswordReset(
+        null,
+        user.firstName,
+        user.lastName,
+        user.email,
+        new Date(),
+        new Date(date.setDate(date.getDate() + 3)),
+        false,
+        false,
+        false
     );
-    this.registrationService.resetUserPassword(passwordReset).subscribe(resData => {
+      return this.registrationService.resetUserPassword(passwordReset);
+      })
+    ).subscribe(resData => {
       if(resData && resData.emailSent) {
         this.resetMassage = 'הפעולה הצליחה! קישור לאיפוס הסיסמה נשלח לתיבת המייל שלך.'
         this.resetSuccess = true;
@@ -71,7 +75,7 @@ export class ForgotPasswordPage implements OnInit {
       }
       this.didReset = true;
     }, error => {
-        this.resetMassage = 'הפעולה נכשלה! אנא נסה שנית מאוחר יותר.';
+        this.resetMassage = error.message;
         this.resetSuccess = false;
         this.retrieveData = false;
     });
