@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="['/', 'tabs', 'event']"></ion-back-button>
+      <ion-back-button class="app-back-btn" text="חזרה" [defaultHref]="['/', 'tabs', 'event']"></ion-back-button>
     </ion-buttons>
-    <ion-title>רשימת משתתפים</ion-title>
+    <ion-title class="app-titles">רשימת משתתפים</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -38,7 +38,7 @@
           <ion-img [src]="participant.picture"></ion-img>
         </ion-thumbnail>
         <ion-label>
-          <h2>{{ participant.firstName + ' ' + participant.lastName }}</h2>
+          <h2 class="participant-name">{{ participant.firstName + ' ' + participant.lastName }}</h2>
           <ion-text color="medium">
             <p>{{ participant.email }}</p>
           </ion-text>

@@ -33,20 +33,62 @@
 }
 
 ion-card-title {
-    font-size: xx-large;
+  font-family: 'Hofesh';
+  font-size: xx-large;
+  color: var(--ion-color-dark);
 }
 
-ion-item::part(native){
-    --inner-padding-end: 0;
+ion-card-content a {
+  font-family: 'Choco';
+  font-size: larger;
+}
+
+.email-label {
+  font-family: cursive !important;
+  font-size: larger;
+}
+
+.phone-label {
+  font-family: cursive !important;
+  font-size: larger;
+}
+
+.address-label {
+  white-space: normal !important;
+  overflow: hidden;
+}
+
+.age-label {
+  font-family: cursive !important;
+  font-size: larger;
+}
+
+.resume-label {
+  font-family: 'Choco';
+  font-size: larger;
+  white-space: normal !important;
+  overflow: hidden;
+}
+
+.treatment-types-label {
+  font-family: 'Choco';
+  font-size: larger;
+}
+
+.type-label {
+  font-family: 'Choco';
+  font-size: larger;
+}
+
+.type-item {
+  --min-height: 30px;
 }
 
 // .main-col {
-//   // max-width: 450px !important;
-//   // min-width: 420px !important;
-//   max-width: fit-content !important;
-//   min-width: fit-content !important;
+// max-width: fit-content !important;
+// min-width: fit-content !important;
 // }
 
 // .user-detail-card {
-//   width: 400px !important;
+// min-width: 400px !important;
 // }

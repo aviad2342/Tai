@@ -1,9 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
+import { Article } from '../../article/article.model';
+import { Course } from '../../course/course.model';
+import { Event } from '../../event/event.model';
+import { Treatment } from '../../treatment/treatment.model';
+import { ArticleService } from '../../article/article.service';
+import { CourseService } from '../../course/course.service';
+import { EventService } from '../../event/event.service';
+import { TreatmentService } from '../../treatment/treatment.service';
 import { Item } from '../item.model';
 import { ItemService } from '../item.service';
+import { Speaker } from '../../event/speaker.model';
+import { ViewSpeakerComponent } from '../../management-tool/manage-events/view-speaker/view-speaker.component';
 
 @Component({
   selector: 'app-item-detail',
@@ -13,14 +23,28 @@ import { ItemService } from '../item.service';
 export class ItemDetailPage implements OnInit {
 
   item: Item;
+  article: Article;
+  course: Course;
+  event: Event;
+  treatment: Treatment;
   activeUrl = '';
   isLoading = false;
+  isArticle = false;
+  isCourse = false;
+  isEvent = false;
+  isTreatment = false;
+  isOther = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private modalController: ModalController,
     private alertController: AlertController,
     private itemService: ItemService,
+    private articleService: ArticleService,
+    private courseService: CourseService,
+    private eventService: EventService,
+    private treatmentService: TreatmentService,
     private navController: NavController
     ) { }
 
@@ -36,9 +60,38 @@ export class ItemDetailPage implements OnInit {
         switchMap(item => {
           this.item = item;
           this.isLoading = false;
-          return item.productId;
+          return this.itemService.getProduct(item.productId);
         })
-      ).subscribe(() => {
+      ).subscribe(productType => {
+        switch (productType) {
+          case 'article':
+            this.articleService.getArticle(this.item.productId).subscribe(article => {
+              this.article = article;
+              this.isArticle = true;
+            });
+            break;
+          case 'course':
+            this.courseService.getCourse(this.item.productId).subscribe(course => {
+              this.course = course;
+              this.isCourse = true;
+            });
+            break;
+          case 'event':
+            this.eventService.getEvent(this.item.productId).subscribe(event => {
+              this.event = event;
+              this.isEvent = true;
+            });
+            break;
+          case 'treatment':
+            this.treatmentService.getTreatment(this.item.productId).subscribe(treatment => {
+              this.treatment = treatment;
+              this.isTreatment = true;
+            });
+            break;
+          default:
+            this.isOther = true;
+            break;
+        }
 
           },
           error => {
@@ -64,5 +117,18 @@ export class ItemDetailPage implements OnInit {
           }
         );
     });
+  }
+
+  async onViewspeaker(speaker: Speaker) {
+    const modal = await this.modalController.create({
+      component: ViewSpeakerComponent,
+      cssClass: 'view-speaker-modal',
+      backdropDismiss: false,
+      animated: true,
+      componentProps: {
+        speaker
+      }
+    });
+    return await modal.present();
   }
 }

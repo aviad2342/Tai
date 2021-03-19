@@ -103,4 +103,11 @@ export class ItemService {
     );
   }
 
+  getProduct(id: string) {
+    return this.http.get<string>(`http://${LOCALHOST}:3000/api/item/product/${id}`)
+    .pipe(tap(resDta => {
+      return resDta;
+    }));
+  }
+
 }

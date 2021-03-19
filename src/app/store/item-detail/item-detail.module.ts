@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ItemDetailPageRoutingModule } from './item-detail-routing.module';
 
 import { ItemDetailPage } from './item-detail.page';
+import { EventSharedModule } from '../../event/event-shared/event-shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ItemDetailPageRoutingModule
+    ItemDetailPageRoutingModule,
+    EventSharedModule
   ],
   declarations: [ItemDetailPage]
 })

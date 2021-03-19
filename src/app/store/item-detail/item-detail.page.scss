@@ -1,0 +1,35 @@
+.view-participants {
+    cursor: pointer;
+}
+
+.view-speaker {
+    cursor: pointer;
+}
+
+.item-titel {
+    font-family: 'Yoav-bold';
+    font-size: x-large;
+}
+
+.item-thumbnail {
+    border: 1px solid black;
+}
+
+.item-description {
+    font-family: 'Yoav';
+    font-size: larger;
+}
+
+app-speaker-item .view-speaker  :hover {
+    --background: lightgray;
+    background-color: lightgray;
+}
+
+.event-detail-labels {
+    font-family: 'Yoav' !important;
+    font-size: large;
+}
+
+.first-item {
+    border-top: 1px solid var(--border-color);
+}

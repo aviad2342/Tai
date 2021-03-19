@@ -53,16 +53,17 @@ export class ViewTherapistPage implements OnInit {
     });
   }
 
-  getTherapistFullName() {
-    return this.therapist?.firstName + ' ' + this.therapist?.lastName;
-  }
+  public ageFromDateOfBirthday(dateOfBirth: any): number {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
 
-  getTherapistAge() {
-    return new Date().getFullYear() - new Date(this.therapist?.date).getFullYear();
-  }
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
 
-  getTherapistAddress() {
-    return this.therapist?.street + ' ' + this.therapist?.houseNumber + ', ' + this.therapist?.city + ', ' + this.therapist?.country;
+    return age;
   }
 
 }
