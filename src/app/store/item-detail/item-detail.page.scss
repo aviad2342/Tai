@@ -1,3 +1,9 @@
+
+.item-detail-container {
+    border: 1px solid black;
+    background: aliceblue;
+}
+
 .view-participants {
     cursor: pointer;
 }
@@ -32,4 +38,14 @@ app-speaker-item .view-speaker  :hover {
 
 .first-item {
     border-top: 1px solid var(--border-color);
+}
+
+.treatment-description-text {
+    font-family: 'Yoav';
+    font-size: large;
+    color: black;
+}
+
+ion-item {
+    --background: transparent;
 }

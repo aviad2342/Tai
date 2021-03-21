@@ -75,6 +75,10 @@ export class AddLessonComponent implements OnInit {
       });
       return videoURL.replace('https://vimeo.com/', '');
     }
+    // else if(videoURL.includes('facebook')) {
+    //   this.thumbnail = `https://img.youtube.com/vi/${videoURL.split('/embed/')[videoURL.split('/embed/').length - 1]}/sddefault.jpg`;
+    //   return videoURL.split('/videos/')[1].split('&')[0];
+    // }
   }
 
   getVideoThumbnail(videoId: string){

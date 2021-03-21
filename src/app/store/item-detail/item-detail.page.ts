@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, ModalController, NavController } from '@ionic/angular';
+import { AlertController, ModalController, NavController, PopoverController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
 import { Article } from '../../article/article.model';
 import { Course } from '../../course/course.model';
@@ -14,6 +14,7 @@ import { Item } from '../item.model';
 import { ItemService } from '../item.service';
 import { Speaker } from '../../event/speaker.model';
 import { ViewSpeakerComponent } from '../../management-tool/manage-events/view-speaker/view-speaker.component';
+import { TherapistDetailComponent } from 'src/app/management-tool/manage-treatments/therapist-detail/therapist-detail.component';
 
 @Component({
   selector: 'app-item-detail',
@@ -38,6 +39,7 @@ export class ItemDetailPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private popoverController: PopoverController,
     private modalController: ModalController,
     private alertController: AlertController,
     private itemService: ItemService,
@@ -130,5 +132,20 @@ export class ItemDetailPage implements OnInit {
       }
     });
     return await modal.present();
+  }
+
+  async onTherapistDetail(ev: any) {
+    const popover = await this.popoverController.create({
+      component: TherapistDetailComponent,
+      cssClass: 'therapist-detail-popover',
+      animated: true,
+      mode: 'ios',
+      event: ev,
+      backdropDismiss: false,
+      componentProps: {
+        id: this.treatment.therapistId
+      }
+    });
+    return await popover.present();
   }
 }

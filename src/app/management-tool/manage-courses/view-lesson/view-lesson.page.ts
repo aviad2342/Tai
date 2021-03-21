@@ -78,6 +78,12 @@ export class ViewLessonPage implements OnInit, ViewDidEnter {
     } else if (videoUrl.includes('vimeo')) {
       return this.sanitizer.bypassSecurityTrustResourceUrl('https://player.vimeo.com/video/'+ this.lesson.videoId);
     }
+    // else if (videoUrl.includes('facebook')) {
+    //   return this.sanitizer
+    //   .bypassSecurityTrustResourceUrl
+    //   (`https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.
+    //   facebook.com%2Ffacebookapp%2Fvideos%2F${this.lesson.videoId}%2F`);
+    // }
   }
 
   playClass(lesson: Lesson) {
