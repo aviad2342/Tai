@@ -38,6 +38,7 @@ export class EditArticlePage implements OnInit {
   fileTypeIcon = '';
   chosenFileName = '';
   articleImage;
+  isPublic: boolean;
   articleIsLoading = false;
   imageIsValid = true;
   isFileChosen = false;
@@ -109,7 +110,8 @@ export class EditArticlePage implements OnInit {
         this.htmlText = article.body;
         const articleObj = {
           title:    article.title,
-          subtitle: article.subtitle
+          subtitle: article.subtitle,
+          isPublic: article.isPublic
           };
         this.form.setValue(articleObj);
       },
@@ -236,7 +238,8 @@ export class EditArticlePage implements OnInit {
         results[0].imageUrl,
         results[1].fileUrl,
         this.article.views,
-        this.article.comments
+        this.article.comments,
+        form.value.isPublic
       );
       return this.articleService.updateArticle(articleToupdate);
 
@@ -267,7 +270,8 @@ export class EditArticlePage implements OnInit {
           uploadRes.imageUrl,
           this.article.pdf,
           this.article.views,
-          this.article.comments
+          this.article.comments,
+          form.value.isPublic
         );
         return this.articleService.updateArticle(articleToupdate);
       }),
@@ -298,7 +302,8 @@ export class EditArticlePage implements OnInit {
               this.article.thumbnail,
               uploadRes.fileUrl,
               this.article.views,
-              this.article.comments
+              this.article.comments,
+              form.value.isPublic
             );
             return this.articleService.updateArticle(articleToupdate);
           }),
@@ -342,7 +347,8 @@ export class EditArticlePage implements OnInit {
   isEquals(article1: Article, article2: Article) {
     if(
       article1.title    === article2.title &&
-      article1.subtitle === article2.subtitle
+      article1.subtitle === article2.subtitle &&
+      article1.isPublic === article2.isPublic
     ) {
       return true;
     }

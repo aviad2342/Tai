@@ -72,17 +72,18 @@ export class ArticleService {
 
     updateArticle(article: Article) {
       const articleObj = {
-         authorId: article.authorId,
+         authorId:      article.authorId,
          catalogNumber: article.catalogNumber,
-         title: article.title,
-         subtitle: article.subtitle,
-         body: article.body,
-         date: article.date,
-         lastEdit: article.lastEdit,
-         thumbnail: article.thumbnail,
-         pdf: article.pdf,
-         views: article.views,
-         comments: article.comments
+         title:         article.title,
+         subtitle:      article.subtitle,
+         body:          article.body,
+         date:          article.date,
+         lastEdit:      article.lastEdit,
+         thumbnail:     article.thumbnail,
+         pdf:           article.pdf,
+         views:         article.views,
+         comments:      article.comments,
+         isPublic:       article.isPublic
         };
       return this.http.put(`http://${LOCALHOST}:3000/api/article/article/${article.id}`,
       {

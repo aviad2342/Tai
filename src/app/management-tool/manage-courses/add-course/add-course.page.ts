@@ -28,6 +28,7 @@ export class AddCoursePage implements OnInit {
   imageFile;
   authorId: string;
   authorName: string;
+  isPublic = false;
   isLoading = false;
   lessonsIsLoading = false;
 
@@ -101,7 +102,8 @@ export class AddCoursePage implements OnInit {
           this.date,
           uploadRes.imageUrl,
           0,
-          []
+          [],
+          form.value.isPublic
         );
         this.isLoading = true;
         return this.courseService.addCourse(courseToAdd);

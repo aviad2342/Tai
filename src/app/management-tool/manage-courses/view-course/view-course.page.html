@@ -25,11 +25,11 @@
           <h5 class="ion-margin-top">{{ course?.description }}</h5>
         </ion-text>
         <ion-img [src]="course.thumbnail" class="course-thumbnail"></ion-img>
-        <ion-text  class="ion-no-padding course-title">
+        <ion-text class="ion-no-padding course-title">
           <p class="article-author-date ion-no-margin"> המרצה {{ course.authorName }}</p>
         </ion-text>
-        <ion-text  class="ion-no-padding course-title">
-          <p class="course-author-date"> {{ course?.date | date  }}</p>
+        <ion-text class="ion-no-padding course-title">
+          <p class="course-author-date"> {{ course?.date | date }}</p>
         </ion-text>
         <ion-text class="course-title" color="medium" *ngIf="course?.date !== course?.lastEdit">
           <small>נערך בתאריך: {{ course?.lastEdit | date }}</small>

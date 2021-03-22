@@ -164,7 +164,8 @@ export class NewArticlePage implements OnInit {
           uploadRes.imageUrl,
           'PDF',
           0,
-          []
+          [],
+          form.value.isPublic
         );
         return this.articleService.addArticle(articleToAdd);
       })

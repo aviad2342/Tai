@@ -86,6 +86,15 @@
                 <ngx-doc-viewer [url]="selectedFileUrl" [viewer]="viewerType" [style]="viewerStyle"></ngx-doc-viewer>
               </ion-col>
             </ion-row>
+
+            <ion-row class="ion-justify-content-center">
+              <ion-col size="12" size-xl="10" size-lg="8" size-md="6" size-sm="6">
+              <ion-item lines="none" class="ion-no-padding">
+                <ion-checkbox mode="ios" color="primary" class="ion-no-margin" [(ngModel)]="isPublic" ngModel name="isPublic" slot="start"></ion-checkbox>
+                <ion-label class="ion-no-margin article-public-label">ציבורי?</ion-label>
+              </ion-item>
+            </ion-col>
+            </ion-row>
       
             <!-- <ion-row class="ion-justify-content-center">
               <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="7" class="ion-text-center">

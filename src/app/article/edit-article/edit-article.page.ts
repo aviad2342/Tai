@@ -109,7 +109,8 @@ export class EditArticlePage implements OnInit, OnDestroy {
           uploadRes.imageUrl,
           'PDF',
           this.article.views,
-          this.article.comments
+          this.article.comments,
+          false
         );
         return this.articleService.updateArticle(articleToUpdate);
       })
@@ -137,7 +138,8 @@ export class EditArticlePage implements OnInit, OnDestroy {
         this.article.thumbnail,
         'PDF',
         this.article.views,
-        this.article.comments
+        this.article.comments,
+        form.value.isPublic
       );
       if(this.isEquals(this.article, articleToUpdate)) {
         this.appService.presentToast('המאמר נשמר בהצלחה', true);

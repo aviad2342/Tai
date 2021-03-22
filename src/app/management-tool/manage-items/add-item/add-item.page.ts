@@ -134,7 +134,7 @@ export class AddItemPage implements OnInit, AfterViewInit {
     case this.categories.COURSES:
       if(!this.courses) {
         this.courseService.getCourses().subscribe(courses => {
-          this.courses = courses.filter(t => this.items.map(i => i.productId).indexOf(t.id, 0) === -1);
+          this.courses = courses.filter(t => this.items.map(i => i.productId).indexOf(t.id, 0) === -1  && !t.isPublic);
           this.isCourse = true;
           this.addItemSlides.slideTo(3, 500);
         });
@@ -145,7 +145,8 @@ export class AddItemPage implements OnInit, AfterViewInit {
      case this.categories.ARTICLES:
        if(!this.articles) {
         this.articleService.getArticles().subscribe(articles => {
-          this.articles = articles.filter(t => this.items.map(i => i.productId).indexOf(t.id, 0) === -1);
+          // this.articles = articles.filter(a => a.isPublic);
+          this.articles = articles.filter(t => this.items.map(i => i.productId).indexOf(t.id, 0) === -1 && !t.isPublic);
           this.isArticle = true;
           this.addItemSlides.slideTo(4, 500);
         });

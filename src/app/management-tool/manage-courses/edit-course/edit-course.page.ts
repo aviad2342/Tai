@@ -23,6 +23,7 @@ export class EditCoursePage implements OnInit {
   @ViewChild('f', { static: true }) form: NgForm;
   @ViewChild(IonReorderGroup) reorderGroup: IonReorderGroup;
   updateImage;
+  isPublic: boolean;
   isLoading = false;
   defaultThumbnail = 'https://www.geirangerfjord.no/upload/images/2018_general/film-and-vid.jpg';
 
@@ -48,8 +49,9 @@ export class EditCoursePage implements OnInit {
         this.course = course;
         this.isLoading = false;
         const courseObj = {
-          title: this.course.title,
-          description: this.course.description
+          title:       course.title,
+          description: course.description,
+          isPublic:    course.isPublic
           };
         this.form.setValue(courseObj);
       }, error => {
@@ -93,7 +95,8 @@ export class EditCoursePage implements OnInit {
           new Date(),
           uploadRes.imageUrl,
           this.course.lessons.length,
-          this.lessons
+          this.lessons,
+          form.value.isPublic
         );
         return this.courseService.updateCourse(courseToUpdate);
       })
@@ -118,7 +121,8 @@ export class EditCoursePage implements OnInit {
       new Date(),
       this.course.thumbnail,
       this.course.lessons.length,
-      this.lessons
+      this.lessons,
+      form.value.isPublic
     );
     if( this.isEquals(this.course, courseToUpdate)) {
       this.appService.presentToast('הקורס עודכן בהצלחה', true);

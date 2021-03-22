@@ -14,6 +14,7 @@ export class Course {
       public thumbnail: string,
       public courseLessons: number,
       public lessons: Lesson[],
+      public isPublic: boolean
     ) {}
 
   }

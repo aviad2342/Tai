@@ -15,7 +15,8 @@ export class Article {
       public thumbnail: string,
       public pdf: string,
       public views: number,
-      public comments: Comment[]
+      public comments: Comment[],
+      public isPublic: boolean
     ) {}
 
   }

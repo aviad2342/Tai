@@ -43,6 +43,7 @@ export class AddArticlePage implements OnInit {
   author: User;
   htmlContent = '';
   font: any;
+  isPublic = false;
   isFileChosen = false;
   imageIsValid = true;
   editorConfig: AngularEditorConfig = {
@@ -260,7 +261,8 @@ MIME_TYPE_ICON: object = {
         results[0].imageUrl,
         results[1].fileUrl,
         0,
-        []
+        [],
+        form.value.isPublic
       );
       return this.articleService.addArticle(articleToAdd);
 
