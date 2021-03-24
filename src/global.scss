@@ -828,6 +828,22 @@ ion-icon {
     &[class*="toolbar-password-icon"] {
       mask-image: url(./assets/icon/password.svg);
     }
+
+    &[class*="custom-video"] {
+      mask-image: url(./assets/icon/video.svg);
+    }
+
+    &[class*="toolbar-video-icon"] {
+      mask-image: url(./assets/icon/video.svg);
+    }
+
+    &[class*="custom-notification"] {
+      mask-image: url(./assets/icon/notification.svg);
+    }
+
+    &[class*="toolbar-notification-icon"] {
+      mask-image: url(./assets/icon/notification.svg);
+    }
   
   
   }

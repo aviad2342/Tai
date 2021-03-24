@@ -51,6 +51,14 @@ const routes: Routes = [
   {
     path: 'testimonies',
     loadChildren: () => import('./manage-testimonies/manage-testimonies.module').then( m => m.ManageTestimoniesPageModule)
+  },
+  {
+    path: 'updates',
+    loadChildren: () => import('./manage-updates/manage-updates.module').then( m => m.ManageUpdatesPageModule)
+  },
+  {
+    path: 'videos',
+    loadChildren: () => import('./manage-videos/manage-videos.module').then( m => m.ManageVideosPageModule)
   }
 ];
 
