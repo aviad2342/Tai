@@ -1,9 +1,113 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>manage-updates</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button class="app-back-btn" text="חזרה" [defaultHref]="['/', 'manage']"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="app-titles">ניהול עדכונים</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+    <!---------------------------------- Action Buttons -------------------------------------------------->
+        <ion-row>
+          <ion-col>
+            <ion-button color="primary" (click)="onAddUpdate()">
+            <ion-icon class="custom-video" slot="start"></ion-icon>
+            <ion-label class="app-crud-btn-label">הוסף</ion-label>
+          </ion-button>
+    
+          <ion-button color="secondary" (click)="onViewUpdate()" [disabled]="!isRowSelected">
+            <ion-icon name="eye-outline" slot="start"></ion-icon>
+            <ion-label class="app-crud-btn-label">פרטים</ion-label>
+          </ion-button>
+    
+          <ion-button color="warning" (click)="onEditUpdate()" [disabled]="!isRowSelected">
+            <ion-icon name="create-outline" slot="start"></ion-icon>
+            <ion-label class="app-crud-btn-label">ערוך</ion-label>
+          </ion-button>
+    
+          <ion-button color="danger" (click)="onDeleteUpdate()" [disabled]="!isRowSelected">
+            <ion-icon name="trash-outline" slot="start"></ion-icon>
+            <ion-label class="app-crud-btn-label">מחק</ion-label>
+          </ion-button>
+    
+          </ion-col>
+        </ion-row>
+    <!---------------------------------- filtering inputs -------------------------------------------------->
+        <ion-row>    
+          <ion-col size-xl="3" size-lg="4" size-md="6" size-sm="8" class="ion-padding-end">
+            <ion-segment color="dark" value="all" mode="ios" (ionChange)="filterActiveUpdates($event)">
+              <ion-segment-button class="filter-updates-segment-button" value="all">
+                <ion-label class="segment-label">הצג את כל העדכונים</ion-label>
+              </ion-segment-button>
+              <ion-segment-button class="filter-updates-segment-button" value="active">
+                <ion-label class="segment-label">הצג עדכונים פעילים</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+    
+        </ion-row>
+    <!------------------------------------------ courses datatable -------------------------------------------------->
+        <ion-row>
+          
+          <ngx-datatable
+          #testimoniesTable
+          [rows]="updates"
+          class="bootstrap"
+          [rowHeight]="'auto'"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [messages]="{emptyMessage:'אין נתונים להצגה', totalMessage: 'total', selectedMessage: 'selected'}"
+          [limit]="50"
+          [columnMode]="columnMode.standard"
+          [selected]="selected"
+          [selectionType]="SelectionType.single"
+          [sorts]="[{ prop: 'category', dir: 'aesc' }]"
+          (activate)="onActivate($event)"
+          (select)="onSelect($event)"
+        >
 
+        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="updateType" [width]="160" [resizeable]="false">
+          <ng-template let-column="column" ngx-datatable-header-template><strong>סוג עדכון</strong></ng-template>
+        </ngx-datatable-column>
+  
+        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="description" [width]="260" [resizeable]="false">
+          <ng-template let-column="column" ngx-datatable-header-template><strong>תוכן</strong></ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="date" [sortable]="true" [width]="160" [resizeable]="false">
+          <ng-template let-column="column" ngx-datatable-header-template><strong>תאריך הוספה</strong></ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ row['date'] | date }}
+          </ng-template>
+        </ngx-datatable-column> 
+
+        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="endUpdate" [sortable]="true" [width]="160" [resizeable]="false">
+          <ng-template let-column="column" ngx-datatable-header-template><strong>תאריך סיום</strong></ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ row['endUpdate'] | date }}
+          </ng-template>
+        </ngx-datatable-column> 
+
+        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="active" [width]="100" [resizeable]="false">
+          <ng-template let-column="column" ngx-datatable-header-template><strong>סטטוס</strong></ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ row['approved'] ? 'פעיל' : 'לא פעיל' }}
+          </ng-template>
+        </ngx-datatable-column>
+    
+          <ngx-datatable-footer #datatableFooter>
+            <ng-template ngx-datatable-footer-template 
+            let-rowCount="rowCount"
+            let-selectedCount="selectedCount"
+            >
+            <div>&nbsp;נבחר {{ selectedCount }}  מתוך {{ rowCount }} עדכונים </div>
+            </ng-template>
+          </ngx-datatable-footer>
+        </ngx-datatable>
+    
+        </ion-row>
+    
+      </ion-grid>
 </ion-content>

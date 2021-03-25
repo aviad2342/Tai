@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { ColumnMode, DatatableComponent, SelectionType } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Subscription } from 'rxjs';
-import { AppService } from 'src/app/app.service';
-import { HomeService } from 'src/app/home/home.service';
-import { Update } from 'src/app/home/update.model';
+import { AppService } from '../../app.service';
+import { HomeService } from '../../home/home.service';
+import { Update } from '../../home/update.model';
 
 @Component({
   selector: 'app-manage-updates',
@@ -68,15 +68,15 @@ export class ManageUpdatesPage implements OnInit, OnDestroy {
     this.selectedUpdateId = null;
     this.isRowSelected = false;
     this.selected = [];
-    this.router.navigate(['manage', 'testimonies', 'new']);
+    this.router.navigate(['manage', 'updates', 'new']);
   }
 
   async onViewUpdate() {
-    this.router.navigate(['manage', 'testimonies', 'view', this.selectedUpdateId]);
+    this.router.navigate(['manage', 'updates', 'view', this.selectedUpdateId]);
   }
 
   async onEditUpdate() {
-    this.router.navigate(['manage', 'testimonies', 'edit', this.selectedUpdateId]);
+    this.router.navigate(['manage', 'updates', 'edit', this.selectedUpdateId]);
   }
 
   async onDeleteUpdate() {

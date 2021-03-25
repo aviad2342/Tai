@@ -84,9 +84,9 @@ export class AddTestimonyPage implements OnInit {
         return this.testimonyService.addTestimony(testimonyToAdd);
       })
     ).subscribe(() => {
-      form.reset();
       this.appService.presentToast('העדות נשמרה בהצלחה', true);
       this.navController.navigateBack('/manage/testimonies');
+      form.reset();
     }, error => {
       form.reset();
       this.appService.presentToast('חלה תקלה פרטי העדות לא נשמרו', false);

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { AddUpdatePageRoutingModule } from './add-update-routing.module';
 
 import { AddUpdatePage } from './add-update.page';
+import { UpdateItemComponent } from '../update-item/update-item.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { AddUpdatePage } from './add-update.page';
     IonicModule,
     AddUpdatePageRoutingModule
   ],
-  declarations: [AddUpdatePage]
+  declarations: [AddUpdatePage, UpdateItemComponent]
 })
 export class AddUpdatePageModule {}

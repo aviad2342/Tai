@@ -66,3 +66,15 @@ export function onImageChosen(imageData: string | File) {
     ACCESSORIES: 'אביזרים',
     OTHER: 'אחר'
   };
+
+  export const updateTypes = {
+    PRODUCT: 'מוצר',
+    TREATMENT: 'טיפול',
+    CONFERENCE: 'כנס',
+    COURSE: 'קורס',
+    ARTICLE: 'מאמר',
+    TESTIMONY: 'עדות',
+    THERAPIST: 'מטפל',
+    NEWS: 'חדשות',
+    OTHER: 'אחר'
+  };

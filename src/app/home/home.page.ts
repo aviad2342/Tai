@@ -52,11 +52,11 @@ export class HomePage implements OnInit, OnDestroy {
       this.user = user;
      });
      this.updatesSubscription = this.homeService.updates.subscribe( updates => {
-      this.updates = updates;
+      this.updates = updates.filter(u => u.active && u.endUpdate > new Date());
       this.sliderOne = {
        isBeginningSlide: true,
        isEndSlide: false,
-       slidesItems: updates
+       slidesItems: this.updates
      };
       this.isLoadingUpdates = false;
     });

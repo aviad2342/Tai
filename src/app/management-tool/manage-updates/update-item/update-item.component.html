@@ -1,0 +1,201 @@
+
+
+<ion-content>
+  <ion-grid>
+
+
+    <ion-row class="ion-justify-content-center" *ngIf="isItem">
+      <ion-col size-xl="5" size-lg="6" size-md="8" size-sm="10"  class="ion-text-center">
+        <ion-list>
+          <ion-item class="ion-no-padding" *ngFor="let item of items">
+            <ion-thumbnail size="medium" slot="start">
+              <ion-img [src]="item.thumbnail"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              <h1 class="title-label">{{ item.name }}</h1>
+              <ion-text color="medium">
+                <p>{{ item.category }}</p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>{{ item.description }}</p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>{{ item.price }}</p>
+              </ion-text>
+            </ion-label>
+            <ion-button color="primary" fill="outline" slot="end" (click)="onSelectItem(item)">
+              <ion-icon name="add-circle-outline" ></ion-icon>
+              <ion-label>בחר</ion-label>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="isEvent">
+      <ion-col size-xl="5" size-lg="6" size-md="8" size-sm="10"  class="ion-text-center">
+        <ion-list>
+          <ion-item class="ion-no-padding" *ngFor="let event of events">
+            <ion-thumbnail size="medium" slot="start">
+              <ion-img [src]="event.thumbnail"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              <h1 class="title-label">{{ event.title }}</h1>
+              <ion-text color="medium">
+                <p>{{ event.description }}</p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>{{ event.date | date }}</p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>{{ event.street + ' ' + event.houseNumber + ', ' +  event.city  }}</p>
+              </ion-text>
+            </ion-label>
+            <ion-button color="primary" fill="outline" slot="end" (click)="onSelectEvent(event)">
+              <ion-icon name="add-circle-outline" ></ion-icon>
+              <ion-label>בחר</ion-label>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="isTreatment">
+      <ion-col size-xl="5" size-lg="6" size-md="8" size-sm="10"  class="ion-text-center">
+        <ion-list>
+          <ion-item class="ion-no-padding" *ngFor="let treatment of treatments">
+            <ion-thumbnail size="medium" slot="start">
+              <ion-img [src]="treatment.thumbnail"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              <h1 class="title-label">{{ treatment.treatmentName }}</h1>
+              <ion-text color="medium">
+                <p>{{ treatment.treatmentType }}</p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>{{ treatment.description }}</p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>{{ treatment.therapistName }}</p>
+              </ion-text>
+            </ion-label>
+            <ion-button color="primary" fill="outline" slot="end" (click)="onSelectTreatment(treatment)">
+              <ion-icon name="add-circle-outline" ></ion-icon>
+              <ion-label>בחר</ion-label>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="isCourse">
+      <ion-col size-xl="5" size-lg="6" size-md="8" size-sm="10"  class="ion-text-center">
+        <ion-list>
+          <ion-item class="ion-no-padding" *ngFor="let course of courses">
+            <ion-thumbnail size="medium" slot="start">
+              <ion-img [src]="course.thumbnail"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              <h1 class="title-label">{{ course.title }}</h1>
+              <ion-text color="medium">
+                <p>{{ course.description }}</p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>{{ course.date }}</p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>{{ course.authorName }}</p>
+              </ion-text>
+            </ion-label>
+            <ion-button color="primary" fill="outline" slot="end" (click)="onSelectCourse(course)">
+              <ion-icon name="add-circle-outline" ></ion-icon>
+              <ion-label>בחר</ion-label>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="isTherapist">
+      <ion-col size-xl="5" size-lg="6" size-md="8" size-sm="10"  class="ion-text-center">
+        <ion-list>
+          <ion-item class="ion-no-padding" *ngFor="let therapist of therapists">
+            <ion-thumbnail size="medium" slot="start">
+              <ion-img [src]="therapist.profilePicture"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              <h1 class="title-label">{{ therapist.firstName + ' ' + therapist.lastName }}</h1>
+              <ion-text color="medium">
+                <p>{{ therapist.email }}</p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>{{ therapist.phone }}</p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>{{ therapist.treatmentTypes }}</p>
+              </ion-text>
+            </ion-label>
+            <ion-button color="primary" fill="outline" slot="end" (click)="onSelectTherapist(therapist)">
+              <ion-icon name="add-circle-outline" ></ion-icon>
+              <ion-label>בחר</ion-label>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="isTestimony">
+      <ion-col size-xl="5" size-lg="6" size-md="8" size-sm="10"  class="ion-text-center">
+        <ion-list>
+          <ion-item class="ion-no-padding" *ngFor="let testimony of testimonies">
+            <ion-thumbnail size="medium" slot="start">
+              <ion-img [src]="testimony.picture"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              <h1 class="title-label">{{ testimony.firstName + ' ' + testimony.lastName }}</h1>
+              <ion-text color="medium">
+                <p>{{ testimony.date }}</p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>{{ testimony.content }}</p>
+              </ion-text>
+            </ion-label>
+            <ion-button color="primary" fill="outline" slot="end" (click)="onSelectTestimony(testimony)">
+              <ion-icon name="add-circle-outline" ></ion-icon>
+              <ion-label>בחר</ion-label>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="isArticle">
+      <ion-col size-xl="5" size-lg="6" size-md="8" size-sm="10"  class="ion-text-center">
+      <ion-list>
+        <ion-item class="ion-no-padding" *ngFor="let article of articles">
+          <ion-thumbnail size="medium" slot="start">
+            <ion-img [src]="article.thumbnail"></ion-img>
+          </ion-thumbnail>
+          <ion-label>
+            <h1 class="title-label">{{ article.title }}</h1>
+            <ion-text color="medium">
+              <p>{{ article.subtitle }}</p>
+            </ion-text>
+            <ion-text color="medium">
+              <p>{{ article.date }}</p>
+            </ion-text>
+            <ion-text color="medium">
+              <p>{{ article.authorName }}</p>
+            </ion-text>
+          </ion-label>
+          <ion-button color="primary" fill="outline" slot="end" (click)="onSelectArticle(article)">
+            <ion-icon name="add-circle-outline" ></ion-icon>
+            <ion-label>בחר</ion-label>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

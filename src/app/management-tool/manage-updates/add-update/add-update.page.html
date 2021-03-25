@@ -1,9 +1,128 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>add-update</ion-title>
+    <ion-title class="app-titles">עדכון חדש</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding" fullscreen="true">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-grid [fixed]="true">
 
+      <ion-row class="ion-justify-content-center ion-padding-bottom">
+        <ion-col size="12" size-xl="5" size-lg="6" size-md="6" size-sm="8">
+          <ion-list>
+
+            <ion-item>
+              <ion-label class="add-update-item-label" position="floating">נושא העדכון <ion-text color="danger">*</ion-text></ion-label>
+              <ion-select mode="ios"
+              class="select-treatments-types" 
+              keyboardClose="true" 
+              [interfaceOptions]="updateTypesSelectOptions" 
+              (ionCancel)="onUpdateTypeCancel($event)" 
+              (ionChange)="onSelecteUpdateType($event)" 
+              cancelText="ביטול" 
+              okText="אישור">
+                <ion-select-option class="update-types-option" [value]="updateTypes.PRODUCT">{{ updateTypes.PRODUCT }}</ion-select-option>
+                <ion-select-option class="update-types-option" [value]="updateTypes.TREATMENT">{{ updateTypes.TREATMENT }}</ion-select-option>
+                <ion-select-option class="update-types-option" [value]="updateTypes.CONFERENCE">{{ updateTypes.CONFERENCE }}</ion-select-option>
+                <ion-select-option class="update-types-option" [value]="updateTypes.COURSE">{{ updateTypes.COURSE }}</ion-select-option>
+                <ion-select-option class="update-types-option" [value]="updateTypes.ARTICLE">{{ updateTypes.ARTICLE }}</ion-select-option>
+                <ion-select-option class="update-types-option" [value]="updateTypes.TESTIMONY">{{ updateTypes.TESTIMONY }}</ion-select-option>
+                <ion-select-option class="update-types-option" [value]="updateTypes.THERAPIST">{{ updateTypes.THERAPIST }}</ion-select-option>
+                <ion-select-option class="update-types-option" [value]="updateTypes.NEWS">{{ updateTypes.NEWS }}</ion-select-option>
+                <ion-select-option class="update-types-option" [value]="updateTypes.OTHER">{{ updateTypes.OTHER }}</ion-select-option>
+              </ion-select>
+              <ion-icon slot="end" position="floating" class="custom-brain-treatment ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-label *ngIf="updateTypesValid" color="danger">
+              <small> זהו שדה חובה!</small>
+            </ion-label>
+
+            <ion-item >
+              <ion-label class="add-update-item-label" position="floating"> תאור <ion-text color="danger">*</ion-text></ion-label>
+              <ion-textarea 
+                type="text"
+                autoGrow="true"
+                ngModel
+                name="description"
+                required
+                #descriptionCtrl="ngModel"
+              ></ion-textarea>
+              <ion-icon slot="end" position="floating" class="custom-resume ion-align-self-center"></ion-icon>
+            </ion-item>
+            <ion-label *ngIf="!descriptionCtrl.valid && descriptionCtrl.touched" color="danger">
+              <small>זהו שדה חובה!</small>
+            </ion-label>
+
+            <ion-item>
+              <ion-label class="add-update-item-label" position="floating">פעיל עד <ion-text color="danger">*</ion-text></ion-label>
+                <ion-datetime
+                  display-format="DD/MM/YYYY"
+                  pickerFormat="DD MMM YYYY"
+                  monthNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
+                  monthShortNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
+                  ngModel
+                  max="2025-12-29"
+                  [min]="now"
+                  doneText="אישור"
+                  cancelText="ביטול"
+                  mode="ios"
+                  name="endUpdate"
+                  required
+                  #endUpdateCtrl="ngModel"
+                ></ion-datetime>
+                  <ion-icon name="calendar-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+            </ion-item>
+              <ion-label *ngIf="!endUpdateCtrl.valid && endUpdateCtrl.touched" color="danger">
+                <small>זהו שדה חובה!</small>
+              </ion-label>
+
+             
+            <ion-item class="ion-padding-top" *ngIf="didSelecteUpdateType">
+              <ion-button
+              class="ion-no-margin"
+              (click)="onSelecteProduct()" 
+               
+              slot="start" 
+              mode="ios" 
+              size="default">
+                <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+                <ion-label class="selecte-update-button-label ion-no-padding">בחר {{updateType}}</ion-label>
+              </ion-button> 
+              <!-- <ion-avatar size="medium" slot="start">
+                <ion-img [src]="therapistPicture"></ion-img>
+              </ion-avatar>
+              <ion-label class="therapist-name-label">
+                <strong>
+                {{ therapistName }}
+                </strong>
+              </ion-label> -->
+            </ion-item>
+
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center ion-padding-top">
+        <ion-col size-xl="2" size-lg="3" size-md="3" size-sm="4">
+          <ion-button 
+          class="app-submit-cancel-btn"
+          color="primary"
+          expand="block"
+          (click)="onCancel()"
+          >ביטול</ion-button>
+        </ion-col>
+        <ion-col size-xl="2" size-lg="3" size-md="3" size-sm="4">
+          <ion-button
+          class="app-submit-cancel-btn"
+            type="submit"
+            color="primary"
+            expand="block"
+            [disabled]="!f.valid"
+          >
+          הוסף
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>
