@@ -52,7 +52,7 @@ export class HomePage implements OnInit, OnDestroy {
       this.user = user;
      });
      this.updatesSubscription = this.homeService.updates.subscribe( updates => {
-      this.updates = updates.filter(u => u.active && u.endUpdate > new Date());
+      this.updates = updates.filter(u => u.active);
       this.sliderOne = {
        isBeginningSlide: true,
        isEndSlide: false,

@@ -38,12 +38,37 @@
               <small> זהו שדה חובה!</small>
             </ion-label>
 
+            <ion-item lines="full" class="ion-padding-top" *ngIf="didSelecteUpdateType">
+              <ion-button
+              class="ion-no-margin ion-padding"
+              (click)="onSelecteProduct()" 
+              slot="start" 
+              mode="ios" 
+              size="default">
+                <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+                <ion-label class="selecte-update-button-label ion-no-padding">בחר {{updateType}}</ion-label>
+              </ion-button> 
+              <ion-avatar size="medium" slot="start">
+                <ion-img [src]="selectedProductImage"></ion-img>
+              </ion-avatar>
+              <ion-label class="product-name-label">
+                <strong>
+                {{ selectedProductName }}
+                </strong>
+                <p>
+                  {{ selectedProductType }}
+                </p>
+              </ion-label>
+            </ion-item>
+
             <ion-item >
               <ion-label class="add-update-item-label" position="floating"> תאור <ion-text color="danger">*</ion-text></ion-label>
               <ion-textarea 
                 type="text"
+                [disabled]="!productSelected"
                 autoGrow="true"
                 ngModel
+                [(ngModel)]="updateContent"
                 name="description"
                 required
                 #descriptionCtrl="ngModel"
@@ -76,28 +101,6 @@
               <ion-label *ngIf="!endUpdateCtrl.valid && endUpdateCtrl.touched" color="danger">
                 <small>זהו שדה חובה!</small>
               </ion-label>
-
-             
-            <ion-item class="ion-padding-top" *ngIf="didSelecteUpdateType">
-              <ion-button
-              class="ion-no-margin"
-              (click)="onSelecteProduct()" 
-               
-              slot="start" 
-              mode="ios" 
-              size="default">
-                <ion-icon name="add-circle-outline" slot="start"></ion-icon>
-                <ion-label class="selecte-update-button-label ion-no-padding">בחר {{updateType}}</ion-label>
-              </ion-button> 
-              <!-- <ion-avatar size="medium" slot="start">
-                <ion-img [src]="therapistPicture"></ion-img>
-              </ion-avatar>
-              <ion-label class="therapist-name-label">
-                <strong>
-                {{ therapistName }}
-                </strong>
-              </ion-label> -->
-            </ion-item>
 
           </ion-list>
         </ion-col>

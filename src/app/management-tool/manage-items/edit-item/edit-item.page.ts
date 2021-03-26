@@ -24,6 +24,7 @@ export class EditItemPage implements OnInit {
   selectedImage;
   amount = '';
   prevAmount = '';
+  activeUrl = '';
   @ViewChild('f', { static: true }) form: NgForm;
 
   constructor(
@@ -37,6 +38,7 @@ export class EditItemPage implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.activeUrl = this.router.url;
     this.isLoading = true;
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
@@ -57,6 +59,7 @@ export class EditItemPage implements OnInit {
             this.isLoading = false;
           },
           error => {
+            if (this.router.isActive(this.activeUrl, false)) {
             this.alertController
               .create({
                 header: 'ישנה תקלה!',
@@ -65,12 +68,15 @@ export class EditItemPage implements OnInit {
                   {
                     text: 'אישור',
                     handler: () => {
-                      this.navController.navigateBack('/manage/items');
+                      if (this.router.isActive(this.activeUrl, false)) {
+                        this.navController.navigateBack('/manage/items');
+                      }
                     }
                   }
                 ]
               })
               .then(alertEl => alertEl.present());
+            }
           }
         );
     });

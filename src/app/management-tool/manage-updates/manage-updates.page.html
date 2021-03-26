@@ -72,7 +72,7 @@
           <ng-template let-column="column" ngx-datatable-header-template><strong>סוג עדכון</strong></ng-template>
         </ngx-datatable-column>
   
-        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="description" [width]="260" [resizeable]="false">
+        <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="description" [width]="360" [resizeable]="false">
           <ng-template let-column="column" ngx-datatable-header-template><strong>תוכן</strong></ng-template>
         </ngx-datatable-column>
 
@@ -93,7 +93,7 @@
         <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="active" [width]="100" [resizeable]="false">
           <ng-template let-column="column" ngx-datatable-header-template><strong>סטטוס</strong></ng-template>
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-            {{ row['approved'] ? 'פעיל' : 'לא פעיל' }}
+            {{ row['approved'] ? 'לא פעיל' : 'פעיל' }}
           </ng-template>
         </ngx-datatable-column>
     

@@ -81,15 +81,15 @@ export class ManageUpdatesPage implements OnInit, OnDestroy {
 
   async onDeleteUpdate() {
       const alert = await this.alertController.create({
-        cssClass: 'delete-testimonies-alert',
-        header: 'אישור מחיקת העדות',
-        message: `האם אתה בטוח שברצונך למחוק את העדות לצמיתות?`,
+        cssClass: 'delete-updates-alert',
+        header: 'אישור מחיקת עדכון',
+        message: `האם אתה בטוח שברצונך למחוק את העדכון לצמיתות?`,
         mode: 'ios',
         buttons: [
           {
             text: 'ביטול',
             role: 'cancel',
-            cssClass: 'delete-testimonies-alert-btn-cancel',
+            cssClass: 'delete-updates-alert-btn-cancel',
             handler: () => {
             }
           }, {
@@ -99,7 +99,7 @@ export class ManageUpdatesPage implements OnInit, OnDestroy {
                 this.isRowSelected = false;
                 this.selectedUpdateId = null;
                 this.selected = [];
-                this.appservice.presentToast('העדות נמחקה בהצלחה!', true);
+                this.appservice.presentToast('העדכון נמחקה בהצלחה!', true);
               }, error => {
                 this.appservice.presentToast('חלה תקלה פעולת המחיקה נכשלה!', false);
               });

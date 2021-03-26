@@ -14,6 +14,7 @@ import { TherapistService } from '../../../therapist/therapist.service';
 import { TreatmentService } from '../../../treatment/treatment.service';
 import { Therapist } from '../../../therapist/therapist.model';
 import { Testimony } from '../../../testimony/testimony.model';
+import { ProductData } from '../../../home/update.model';
 
 @Component({
   selector: 'app-update-item',
@@ -23,6 +24,8 @@ import { Testimony } from '../../../testimony/testimony.model';
 export class UpdateItemComponent implements OnInit {
 
   @Input() updateType: string;
+  @Input() typeName: string;
+  productData: ProductData;
   items: Item[];
   events: Event[];
   courses: Course[];
@@ -99,16 +102,90 @@ export class UpdateItemComponent implements OnInit {
     }
   }
 
-  onSelectItem(item: Item ) {}
-  onSelectEvent(event: Event) {}
-  onSelectTreatment(treatment: Treatment) {}
-  onSelectCourse(course: Course) {}
-  onSelectTherapist(therapist: Therapist) {}
-  onSelectTestimony(testimony: Testimony) {}
-  onSelectArticle(article: Article) {}
+  onSelectItem(item: Item ) {
+    this.productData = new ProductData(
+      item.id,
+      item.name,
+      item.description,
+      item.category,
+      `/tabs/store`,
+      item.thumbnail
+    );
+    this.close();
+  }
+  onSelectEvent(event: Event) {
+    this.productData = new ProductData(
+      event.id,
+      event.title,
+      event.description,
+      this.typeName,
+      `/tabs/events/${event.id}`,
+      event.thumbnail
+    );
+    this.close();
+  }
+  onSelectTreatment(treatment: Treatment) {
+    this.productData = new ProductData(
+      treatment.id,
+      treatment.treatmentName,
+      treatment.description,
+      treatment.treatmentType,
+      `/tabs/treatments/${treatment.id}`,
+      treatment.thumbnail
+    );
+    this.close();
+  }
+  onSelectCourse(course: Course) {
+    this.productData = new ProductData(
+      course.id,
+      course.title,
+      course.description,
+      this.typeName,
+      `/tabs/course/${course.id}`,
+      course.thumbnail
+    );
+    this.close();
+  }
+  onSelectTherapist(therapist: Therapist) {
+    this.productData = new ProductData(
+      therapist.id,
+      therapist.firstName + ' ' + therapist.lastName,
+      therapist.resume,
+      therapist.treatmentTypes.toString(),
+      `/tabs/therapists/${therapist.id}`,
+      therapist.profilePicture
+    );
+    this.close();
+  }
+  onSelectTestimony(testimony: Testimony) {
+    this.productData = new ProductData(
+      testimony.id,
+      testimony.firstName + ' ' + testimony.lastName,
+      testimony.content,
+      this.typeName,
+      `/tabs/testimony`,
+      testimony.picture
+    );
+    this.close();
+  }
+  onSelectArticle(article: Article) {
+    this.productData = new ProductData(
+      article.id,
+      article.title,
+      article.subtitle,
+      this.typeName,
+      `/tabs/article/${article.id}`,
+      article.thumbnail
+    );
+    this.close();
+  }
 
-  async close(participants: string) {
-    await this.modalController.dismiss(participants);
+  async close() {
+    await this.modalController.dismiss(this.productData);
+  }
+
+  async emptyClose() {
+    await this.modalController.dismiss(null);
   }
 
 }

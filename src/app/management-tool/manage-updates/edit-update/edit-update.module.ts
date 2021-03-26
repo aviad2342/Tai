@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { EditUpdatePageRoutingModule } from './edit-update-routing.module';
 
 import { EditUpdatePage } from './edit-update.page';
+import { UpdateItemComponent } from '../update-item/update-item.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { EditUpdatePage } from './edit-update.page';
     IonicModule,
     EditUpdatePageRoutingModule
   ],
-  declarations: [EditUpdatePage]
+  declarations: [EditUpdatePage, UpdateItemComponent]
 })
 export class EditUpdatePageModule {}
