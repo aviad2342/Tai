@@ -3,12 +3,18 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, AnimationController, NavController } from '@ionic/angular';
+import { switchMap } from 'rxjs/operators';
 import { AppService } from '../app.service';
 import { AuthService } from '../auth/auth.service';
 import { CartService } from '../cart/cart.service';
+import { Customer } from '../customer/customer.model';
+import { CustomerService } from '../customer/customer.service';
 import { DeliveryAddress } from '../shared/address.model';
 import { Coupon } from '../store/coupon.model';
 import { CouponService } from '../store/coupon.service';
+import { User } from '../user/user.model';
+import { UserService } from '../user/user.service';
+import { CreditCard } from './credit-card.model';
 import { Order } from './order.model';
 import { OrderService } from './order.service';
 
@@ -30,6 +36,8 @@ export class OrderPage implements OnInit {
   order: Order;
   activeUrl = '';
   coupon: Coupon;
+  user: User
+  customer: Customer;
   address: DeliveryAddress = new DeliveryAddress();
   @ViewChild('f', { static: true }) form: NgForm;
   addressIsValid = false;
@@ -56,7 +64,9 @@ export class OrderPage implements OnInit {
     private couponService: CouponService,
     private orderService: OrderService,
     private authService: AuthService,
+    private userService: UserService,
     public appService: AppService,
+    private customerService: CustomerService,
     public animationController: AnimationController
   ) {}
 
@@ -111,6 +121,10 @@ export class OrderPage implements OnInit {
           }
         );
     });
+    this.userService.getUser(this.authService.getLoggedUserId()).subscribe(user => {
+      this.customer = user;
+      console.log(this.customer.orders);
+     });
   }
 
   async onFormValid(valid: boolean) {
@@ -149,32 +163,55 @@ export class OrderPage implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (!form.valid || !this.addressIsValid) {
+    // if (!form.valid || !this.addressIsValid) {
+    //   return;
+    // }
+
+    if (!form.valid) {
       return;
     }
-    // console.log(new Date(form.value.cardYear).getFullYear().toString());
-    // console.log((new Date(form.value.cardMonth).getMonth() + 1).toString());
-    const orderToUpdate = new Order(
-      this.order.id,
-      this.order.cartId,
-      new Date(),
-      '',
-      this.order.delivery,
-      this.order.couponCode,
-      this.order.totalItems,
-      this.order.totalPayment,
-      false,
-      'a3nf4jd6',
-      this.order.customer,
-      this.address,
-      this.order.items
+    const payment = new CreditCard(
+      form.value.cardNumber,
+      form.value.ownerId,
+      form.value.ownerName,
+      form.value.expirationDate,
+      form.value.cvv,
+      this.order.totalPayment
     );
-    this.orderService.updateOrder(orderToUpdate).subscribe(() => {
+
+    this.orderService.commitPayment(payment).pipe(
+      switchMap(confirmPaymentNumber => {
+        const order = new Order(
+          this.order.id,
+          this.order.cartId,
+          new Date(),
+          '',
+          this.order.delivery,
+          this.order.couponCode,
+          this.order.totalItems,
+          this.order.totalPayment,
+          false,
+          confirmPaymentNumber,
+          this.customer,
+          this.address,
+          this.order.items
+        );
+        if(this.customer.orders) {
+          this.customer.orders.push(order);
+        } else {
+          const orders: Order[] = [];
+          orders.push(order);
+          this.customer.orders = orders;
+        }
+        return this.customerService.updateCustomer(this.customer);
+      })
+    ).subscribe(() => {
       this.cartService.deleteCart(this.order.cartId).subscribe();
       this.appService.presentToast('ההזמנה בוצעה בהצלחה', true);
       this.router.navigate(['/tabs/store']);
     },
     error => {
+      console.log(error);
       this.appService.presentToast('לא ניתן להשלים את ההזמנה כעת, אנא נסה מאוחר יותר.', false);
     });
 

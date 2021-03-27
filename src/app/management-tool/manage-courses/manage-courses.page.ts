@@ -63,6 +63,9 @@ export class ManageCoursesPage implements OnInit, OnDestroy {
 // -------------------------------------------------- Course Functions ----------------------------------------------------
 
 filterCourses(event) {
+  this.selectedCourseId = null;
+  this.isRowSelected = false;
+  this.selected = [];
   const val = event.target.value.toLowerCase();
   const temp = this.temp.filter((d)=> {
     return d.title.toLowerCase().indexOf(val) !== -1 || !val;
@@ -73,6 +76,7 @@ filterCourses(event) {
 async onAddCourse() {
   this.selectedCourseId = null;
   this.isRowSelected = false;
+  this.selected = [];
   this.router.navigate(['manage', 'courses', 'new']);
 }
 

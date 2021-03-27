@@ -60,6 +60,9 @@ export class ManageItemsPage implements OnInit, OnDestroy {
     }
 
    onFilterCategories(event) {
+    this.selectedItemId = null;
+    this.isRowSelected = false;
+    this.selected = [];
     const val = event.target.value.toLowerCase();
     const temp = this.temp.filter((d)=> {
       return d.category.toLowerCase().indexOf(val) !== -1 || !val;
@@ -68,6 +71,9 @@ export class ManageItemsPage implements OnInit, OnDestroy {
     }
 
     filterItems(event) {
+      this.selectedItemId = null;
+      this.isRowSelected = false;
+      this.selected = [];
       const val = event.target.value.toLowerCase();
       const temp = this.temp.filter((d)=> {
         return d.name.toLowerCase().indexOf(val) !== -1 || !val;

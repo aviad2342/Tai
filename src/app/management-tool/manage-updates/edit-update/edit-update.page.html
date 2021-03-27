@@ -14,41 +14,22 @@
 
             <ion-item>
               <ion-label class="add-update-item-label" position="floating">נושא העדכון <ion-text color="danger">*</ion-text></ion-label>
-              <ion-select mode="ios"
-              disabled="true"
-              [value]="this?.updateType"
-              class="select-treatments-types" 
-              keyboardClose="true" 
-              [interfaceOptions]="updateTypesSelectOptions" 
-              (ionCancel)="onUpdateTypeCancel($event)" 
-              (ionChange)="onSelecteUpdateType($event)" 
-              cancelText="ביטול" 
-              okText="אישור">
-                <ion-select-option class="update-types-option" [value]="updateTypes.PRODUCT">{{ updateTypes.PRODUCT }}</ion-select-option>
-                <ion-select-option class="update-types-option" [value]="updateTypes.TREATMENT">{{ updateTypes.TREATMENT }}</ion-select-option>
-                <ion-select-option class="update-types-option" [value]="updateTypes.CONFERENCE">{{ updateTypes.CONFERENCE }}</ion-select-option>
-                <ion-select-option class="update-types-option" [value]="updateTypes.COURSE">{{ updateTypes.COURSE }}</ion-select-option>
-                <ion-select-option class="update-types-option" [value]="updateTypes.ARTICLE">{{ updateTypes.ARTICLE }}</ion-select-option>
-                <ion-select-option class="update-types-option" [value]="updateTypes.TESTIMONY">{{ updateTypes.TESTIMONY }}</ion-select-option>
-                <ion-select-option class="update-types-option" [value]="updateTypes.THERAPIST">{{ updateTypes.THERAPIST }}</ion-select-option>
-                <ion-select-option class="update-types-option" [value]="updateTypes.NEWS">{{ updateTypes.NEWS }}</ion-select-option>
-                <ion-select-option class="update-types-option" [value]="updateTypes.OTHER">{{ updateTypes.OTHER }}</ion-select-option>
-              </ion-select>
+              <ion-input 
+                disabled="true" 
+                type="text"
+                ngModel
+                name="updateType">
+              </ion-input>
               <ion-icon slot="end" position="floating" class="custom-brain-treatment ion-align-self-center"></ion-icon>
             </ion-item>
-            <ion-label *ngIf="updateTypesValid" color="danger">
-              <small> זהו שדה חובה!</small>
-            </ion-label>
 
 
             <ion-item >
               <ion-label class="add-update-item-label" position="floating"> תאור <ion-text color="danger">*</ion-text></ion-label>
               <ion-textarea 
                 type="text"
-                [disabled]="!productSelected"
                 autoGrow="true"
                 ngModel
-                [(ngModel)]="updateContent"
                 name="description"
                 required
                 #descriptionCtrl="ngModel"
@@ -82,6 +63,11 @@
                 <small>זהו שדה חובה!</small>
               </ion-label>
 
+              <ion-item lines="none">
+                <ion-checkbox name="active" ngModel  mode="ios" color="primary" class="ion-no-margin" slot="start"></ion-checkbox>
+                <ion-label class="ion-no-margin update-active-label"> עדכון פעיל? </ion-label>
+              </ion-item>
+
           </ion-list>
         </ion-col>
       </ion-row>
@@ -102,7 +88,7 @@
             expand="block"
             [disabled]="!f.valid"
           >
-          הוסף
+          ערוך
           </ion-button>
         </ion-col>
       </ion-row>

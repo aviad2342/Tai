@@ -58,6 +58,9 @@ export class ManageCouponsPage implements OnInit, OnDestroy {
     }
 
     filterValidCoupons(event) {
+      this.selectedcouponCode = null;
+      this.isRowSelected = false;
+      this.selected = [];
       const val = event.target.value;
       let temp;
       if (val === 'valid') {

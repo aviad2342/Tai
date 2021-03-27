@@ -51,6 +51,9 @@ export class ManageTestimoniesPage implements OnInit, OnDestroy {
 
 
     filterApprovedTestimonies(event) {
+      this.selectedTestimonyId = null;
+      this.isRowSelected = false;
+      this.selected = [];
       const val = event.target.value;
       let temp;
       if (val === 'approved') {

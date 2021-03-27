@@ -16,6 +16,6 @@ import { UpdateItemComponent } from '../update-item/update-item.component';
     IonicModule,
     EditUpdatePageRoutingModule
   ],
-  declarations: [EditUpdatePage, UpdateItemComponent]
+  declarations: [EditUpdatePage]
 })
 export class EditUpdatePageModule {}

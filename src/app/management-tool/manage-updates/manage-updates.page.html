@@ -93,7 +93,7 @@
         <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="active" [width]="100" [resizeable]="false">
           <ng-template let-column="column" ngx-datatable-header-template><strong>סטטוס</strong></ng-template>
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-            {{ row['approved'] ? 'לא פעיל' : 'פעיל' }}
+            {{ row['active'] ? 'פעיל' : 'לא פעיל' }}
           </ng-template>
         </ngx-datatable-column>
     

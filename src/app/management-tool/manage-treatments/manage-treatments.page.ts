@@ -112,6 +112,9 @@ export class ManageTreatmentsPage implements OnInit, OnDestroy {
   }
 
   filterByTreatmentType(event) {
+    this.selectedTreatmentId = null;
+    this.isRowSelected = false;
+    this.selected = [];
     const val = event.target.value.toLowerCase();
     const temp = this.temp.filter((d)=> {
       return d.treatmentType.toLowerCase().indexOf(val) !== -1 || !val;
@@ -120,6 +123,9 @@ export class ManageTreatmentsPage implements OnInit, OnDestroy {
 }
 
   filterByTherapistName(event) {
+    this.selectedTreatmentId = null;
+    this.isRowSelected = false;
+    this.selected = [];
     const val = event.target.value.toLowerCase();
     const temp = this.temp.filter((d)=> {
       return d.therapistName.toLowerCase().indexOf(val) !== -1 || !val;

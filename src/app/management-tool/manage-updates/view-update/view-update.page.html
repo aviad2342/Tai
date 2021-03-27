@@ -1,9 +1,39 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>view-update</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button class="app-back-btn" text="חזרה" [defaultHref]="['/', 'manage','updates']"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-no-padding app-titles">פרטי עדכון</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-grid [fixed]="true">
+    <ion-row class="ion-justify-content-center" *ngIf="isLoading">
+      <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2"  class="ion-text-center">
+        <ion-spinner color="primary"></ion-spinner>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
+      <ion-col size-xl="8" size-lg="9" size-md="10" size-sm="11"  class="ion-text-center">
+        <div class="course-container ion-padding">
+        <ion-text>
+          <h1 class="item-title">עדכון {{ update?.updateType }}</h1>
+        </ion-text>
+        <ion-text>
+          <h5 class="ion-margin-top">{{ update?.description }}</h5>
+        </ion-text>
+        <ion-text  class="ion-no-padding">
+          <p><strong>נוצר בתאריך:</strong> {{ update?.date | date }}</p>
+        </ion-text>
+        <ion-text  class="ion-no-padding">
+          <p><strong>פעיל עד:</strong> {{ update?.endUpdate | date  }}</p>
+        </ion-text>
+        <ion-text  class="ion-no-padding">
+          <p><strong>סטטוס:</strong> {{ update?.active? 'פעיל' : 'לא פעיל' }}</p>
+        </ion-text>
+      </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

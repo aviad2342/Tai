@@ -107,6 +107,9 @@ export class ManageCustomersPage implements OnInit, OnDestroy {
   }
 
   filterByFirstName(event) {
+    this.selectedCustomerId = null;
+    this.isRowSelected = false;
+    this.selected = [];
     const val = event.target.value.toLowerCase();
     const temp = this.temp.filter((d)=> {
       return d.firstName.toLowerCase().indexOf(val) !== -1 || !val;
@@ -115,6 +118,9 @@ export class ManageCustomersPage implements OnInit, OnDestroy {
 }
 
   filterByLastName(event) {
+    this.selectedCustomerId = null;
+    this.isRowSelected = false;
+    this.selected = [];
     const val = event.target.value.toLowerCase();
     const temp = this.temp.filter((d)=> {
       return d.lastName.toLowerCase().indexOf(val) !== -1 || !val;
@@ -123,6 +129,9 @@ export class ManageCustomersPage implements OnInit, OnDestroy {
 }
 
   filterByMail(event) {
+    this.selectedCustomerId = null;
+    this.isRowSelected = false;
+    this.selected = [];
     const val = event.target.value.toLowerCase();
     const temp = this.temp.filter((d)=> {
       return d.email.toLowerCase().indexOf(val) !== -1 || !val;
@@ -131,6 +140,9 @@ export class ManageCustomersPage implements OnInit, OnDestroy {
 }
 
   filterByCity(event) {
+    this.selectedCustomerId = null;
+    this.isRowSelected = false;
+    this.selected = [];
     const val = event.target.value.toLowerCase();
     const temp = this.temp.filter((d)=> {
       return d.city.toLowerCase().indexOf(val) !== -1 || !val;

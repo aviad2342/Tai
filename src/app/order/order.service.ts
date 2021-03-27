@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { OrderItem } from '../store/item.model';
+import { CreditCard } from './credit-card.model';
 import { Order } from './order.model';
 
 const LOCALHOST = environment.LOCALHOST;
@@ -105,5 +106,15 @@ export class OrderService {
         .pipe(tap(orders => {
           return orders;
         }));
+    }
+
+    commitPayment(creditCard: CreditCard) {
+      return this.http.post<string>(`http://${LOCALHOST}:3000/api/order/payment`,
+      {
+        ...creditCard
+      }).
+      pipe(tap(confirmPaymentNumber => {
+        return confirmPaymentNumber;
+      }));
     }
 }

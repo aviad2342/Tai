@@ -117,7 +117,7 @@
                 placeholder="שם בעל הכרטיס"
                 class="item-border-input ion-no-padding"
                 type="text" 
-                name="cardOwnerName"
+                name="ownerName"
                 ngModel
                 #cardOwnerNameCtrl="ngModel"
                 required 
@@ -137,7 +137,7 @@
                 maxlength="9"
                 min="9"
                 pattern="^\d{9}$"
-                name="cardOwnerId"
+                name="ownerId"
                 ngModel
                 #cardOwnerIdCtrl="ngModel"
                 required 
@@ -182,9 +182,11 @@
               >
               </ion-input> -->
               <ion-datetime
-                  placeholder="שנה"
-                  display-format="YYYY"
-                  pickerFormat="YYYY"
+                  placeholder="תוקף"
+                  display-format="MM/YYYY"
+                  pickerFormat="MMM YYYY"
+                  monthNames="ינואר, פברואר, מרץ, אפריל, מאי, יוני, יולי, אוגוסט, ספטמבר, אוקטובר, נובמבר, דצמבר"
+                  monthShortNames="01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12"
                   ngModel
                   max="2025-01-01"
                   [min]="now"
@@ -192,27 +194,16 @@
                   doneText="אישור"
                   cancelText="ביטול"
                   mode="ios"
-                  name="cardYear"
+                  name="expirationDate"
                   value="string"
                   required
                   #cardYearCtrl="ngModel"
                 ></ion-datetime>
               </ion-col>
 
-              <ion-label class="date-separator-label">/</ion-label>
+              <!-- <ion-label class="date-separator-label">/</ion-label>
 
               <ion-col size="12" size-xl="1" size-lg="2" size-md="2" size-sm="1" size-xs="4">
-                <!-- <ion-input 
-                enterkeyhint="next"
-                placeholder="חודש"
-                class="item-border-input ion-no-padding"
-                name="cardMmonth"
-                type="text" 
-                ngModel
-                #houseNumberCtrl="ngModel"
-                required 
-              >
-              </ion-input> -->
               <ion-datetime
                   placeholder="חודש"
                   display-format="MM"
@@ -227,7 +218,7 @@
                   required
                   #cardMonthCtrl="ngModel"
                 ></ion-datetime>
-              </ion-col>
+              </ion-col> -->
 
               <ion-col size="12" size-xl="1" size-lg="1" size-md="1" size-sm="1" size-xs="3.5">
                 <ion-input 
@@ -235,7 +226,7 @@
                 placeholder="cvv"
                 class="item-border-cvv-input ion-no-padding"
                 type="text" 
-                name="cardCvv"
+                name="cvv"
                 maxlength="3"
                 min="3"
                 pattern="^\d{3}$"
@@ -276,7 +267,7 @@
     color="primary" 
     (click)="f.ngSubmit.emit()" 
     class="ion-no-padding ion-no-margin" 
-    [disabled]="!f.valid || !addressIsValid">
+    [disabled]="!f.valid">
     <ion-icon class="custom-cashier" slot="start"></ion-icon>
     <ion-label class="app-order-pay-btn">בצע תשלום</ion-label>
   </ion-button>

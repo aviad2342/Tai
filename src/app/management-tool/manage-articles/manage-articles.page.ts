@@ -51,6 +51,9 @@ export class ManageArticlesPage implements OnInit, OnDestroy {
   }
 
   filterArticle(event) {
+    this.selectedArticleId = null;
+    this.isRowSelected = false;
+    this.selected = [];
     const val = event.target.value.toLowerCase();
     const temp = this.temp.filter((a)=> {
       return a.title.toLowerCase().indexOf(val) !== -1 || !val;

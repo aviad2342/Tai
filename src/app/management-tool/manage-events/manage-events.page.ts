@@ -53,6 +53,9 @@ export class ManageEventsPage implements OnInit, OnDestroy {
     }
 
    filterEvents(event) {
+    this.selectedEventId = null;
+    this.isRowSelected = false;
+    this.selected = [];
     const val = event.target.value.toLowerCase();
     const temp = this.temp.filter((d)=> {
       return d.title.toLowerCase().indexOf(val) !== -1 || !val;

@@ -51,6 +51,9 @@ export class ManageUpdatesPage implements OnInit, OnDestroy {
 
 
     filterActiveUpdates(event) {
+      this.selectedUpdateId = null;
+      this.isRowSelected = false;
+      this.selected = [];
       const val = event.target.value;
       let temp;
       if (val === 'active') {
