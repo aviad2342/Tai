@@ -1,9 +1,35 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>video</ion-title>
+    <ion-buttons slot="start" *ngIf="isDesktop">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-no-padding app-titles">משתמשים</ion-title>
+    <ion-icon class="title-icon" slot="start" name="people-outline"></ion-icon>
+    <ion-buttons slot="primary">
+      <ion-button routerLink="new">
+        <ion-icon name="person-add-outline" class="toolbar-icon" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+
+  <ion-grid>
+
+    <ion-row class="ion-justify-content-center" *ngIf="isLoading">
+      <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="ion-text-center" >
+        <ion-spinner color="primary"></ion-spinner>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
+      <ion-col size-xl="3" size-lg="5" size-md="6" size-sm="7">
+        <ion-list #dynamicList>
+          
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

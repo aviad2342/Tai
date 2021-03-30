@@ -13,7 +13,12 @@ const LOCALHOST = environment.LOCALHOST;
 export class VideoService {
 
     // tslint:disable-next-line: variable-name
-    private _videos = new BehaviorSubject<Video[]>([]);
+    private _videos = new BehaviorSubject<Video[]>([
+      new Video('123', '66865270', 'https://vimeo.com/66865270', '<iframe src=\"https://player.vimeo.com/video/66865270?app_id=122963\" width=\"480\" height=\"270\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen title=\"Vimeo Video Jam\"></iframe>', 'Vimeo Video Jam', 'Melissa\'s quest to convince Andrea to make a new Vimeo Original.', new Date(), 'https://i.vimeocdn.com/video/438495722_295x166.jpg'),
+      new Video('123', '66865270', 'https://vimeo.com/66865270', '<iframe src=\"https://player.vimeo.com/video/66865270?app_id=122963\" width=\"480\" height=\"270\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen title=\"Vimeo Video Jam\"></iframe>', 'Vimeo Video Jam', 'Melissa\'s quest to convince Andrea to make a new Vimeo Original.', new Date(), 'https://i.vimeocdn.com/video/438495722_295x166.jpg'),
+      new Video('123', '66865270', 'https://vimeo.com/66865270', '<iframe src=\"https://player.vimeo.com/video/66865270?app_id=122963\" width=\"480\" height=\"270\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen title=\"Vimeo Video Jam\"></iframe>', 'Vimeo Video Jam', 'Melissa\'s quest to convince Andrea to make a new Vimeo Original.', new Date(), 'https://i.vimeocdn.com/video/438495722_295x166.jpg'),
+      new Video('123', '66865270', 'https://vimeo.com/66865270', '<iframe src=\"https://player.vimeo.com/video/66865270?app_id=122963\" width=\"480\" height=\"270\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen title=\"Vimeo Video Jam\"></iframe>', 'Vimeo Video Jam', 'Melissa\'s quest to convince Andrea to make a new Vimeo Original.', new Date(), 'https://i.vimeocdn.com/video/438495722_295x166.jpg')
+    ]);
     // countries: string[] = [];
 
     get videos() {
@@ -96,6 +101,22 @@ export class VideoService {
       }),
       tap(videos => {
         this._videos.next(videos.filter(v => v.id !== id));
+      }));
+  }
+
+  getVimeoVideo(videoId: string) {
+    return this.http.get(`https://vimeo.com/api/v2/video/${videoId}.json`).
+    pipe(
+      map(resData => {
+        return resData;
+      }));
+  }
+
+  getEmbedVimeoVideo(videoURL: string) {
+    return this.http.get(`https://vimeo.com/api/oembed.json?url=${videoURL}`).
+    pipe(
+      map(resData => {
+        return resData;
       }));
   }
 

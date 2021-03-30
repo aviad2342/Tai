@@ -8,9 +8,9 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides #updatesSlides class="update-slides ion-no-margin" [options]="slideOpts">
-    <ion-slide *ngFor="let update of this?.updates">
-      <a class="update-text" [routerLink]="update.url" >{{ update.description }} </a>
+  <ion-slides #updatesSlides class="update-slides ion-no-margin" [options]="slideOpts" *ngIf="!isLoadingUpdates">
+    <ion-slide *ngFor="let update of updates">
+      <a class="update-text" [routerLink]="update.url" >{{ update?.description }} </a>
     </ion-slide>
   </ion-slides>
 </ion-content>

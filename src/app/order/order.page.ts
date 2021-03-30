@@ -123,7 +123,7 @@ export class OrderPage implements OnInit {
     });
     this.userService.getUser(this.authService.getLoggedUserId()).subscribe(user => {
       this.customer = user;
-      console.log(this.customer.orders);
+      console.log(this.customer);
      });
   }
 
@@ -198,12 +198,29 @@ export class OrderPage implements OnInit {
         );
         if(this.customer.orders) {
           this.customer.orders.push(order);
+          return this.customerService.updateCustomer(this.customer);
         } else {
           const orders: Order[] = [];
           orders.push(order);
-          this.customer.orders = orders;
+          const newCustomer: Customer = new Customer(
+            this.customer.id,
+            this.customer.firstName,
+            this.customer.lastName,
+            this.customer.password,
+            this.customer.phone,
+            this.customer.email,
+            this.customer.date,
+            this.customer.country,
+            this.customer.city,
+            this.customer.street,
+            this.customer.houseNumber,
+            this.customer.apartment,
+            this.customer.entry,
+            this.customer.profilePicture,
+            orders
+          );
+          return this.customerService.createCustomer(newCustomer);
         }
-        return this.customerService.updateCustomer(this.customer);
       })
     ).subscribe(() => {
       this.cartService.deleteCart(this.order.cartId).subscribe();
