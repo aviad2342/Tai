@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Video } from '../../video.model';
 
 @Component({
   selector: 'app-video-item',
@@ -7,8 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VideoItemComponent implements OnInit {
 
-  constructor() { }
+  @Input() video: Video;
+  embedVideo: SafeResourceUrl;
 
-  ngOnInit() {}
+  constructor(public sanitizer: DomSanitizer,) { }
+
+  ngOnInit() {
+    this.embedVideo = this.sanitizer.bypassSecurityTrustResourceUrl('https://player.vimeo.com/video/'+ this.video.videoId);
+  }
 
 }

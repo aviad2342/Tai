@@ -49,6 +49,12 @@
       </ion-item>
     </ion-menu-toggle>
     <ion-menu-toggle auto-hide="false">
+      <ion-item lines="none" routerLink="/video" [class.active-item]="selectedPath.startsWith('/video')">
+        <ion-icon class="custom-video ion-no-margin menu-icon" size="large" slot="start"></ion-icon>
+        <ion-label class="app-side-menu-label">סירטונים</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle auto-hide="false">
       <ion-item lines="none" routerLink="/testimony" [class.active-item]="selectedPath.startsWith('/testimony')">
         <ion-icon class="custom-speaker ion-no-margin menu-icon" size="large" slot="start"></ion-icon>
         <ion-label class="app-side-menu-label">עדויות</ion-label>

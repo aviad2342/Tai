@@ -3,17 +3,12 @@
     <ion-buttons slot="start" *ngIf="isDesktop">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title class="ion-no-padding app-titles">משתמשים</ion-title>
-    <ion-icon class="title-icon" slot="start" name="people-outline"></ion-icon>
-    <ion-buttons slot="primary">
-      <ion-button routerLink="new">
-        <ion-icon name="person-add-outline" class="toolbar-icon" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title class="ion-no-padding app-titles">סירטונים</ion-title>
+    <ion-icon class="custom-video title-icon" slot="start"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
 
   <ion-grid>
 
@@ -25,8 +20,10 @@
 
     <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
       <ion-col size-xl="3" size-lg="5" size-md="6" size-sm="7">
-        <ion-list #dynamicList>
-          
+        <ion-list>
+          <div *ngFor="let video of videos">
+            <app-video-item [video]="video"></app-video-item>
+          </div>
         </ion-list>
       </ion-col>
     </ion-row>

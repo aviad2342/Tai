@@ -1,0 +1,19 @@
+
+ion-card-header {
+    padding: 5px;
+}
+
+ion-card-content {
+    padding: 5px;
+}
+
+.video-card {
+    border: 1px solid black;
+    --background: #e0e1e4;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ion-item::part(native){
+    --inner-padding-end: 0;
+}

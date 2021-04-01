@@ -20,7 +20,15 @@ export class VideoPage implements OnInit, OnDestroy  {
 
   ngOnInit() {
     this.isLoading = true;
-    this.videosSubscription = this.videoService.videos.subscribe(videos => {
+    // this.videosSubscription = this.videoService.videos.subscribe(videos => {
+    //   this.videos = videos;
+    //   this.isLoading = false;
+    // }, error => {
+    //   this.isLoading = false;
+    //   console.log(error);
+    // });
+
+    this.videoService.getAllVideos().subscribe(videos => {
       this.videos = videos;
       this.isLoading = false;
     }, error => {
@@ -31,7 +39,7 @@ export class VideoPage implements OnInit, OnDestroy  {
 
   ionViewWillEnter() {
     this.isDesktop = this.appService.isDesktop();
-    this.videoService.getVideos().subscribe();
+    // this.videoService.getVideos().subscribe();
   }
 
   ngOnDestroy() {

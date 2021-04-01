@@ -90,6 +90,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'video',
+        children: [
+          {
+          path: '',
+          loadChildren: () => import('../video/video.module').then( m => m.VideoPageModule), canLoad: [AuthGuard]
+          }
+        ]
+      },
+      {
         path: 'menu',
         children: [
           {
