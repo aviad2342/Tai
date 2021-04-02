@@ -17,3 +17,28 @@ ion-card-content {
 ion-item::part(native){
     --inner-padding-end: 0;
 }
+
+ion-card-title {
+    font-family: 'Yoav';
+    font-size: larger;
+    text-align: right;
+    color: var(--ion-color-dark);
+}
+
+ion-card-subtitle {
+      font-family: 'Yoav';
+      font-size: medium;
+      text-align: right;
+}
+
+.save-video-icon {
+    float: right;
+    padding: 4px;
+    font-size: 24px;
+}
+
+.save-video-icon:hover {
+    opacity: 0.5;
+    color: yellow;
+    font-size: 24px;
+}

@@ -31,16 +31,12 @@
                 #titleCtrl="ngModel"
               ></ion-input>
             </ion-item>
-            <ion-item
-            *ngIf="!titleCtrl.valid && titleCtrl.touched"
-            lines="none">
-            <ion-label color="danger">
-              זהו שדה חובה!
+            <ion-label *ngIf="!titleCtrl.valid && titleCtrl.touched" color="danger">
+              <small> זהו שדה חובה!</small>
             </ion-label>
-          </ion-item>
 
             <ion-item>
-              <ion-label position="floating">תיאור<ion-text color="danger">*</ion-text></ion-label>
+              <ion-label position="floating">תאור<ion-text color="danger">*</ion-text></ion-label>
               <ion-input
                 type="text"
                 ngModel
@@ -49,13 +45,9 @@
                 #descriptionCtrl="ngModel"
               ></ion-input>
             </ion-item>
-            <ion-item
-            *ngIf="!descriptionCtrl.valid && descriptionCtrl.touched"
-            lines="none">
-            <ion-label color="danger">
-              זהו שדה חובה!
+            <ion-label *ngIf="!descriptionCtrl.valid && descriptionCtrl.touched" color="danger">
+              <small> זהו שדה חובה!</small>
             </ion-label>
-          </ion-item>
 
           <!-- <ion-item class="ion-text-center">
             <ion-label position="floating">מזהה<ion-text color="danger">*</ion-text></ion-label>

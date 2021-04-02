@@ -1,9 +1,93 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>add-video</ion-title>
+    <ion-title class="app-titles">סירטון חדש</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-grid>
 
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-xl="4" size-lg="4" size-md="5" size-sm="6" size-xs="7" class="ion-text-center">
+          <ion-img [src]="thumbnail"></ion-img>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-xl="5" size-lg="5" size-md="6" size-sm="7" size-xs="8">
+          <ion-list>
+
+            <ion-item>
+              <ion-label position="floating"> כותרת <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input
+                type="text"
+                ngModel
+                name="title"
+                required
+                #titleCtrl="ngModel"
+              ></ion-input>
+            </ion-item>
+            <ion-label *ngIf="!titleCtrl.valid && titleCtrl.touched" color="danger">
+              <small> זהו שדה חובה!</small>
+            </ion-label>
+
+            <ion-item>
+              <ion-label position="floating">תאור<ion-text color="danger">*</ion-text></ion-label>
+              <ion-textarea
+                type="text"
+                ngModel
+                name="description"
+                required
+                #descriptionCtrl="ngModel"
+              ></ion-textarea>
+            </ion-item>
+            <ion-label *ngIf="!descriptionCtrl.valid && descriptionCtrl.touched" color="danger">
+              <small> זהו שדה חובה!</small>
+            </ion-label>
+
+
+        <ion-item>
+          <ion-label position="floating">קישור<ion-text color="danger">*</ion-text></ion-label>
+          <ion-input
+            type="text"
+            ngModel
+            name="videoURL"
+            required
+            pattern="https:\/\/vimeo.com\/\d{4,10}(?=\b|\/)"
+            #videoURLCtrl="ngModel"
+            (ionChange)="onUrlChange($event)"
+          ></ion-input>
+        </ion-item>
+        <ion-label *ngIf="!videoURLCtrl.valid && videoURLCtrl.touched || invalidVideoURL" color="danger">
+          <small> קישור לא תקין/קיים !</small>
+        </ion-label>
+
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center ion-padding-top">
+        <ion-col size-xl="2" size-lg="3" size-md="3" size-sm="4">
+          <ion-button 
+          class="app-submit-cancel-btn"
+          color="primary"
+          expand="block"
+          (click)="onCancel()"
+          >ביטול</ion-button>
+        </ion-col>
+        <ion-col size-xl="2" size-lg="3" size-md="3" size-sm="4">
+          <ion-button
+          class="app-submit-cancel-btn"
+            type="submit"
+            color="primary"
+            expand="block"
+            [disabled]="!f.valid || invalidVideoURL"
+          >
+          הוסף
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>

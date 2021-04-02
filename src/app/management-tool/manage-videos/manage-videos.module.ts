@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ManageVideosPageRoutingModule } from './manage-videos-routing.module';
 
 import { ManageVideosPage } from './manage-videos.page';
+import { NgxDatatableModule } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ManageVideosPageRoutingModule
+    ManageVideosPageRoutingModule,
+    NgxDatatableModule
   ],
   declarations: [ManageVideosPage]
 })

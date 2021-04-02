@@ -1,11 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, from } from 'rxjs';
+import { Plugins } from '@capacitor/core';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Video } from './video.model';
 
 const LOCALHOST = environment.LOCALHOST;
+
+export interface VideoResponseData {
+  video_id: string;
+  thumbnail_url: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -13,19 +19,19 @@ const LOCALHOST = environment.LOCALHOST;
 export class VideoService {
 
     // tslint:disable-next-line: variable-name
-    private _videos = new BehaviorSubject<Video[]>([
-      new Video('123', '66865270', 'https://vimeo.com/66865270', '<iframe src=\"https://player.vimeo.com/video/66865270?app_id=122963\" width=\"480\" height=\"270\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen title=\"Vimeo Video Jam\"></iframe>', 'Vimeo Video Jam', 'Melissa\'s quest to convince Andrea to make a new Vimeo Original.', new Date(), 'https://i.vimeocdn.com/video/438495722_295x166.jpg'),
-      new Video('123', '66865270', 'https://vimeo.com/66865270', '<iframe src=\"https://player.vimeo.com/video/66865270?app_id=122963\" width=\"480\" height=\"270\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen title=\"Vimeo Video Jam\"></iframe>', 'Vimeo Video Jam', 'Melissa\'s quest to convince Andrea to make a new Vimeo Original.', new Date(), 'https://i.vimeocdn.com/video/438495722_295x166.jpg'),
-      new Video('123', '66865270', 'https://vimeo.com/66865270', '<iframe src=\"https://player.vimeo.com/video/66865270?app_id=122963\" width=\"480\" height=\"270\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen title=\"Vimeo Video Jam\"></iframe>', 'Vimeo Video Jam', 'Melissa\'s quest to convince Andrea to make a new Vimeo Original.', new Date(), 'https://i.vimeocdn.com/video/438495722_295x166.jpg'),
-      new Video('123', '66865270', 'https://vimeo.com/66865270', '<iframe src=\"https://player.vimeo.com/video/66865270?app_id=122963\" width=\"480\" height=\"270\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen title=\"Vimeo Video Jam\"></iframe>', 'Vimeo Video Jam', 'Melissa\'s quest to convince Andrea to make a new Vimeo Original.', new Date(), 'https://i.vimeocdn.com/video/438495722_295x166.jpg')
-    ]);
-    // countries: string[] = [];
+    private _videos = new BehaviorSubject<Video[]>([]);
+
+    private _savedVideo = new BehaviorSubject<string[]>([]);
 
     get videos() {
       return this._videos.asObservable();
     }
 
-  constructor( private http: HttpClient ) { }
+    get savedVideos() {
+      return this._savedVideo.asObservable();
+    }
+
+  constructor( private http: HttpClient ) {}
 
   getAllVideos() {
     return this.videos.pipe(
@@ -114,11 +120,58 @@ export class VideoService {
   }
 
   getEmbedVimeoVideo(videoURL: string) {
-    return this.http.get(`https://vimeo.com/api/oembed.json?url=${videoURL}`).
+    return this.http.get<VideoResponseData>(`https://vimeo.com/api/oembed.json?url=${videoURL}`).
     pipe(
       map(resData => {
         return resData;
       }));
+  }
+
+  getSavedVideos() {
+    return from(Plugins.Storage.get({ key: 'savedVideos' })).pipe(
+      map(videosData => {
+        if (!videosData || !videosData.value) {
+          return null;
+        }
+        const parsedData = JSON.parse(videosData.value) as {
+          videos: string[];
+        };
+        return parsedData;
+      }),
+      tap(data => {
+        if (data) {
+           this._savedVideo.next(data.videos);
+           return data.videos;
+        }
+      }));
+  }
+
+  addToSavedVideos(id: string) {
+    return this.savedVideos.pipe(
+      tap(videos => {
+        this._savedVideo.next(videos.concat(id));
+        console.log(videos);
+      }));
+  }
+
+  removeFromSavedVideos(id: string) {
+    return this.savedVideos.
+      pipe(
+       tap(videos => {
+          this._savedVideo.next(videos.filter(v => v !== id));
+          console.log(videos);
+        }));
+  }
+
+  storeSavedVideosData() {
+    return this.savedVideos.pipe(
+      tap( videosToSave => {
+        const data = JSON.stringify({
+          videos: videosToSave
+        });
+        Plugins.Storage.set({ key: 'savedVideos', value: data });
+      })
+      );
   }
 
 }

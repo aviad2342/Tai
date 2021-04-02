@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 import { Video } from '../../video.model';
+import { VideoService } from '../../video.service';
 
 @Component({
   selector: 'app-video-item',
@@ -10,12 +12,13 @@ import { Video } from '../../video.model';
 export class VideoItemComponent implements OnInit {
 
   @Input() video: Video;
+  @Input() saved = false;
   embedVideo: SafeResourceUrl;
 
-  constructor(public sanitizer: DomSanitizer,) { }
+  constructor(public sanitizer: DomSanitizer, private videoService: VideoService) { }
 
   ngOnInit() {
-    this.embedVideo = this.sanitizer.bypassSecurityTrustResourceUrl('https://player.vimeo.com/video/'+ this.video.videoId);
+    this.embedVideo = this.sanitizer.bypassSecurityTrustResourceUrl(this?.video.embed);
   }
 
 }
