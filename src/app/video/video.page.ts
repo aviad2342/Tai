@@ -12,6 +12,7 @@ import { VideoService } from './video.service';
 export class VideoPage implements OnInit, OnDestroy  {
 
   videos: Video[];
+  savedVideos: string[] = [];
   private videosSubscription: Subscription;
   isDesktop: boolean;
   isLoading = false;
@@ -27,11 +28,36 @@ export class VideoPage implements OnInit, OnDestroy  {
       this.isLoading = false;
       console.log(error);
     });
+    this.videoService.getSavedVideos().subscribe(videos => {
+      if(videos) {
+        this.savedVideos = [...videos.videos];
+        console.log(this.savedVideos);
+      }
+    });
+  }
+
+  isSaved(id: string) {
+    return this.savedVideos.includes(id);
+  }
+
+  onSaveVideoItem(videoId: string) {
+    this.savedVideos.push(videoId);
+    console.log(this.savedVideos);
+  }
+
+  onRemoveSavedVideoItem(videoId: string) {
+    this.savedVideos.splice(this.savedVideos.indexOf(videoId),1);
+    console.log(this.savedVideos);
   }
 
   ionViewWillEnter() {
     this.isDesktop = this.appService.isDesktop();
     this.videoService.getVideos().subscribe();
+  }
+
+  ionViewDidLeave() {
+    console.log('dd');
+    this.videoService.storeSavedVideosData(this.savedVideos);
   }
 
   ngOnDestroy() {

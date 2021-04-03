@@ -146,32 +146,11 @@ export class VideoService {
       }));
   }
 
-  addToSavedVideos(id: string) {
-    return this.savedVideos.pipe(
-      tap(videos => {
-        this._savedVideo.next(videos.concat(id));
-        console.log(videos);
-      }));
-  }
-
-  removeFromSavedVideos(id: string) {
-    return this.savedVideos.
-      pipe(
-       tap(videos => {
-          this._savedVideo.next(videos.filter(v => v !== id));
-          console.log(videos);
-        }));
-  }
-
-  storeSavedVideosData() {
-    return this.savedVideos.pipe(
-      tap( videosToSave => {
-        const data = JSON.stringify({
-          videos: videosToSave
-        });
-        Plugins.Storage.set({ key: 'savedVideos', value: data });
-      })
-      );
+  storeSavedVideosData(savedVideosList: string[]) {
+    const data = JSON.stringify({
+      videos: savedVideosList
+    });
+    Plugins.Storage.set({ key: 'savedVideos', value: data });
   }
 
 }

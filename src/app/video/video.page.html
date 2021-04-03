@@ -10,7 +10,7 @@
 
 <ion-content>
 
-  <ion-grid>
+  <ion-grid class="ion-no-padding">
 
     <ion-row class="ion-justify-content-center" *ngIf="isLoading">
       <ion-col size-xl="4" size-lg="5" size-md="6" size-sm="7" class="ion-text-center" >
@@ -19,10 +19,10 @@
     </ion-row>
 
     <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
-      <ion-col size-xl="3" size-lg="5" size-md="6" size-sm="7">
-        <ion-list>
-          <div *ngFor="let video of videos">
-            <app-video-item [video]="video"></app-video-item>
+      <ion-col size-xl="3" size-lg="5" size-md="6" size-sm="7" class="ion-no-padding">
+        <ion-list class="ion-no-padding">
+          <div class="video-item-container" *ngFor="let video of videos">
+            <app-video-item [video]="video" (saveVideo)="onSaveVideoItem($event)" (unsaveVideo)="onRemoveSavedVideoItem($event)" [saved]="isSaved(video.id)"></app-video-item>
           </div>
         </ion-list>
       </ion-col>

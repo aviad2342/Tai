@@ -1,4 +1,7 @@
 
+ion-item {
+    --background: transparent;
+}
 ion-card-header {
     padding: 5px;
 }
@@ -8,10 +11,11 @@ ion-card-content {
 }
 
 .video-card {
-    border: 1px solid black;
-    --background: #e0e1e4;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 0px;
+    background: #ffffffe3;
 }
 
 ion-item::part(native){
@@ -19,9 +23,9 @@ ion-item::part(native){
 }
 
 ion-card-title {
-    font-family: 'Yoav';
-    font-size: larger;
-    text-align: right;
+    font-family: 'Haim';
+    font-size: large;
+    padding-top: 5px;
     color: var(--ion-color-dark);
 }
 
@@ -31,14 +35,14 @@ ion-card-subtitle {
       text-align: right;
 }
 
+ion-card-content {
+    font-family: 'Yoav';
+      font-size: medium;
+      text-align: right;
+}
+
 .save-video-icon {
     float: right;
     padding: 4px;
-    font-size: 24px;
-}
-
-.save-video-icon:hover {
-    opacity: 0.5;
-    color: yellow;
     font-size: 24px;
 }
