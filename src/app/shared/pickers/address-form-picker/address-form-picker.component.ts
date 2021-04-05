@@ -45,13 +45,16 @@ export class AddressFormPickerComponent implements OnInit {
      ) { }
 
   ngOnInit() {
-    this.selectedAddress.country = 'ישראל';
 
     if(this.isEdit) {
       this.enableStreetPicker = true;
       this.disableHouseNumberPicker = false;
       this.isValid.emit(true);
+    } else {
+      this.selectedAddress.id = null;
+      this.selectedAddress.country = 'ישראל';
     }
+
     this.houseNumber.splice(0, 1);
     this.houseNumber.forEach(element => {
       this.houseNumberPickerOptions.push({

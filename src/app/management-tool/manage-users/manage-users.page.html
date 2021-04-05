@@ -119,9 +119,9 @@
         <ng-template let-column="column" ngx-datatable-header-template><strong>אימייל</strong></ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="city" [sortable]="true" [width]="270" [resizeable]="false">
+      <ngx-datatable-column headerClass="datatable-header-padding" cellClass="datatable-cell-padding" name="address" [sortable]="true" [width]="270" [resizeable]="false">
         <ng-template let-column="column" ngx-datatable-header-template><strong>כתובת</strong></ng-template>
-        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <ng-template let-row="row.address" let-value="value" ngx-datatable-cell-template>
           <a href="https://www.google.com/maps/place/{{row.street}} {{row.houseNumber}}, {{row.city}}, {{row.country}}">
             <i [innerHTML]="row['street']"></i>&nbsp;  
             <i [innerHTML]="row['houseNumber']"></i>,&nbsp;  

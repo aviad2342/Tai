@@ -45,6 +45,7 @@ export class NewUserPage implements OnInit {
   address: Address = new Address();
   userImage = '../../../assets/images/user-default-image.png';
   file: File;
+  imageIsValid = true;
 
 
   constructor(
@@ -58,6 +59,7 @@ export class NewUserPage implements OnInit {
   }
 
   onImagePicked(imageData: string | File) {
+    this.imageIsValid = true;
     let imageFile;
     if (typeof imageData === 'string') {
       try {
@@ -73,8 +75,6 @@ export class NewUserPage implements OnInit {
       imageFile = imageData;
     }
     this.file = imageFile;
-    this.form.value.image = imageFile;
-
   }
 
   onAddressPicked(address: Address) {
@@ -82,11 +82,14 @@ export class NewUserPage implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    form.value.image = this.file;
-    if (!form.valid || !this.form.value.image) {
+    if (!form.valid) {
       return;
     }
-    this.userService.uploadImage(this.form.value.image, form.value.email)
+    if (!this.file) {
+      this.imageIsValid = false;
+      return;
+    }
+    this.userService.uploadImage(this.file, form.value.email)
     .pipe(
       switchMap(uploadRes => {
         const userToAdd = new User(
@@ -96,14 +99,9 @@ export class NewUserPage implements OnInit {
           form.value.password,
           form.value.phone,
           form.value.email,
-          new Date(form.value.dateOfBirth),
-          this.address.country,
-          this.address.city,
-          this.address.street,
-          this.address.houseNumber,
-          this.address.apartment,
-          this.address.entry,
-          uploadRes.imageUrl
+          form.value.date,
+          uploadRes.imageUrl,
+          this.address
         );
         return this.userService.addUser(userToAdd);
       })

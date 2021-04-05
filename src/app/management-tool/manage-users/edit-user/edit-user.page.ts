@@ -44,12 +44,15 @@ export class EditUserPage implements OnInit {
       }
       this.userService.getUser(paramMap.get('id')).subscribe(user => {
             this.user = user;
-            this.address.setAddress(this.user.country,
-              this.user.city,
-              this.user.street,
-              this.user.houseNumber,
-              this.user.apartment,
-              this.user.entry);
+            this.address.setAddress(
+              user.address.id,
+              user.address.country,
+              user.address.city,
+              user.address.street,
+              user.address.houseNumber,
+              user.address.apartment,
+              user.address.entry
+              );
             const userObj = {
               firstName: this.user.firstName,
               lastName: this.user.lastName,
@@ -138,13 +141,12 @@ export class EditUserPage implements OnInit {
           form.value.phone,
           form.value.email,
           form.value.date,
-          this.address.country,
-          this.address.city,
-          this.address.street,
-          this.address.houseNumber,
-          this.address.apartment,
-          this.address.entry,
-          uploadRes.imageUrl
+          uploadRes.imageUrl,
+          this.address,
+          this.user.preferences,
+          this.user.savedVideos,
+          this.user.cart,
+          this.user.orders,
         );
         return this.userService.updateUser(userToUpdate);
       })
@@ -165,13 +167,12 @@ export class EditUserPage implements OnInit {
         form.value.phone,
         form.value.email,
         form.value.date,
-        this.address.country,
-        this.address.city,
-        this.address.street,
-        this.address.houseNumber,
-        this.address.apartment,
-        this.address.entry,
-        this.user.profilePicture
+        this.user.profilePicture,
+        this.address,
+        this.user.preferences,
+        this.user.savedVideos,
+        this.user.cart,
+        this.user.orders
       );
 
       if(this.isEquals(this.user, userToUpdate)) {
@@ -191,19 +192,19 @@ export class EditUserPage implements OnInit {
 
   isEquals(user1: User, user2: User) {
     if(
-      user1.firstName   === user2.firstName &&
-      user1.lastName    === user2.lastName &&
-      user1.date        === user2.date &&
-      user1.password    === user2.password &&
-      user1.phone       === user2.phone &&
-      user1.email       === user2.email &&
-      user1.date        === user2.date && // compare dates
-      user1.country     === user2.country &&
-      user1.city        === user2.city &&
-      user1.street      === user2.street &&
-      user1.houseNumber === user2.houseNumber &&
-      user1.apartment   === user2.apartment &&
-      user1.entry       === user2.entry
+      user1.firstName           === user2.firstName &&
+      user1.lastName            === user2.lastName &&
+      user1.date                === user2.date &&
+      user1.password            === user2.password &&
+      user1.phone               === user2.phone &&
+      user1.email               === user2.email &&
+      user1.date                === user2.date && // compare dates
+      user1.address.country     === user2.address.country &&
+      user1.address.city        === user2.address.city &&
+      user1.address.street      === user2.address.street &&
+      user1.address.houseNumber === user2.address.houseNumber &&
+      user1.address.apartment   === user2.address.apartment &&
+      user1.address.entry       === user2.address.entry
     ) {
       return true;
     }

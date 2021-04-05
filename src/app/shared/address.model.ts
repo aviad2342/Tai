@@ -1,5 +1,6 @@
 export class Address {
 
+    public id: string;
     public country: string;
     public city: string;
     public street: string;
@@ -9,7 +10,8 @@ export class Address {
 
     constructor() {}
 
-    setAddress(country: string, city: string, street: string, houseNumber: string, apartment: string, entry: string) {
+    setAddress(id: string, country: string, city: string, street: string, houseNumber: string, apartment: string, entry: string) {
+      this.id = id;
       this.country = country;
       this.city = city;
       this.street = street;
@@ -23,6 +25,7 @@ export class Address {
 
 export class DeliveryAddress extends Address {
 
+  public id: string;
   public country: string;
   public city: string;
   public street: string;
@@ -35,8 +38,16 @@ export class DeliveryAddress extends Address {
     super();
   }
 
-  setDeliveryAddress(country: string, city: string, street: string, houseNumber: string, apartment: string, entry: string, zipCode = '')
+  setDeliveryAddress(id: string,
+    country: string,
+    city: string,
+    street: string,
+    houseNumber: string,
+    apartment: string,
+    entry: string,
+    zipCode = '')
    {
+    this.id = id;
     this.country = country;
     this.city = city;
     this.street = street;

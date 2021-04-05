@@ -5,8 +5,7 @@ export class Cart {
 
     constructor(
       public id: string,
-      public customer: Customer,
-      public items: CartItem[],
+      public items?: CartItem[],
       public orderId?: string,
     ) {}
 

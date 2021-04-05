@@ -92,13 +92,8 @@ export class AddUserPage implements OnInit {
           form.value.phone,
           form.value.email,
           form.value.date,
-          this.address.country,
-          this.address.city,
-          this.address.street,
-          this.address.houseNumber,
-          this.address.apartment,
-          this.address.entry,
-          uploadRes.imageUrl
+          uploadRes.imageUrl,
+          this.address
         );
         return this.userService.addUser(userToAdd);
       })

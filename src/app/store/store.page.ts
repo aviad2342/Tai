@@ -11,6 +11,7 @@ import { Cart } from '../cart/cart.model';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { NavController } from '@ionic/angular';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'app-store',
@@ -121,6 +122,7 @@ export class StorePage implements OnInit, OnDestroy {
     private authService: AuthService,
     private appService: AppService,
     private itemService: ItemService,
+    private userService: UserService,
     private ngZone: NgZone
     ) { }
 
@@ -147,21 +149,18 @@ export class StorePage implements OnInit, OnDestroy {
       //   });
       // }
     });
-    // this.cartService.getCustomerCart(this.authService.getLoggedUserId()).subscribe(cart => {
-    //   if(cart) {
-    //     this.cart = cart;
-    //     this.cartItems = cart.items;
-    //     this.itemsAddedToCart = cart.items.length;
-    //   } else {
-    //     this.authService.getUserLogged().pipe(
-    //       switchMap(user => {
-    //       const newCart = new Cart(null, user, this.cartItems, null);
-    //       return this.cartService.addCart(newCart);
-    //     })).subscribe(newCart => {
-    //       this.cart = newCart;
-    //     });
-    //   }
-    // });
+    this.userService.getFullUser(this.authService.getLoggedUserId()).subscribe(user => {
+      this.user = user;
+      if(user.cart || user.cart === null) {
+        this.cart = user.cart;
+      } else {
+        this.cart = new Cart(
+          null,
+          this.cartItems,
+          null
+        );
+      }
+    });
   }
 
   // changePlaying() {
@@ -207,7 +206,7 @@ export class StorePage implements OnInit, OnDestroy {
       } else {
         this.authService.getUserLogged().pipe(
           switchMap(user => {
-          const newCart = new Cart(null, user, this.cartItems, null);
+          const newCart = new Cart(null, this.cartItems, null);
           return this.cartService.addCart(newCart);
         })).subscribe(newCart => {
           this.cart = newCart;

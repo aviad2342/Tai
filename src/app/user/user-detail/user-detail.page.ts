@@ -73,7 +73,10 @@ export class UserDetailPage implements OnInit, OnDestroy {
   }
 
   getAddress() {
-    return this.user?.street + ' ' + this.user?.houseNumber + ', ' + this.user?.city + ', ' + this.user?.country;
+    return this.user?.address.street + ' ' +
+    this.user?.address.houseNumber + ', ' +
+    this.user?.address.city + ', ' +
+    this.user?.address.country;
   }
 
 }

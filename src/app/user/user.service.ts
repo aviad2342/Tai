@@ -5,6 +5,10 @@ import { take, map, tap, delay, switchMap } from 'rxjs/operators';
 import { User } from './user.model';
 import { environment } from 'src/environments/environment';
 import { PasswordReset } from './password-reset.model';
+import { Address } from '../shared/address.model';
+import { UserPreferences } from './user-preferences.model';
+import { Cart } from '../cart/cart.model';
+import { Order } from '../order/order.model';
 
 const LOCALHOST = environment.LOCALHOST;
 
@@ -96,6 +100,41 @@ export class UserService {
     }));
   }
 
+  getUserAddress(id: string) {
+    return this.http.get<Address>(`http://${LOCALHOST}:3000/api/user/address/${id}`)
+    .pipe(tap(resDta => {
+      return resDta;
+    }));
+  }
+
+  getUserPreferences(id: string) {
+    return this.http.get<UserPreferences>(`http://${LOCALHOST}:3000/api/user/preferences/${id}`)
+    .pipe(tap(resDta => {
+      return resDta;
+    }));
+  }
+
+  getUserCart(id: string) {
+    return this.http.get<Cart>(`http://${LOCALHOST}:3000/api/user/cart/${id}`)
+    .pipe(tap(resDta => {
+      return resDta;
+    }));
+  }
+
+  getUserOrders(id: string) {
+    return this.http.get<Order[]>(`http://${LOCALHOST}:3000/api/user/orders/${id}`)
+    .pipe(tap(resDta => {
+      return resDta;
+    }));
+  }
+
+  getFullUser(id: string) {
+    return this.http.get<User>(`http://${LOCALHOST}:3000/api/user/full/${id}`)
+    .pipe(tap(resDta => {
+      return resDta;
+    }));
+  }
+
   getUserByEmail(email: string) {
     return this.http
       .get<User>(
@@ -130,6 +169,7 @@ export class UserService {
       }));
   }
 
+
   registerUser(user: User) {
     return this.http.post<User>(`http://${LOCALHOST}:3000/api/user/register`,
     {
@@ -143,19 +183,18 @@ export class UserService {
 
   updateUser(user: User) {
     const userObj = {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      phone: user.phone,
-      password: user.password,
-      date: user.date,
-      country: user.country,
-      city: user.city,
-      street: user.street,
-      houseNumber: user.houseNumber,
-      apartment: user.apartment,
-      entry: user.entry,
-      profilePicture: user.profilePicture
+      firstName:      user.firstName,
+      lastName:       user.lastName,
+      email:          user.email,
+      phone:          user.phone,
+      password:       user.password,
+      date:           user.date,
+      profilePicture: user.profilePicture,
+      address:        user.address,
+      preferences:    user.preferences,
+      savedVideos:    user.savedVideos,
+      cart:           user.cart,
+      orders:         user.orders
       };
     return this.http.put(`http://${LOCALHOST}:3000/api/user/user/${user.id}`,
     {
@@ -175,39 +214,6 @@ export class UserService {
       }));
   }
 
-  updateUserAndProfilePicture(user: User) {
-    const userObj = {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      phone: user.phone,
-      password: user.password,
-      date: user.date,
-      country: user.country,
-      city: user.city,
-      street: user.street,
-      houseNumber: user.houseNumber,
-      apartment: user.apartment,
-      entry: user.entry,
-      profilePicture: user.profilePicture
-      };
-    return this.http.put(`http://${LOCALHOST}:3000/api/user/user/image/${user.id}`,
-    {
-      ...userObj
-    }).
-    pipe(
-      switchMap(resData => {
-        return this.getUsers();
-      }),
-      switchMap(users => {
-        this._users.next(users);
-        return users.filter(u => u.id === user.id);
-      }),
-      take(1),
-      tap(userData => {
-        return userData;
-      }));
-  }
 
   deleteUser(id: string) {
     return this.http.delete(`http://${LOCALHOST}:3000/api/user/user/${id}`).
@@ -229,19 +235,18 @@ export class UserService {
 
   updateUserPassword(user: User, token: string) {
     const userObj = {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      phone: user.phone,
-      password: user.password,
-      date: user.date,
-      country: user.country,
-      city: user.city,
-      street: user.street,
-      houseNumber: user.houseNumber,
-      apartment: user.apartment,
-      entry: user.entry,
-      profilePicture: user.profilePicture
+      firstName:      user.firstName,
+      lastName:       user.lastName,
+      email:          user.email,
+      phone:          user.phone,
+      password:       user.password,
+      date:           user.date,
+      profilePicture: user.profilePicture,
+      address:        user.address,
+      preferences:    user.preferences,
+      savedVideos:    user.savedVideos,
+      cart:           user.cart,
+      orders:         user.orders
       };
     return this.http.put<PasswordReset>(`http://${LOCALHOST}:3000/api/user/password/${user.id}/${token}`,
     {

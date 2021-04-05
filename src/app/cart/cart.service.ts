@@ -82,7 +82,6 @@ export class CartService {
 
     updateCart(cart: Cart) {
       const cartObj = {
-        customer: cart.customer,
         items:    cart.items,
         orderId: cart.orderId,
         };

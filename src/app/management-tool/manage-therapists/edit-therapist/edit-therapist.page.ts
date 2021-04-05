@@ -81,12 +81,14 @@ export class EditTherapistPage implements OnInit {
             this.isLoading = false;
             this.treatmentsTypes = this.therapist.treatmentTypes;
             this.address.setAddress(
-              this.therapist.country,
-              this.therapist.city,
-              this.therapist.street,
-              this.therapist.houseNumber,
-              this.therapist.apartment,
-              this.therapist.entry);
+              therapist.address.id,
+              therapist.address.country,
+              therapist.address.city,
+              therapist.address.street,
+              therapist.address.houseNumber,
+              therapist.address.apartment,
+              therapist.address.entry
+              );
             const therapistObj = {
               firstName: this.therapist.firstName,
               lastName: this.therapist.lastName,
@@ -177,13 +179,8 @@ export class EditTherapistPage implements OnInit {
             form.value.phone,
             form.value.email,
             form.value.date,
-            this.address.country,
-            this.address.city,
-            this.address.street,
-            this.address.houseNumber,
-            this.address.apartment,
-            this.address.entry,
             uploadRes.imageUrl,
+            this.address,
             this.therapist.treatmentTypes,
             form.value.resume,
             this.form.value.admin
@@ -206,13 +203,8 @@ export class EditTherapistPage implements OnInit {
         form.value.phone,
         form.value.email,
         form.value.date,
-        this.address.country,
-        this.address.city,
-        this.address.street,
-        this.address.houseNumber,
-        this.address.apartment,
-        this.address.entry,
         this.therapist.profilePicture,
+        this.address,
         this.therapist.treatmentTypes,
         form.value.resume,
         this.form.value.admin

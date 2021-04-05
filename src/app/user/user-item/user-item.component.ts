@@ -15,8 +15,4 @@ export class UserItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  getUserFullName() {
-    return this.user.firstName + ' ' + this.user.lastName;
-  }
-
 }

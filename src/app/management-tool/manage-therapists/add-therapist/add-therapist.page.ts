@@ -73,14 +73,11 @@ export class AddTherapistPage implements OnInit {
       imageFile = imageData;
     }
     this.file = imageFile;
-    this.form.value.image = imageFile;
-
   }
 
   onTreatmentsChosen(event: CustomEvent<SegmentChangeEventDetail>) {
     this.treatmentsTypesValid = false;
     this.treatmentsTypes = [...event.detail.value];
-    console.log(this.form.value.admin);
   }
 
   onTreatmentsCancel() {
@@ -100,11 +97,11 @@ export class AddTherapistPage implements OnInit {
     if (!form.valid) {
       return;
     }
-    if (!this.form.value.image) {
+    if (!this.file) {
       this.imageIsValid = false;
       return;
     }
-    this.therapistService.uploadImage(this.form.value.image, form.value.email)
+    this.therapistService.uploadImage(this.file, form.value.email)
     .pipe(
       switchMap(uploadRes => {
         const therapistToAdd = new Therapist(
@@ -115,13 +112,8 @@ export class AddTherapistPage implements OnInit {
           form.value.phone,
           form.value.email,
           form.value.date,
-          this.address.country,
-          this.address.city,
-          this.address.street,
-          this.address.houseNumber,
-          this.address.apartment,
-          this.address.entry,
           uploadRes.imageUrl,
+          this.address,
           this.treatmentsTypes,
           form.value.resume,
           this.form.value.admin

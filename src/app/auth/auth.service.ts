@@ -26,6 +26,7 @@ const LOCALHOST = environment.LOCALHOST;
 export class AuthService implements OnDestroy {
   // tslint:disable-next-line: variable-name
   private _user = new BehaviorSubject<UserLogged>(null);
+  private userDetails: User;
   private activeLogoutTimer: any;
   public loggedUserId: string;
 
@@ -80,6 +81,18 @@ export class AuthService implements OnDestroy {
     return this.userSrvice.getUser(this._user.value.id);
   }
 
+  setUserDetails(id: string) {
+    if(!this.userDetails) {
+      this.userSrvice.getFullUser(id).subscribe(user => {
+        this.userDetails = user
+      });
+    }
+  }
+
+  getUserDetails() {
+    return this.userDetails;
+  }
+
   isTheCurrentUserLogged(id: string) {
     return (this._user.value.id === id);
   }
@@ -119,6 +132,7 @@ export class AuthService implements OnDestroy {
         if (user) {
           this._user.next(user);
           this.autoLogout(user.tokenDuration);
+          this.setUserDetails(user.id);
         }
       }),
       map(user => {
@@ -142,7 +156,9 @@ export class AuthService implements OnDestroy {
         `http://${LOCALHOST}:3000/api/auth/login`,
         { email, password }
       )
-      .pipe(tap(this.setUserData.bind(this)));
+      .pipe(tap(
+        this.setUserData.bind(this)
+        ));
   }
 
   logout() {
@@ -170,6 +186,7 @@ export class AuthService implements OnDestroy {
 
   private setUserData(userData: AuthResponseData) {
     this.loggedUserId = userData.userId;
+    this.setUserDetails(userData.userId);
     const expirationTime = new Date(
       new Date().getTime() + +userData.expiresIn * 1000);
     const user = new UserLogged(

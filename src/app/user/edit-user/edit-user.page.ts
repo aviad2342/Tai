@@ -66,12 +66,15 @@ export class EditUserPage implements OnInit, OnDestroy {
       this.userSubscription = this.userService.getUser(paramMap.get('id')).
       subscribe(user => {
         this.user = user;
-        this.address.setAddress(this.user.country,
-          this.user.city,
-          this.user.street,
-          this.user.houseNumber,
-          this.user.apartment,
-          this.user.entry);
+        this.address.setAddress(
+          user.address.id,
+          user.address.country,
+          user.address.city,
+          user.address.street,
+          user.address.houseNumber,
+          user.address.apartment,
+          user.address.entry
+          );
         const userObj = {
           firstName: this.user.firstName,
           lastName: this.user.lastName,
@@ -132,20 +135,19 @@ export class EditUserPage implements OnInit, OnDestroy {
     .pipe(
       switchMap(uploadRes => {
         const userToUpdate = new User(
-          this.id,
+          this.user.id,
           form.value.firstName,
           form.value.lastName,
           form.value.password,
           form.value.phone,
           form.value.email,
           form.value.date,
-          this.address.country,
-          this.address.city,
-          this.address.street,
-          this.address.houseNumber,
-          this.address.apartment,
-          this.address.entry,
-          uploadRes.imageUrl
+          uploadRes.imageUrl,
+          this.address,
+          this.user.preferences,
+          this.user.savedVideos,
+          this.user.cart,
+          this.user.orders,
         );
         return this.userService.updateUser(userToUpdate);
       })
@@ -161,20 +163,19 @@ export class EditUserPage implements OnInit, OnDestroy {
 
     } else {
       const userToUpdate = new User(
-        this.id,
+        this.user.id,
         form.value.firstName,
         form.value.lastName,
         form.value.password,
         form.value.phone,
         form.value.email,
         form.value.date,
-        this.address.country,
-        this.address.city,
-        this.address.street,
-        this.address.houseNumber,
-        this.address.apartment,
-        this.address.entry,
-        this.user.profilePicture
+        this.user.profilePicture,
+        this.address,
+        this.user.preferences,
+        this.user.savedVideos,
+        this.user.cart,
+        this.user.orders
       );
       this.userService.updateUser(userToUpdate).subscribe(() => {
         form.reset();

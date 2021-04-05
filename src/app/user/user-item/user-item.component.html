@@ -3,7 +3,7 @@
     <ion-img [src]="user.profilePicture"></ion-img>
   </ion-avatar>
   <ion-label>
-    <h1 class="app-user-list-item-labels">{{ getUserFullName() }}</h1>
+    <h1 class="app-user-list-item-labels">{{ this?.user.firstName + ' ' + this?.user.lastName }}</h1>
     <ion-text color="medium">
       <p>{{ user.email }}</p>
     </ion-text>

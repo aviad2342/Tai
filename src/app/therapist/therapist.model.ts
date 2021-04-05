@@ -1,3 +1,7 @@
+import { Cart } from '../cart/cart.model';
+import { Order } from '../order/order.model';
+import { Address } from '../shared/address.model';
+import { UserPreferences } from '../user/user-preferences.model';
 import { User } from '../user/user.model';
 
 export class Therapist extends User {
@@ -10,16 +14,15 @@ export class Therapist extends User {
       public phone: string,
       public email: string,
       public date: Date,
-      public country: string,
-      public city: string,
-      public street: string,
-      public houseNumber: string,
-      public apartment: string,
-      public entry: string,
       public profilePicture: string,
+      public address: Address,
       public treatmentTypes: string[],
       public resume: string,
       public admin: boolean,
+      public preferences?: UserPreferences,
+      public savedVideos?: string[],
+      public cart?: Cart,
+      public orders?: Order[],
     ) {
         super(
             id,
@@ -29,13 +32,12 @@ export class Therapist extends User {
             phone,
             email,
             date,
-            country,
-            city,
-            street,
-            houseNumber,
-            apartment,
-            entry,
-            profilePicture
+            profilePicture,
+            address,
+            preferences,
+            savedVideos,
+            cart,
+            orders
             );
     }
 

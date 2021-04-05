@@ -1,3 +1,8 @@
+import { Cart } from '../cart/cart.model';
+import { Order } from '../order/order.model';
+import { Address } from '../shared/address.model';
+import { UserPreferences } from './user-preferences.model';
+
 export class User {
 
     constructor(
@@ -8,13 +13,12 @@ export class User {
       public phone: string,
       public email: string,
       public date: Date,
-      public country: string,
-      public city: string,
-      public street: string,
-      public houseNumber: string,
-      public apartment: string,
-      public entry: string,
-      public profilePicture: string
+      public profilePicture: string,
+      public address: Address,
+      public preferences?: UserPreferences,
+      public savedVideos?: string[],
+      public cart?: Cart,
+      public orders?: Order[]
     ) {}
 
   }
