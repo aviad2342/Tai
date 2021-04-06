@@ -12,6 +12,7 @@ import { Coupon } from '../store/coupon.model';
 import { CouponService } from '../store/coupon.service';
 import { CouponUsers } from '../store/couponUsers.model';
 import { CartItem } from '../store/item.model';
+import { User } from '../user/user.model';
 import { Cart } from './cart.model';
 import { CartService } from './cart.service';
 
@@ -27,6 +28,7 @@ export class CartPage implements OnInit {
   @ViewChild('slidingItem') slidingItem: IonItemSliding;
   slidingItems: IonItemSliding[] = [];
   coupon: Coupon;
+  user: User;
   couponUsers: CouponUsers[]
   summaryItems = 0;
   shippingCost = 0;
@@ -185,8 +187,8 @@ export class CartPage implements OnInit {
           this.summaryOrder,
           order.receivedPayment,
           order.confirmPaymentNumber,
-          order.customer,
           order.address,
+          order.user,
           this.cart.items
         );
         return this.orderService.updateOrder(orderToUpdate);
@@ -208,8 +210,8 @@ export class CartPage implements OnInit {
         this.summaryOrder,
         false,
         '',
-        this.cart.customer,
         null,
+        this.user,
         this.cart.items
       );
       this.orderService.addOrder(newOrder).subscribe(order => {

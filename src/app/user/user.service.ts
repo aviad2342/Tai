@@ -24,24 +24,29 @@ export class UserService {
 
   // tslint:disable-next-line: variable-name
   private _users = new BehaviorSubject<User[]>([]);
-  // countries: string[] = [];
+
+  private _user = new BehaviorSubject<User>(null);
 
   get users() {
     return this._users.asObservable();
+  }
+
+  get user() {
+    return this._user.asObservable();
   }
 
   constructor( private http: HttpClient ) { }
 
   getUsers() {
     return this.http.get<User[]>(`http://${LOCALHOST}:3000/api/user/users`)
-    .pipe(tap(resDta => {
-      this._users.next(resDta);
+    .pipe(tap(resData => {
+      this._users.next(resData);
     }));
   }
 
   getAllUsers() {
     return this.http.get(`http://${LOCALHOST}:3000/api/user/users`)
-    .pipe(tap(resDta => {
+    .pipe(tap(resData => {
     }));
   }
 
@@ -95,43 +100,44 @@ export class UserService {
 
   getUser(id: string) {
     return this.http.get<User>(`http://${LOCALHOST}:3000/api/user/user/${id}`)
-    .pipe(tap(resDta => {
-      return resDta;
+    .pipe(tap(resData => {
+      return resData;
     }));
   }
 
   getUserAddress(id: string) {
     return this.http.get<Address>(`http://${LOCALHOST}:3000/api/user/address/${id}`)
-    .pipe(tap(resDta => {
-      return resDta;
+    .pipe(tap(resData => {
+      return resData;
     }));
   }
 
   getUserPreferences(id: string) {
     return this.http.get<UserPreferences>(`http://${LOCALHOST}:3000/api/user/preferences/${id}`)
-    .pipe(tap(resDta => {
-      return resDta;
+    .pipe(tap(resData => {
+      return resData;
     }));
   }
 
   getUserCart(id: string) {
     return this.http.get<Cart>(`http://${LOCALHOST}:3000/api/user/cart/${id}`)
-    .pipe(tap(resDta => {
-      return resDta;
+    .pipe(tap(resData => {
+      return resData;
     }));
   }
 
   getUserOrders(id: string) {
     return this.http.get<Order[]>(`http://${LOCALHOST}:3000/api/user/orders/${id}`)
-    .pipe(tap(resDta => {
-      return resDta;
+    .pipe(tap(resData => {
+      return resData;
     }));
   }
 
   getFullUser(id: string) {
     return this.http.get<User>(`http://${LOCALHOST}:3000/api/user/full/${id}`)
-    .pipe(tap(resDta => {
-      return resDta;
+    .pipe(tap(resData => {
+      this._user.next(resData);
+      return resData;
     }));
   }
 
@@ -207,6 +213,39 @@ export class UserService {
       switchMap(users => {
         this._users.next(users);
         return users.filter(u => u.id === user.id);
+      }),
+      take(1),
+      tap(userData => {
+        return userData;
+      }));
+  }
+
+  updateFullUser(user: User) {
+    const userObj = {
+      firstName:      user.firstName,
+      lastName:       user.lastName,
+      email:          user.email,
+      phone:          user.phone,
+      password:       user.password,
+      date:           user.date,
+      profilePicture: user.profilePicture,
+      address:        user.address,
+      preferences:    user.preferences,
+      savedVideos:    user.savedVideos,
+      cart:           user.cart,
+      orders:         user.orders
+      };
+    return this.http.put(`http://${LOCALHOST}:3000/api/user/full/${user.id}`,
+    {
+      ...userObj
+    }).
+    pipe(
+      switchMap(resData => {
+        return this.getUsers();
+      }),
+      switchMap(users => {
+        this._users.next(users);
+        return this.getFullUser(user.id);
       }),
       take(1),
       tap(userData => {

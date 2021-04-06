@@ -93,9 +93,9 @@
 
           <ion-col *ngIf="!loadingSelectedOrder">
             <ion-label><strong>לקוח</strong></ion-label>
-            <div> {{ selectOrderdetails.customer.firstName +' '+selectOrderdetails.customer.lastName }}</div>
-            <div> {{ selectOrderdetails.customer.email }}</div>
-            <div> {{ selectOrderdetails.customer.phone }}</div>
+            <div> {{ selectOrderdetails.user.firstName +' '+selectOrderdetails.user.lastName }}</div>
+            <div> {{ selectOrderdetails.user.email }}</div>
+            <div> {{ selectOrderdetails.user.phone }}</div>
           </ion-col>
 
           <ion-col *ngIf="!loadingSelectedOrder && selectOrderdetails.address">

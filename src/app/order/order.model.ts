@@ -1,6 +1,6 @@
-import { Customer } from '../customer/customer.model';
 import { DeliveryAddress } from '../shared/address.model';
 import { OrderItem } from '../store/item.model';
+import { User } from '../user/user.model';
 
 export class Order {
 
@@ -15,9 +15,9 @@ export class Order {
       public totalPayment: number,
       public receivedPayment: boolean,
       public confirmPaymentNumber: string,
-      public customer: Customer,
       public address: DeliveryAddress,
-      public items: OrderItem[],
+      public user: User,
+      public items?: OrderItem[],
     ) {}
 
   }

@@ -32,7 +32,11 @@
 
   <ion-item lines="none">
     <ion-icon size="medium" name="home-outline"></ion-icon>
-    <ion-label class="ion-padding-start therapist-detail-label"><a target="_blank" href="https://www.google.com/maps/place/{{getTherapistAddress()}}">{{ getTherapistAddress() }}</a></ion-label>
+      <ion-label class="ion-padding-start therapist-detail-label">
+        <a target="_blank" href="https://www.google.com/maps/place/{{therapist?.address.street + ' ' + therapist?.address.houseNumber + ', ' + therapist?.address.city + ', ' + therapist?.address.country}}">
+          {{ therapist?.address.street + ' ' + therapist?.address.houseNumber + ', ' + therapist?.address.city + ', ' + therapist?.address.country }}
+        </a>
+    </ion-label>
   </ion-item>
 
   <ion-item lines="none">

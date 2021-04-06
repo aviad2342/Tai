@@ -99,6 +99,7 @@ export class EditEventPage implements OnInit, AfterViewInit {
           };
         this.form.setValue(eventObj);
         this.address.setAddress(
+          null,
           this.event.country,
           this.event.city,
           this.event.street,

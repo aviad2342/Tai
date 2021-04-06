@@ -20,10 +20,10 @@ export class StoreItemComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.cartService.isItemInCart(this.authService.getLoggedUserId(), this.item.id)
-    .subscribe(inCart => {
-      this.disabled = inCart;
-    })
+    // this.cartService.isItemInCart(this.authService.getLoggedUserId(), this.item.id)
+    // .subscribe(inCart => {
+    //   this.disabled = inCart;
+    // });
     // this.disabled = this.cartItems.includes(this.item.id);
   }
 

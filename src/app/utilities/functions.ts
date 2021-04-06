@@ -50,7 +50,10 @@ export function onImageChosen(imageData: string | File) {
   }
 
   export function userFullAddress(user: User) {
-    return user.street + ' ' + user.houseNumber + ', ' + user.city + ', ' + user?.country;
+    return user.address.street + ' ' +
+           user.address.houseNumber + ', ' +
+           user.address.city + ', ' +
+           user?.address.country;
   }
 
   export function getUserFullName(user: User) {

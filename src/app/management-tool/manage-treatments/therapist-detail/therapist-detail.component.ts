@@ -32,10 +32,6 @@ export class TherapistDetailComponent implements OnInit {
     return new Date().getFullYear() - new Date(this.therapist?.date).getFullYear();
   }
 
-  getTherapistAddress() {
-    return this.therapist?.street + ' ' + this.therapist?.houseNumber + ', ' + this.therapist?.city + ', ' + this.therapist?.country;
-  }
-
   async close() {
     await this.popoverController.dismiss();
   }

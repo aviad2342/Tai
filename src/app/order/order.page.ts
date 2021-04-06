@@ -192,8 +192,8 @@ export class OrderPage implements OnInit {
           this.order.totalPayment,
           false,
           confirmPaymentNumber,
-          this.customer,
           this.address,
+          this.user,
           this.order.items
         );
         if(this.customer.orders) {
@@ -210,16 +210,14 @@ export class OrderPage implements OnInit {
             this.customer.phone,
             this.customer.email,
             this.customer.date,
-            this.customer.country,
-            this.customer.city,
-            this.customer.street,
-            this.customer.houseNumber,
-            this.customer.apartment,
-            this.customer.entry,
             this.customer.profilePicture,
-            orders
+            this.customer.address,
+            this.customer.preferences,
+            this.customer.savedVideos,
+            this.customer.cart,
+            this.customer.orders
           );
-          return this.customerService.createCustomer(newCustomer);
+          return this.customerService.updateCustomer(newCustomer);
         }
       })
     ).subscribe(() => {

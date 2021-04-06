@@ -21,7 +21,7 @@ import { UserService } from '../user/user.service';
 export class StorePage implements OnInit, OnDestroy {
 
   items: Item[];
-  cartItems: CartItem[] = [];
+  cartItems: CartItem[];
   itemsAddedToCart = 0;
   user: User;
   cart: Cart;
@@ -30,18 +30,10 @@ export class StorePage implements OnInit, OnDestroy {
   didAddItem = false;
   badgeColor = 'danger';
   private itemsSubscription: Subscription;
-  private cartSubscription: Subscription;
+  private userSubscription: Subscription;
   isDesktop: boolean;
   categories: string[] = [];
-  // categories = [
-  //   'ספרים',
-  //   'טיפולים',
-  //   'כנסים',
-  //   'קורסים',
-  //   'מאמרים',
-  //   'אביזרים',
-  //   'אחר'
-  // ];
+
 
   sliderConfig = {
     slidesPerView: 1.6,
@@ -127,47 +119,37 @@ export class StorePage implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
+    this.isDesktop = this.appService.isDesktop();
     this.itemsSubscription = this.itemService.items.subscribe(items => {
       this.items = items;
       this.categories = items.map(item => item.category).filter((value, index, self) => self.indexOf(value) === index);
     });
-    this.cartSubscription = this.cartService.cart.subscribe(cart => {
-      this.cart = cart;
-      // if(cart) {
-      //   console.log(cart.id);
-      //   this.cart = cart;
-      //   this.cartItems = cart.items;
-      //   this.itemsAddedToCart = cart.items.length;
-      // } else {
-      //   console.log('bla');
-      //   this.authService.getUserLogged().pipe(
-      //     switchMap(user => {
-      //     const newCart = new Cart(null, user, this.cartItems, null);
-      //     return this.cartService.addCart(newCart);
-      //   })).subscribe(newCart => {
-      //     this.cart = newCart;
-      //   });
-      // }
-    });
-    this.userService.getFullUser(this.authService.getLoggedUserId()).subscribe(user => {
+    this.userSubscription = this.userService.user.subscribe(user => {
       this.user = user;
-      if(user.cart || user.cart === null) {
-        this.cart = user.cart;
-      } else {
-        this.cart = new Cart(
-          null,
-          this.cartItems,
-          null
-        );
+      if(user) {
+        if(user.cart !== null && user.cart ) {
+          this.cart = user.cart;
+          if(user.cart.items) {
+            this.cartItems = user.cart.items;
+          }
+        } else {
+          this.cartItems = [];
+          this.cart = new Cart(
+            null,
+            this.cartItems,
+            null
+          );
+          // this.user.cart = this.cart;
+          // this.userService.updateFullUser(this.user).subscribe();
+        }
       }
     });
   }
 
-  // changePlaying() {
-  //   this.ngZone.run(() => {
-  //     this.playing = true;
-  //   });
-  // }
+  ionViewWillEnter() {
+    this.itemService.getItems().subscribe();
+    this.userService.getFullUser(this.authService.getLoggedUserId()).subscribe();
+  }
 
 
   onItemAddedToCart(item: Item) {
@@ -178,12 +160,14 @@ export class StorePage implements OnInit, OnDestroy {
       this.badgeColor = 'danger';
     }, 3000)
     const cartItem: CartItem = item;
+    cartItem.id = null;
     cartItem.itemId = item.id;
     cartItem.units = 1;
-    cartItem.cart = this.cart.id;
-    this.cartService.addCartItem(cartItem).subscribe(() => {
-      this.cart.items.push(cartItem);
-      this.itemsAddedToCart = this.cart.items.length;
+    this.cartItems.push(cartItem);
+    this.user.cart.items = this.cartItems;
+    // cartItem.cart = this.cart.id;
+    this.userService.updateFullUser(this.user).subscribe(() => {
+      this.itemsAddedToCart = this.user.cart.items.length;
       this.appService.presentToast('הפריט נשמר בהצלחה', true);
     }, error => {
       this.appService.presentToast('חלה תקלה לא ניתן להוסיף את המוצר! נסה שנית מאוחר יותר', false);
@@ -193,26 +177,6 @@ export class StorePage implements OnInit, OnDestroy {
   onGoToCart() {
     this.navController.navigateRoot(['/', 'cart', this.cart.id]);
     // this.router.navigate(['/', 'cart', this.cart.id]);
-  }
-
-  ionViewWillEnter() {
-    this.isDesktop = this.appService.isDesktop();
-    this.itemService.getItems().subscribe();
-    this.cartService.getCustomerCart(this.authService.getLoggedUserId()).subscribe(cart => {
-      if(cart) {
-        this.cart = cart;
-        this.cartItems = cart.items;
-        this.itemsAddedToCart = cart.items.length;
-      } else {
-        this.authService.getUserLogged().pipe(
-          switchMap(user => {
-          const newCart = new Cart(null, this.cartItems, null);
-          return this.cartService.addCart(newCart);
-        })).subscribe(newCart => {
-          this.cart = newCart;
-        });
-      }
-    });
   }
 
 
@@ -238,8 +202,8 @@ export class StorePage implements OnInit, OnDestroy {
     if (this.itemsSubscription) {
       this.itemsSubscription.unsubscribe();
     }
-    if (this.cartSubscription) {
-      this.cartSubscription.unsubscribe();
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
     }
   }
 

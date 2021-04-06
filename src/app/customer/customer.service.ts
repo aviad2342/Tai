@@ -69,58 +69,20 @@ export class CustomerService {
         }));
     }
 
-    createCustomer(customer: Customer) {
-      const customerObj = {
-        firstName: customer.firstName,
-        lastName: customer.lastName,
-        email: customer.email,
-        phone: customer.phone,
-        password: customer.password,
-        date: customer.date,
-        country: customer.country,
-        city: customer.city,
-        street: customer.street,
-        houseNumber: customer.houseNumber,
-        apartment: customer.apartment,
-        entry: customer.entry,
-        profilePicture: customer.profilePicture,
-        orders: customer.orders
-        };
-      return this.http.put(`http://${LOCALHOST}:3000/api/customer/customer/user/${customer.id}`,
-      {
-        ...customerObj
-      }).
-      pipe(
-        switchMap(resData => {
-          console.log(resData);
-          return this.getCustomers();
-        }),
-        switchMap(customers => {
-          this._customers.next(customers);
-          return customers.filter(c => c.id === customer.id);
-        }),
-        take(1),
-        tap(customerData => {
-          return customerData;
-        }));
-    }
-
     updateCustomer(customer: Customer) {
       const customerObj = {
-        firstName: customer.firstName,
-        lastName: customer.lastName,
-        email: customer.email,
-        phone: customer.phone,
-        password: customer.password,
-        date: customer.date,
-        country: customer.country,
-        city: customer.city,
-        street: customer.street,
-        houseNumber: customer.houseNumber,
-        apartment: customer.apartment,
-        entry: customer.entry,
+        firstName:      customer.firstName,
+        lastName:       customer.lastName,
+        email:          customer.email,
+        phone:          customer.phone,
+        password:       customer.password,
+        date:           customer.date,
         profilePicture: customer.profilePicture,
-        orders: customer.orders
+        address:        customer.address,
+        preferences:    customer.preferences,
+        savedVideos:    customer.savedVideos,
+        cart:           customer.cart,
+        orders:         customer.orders
         };
       return this.http.put(`http://${LOCALHOST}:3000/api/customer/customer/${customer.id}`,
       {

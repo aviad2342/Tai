@@ -78,61 +78,23 @@ export class TherapistService {
 
   updateTherapist(therapist: Therapist) {
     const therapistObj = {
-      firstName: therapist.firstName,
-      lastName: therapist.lastName,
-      email: therapist.email,
-      phone: therapist.phone,
-      password: therapist.password,
-      date: therapist.date,
-      country: therapist.country,
-      city: therapist.city,
-      street: therapist.street,
-      houseNumber: therapist.houseNumber,
-      apartment: therapist.apartment,
-      entry: therapist.entry,
+      firstName:      therapist.firstName,
+      lastName:       therapist.lastName,
+      email:          therapist.email,
+      phone:          therapist.phone,
+      password:       therapist.password,
+      date:           therapist.date,
       profilePicture: therapist.profilePicture,
+      address:        therapist.address,
       treatmentTypes: therapist.treatmentTypes,
-      resume: therapist.resume,
-      admin: therapist.admin
+      resume:         therapist.resume,
+      admin:          therapist.admin,
+      preferences:    therapist.preferences,
+      savedVideos:    therapist.savedVideos,
+      cart:           therapist.cart,
+      orders:         therapist.orders
       };
     return this.http.put(`http://${LOCALHOST}:3000/api/therapist/therapist/${therapist.id}`,
-    {
-      ...therapistObj
-    }).
-    pipe(
-      switchMap(resData => {
-        return this.getTherapists();
-      }),
-      switchMap(therapists => {
-        this._therapists.next(therapists);
-        return therapists.filter(t => t.id === therapist.id);
-      }),
-      take(1),
-      tap(therapistData => {
-        return therapistData;
-      }));
-  }
-
-  updateTherapistAndProfilePicture(therapist: Therapist) {
-    const therapistObj = {
-      firstName: therapist.firstName,
-      lastName: therapist.lastName,
-      email: therapist.email,
-      phone: therapist.phone,
-      password: therapist.password,
-      date: therapist.date,
-      country: therapist.country,
-      city: therapist.city,
-      street: therapist.street,
-      houseNumber: therapist.houseNumber,
-      apartment: therapist.apartment,
-      entry: therapist.entry,
-      profilePicture: therapist.profilePicture,
-      treatmentTypes: therapist.treatmentTypes,
-      resume: therapist.resume,
-      admin: therapist.admin
-      };
-    return this.http.put(`http://${LOCALHOST}:3000/api/therapist/therapist/image/${therapist.id}`,
     {
       ...therapistObj
     }).
