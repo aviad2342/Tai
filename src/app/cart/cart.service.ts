@@ -136,4 +136,12 @@ export class CartService {
           return cart;
         }));
     }
+
+    removeCartItem(id: string) {
+      return this.http.delete(`http://${LOCALHOST}:3000/api/cart/item/${id}`).
+      pipe(
+        tap(resData => {
+          return resData;
+        }));
+    }
 }

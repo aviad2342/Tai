@@ -443,6 +443,11 @@ input::-webkit-calendar-picker-indicator {
   color: black;
 }
 
+.swiper-pagination {
+  position: initial !important;
+  font-style: 'Yoav' !important;
+}
+
 // .swiper-wrapper {
 //   transform: translate3d(-7.5px, 0px, 0px) !important;
 // }
@@ -843,6 +848,14 @@ ion-icon {
 
     &[class*="toolbar-notification-icon"] {
       mask-image: url(./assets/icon/notification.svg);
+    }
+
+    &[class*="custom-remove-from-cart"] {
+      mask-image: url(./assets/icon/remove-from-cart.svg);
+    }
+
+    &[class*="toolbar-remove-from-cart-icon"] {
+      mask-image: url(./assets/icon/remove-from-cart.svg);
     }
   
   

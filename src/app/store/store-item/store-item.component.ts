@@ -11,25 +11,24 @@ import { Item } from '../item.model';
 export class StoreItemComponent implements OnInit {
 
   @Input() item: Item;
-  disabled = false;
+  @Input() itemInCart = false;
   @Output() selectedItem = new EventEmitter<Item>();
+  @Output() unselectItem = new EventEmitter<Item>();
 
   constructor(
-    private cartService: CartService,
-    private authService: AuthService
     ) { }
 
   ngOnInit() {
-    // this.cartService.isItemInCart(this.authService.getLoggedUserId(), this.item.id)
-    // .subscribe(inCart => {
-    //   this.disabled = inCart;
-    // });
-    // this.disabled = this.cartItems.includes(this.item.id);
   }
 
   onItemSelected() {
-    this.disabled = true;
-    this.selectedItem.emit(this.item);
+    if(this.itemInCart) {
+      this.unselectItem.emit(this.item);
+      this.itemInCart = false;
+    } else {
+      this.selectedItem.emit(this.item);
+      this.itemInCart = true;
+    }
   }
 
 }

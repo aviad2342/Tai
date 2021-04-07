@@ -130,6 +130,7 @@ export class StorePage implements OnInit, OnDestroy {
         if(user.cart !== null && user.cart ) {
           this.cart = user.cart;
           if(user.cart.items) {
+            this.itemsAddedToCart = user.cart.items.length;
             this.cartItems = user.cart.items;
           }
         } else {
@@ -139,8 +140,8 @@ export class StorePage implements OnInit, OnDestroy {
             this.cartItems,
             null
           );
-          // this.user.cart = this.cart;
-          // this.userService.updateFullUser(this.user).subscribe();
+          this.user.cart = this.cart;
+          this.userService.updateFullUser(this.user).subscribe();
         }
       }
     });
@@ -159,18 +160,49 @@ export class StorePage implements OnInit, OnDestroy {
       this.didAddItem = false;
       this.badgeColor = 'danger';
     }, 3000)
-    const cartItem: CartItem = item;
-    cartItem.id = null;
-    cartItem.itemId = item.id;
-    cartItem.units = 1;
+    const cartItem: CartItem = new CartItem(
+      null,
+      item.productId,
+      item.name,
+      item.description,
+      item.price,
+      item.thumbnail,
+      item.catalogNumber,
+      item.quantity,
+      item.category,
+      item.id,
+      1,
+      this.user.cart.id
+    );
     this.cartItems.push(cartItem);
     this.user.cart.items = this.cartItems;
-    // cartItem.cart = this.cart.id;
-    this.userService.updateFullUser(this.user).subscribe(() => {
+    this.userService.updateFullUser(this.user).subscribe(user => {
+      this.cartItems = user.cart.items;
       this.itemsAddedToCart = this.user.cart.items.length;
       this.appService.presentToast('הפריט נשמר בהצלחה', true);
     }, error => {
       this.appService.presentToast('חלה תקלה לא ניתן להוסיף את המוצר! נסה שנית מאוחר יותר', false);
+    });
+  }
+
+  onItemRemovedFromCart(item: Item) {
+    this.didAddItem = true;
+    this.badgeColor = 'success';
+    setTimeout(()=>{
+      this.didAddItem = false;
+      this.badgeColor = 'danger';
+    }, 3000);
+    const cartItemToRemove = this.cartItems.find(i => i.itemId === item.id);
+    this.cartService.removeCartItem(cartItemToRemove.id).pipe(
+      switchMap(() => {
+        return this.userService.getFullUser(this.user.id);
+      })
+    ).subscribe(user => {
+      this.cartItems = user.cart.items;
+      this.itemsAddedToCart = this.user.cart.items.length;
+      this.appService.presentToast('הפריט הוסר בהצלחה', true);
+    }, error => {
+      this.appService.presentToast('חלה תקלה לא ניתן להסיר את המוצר! נסה שנית מאוחר יותר', false);
     });
   }
 
@@ -185,17 +217,7 @@ export class StorePage implements OnInit, OnDestroy {
   }
 
   itemExistInCart(id: string) {
-    // let bool: boolean;
-    // console.log(this?.cartItems.map(cartItem => cartItem.itemId).find(i => i === id));
-    // const ll = this.cartItems.find(i => i.itemId === id);
-    // bool = this?.cartItems.map(cartItem => cartItem.itemId).indexOf(id) > -1;
-    // console.log(id);
-    // console.log(bool);
-    // console.log(this?.cartItems.map(cartItem => cartItem.itemId).indexOf(id));
-    // return bool;
-    // console.log(this?.cartItems.map(cartItem => cartItem.itemId));
-    // return this.cartItems.filter(i => i.itemId === item.id).length > 0;
-    // return this?.cartItems.map(cartItem => cartItem.itemId).includes(item.id);
+    return this?.cartItems.map(cartItem => cartItem.itemId).includes(id);
   }
 
   ngOnDestroy() {

@@ -95,6 +95,37 @@ ion-avatar {
     align-self: baseline;
 }
 
-// ion-slides {
-//     height: 100%;
-// }
+.address-picker {
+    margin-top: 30px;
+}
+
+.address {
+    border: 1px solid rgb(202, 195, 195);
+    margin-top: 50px;
+  }
+
+.titlebox {
+	float: right;
+	font-size: larger;
+	// padding:0 5px;
+	margin:-18px 14px 0 10px;
+	background:#fff;
+ }
+
+ .titlebox-icon {
+	float: left;
+	// padding:0 5px;
+	margin:-32px 10px 0 10px;
+	background:#fff;
+ }
+
+.address-item::part(native) {
+    --inner-padding-end: 0;
+    padding-inline-start: 0;
+ }
+
+ .address-picker-div {
+     padding-left: 16px;
+     padding-right: 16px;
+     padding-bottom: 20px;
+ }

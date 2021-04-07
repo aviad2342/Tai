@@ -16,6 +16,7 @@ import { AddressFinderComponent } from './pickers/address-finder/address-finder.
 import { AddressFormPickerComponent } from './pickers/address-form-picker/address-form-picker.component';
 import { NgxIonicImageViewerModule } from 'ngx-ionic-image-viewer';
 import { DateCountdownComponent } from './date-countdown/date-countdown.component';
+import { AddressSelectComponent } from './pickers/address-select/address-select.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { DateCountdownComponent } from './date-countdown/date-countdown.componen
     GalleryComponent,
     ImageItemComponent,
     NumberPickerComponent,
+    AddressSelectComponent,
     AddressDetailsPickerComponent,
     AddressFinderComponent,
     AddressFormPickerComponent,
@@ -44,6 +46,7 @@ import { DateCountdownComponent } from './date-countdown/date-countdown.componen
     GalleryComponent,
     ImageItemComponent,
     NumberPickerComponent,
+    AddressSelectComponent,
     AddressDetailsPickerComponent,
     AddressFinderComponent,
     AddressFormPickerComponent,

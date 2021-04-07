@@ -1,0 +1,89 @@
+<ion-grid class="ion-no-padding ion-padding-top">
+
+  <ion-row class="ion-justify-content-center ion-margin-top">
+    <ion-col>
+      <ejs-autocomplete 
+        #cityInput
+        class="ion-no-padding"
+        id="atcelement" 
+        FilterType="StartsWith"
+        enableRtl="true"
+        (filtering)="onFilteringCity($event)"
+        placeholder="עיר*"
+        [autofill]="true"
+        (select)='onSelectedCity($event)'
+        [(value)]='selectedAddress.city'
+      ></ejs-autocomplete>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-justify-content-center ion-margin-top">
+    <ion-col>
+      <ejs-autocomplete 
+        [enabled]="enableStreetPicker"
+        #streetInput
+        class="ion-padding-top"
+        FilterType="StartsWith"
+        enableRtl="true"
+        (filtering)="onFilteringStreet($event)"
+        placeholder="רחוב*"
+        [autofill]="true"
+        (select)='onSelectedStreet($event)'
+        [(value)]='selectedAddress.street'
+      ></ejs-autocomplete>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-justify-content-center">
+
+    <ion-col>
+      <ion-item>
+        <ion-label class="app-input-label ion-no-margin" position="floating">מספר בית<ion-text class="required-star" color="danger">*</ion-text></ion-label>
+        <ion-input 
+          [disabled]="disableHouseNumberPicker"
+          class="ion-no-padding"
+          #houseNumberComponent 
+          type="number" 
+          [(ngModel)]="this.selectedAddress.houseNumber" 
+          #houseNumberCtrl="ngModel"
+          required 
+          (ionFocus)="onSelecteHouseNumber()">
+      </ion-input>
+      </ion-item>
+    </ion-col>
+
+    <ion-col>
+      <ion-item>
+        <ion-label class="app-input-label ion-no-margin" position="floating">מספר דירה<ion-text class="required-star"></ion-text></ion-label>
+        <ion-input 
+          [disabled]="disableHouseNumberPicker"
+          class="ion-no-padding"
+          #apartmentComponent 
+          type="number" 
+          [(ngModel)]="this.selectedAddress.apartment" 
+          #apartmentCtrl="ngModel"
+          required 
+          (ionFocus)="onSelecteApartment()">
+        </ion-input>
+     </ion-item>
+    </ion-col>
+
+    <ion-col>
+      <ion-item>
+        <ion-label class="app-input-label ion-no-margin" position="floating">כניסה<ion-text class="required-star"></ion-text></ion-label>
+        <ion-input 
+      [disabled]="disableHouseNumberPicker"
+      class="ion-no-padding"
+      #entryComponent 
+      type="text" 
+      [(ngModel)]="this.selectedAddress.entry" 
+      #entryCtrl="ngModel"
+      required 
+      (ionChange)="onSelecteEntry($event)"
+      >
+    </ion-input>
+     </ion-item>
+    </ion-col>
+
+  </ion-row>
+</ion-grid>

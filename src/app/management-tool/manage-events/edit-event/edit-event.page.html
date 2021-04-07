@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-no-padding app-titles">עריכת אירוע</ion-title>
+    <ion-title class="app-titles">עריכת אירוע</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -20,7 +20,7 @@
       <form #f="ngForm" (ngSubmit)="onSubmit(f)">
         <ion-grid>
           <ion-row class="ion-justify-content-center">
-            <ion-col size="12" size-xl="4" size-lg="5" size-md="6" size-sm="6" size-xs="7">
+            <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="7">
               <app-image-picker 
               [selectedImage]="this.event?.thumbnail"
               [showPreview]="true"
@@ -31,7 +31,7 @@
         </ion-row>
 
           <ion-row class="ion-justify-content-center">
-            <ion-col size="12" size-xl="5" size-lg="6" size-md="6" size-sm="6" size-xs="7">
+            <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="8" size-xs="8">
               <ion-list>
                 
                 <ion-item>
@@ -164,25 +164,37 @@
             <ion-label *ngIf="!placeCtrl.valid && placeCtrl.touched" color="danger">
               <small>זהו שדה חובה!</small>
             </ion-label>
+
+            <ion-item lines="none" class="address-item">
+              <div class="address">
+                <div class="titlebox" size="large">כתובת <ion-text color="danger">*</ion-text></div>
+                <ion-icon name="location-outline" size="large" class="ion-align-self-center titlebox-icon"></ion-icon>
+                <div class="address-picker-div">
+                  <app-address-select [selectedAddress]="this?.address" (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)" [isEdit]="true"></app-address-select>
+                </div>
+              </div>
+            </ion-item>
           
     
           </ion-list>
     
-          <div class="address-picker">
+          <!-- <div class="address-picker">
             <app-address-picker [address]="this?.address" (isValid)="onAddressIsValid($event)" (addressPicked)="onAddressPicked($event)" [isEdit]="true"></app-address-picker>
-          </div>
+          </div> -->
           
             </ion-col>   
           </ion-row>
           <ion-row class="ion-justify-content-center">
-            <ion-col size="12" size-xl="3" size-lg="3" size-md="5" size-sm="6" size-xs="7">
-              <ion-button  
+            <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size-xs="4">
+              <ion-button 
+              class="app-submit-cancel-btn" 
               expand="block"
               (click)="onCancel()"
-              >ביטול <ion-icon slot="start" name="close-outline"></ion-icon></ion-button>
+              >ביטול </ion-button>
             </ion-col>
-            <ion-col size="12" size-xl="3" size-lg="3" size-md="5" size-sm="6" size-xs="7">
+            <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size-xs="4">
               <ion-button 
+              class="app-submit-cancel-btn"
               type="submit"
               expand="block"
               [disabled]="!f.valid || !this?.addressIsValid"
@@ -207,7 +219,7 @@
           <ion-col size="6">
 
             <ion-item lines="none">
-              <ion-icon name="mic-outline" slot="end"></ion-icon>
+              <ion-icon class="custom-speaker ion-no-margin" slot="start"></ion-icon>
               <ion-label class="ion-padding-start"> <strong>נואמים: </strong></ion-label>
             </ion-item>
     
@@ -250,8 +262,9 @@
             </ion-list>
 
             <ion-row class="ion-justify-content-center">
-              <ion-col size="8">
+              <ion-col size="6">
                 <ion-button 
+                class="app-submit-cancel-btn"
                 expand="block"
                 (click)="onSaveSpeakers()"
                 >שמור והמשך <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
@@ -275,7 +288,7 @@
           <ion-col size="6" *ngIf="!isLoading">
 
             <ion-item lines="none">
-              <ion-icon name="people-outline" slot="end"></ion-icon>
+              <ion-icon name="people-outline ion-no-margin" slot="start"></ion-icon>
               <ion-label class="ion-padding-start"><strong>משתתפים:</strong></ion-label>
             </ion-item>
             <ion-list class="add-participants-list">
@@ -312,45 +325,11 @@
               </ion-item>
 
             </ion-list>
-            <!-- <ion-virtual-scroll
-            *ngIf="!isLoading"
-            [items]="event.participants"
-            approxItemHeight="60px"
-          >
-          <div *virtualItem="let participant">
-                <ion-item >
-                  <ion-avatar size="medium" slot="start">
-                    <ion-img [src]="participant.picture"></ion-img>
-                  </ion-avatar>
-                  <ion-label>
-                    <strong>
-                      {{ getParticipantName(participant) }}
-                    </strong>
-                    <ion-text color="medium">
-                      <p>{{ participant.email }}</p>
-                    </ion-text>
-                  </ion-label>
-                  <ion-button color="primary" fill="outline" slot="end" (click)="onRemoveParticipant(participant.id)">
-                    <ion-icon name="person-add-outline" ></ion-icon>
-                    <ion-label>הוסף משתתף</ion-label>
-                  </ion-button>
-                </ion-item>
-              </div>
-              <ion-item>
-                <div style="padding: 5px 10px">
-                  <ion-button (click)="onAddParticipant()">
-                    <ion-icon name="add" slot="start"></ion-icon>
-                    <ion-label>הוסף משתתף</ion-label>
-                  </ion-button>
-                  </div>
-
-              </ion-item>
-
-            </ion-virtual-scroll> -->
 
             <ion-row class="ion-justify-content-center">
-              <ion-col size="8">
+              <ion-col size="6">
                 <ion-button 
+                class="app-submit-cancel-btn"
                 expand="block"
                 (click)="onSaveParticipants()"
                 >שמור והמשך <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
@@ -385,8 +364,9 @@
 
         </ion-row>
           <ion-row class="ion-justify-content-center">
-            <ion-col size="8">
+            <ion-col size="6">
               <ion-button 
+              class="app-submit-cancel-btn"
               expand="block"
               (click)="onSaveAndExit()"
               >שמור וסיים <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
