@@ -79,6 +79,30 @@ export class OrderService {
         }));
     }
 
+    completeOrder(order: Order) {
+      const orderObj = {
+        cartId:               order.cartId,
+        date:                 order.date,
+        note:                 order.note,
+        delivery:             order.delivery,
+        couponCode:           order.couponCode,
+        totalItems:           order.totalItems,
+        totalPayment:         order.totalPayment,
+        receivedPayment:      order.receivedPayment,
+        confirmPaymentNumber: order.confirmPaymentNumber,
+        address:              order.address,
+        user:                 order.user,
+        items:                order.items,
+        };
+      return this.http.put<Order>(`http://${LOCALHOST}:3000/api/order/complete/${order.id}`,
+      {
+        ...orderObj
+      }).
+      pipe(tap(updatedOrder => {
+          return updatedOrder;
+        }));
+    }
+
     deleteOrder(id: string) {
       return this.http.delete(`http://${LOCALHOST}:3000/api/order/order/${id}`).
       pipe(

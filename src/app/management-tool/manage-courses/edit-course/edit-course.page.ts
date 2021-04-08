@@ -124,11 +124,6 @@ export class EditCoursePage implements OnInit {
       this.lessons,
       form.value.isPublic
     );
-    if( this.isEquals(this.course, courseToUpdate)) {
-      this.appService.presentToast('הקורס עודכן בהצלחה', true);
-      this.navCtrl.navigateBack('/manage/courses');
-      return;
-    }
     this.courseService.updateCourse(courseToUpdate).subscribe(newCourse => {
       this.appService.presentToast('הקורס עודכן בהצלחה', true);
       this.navCtrl.navigateBack('/manage/courses');
@@ -249,16 +244,6 @@ export class EditCoursePage implements OnInit {
       return this.course.lessons.length + 1;
     }
     return 1;
-  }
-
-  isEquals(course1: Course, course2: Course) {
-    if(
-      course1.title === course2.title &&
-      course1.description === course2.description
-    ) {
-      return true;
-    }
-    return  false;
   }
 
   onCancel() {

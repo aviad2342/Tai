@@ -52,7 +52,7 @@ const routes: Routes = [
     loadChildren: () => import('./order/order.module').then( m => m.OrderPageModule), canLoad: [AuthGuard]
   },
   {
-    path: 'cart/:id',
+    path: 'cart',
     loadChildren: () => import('./cart/cart.module').then( m => m.CartPageModule), canLoad: [AuthGuard]
   },
   {

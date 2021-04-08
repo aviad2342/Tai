@@ -37,7 +37,6 @@ export class OrderPage implements OnInit {
   activeUrl = '';
   coupon: Coupon;
   user: User
-  customer: Customer;
   address: DeliveryAddress = new DeliveryAddress();
   @ViewChild('f', { static: true }) form: NgForm;
   addressIsValid = false;
@@ -100,6 +99,7 @@ export class OrderPage implements OnInit {
             }
           },
           error => {
+            this.isLoading = false;
             if (this.router.isActive(this.activeUrl, false)) {
             this.alertController
               .create({
@@ -110,7 +110,7 @@ export class OrderPage implements OnInit {
                     text: 'אישור',
                     handler: () => {
                       if (this.router.isActive(this.activeUrl, false)) {
-                        this.navController.navigateBack('/tabs/store');
+                        this.navController.back();
                       }
                     }
                   }
@@ -121,10 +121,6 @@ export class OrderPage implements OnInit {
           }
         );
     });
-    this.userService.getUser(this.authService.getLoggedUserId()).subscribe(user => {
-      this.customer = user;
-      console.log(this.customer);
-     });
   }
 
   async onFormValid(valid: boolean) {
@@ -136,7 +132,6 @@ export class OrderPage implements OnInit {
   }
 
   onAddressIsValid(isValid: boolean) {
-    console.log(isValid);
     this.addressIsValid = isValid;
   }
 
@@ -181,7 +176,7 @@ export class OrderPage implements OnInit {
 
     this.orderService.commitPayment(payment).pipe(
       switchMap(confirmPaymentNumber => {
-        const order = new Order(
+        const orderToUpdate = new Order(
           this.order.id,
           this.order.cartId,
           new Date(),
@@ -196,37 +191,14 @@ export class OrderPage implements OnInit {
           this.user,
           this.order.items
         );
-        if(this.customer.orders) {
-          this.customer.orders.push(order);
-          return this.customerService.updateCustomer(this.customer);
-        } else {
-          const orders: Order[] = [];
-          orders.push(order);
-          const newCustomer: Customer = new Customer(
-            this.customer.id,
-            this.customer.firstName,
-            this.customer.lastName,
-            this.customer.password,
-            this.customer.phone,
-            this.customer.email,
-            this.customer.date,
-            this.customer.profilePicture,
-            this.customer.address,
-            this.customer.preferences,
-            this.customer.savedVideos,
-            this.customer.cart,
-            this.customer.orders
-          );
-          return this.customerService.updateCustomer(newCustomer);
-        }
+          return this.orderService.completeOrder(orderToUpdate);
       })
     ).subscribe(() => {
-      this.cartService.deleteCart(this.order.cartId).subscribe();
+      // this.cartService.deleteCart(this.order.cartId).subscribe();
       this.appService.presentToast('ההזמנה בוצעה בהצלחה', true);
-      this.router.navigate(['/tabs/store']);
+      this.router.navigate(['/tabs/home']); // דף אישור
     },
     error => {
-      console.log(error);
       this.appService.presentToast('לא ניתן להשלים את ההזמנה כעת, אנא נסה מאוחר יותר.', false);
     });
 

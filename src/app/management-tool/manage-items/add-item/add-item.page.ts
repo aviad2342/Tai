@@ -134,7 +134,7 @@ export class AddItemPage implements OnInit, AfterViewInit {
     case this.categories.COURSES:
       if(!this.courses) {
         this.courseService.getCourses().subscribe(courses => {
-          this.courses = courses.filter(t => this.items.map(i => i.productId).indexOf(t.id, 0) === -1  && !t.isPublic);
+          this.courses = courses.filter(t => this.items.map(i => i.productId).indexOf(t.id, 0) === -1 && !t.isPublic);
           this.isCourse = true;
           this.addItemSlides.slideTo(3, 500);
         });

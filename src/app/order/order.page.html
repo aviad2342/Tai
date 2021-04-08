@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-no-padding app-titles">הזמנה</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button class="app-back-btn" text="חזרה" [defaultHref]="['/', 'cart']"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="app-titles">הזמנה</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -267,7 +270,7 @@
     color="primary" 
     (click)="f.ngSubmit.emit()" 
     class="ion-no-padding ion-no-margin" 
-    [disabled]="!f.valid">
+    [disabled]="!f.valid || !addressIsValid">
     <ion-icon class="custom-cashier" slot="start"></ion-icon>
     <ion-label class="app-order-pay-btn">בצע תשלום</ion-label>
   </ion-button>

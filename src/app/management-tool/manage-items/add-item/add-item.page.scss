@@ -67,3 +67,23 @@ ion-item::part(native){
 ion-slides {
     height: 100%;
 }
+
+ion-card-title {
+    font-family: 'Yoav-bold';
+    font-size: x-large;
+}
+
+ion-card-subtitle {
+    font-family: 'Yoav';
+    font-size: large;
+}
+
+.name-label {
+    font-family: 'Yoav';
+    font-size: medium;
+}
+
+p {
+    font-family: 'Yoav';
+    font-size: medium;
+}

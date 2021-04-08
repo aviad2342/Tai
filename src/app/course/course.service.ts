@@ -80,15 +80,17 @@ export class CourseService {
 
   updateCourse(course: Course) {
     const courseObj = {
-      authorId: course.authorId,
-      authorName: course.authorName,
+      authorId:      course.authorId,
+      authorName:    course.authorName,
       catalogNumber: course.catalogNumber,
-      title: course.title,
-      description: course.description,
-      date: course.date,
-      lastEdit: course.lastEdit,
-      thumbnail: course.thumbnail,
-      courseLessons: course.courseLessons
+      title:         course.title,
+      description:   course.description,
+      date:          course.date,
+      lastEdit:      course.lastEdit,
+      thumbnail:     course.thumbnail,
+      courseLessons: course.courseLessons,
+      lessons:       course.lessons,
+      isPublic:      course.isPublic
       };
     return this.http.put<Course>(`http://${LOCALHOST}:3000/api/course/course/${course.id}`,
     {

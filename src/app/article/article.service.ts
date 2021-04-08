@@ -83,7 +83,7 @@ export class ArticleService {
          pdf:           article.pdf,
          views:         article.views,
          comments:      article.comments,
-         isPublic:       article.isPublic
+         isPublic:      article.isPublic
         };
       return this.http.put(`http://${LOCALHOST}:3000/api/article/article/${article.id}`,
       {

@@ -207,7 +207,7 @@ export class StorePage implements OnInit, OnDestroy {
   }
 
   onGoToCart() {
-    this.navController.navigateRoot(['/', 'cart', this.cart.id]);
+    this.navController.navigateRoot(['/', 'cart']);
     // this.router.navigate(['/', 'cart', this.cart.id]);
   }
 
