@@ -141,7 +141,11 @@ export class StorePage implements OnInit, OnDestroy {
             null
           );
           this.user.cart = this.cart;
-          this.userService.updateFullUser(this.user).subscribe();
+          this.userService.updateFullUser(this.user).subscribe(fullUser => {
+            if(fullUser && fullUser.cart) {
+              this.cart = fullUser.cart;
+            }
+          });
         }
       }
     });
@@ -217,6 +221,9 @@ export class StorePage implements OnInit, OnDestroy {
   }
 
   itemExistInCart(id: string) {
+    if(!this?.cartItems) {
+      return;
+    }
     return this?.cartItems.map(cartItem => cartItem.itemId).includes(id);
   }
 

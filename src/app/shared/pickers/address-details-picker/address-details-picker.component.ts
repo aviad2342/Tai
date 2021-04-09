@@ -45,12 +45,16 @@ export class AddressDetailsPickerComponent implements OnInit {
      ) { }
 
   ngOnInit() {
-    this.selectedAddress.country = 'ישראל';
 
     if(this.isEdit) {
       this.enableStreetPicker = true;
       this.disableHouseNumberPicker = false;
+    } else {
+      this.selectedAddress.id = null;
+      this.selectedAddress.country = 'ישראל';
+      this.selectedAddress.zipCode = null;
     }
+
     this.houseNumber.splice(0, 1);
     this.houseNumber.forEach(element => {
       this.houseNumberPickerOptions.push({
@@ -123,14 +127,6 @@ async onSelecteHouseNumber() {
         cssClass: 'house-number-picker-btn'
       },
       {
-        text: '+100',
-        role: 'null',
-        cssClass: 'house-number-picker-btn',
-        handler: (value: any) => {
-          this.selectedHouseNumberIndex = value.Number.value + 99;
-        }
-      },
-      {
         text: 'אישור',
         cssClass: 'house-number-picker-btn',
         handler: (value: any) => {
@@ -138,13 +134,6 @@ async onSelecteHouseNumber() {
           this.selectedHouseNumberIndex = value.Number.value - 1;
           this.addressPicked.emit(this.selectedAddress);
           this.isValid.emit(true);
-          // this.addressService.getZipCode(this.selectedAddress.city, this.selectedAddress.street, this.selectedAddress.houseNumber)
-          // .subscribe(zipCode => {
-          //   console.log(zipCode);
-          //   this.demo = zipCode;
-          //   this.selectedAddress.zipCode = zipCode;
-          //   this.addressPicked.emit(this.selectedAddress);
-          // });
         }
       }
     ]

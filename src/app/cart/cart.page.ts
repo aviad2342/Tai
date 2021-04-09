@@ -194,34 +194,6 @@ export class CartPage implements OnInit, OnDestroy {
   }
 
   onMoveToPayment() {
-    // if(this.cart.orderId && this.cart.orderId !== null && this.cart.orderId.length > 0 ) {
-    //   this.orderService.getOrder(this.cart.orderId)
-    //   .pipe(
-    //     switchMap(order => {
-    //       order.items = [];
-    //     const orderToUpdate = new Order(
-    //       order.id,
-    //       order.cartId,
-    //       new Date(),
-    //       order.note,
-    //       this.shippingCost,
-    //       this.orderCouponCode,
-    //       this.summaryItems,
-    //       this.summaryOrder,
-    //       order.receivedPayment,
-    //       order.confirmPaymentNumber,
-    //       order.address,
-    //       order.user,
-    //       this.cart.items
-    //     );
-    //     return this.orderService.updateOrder(orderToUpdate);
-    //   })).subscribe(updatedOrder => {
-    //     console.log('updatedOrder');
-    //     this.navController.navigateForward(['/', 'order', updatedOrder.id]);
-    //   }, error => {
-    //     this.appService.presentToast('חלה תקלה לא ניתן לבצע את ההזמנה כרגע. אנא נסו שנית מאוחר יותר.', false);
-    //   });
-    // } else {
       const newOrder = new Order(
         null,
         this.cart.id,

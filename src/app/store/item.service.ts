@@ -45,6 +45,13 @@ export class ItemService {
     }));
   }
 
+  getItemByProductId(id: string) {
+    return this.http.get<Item>(`http://${LOCALHOST}:3000/api/item/product/${id}`)
+    .pipe(tap(resDta => {
+      return resDta;
+    }));
+  }
+
   addItem(item: Item) {
     return this.http.post<{id: string}>(`http://${LOCALHOST}:3000/api/item/item`,
     {
@@ -103,8 +110,8 @@ export class ItemService {
     );
   }
 
-  getProduct(id: string) {
-    return this.http.get<string>(`http://${LOCALHOST}:3000/api/item/product/${id}`)
+  getProductName(id: string) {
+    return this.http.get<string>(`http://${LOCALHOST}:3000/api/item/product/name/${id}`)
     .pipe(tap(resDta => {
       return resDta;
     }));

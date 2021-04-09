@@ -43,7 +43,7 @@ export class ViewCouponPage implements OnInit {
       this.couponService.getCoupon(paramMap.get('code')).subscribe(coupon => {
             this.coupon = coupon;
             if(coupon.singleItem && coupon.itemId) {
-              this.itemService.getItem(coupon.itemId).subscribe(item => {
+              this.itemService.getItemByProductId(coupon.itemId).subscribe(item => {
                 this.item = item;
               });
             }

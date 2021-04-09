@@ -79,7 +79,7 @@ export class OrderPage implements OnInit {
       }
       this.orderService.getOrder(paramMap.get('id')).subscribe(order => {
             this.order = order;
-            if(order.couponCode.length > 0) {
+            if(order && order.couponCode.length > 0) {
               this.couponService.getCoupon(order.couponCode).subscribe(coupon => {
                 this.coupon = coupon;
                 this.discountRate = (coupon.discount/100);

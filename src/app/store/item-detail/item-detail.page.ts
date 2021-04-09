@@ -62,7 +62,7 @@ export class ItemDetailPage implements OnInit {
         switchMap(item => {
           this.item = item;
           this.isLoading = false;
-          return this.itemService.getProduct(item.productId);
+          return this.itemService.getProductName(item.productId);
         })
       ).subscribe(productType => {
         switch (productType) {
