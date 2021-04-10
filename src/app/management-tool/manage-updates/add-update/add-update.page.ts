@@ -21,7 +21,7 @@ export class AddUpdatePage implements OnInit {
   updateType = '';
   url = '';
   updateContent = '';
-  selectedProductImage = 'https://lh3.googleusercontent.com/proxy/7fPvodKW9MuwkJjV5uBel7a2cmAJe9HTAOlc416RzsyL7GIsZ6uyhf7fYUR5Fxq_Z40Uqvk3odQ4x0H1arR4NZnbXUINf0pHtI7_LFvUcs7F';
+  selectedProductImage = 'https://img.icons8.com/bubbles/2x/product.png';
   selectedProductName = '';
   selectedProductType = '';
   now = new Date().toISOString();
@@ -170,7 +170,7 @@ export class AddUpdatePage implements OnInit {
   reSelectPproduct() {
     this.productId = '';
     this.url = '';
-    this.selectedProductImage = 'https://lh3.googleusercontent.com/proxy/7fPvodKW9MuwkJjV5uBel7a2cmAJe9HTAOlc416RzsyL7GIsZ6uyhf7fYUR5Fxq_Z40Uqvk3odQ4x0H1arR4NZnbXUINf0pHtI7_LFvUcs7F';
+    this.selectedProductImage = 'https://img.icons8.com/bubbles/2x/product.png';
     this.selectedProductName = '';
     this.selectedProductType = '';
     this.productSelected = false;
@@ -181,7 +181,7 @@ export class AddUpdatePage implements OnInit {
     this.url = '';
     this.updateContent = '';
     this.selectedProductType = '';
-    this.selectedProductImage = 'https://lh3.googleusercontent.com/proxy/7fPvodKW9MuwkJjV5uBel7a2cmAJe9HTAOlc416RzsyL7GIsZ6uyhf7fYUR5Fxq_Z40Uqvk3odQ4x0H1arR4NZnbXUINf0pHtI7_LFvUcs7F';
+    this.selectedProductImage = 'https://img.icons8.com/bubbles/2x/product.png';
     this.selectedProductName = '';
     this.productSelected = false;
   }

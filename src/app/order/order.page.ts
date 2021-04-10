@@ -74,7 +74,8 @@ export class OrderPage implements OnInit {
     this.isLoading = true;
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
-        this.navController.navigateBack('/tabs/store');
+        this.appService.presentToast('לא נבחרה הזמנה!', false);
+        this.navController.back();
         return;
       }
       this.orderService.getOrder(paramMap.get('id')).subscribe(order => {
@@ -110,7 +111,7 @@ export class OrderPage implements OnInit {
                     text: 'אישור',
                     handler: () => {
                       if (this.router.isActive(this.activeUrl, false)) {
-                        this.navController.back();
+                        this.navController.navigateBack('/tabs/store');
                       }
                     }
                   }
@@ -176,6 +177,14 @@ export class OrderPage implements OnInit {
 
     this.orderService.commitPayment(payment).pipe(
       switchMap(confirmPaymentNumber => {
+
+        if(!confirmPaymentNumber || confirmPaymentNumber === null) {
+          this.commitPaymentErrorMessage('לא התקבל אישור!');
+          return;
+        } else if (confirmPaymentNumber && confirmPaymentNumber.length === 0) {
+          this.commitPaymentErrorMessage('לא התקבל אישור!');
+          return;
+        }
         const orderToUpdate = new Order(
           this.order.id,
           this.order.cartId,
@@ -185,7 +194,7 @@ export class OrderPage implements OnInit {
           this.order.couponCode,
           this.order.totalItems,
           this.order.totalPayment,
-          false,
+          true,
           confirmPaymentNumber,
           this.address,
           this.user,
@@ -194,7 +203,6 @@ export class OrderPage implements OnInit {
           return this.orderService.completeOrder(orderToUpdate);
       })
     ).subscribe(() => {
-      // this.cartService.deleteCart(this.order.cartId).subscribe();
       this.appService.presentToast('ההזמנה בוצעה בהצלחה', true);
       this.router.navigate(['/tabs/home']); // דף אישור
     },
@@ -215,6 +223,18 @@ export class OrderPage implements OnInit {
       this.order.address?.city + ', ' +
       this.order.address?.country;
     }
+  }
+
+  commitPaymentErrorMessage(ErrorMessage: string) {
+    this.alertController.create({
+      header: 'ישנה תקלה!',
+      message: ErrorMessage,
+      buttons: [{
+          text: 'אישור',
+          handler: () => {
+            if (this.router.isActive(this.activeUrl, false)) {
+                this.navController.navigateBack('/tabs/store');
+     }}}] }).then(alertEl => alertEl.present());
   }
 
 }

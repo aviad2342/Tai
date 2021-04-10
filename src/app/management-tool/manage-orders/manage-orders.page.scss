@@ -7,4 +7,9 @@ a {
 
 .cb-payment {
     vertical-align: text-bottom;
+    pointer-events: none;
 }
+
+// ion-checkbox::part(mark) .part[Attributes Style] {
+//     d: path("M 1.73 12.91 L 8.1 19.28 L 22.79 4.59");
+// }

@@ -78,7 +78,7 @@
       (select)="onSelect($event)"
     >
     <!-- Row Detail -->
-    <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
+    <ngx-datatable-row-detail [rowHeight]="'auto'" #myDetailRow (toggle)="onDetailToggle($event)">
       <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
         
         <ion-row>
@@ -131,7 +131,7 @@
           </ng-template>
         </ngx-datatable-column>
 
-    <ngx-datatable-column name="id" headerClass="datatable-header-padding" cellClass="datatable-cell-padding" [width]="120" [resizeable]="false">
+    <ngx-datatable-column name="id" headerClass="datatable-header-padding" cellClass="datatable-cell-padding" [width]="320" [resizeable]="false">
       <ng-template let-column="column" ngx-datatable-header-template><strong>מספר הזמנה</strong></ng-template>
     </ngx-datatable-column>
 
@@ -152,8 +152,7 @@
     <ngx-datatable-column name="receivedPayment" headerClass="datatable-header-padding" cellClass="received-payment-cell-class datatable-cell-padding" [sortable]="true" [width]="130" [resizeable]="false">
       <ng-template let-column="column" ngx-datatable-header-template><strong>התקבל תשלום</strong></ng-template>
        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-         <ion-checkbox class="cb-payment" [checked]="row['receivedPayment']" disabled="true"></ion-checkbox>
-        <!-- <input type="checkbox" [checked]="row['receivedPayment']" disabled="true" /> -->
+         <ion-checkbox [color]="row['receivedPayment']? 'success':'danger'" [indeterminate]="!row['receivedPayment']" mode="ios" class="cb-payment" [checked]="row['receivedPayment']"></ion-checkbox>
        </ng-template>
     </ngx-datatable-column> 
 

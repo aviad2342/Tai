@@ -39,6 +39,9 @@ export class ViewUpdatePage implements OnInit {
             this.isLoading = false;
           },
           error => {
+            // setTimeout(() => {
+            //   this.getUpdateErrorMessage('לא התקבל אישור!');
+            // }, 5000);
             if (this.router.isActive(this.activeUrl, false)) {
             this.alertController
               .create({
@@ -60,6 +63,18 @@ export class ViewUpdatePage implements OnInit {
           }
         );
     });
+  }
+
+  getUpdateErrorMessage(ErrorMessage: string) {
+    this.alertController.create({
+      header: 'ישנה תקלה!',
+      message: ErrorMessage,
+      buttons: [{
+          text: 'אישור',
+          handler: () => {
+            if (this.router.isActive(this.activeUrl, false)) {
+                this.navController.navigateBack('/manage/updates');
+     }}}] }).then(alertEl => alertEl.present());
   }
 
 }
