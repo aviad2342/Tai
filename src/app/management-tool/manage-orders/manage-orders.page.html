@@ -37,18 +37,18 @@
 <!---------------------------------- filtering inputs -------------------------------------------------->
     <ion-row>
 
-      <!-- <ion-col size="4" class="ion-padding-end">
+      <ion-col size="4" class="ion-padding-end">
         <ion-item>
           <ion-input   
           type="text"
           placeholder="חפש קורס"
-          (keyup)="filterEvents($event)">
+          (keyup)="filterByOrederId($event)">
           </ion-input>
           <ion-icon name="funnel-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
         </ion-item>
       </ion-col>
 
-      <ion-col size="4" class="ion-padding-end">
+      <!-- <ion-col size="4" class="ion-padding-end">
         <ion-item>
           <ion-input   
           type="text"
@@ -156,9 +156,6 @@
        </ng-template>
     </ngx-datatable-column> 
 
-      <!-- <ngx-datatable-column name="maxCapacity" [width]="120" [resizeable]="false">
-        <ng-template let-column="column" ngx-datatable-header-template><strong>כמות משתתפים</strong></ng-template>
-      </ngx-datatable-column> -->
 
       <ngx-datatable-footer #datatableFooter>
         <ng-template ngx-datatable-footer-template 

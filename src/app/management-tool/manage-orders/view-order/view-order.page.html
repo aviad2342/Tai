@@ -1,9 +1,145 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-no-padding app-titles">view-order</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button class="app-back-btn" text="חזרה" [defaultHref]="['/', 'manage','items']"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="app-titles">הזמנה</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  <ion-grid [fixed]="true" class="ion-no-padding">
+    <ion-row class="ion-justify-content-center" *ngIf="isLoading">
+      <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2"  class="ion-text-center">
+        <ion-spinner color="primary"></ion-spinner>
+      </ion-col>
+    </ion-row>
 
+    <ion-row class="category-banner ion-no-padding ion-justify-content-center ion-margin-top">
+      <ion-col class="button tappable ion-text-right align-self-center category-title">&nbsp; פרטי הזמנה </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
+      <ion-col>
+        <ion-item lines="none">
+          <ion-label>
+            <ion-text>
+              <p class="order-number"> <strong class="strong-text">מספר הזמנה:</strong> {{ order?.id }} </p>
+            </ion-text>
+            <ion-text>
+              <p class="item-name"> <strong>תאריך:</strong> {{ order?.date | date }} </p>
+            </ion-text>
+            <ion-text>
+              <p class="item-name"> <strong>סכום כולל:</strong> {{ order?.totalPayment | currency:'ILS' }} </p>
+            </ion-text>
+          </ion-label>
+          <ion-label>
+            <ion-text>
+              <p class="item-name"> <strong>סה'כ פריטים:</strong> {{ order?.items.length }} </p>
+            </ion-text>
+            <ion-text>
+              <p class="item-name"> <strong>סטטוס תשלום:</strong> {{ order?.receivedPayment? 'התקבל תשלום':'לא התקבל תשלופ' }} </p>
+            </ion-text>
+            <ion-text *ngIf="order?.receivedPayment">
+              <p class="order-number"> <strong class="strong-text">מספר אישור תשלום:</strong> {{ order?.confirmPaymentNumber }} </p>
+            </ion-text>
+            <ion-text *ngIf="order?.note.length > 0">
+              <p class="item-name"> <strong>הערות לקוח:</strong> {{ order?.note }} </p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="category-banner ion-no-padding ion-justify-content-center ion-margin-top">
+      <ion-col class="button tappable ion-text-right align-self-center category-title">&nbsp; פריטים </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
+      <ion-col>
+        <ion-list *ngFor="let item of order?.items">
+          <ion-item lines="full">
+            <ion-thumbnail class="item-thumbnail">
+              <ion-img [src]="item.thumbnail"></ion-img>
+            </ion-thumbnail>
+            <ion-label class="ion-padding-start">
+              <ion-text>
+                <p class="item-name"> <strong>שם המוצר:</strong> {{ item.name }} </p>
+              </ion-text>
+              <ion-text>
+                <p class="item-description"> <strong>תאור המוצר:</strong> {{ item.description }} </p>
+              </ion-text>
+            </ion-label>
+            <ion-label class="price-units-label">
+              <ion-text>
+                <p class="item-price"> <strong>מחיר:</strong> {{ item.price | currency:'ILS' }} </p>
+              </ion-text>
+              <ion-text>
+                <p class="item-units"> <strong>כמות:</strong> {{ item.units }} יח' </p>
+              </ion-text>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="category-banner ion-no-padding ion-justify-content-center ion-margin-top">
+      <ion-col class="button tappable ion-text-right align-self-center category-title">&nbsp; פרטי לקוח </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
+      <ion-col>
+        <ion-item lines="none">
+          <ion-thumbnail class="item-thumbnail">
+            <ion-img [src]="order.user?.profilePicture"></ion-img>
+          </ion-thumbnail>
+          <ion-label class="ion-padding-start">
+            <ion-text>
+              <p class="item-name ion-no-margin"> <strong>שם הלקוח:</strong> {{ order.user?.firstName + ' ' + order.user?.lastName }} </p>
+            </ion-text>
+            <ion-text>
+              <p class="item-description ion-no-margin"> <strong>כתובת מייל:</strong> {{ order.user?.email }} </p>
+            </ion-text>
+            <ion-text>
+              <p class="item-description ion-no-margin"> <strong>מספר:</strong> {{ order.user?.phone }} </p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="category-banner ion-no-padding ion-justify-content-center ion-margin-top">
+      <ion-col class="button tappable ion-text-right align-self-center category-title">&nbsp; כתובת משלוח </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
+      <ion-col>
+        <ion-item lines="none">
+          <ion-label>
+            <ion-text>
+              <p class="item-name"> <strong>מדינה:</strong> {{ order?.address.country }} </p>
+            </ion-text>
+            <ion-text>
+              <p class="item-name"> <strong>עיר:</strong> {{ order?.address.city }} </p>
+            </ion-text>
+            <ion-text>
+              <p class="item-name"> <strong>רחוב:</strong> {{ order?.address.street }} </p>
+            </ion-text>
+          </ion-label>
+          <ion-label>
+            <ion-text>
+              <p class="item-name"> <strong>מספר בית:</strong> {{ order?.address.houseNumber }} </p>
+            </ion-text>
+            <ion-text>
+              <p class="item-name"> <strong>דירה:</strong> {{ order?.address.apartment }} </p>
+            </ion-text>
+            <ion-text>
+              <p class="item-name"> <strong>כניסה:</strong> {{ order?.address.entry }} </p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
 </ion-content>

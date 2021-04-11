@@ -110,10 +110,10 @@ export class ManageOrdersPage implements OnInit, OnDestroy {
     }
   }
 
-  filterByFirstName(event) {
-    const val = event.target.value.toLowerCase();
-    const temp = this.temp.filter((d)=> {
-      return d.firstName.toLowerCase().indexOf(val) !== -1 || !val;
+  filterByOrederId(event) {
+    const val = event.target.value;
+    const temp = this.temp.filter((o)=> {
+      return o.id.indexOf(val) !== -1 || !val;
   });
   this.orders = temp;
 }

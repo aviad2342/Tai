@@ -1,0 +1,52 @@
+
+ion-grid {
+    border: 2px solid black;
+}
+.category-block {
+    margin-bottom: 4px;
+}
+
+.category-title {
+    font-family: 'Varela Round';
+    font-size: larger;
+    font-weight: bolder;
+    color: var(--ion-color-dark);
+    background-color: rgb(194, 194, 194);
+}
+
+.strong-text {
+    font-family: 'Yoav';
+}
+
+.order-number {
+    font-family: 'Yoav';
+    font-size: larger;
+}
+
+.price-units-label {
+    max-width: 30%;
+}
+
+.item-thumbnail {
+    border: 1px solid black;
+}
+
+.item-name {
+    font-family: 'Yoav';
+    font-size: larger;
+}
+
+.item-description {
+    font-family: 'Yoav';
+    font-size: medium;
+}
+
+.item-price {
+    font-family: 'Yoav';
+    font-size: larger;
+}
+
+.item-units {
+    font-family: 'Yoav';
+    font-size: larger;
+}
