@@ -71,6 +71,31 @@ ion-grid {
     font-size: x-large;
 }
 
+.invoice {
+    font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    text-align: center;
+    color: #777;
+}
+
+body h1 {
+    font-weight: 300;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    color: #000;
+}
+
+body h3 {
+    font-weight: 300;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-style: italic;
+    color: #555;
+}
+
+body a {
+    color: #06f;
+}
+
 .invoice-box {
     max-width: 800px;
     margin: auto;
@@ -87,6 +112,7 @@ ion-grid {
     width: 100%;
     line-height: inherit;
     text-align: left;
+    border-collapse: collapse;
 }
 
 .invoice-box table td {
@@ -147,18 +173,4 @@ ion-grid {
         display: block;
         text-align: center;
     }
-}
-
-/** RTL **/
-.rtl {
-    direction: rtl;
-    font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-}
-
-.rtl table {
-    text-align: right;
-}
-
-.rtl table tr td:nth-child(2) {
-    text-align: left;
 }

@@ -1,11 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
-import { Coupon } from 'src/app/store/coupon.model';
-import { CouponService } from 'src/app/store/coupon.service';
+import { Coupon } from '../../../store/coupon.model';
+import { CouponService } from '../../../store/coupon.service';
 import { Order } from '../../../order/order.model';
 import { OrderService } from '../../../order/order.service';
 import { jsPDF } from 'jspdf';
+// import { html2canvas } from 'html2canvas';
+// import * as jspdf from 'jspdf';
+// import * as html2canvas from 'html2canvas';
+// import * as html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-view-order',
@@ -19,7 +23,7 @@ export class ViewOrderPage implements OnInit {
   isLoading = false;
   useCoupon = false;
   activeUrl = '';
-  @ViewChild('invoice', { static: true }) html: HTMLElement;
+  @ViewChild('invoice') container: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
@@ -72,28 +76,36 @@ export class ViewOrderPage implements OnInit {
     });
   }
 
-  generateInvoicePdf() {
-    console.log(this.html);
-    const doc = new jsPDF();
-    // doc.setFont('David');
-    doc.setR2L(true);
-    // let pdfText: string;
-    // pdfText = title + '\n\n' + subject + '\n\n\n' + this.htmlText;
-    // const lines = doc.splitTextToSize(pdfText, 150, {A4: true});
-    // doc.text(lines, 100, 10, {align:'center'});
-    doc.addMetadata('<meta charset="utf-8" />');
-    doc.setLanguage('he');
-    // doc.setProperties({
-    //   title,
-    //   subject,
-    //   author
-    // });
-    // let pdfFile;
-    // pdfFile = doc.output('blob');
-    const html = '';
-    doc.html('https://sparksuite.github.io/simple-html-invoice-template/');
-    doc.save('a4.pdf');
-  }
+  // generateInvoicePdf() {
+  //   const doc = new jsPDF('p', 'mm', 'a4');
+  //   doc.setR2L(true);
+  //   doc.addMetadata('<meta charset="utf-8" />');
+  //   doc.setLanguage('he');
+  //   const html = document.getElementById('invoice').innerText;
+  //   const lines = doc.splitTextToSize(html, 150, {A4: true});
+  //   doc.text(lines, 100, 10, {align:'center'});
+  //   doc.html(this.container);
+  //   doc.save('a4.pdf');
+  // }
+
+  convertToPdf(){
+    // const data = document.getElementById('print-container');
+    // html2canvas(data).then((canvas) => {
+    //   // Few necessary setting options
+    //   const imgWidth = 208;
+    //   const pageHeight = 295;
+    //   const imgHeight = canvas.height * imgWidth / canvas.width;
+    //   const heightLeft = imgHeight;
+
+    //   const contentDataURL = canvas.toDataURL('image/png')
+    //   const pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+    //   const position = 0;
+    //   pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+
+    //   pdf.save('report.pdf'); // Generated PDF
+    //       });
+
+}
 
 
 }

@@ -60,7 +60,7 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": ["node_modules/mammoth/mammoth.browser.min.js"]
+            "scripts": ["node_modules/mammoth/mammoth.browser.min.js", "node_modules/html2canvas/dist/html2canvas.min.js"]
           },
           "configurations": {
             "production": {
