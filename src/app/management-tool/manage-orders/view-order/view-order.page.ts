@@ -11,7 +11,7 @@ import { jsPDF } from 'jspdf';
 // import * as html2canvas from 'html2canvas';
 // import * as html2canvas from 'html2canvas';
 import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
@@ -90,10 +90,20 @@ export class ViewOrderPage implements OnInit {
     this.letterObj.from = 'bla';
     this.letterObj.to = this?.order.user.firstName + ' ' + this?.order.user.lastName;
     this.letterObj.text = 'dvvsdv gergeg ht htrhrth hrthrth rthrthrth rth';
+    const inputString = this?.order.user.firstName + ' ' + this?.order.user.lastName;
+    inputString.split(' ').reverse().join(' ');
     const fonts = (pdfMake as any).fonts = {
-      Yoav: {
-        normal: 'Yoav.TTF',
-        bold: 'Yoav-bold.TTF',
+      David: {
+        normal: 'David-normal.ttf',
+        bold: 'David-normal.ttf',
+      },
+      Alef: {
+        normal: 'Alef-Regular-normal.ttf',
+        bold: 'Alef-Regular-normal.ttf',
+      },
+      Rubik: {
+        normal: 'Rubik.ttf',
+        bold: 'Rubik.ttf',
       },
       Roboto: {
         normal: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf',
@@ -101,7 +111,7 @@ export class ViewOrderPage implements OnInit {
         italics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf',
         bolditalics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf'
       }
-   }
+   };
     const docDefinition: TDocumentDefinitions = {
       content: [
         { text: 'REMINDER', style: 'header' },
@@ -110,8 +120,8 @@ export class ViewOrderPage implements OnInit {
         { text: 'From', style: 'subheader' },
         { text: this.letterObj.from },
 
-        { text: 'To', style: 'subheader' },
-        this.letterObj.to,
+        { text: 'עבור:', style: 'subheader' },
+        { text: inputString , style: 'name'},
 
         { text: this.letterObj.text, style: 'story', margin: [0, 20, 0, 20] },
 
@@ -127,16 +137,24 @@ export class ViewOrderPage implements OnInit {
         with: {},
         header: {
           fontSize: 18,
-          bold: true,
+          bold: false,
         },
         subheader: {
-          font: 'Yoav',
+          font: 'Alef',
           fontSize: 14,
           bold: false,
-          margin: [0, 15, 0, 0]
+          margin: [0, 15, 0, 0],
+          alignment: 'right'
+        },
+        name: {
+          font: 'Rubik',
+          fontSize: 14,
+          bold: false,
+          margin: [0, 15, 0, 0],
+          alignment: 'right'
         },
         story: {
-          italics: true,
+          italics: false,
           alignment: 'center'
         }
       }

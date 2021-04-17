@@ -1,0 +1,95 @@
+<span id="invoice" class="invoice-body">
+  <div class="invoice-box rtl">
+    <table>
+      <tr class="top">
+        <td colspan="2">
+          <table>
+            <tr>
+              <td class="title">
+                <img src="https://github.com/sparksuite/simple-html-invoice-template/blob/master/website/images/logo.png?raw=true" alt="Company logo" style="width: 100%; max-width: 300px" />
+              </td>
+
+              <td>
+                חשבונית: 456632214<br />
+                {{ order?.date }}<br />
+                אמא של כולכם זונה
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr class="information">
+        <td colspan="2">
+          <table>
+            <tr>
+              <td>
+                Sparksuite, Inc.<br />
+                12345 Sunny Road<br />
+                Sunnyville, TX 12345
+              </td>
+
+              <td>
+                Acme Corp.<br />
+                John Doe<br />
+                john@example.com
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr class="heading">
+        <td>Payment Method</td>
+
+        <td>Check #</td>
+      </tr>
+
+      <tr class="details">
+        <td>Check</td>
+
+        <td>1000</td>
+      </tr>
+
+      <tr class="heading">
+        <td>Item</td>
+
+        <td>Price</td>
+      </tr>
+
+      <tr class="item">
+        <td>Website design</td>
+
+        <td>$300.00</td>
+      </tr>
+
+      <tr class="item">
+        <td>Hosting (3 months)</td>
+
+        <td>$75.00</td>
+      </tr>
+
+      <tr class="item last">
+        <td>Domain name (1 year)</td>
+
+        <td>$10.00</td>
+      </tr>
+
+      <tr class="total">
+        <td></td>
+
+        <td>Total: $385.00</td>
+      </tr>
+    </table>
+  </div>
+</span>
+<button (click)="exportAsString('pdf', 'portrait')">From String</button>
+<button (click)="exportAs('pdf', 'portrait')">export as pdf</button>
+<button (click)="exportAs('pdf', 'landscape')">export as pdf landscape</button>
+<button (click)="exportAs('png')">export as png</button>
+<button (click)="exportAs('csv')">export as csv</button>
+<button (click)="exportAs('txt')">export as txt</button>
+<button (click)="exportAs('xlsx')">export as Ms-Excel</button>
+<button (click)="exportAs('docx')">export as MS-Word</button>
+<button (click)="exportAs('json')">export as json</button>
+<button (click)="exportAs('xml')">export as xml</button>
