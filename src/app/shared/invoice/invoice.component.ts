@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { Order } from '../../order/order.model';
+import * as jspdf from 'jspdf';
+import domtoimage from 'dom-to-image';
 
 @Component({
   selector: 'app-invoice',
@@ -11,7 +13,7 @@ export class InvoiceComponent implements OnInit {
 
   @Input() order: Order ;
   exportAsConfig: ExportAsConfig = {
-    type: 'pdf', // the type you want to download
+    type: 'png', // the type you want to download
     elementIdOrContent: 'invoice',
   }
 
@@ -30,14 +32,30 @@ export class InvoiceComponent implements OnInit {
 
   ngOnInit() {}
 
+  public convertToPDF()
+{
+    const div = document.getElementById('invoice');
+    const options = { background: 'white', height: 520, width: 900 };
+    domtoimage.toPng(div, options).then(
+      (dataUrl) =>
+    {
+      const doc = new jspdf.jsPDF('p', 'px', 'a4');
+      doc.setR2L(true);
+      doc.addImage(dataUrl, 'PNG', 0, 0, 430, 400,);
+      doc.save('invoice.pdf');
+    });
+}
+
   export() {
     // download the file using old school javascript method
-    this.exportAsService.save(this.exportAsConfig, 'My File Name').subscribe(() => {
-      // save started
-    });
+    // this.exportAsService.save(this.exportAsConfig, 'invoice').subscribe(() => {
+    // });
     // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
     this.exportAsService.get(this.exportAsConfig).subscribe(content => {
       console.log(content);
+      const doc = new jspdf.jsPDF('p', 'mm', 'a4');
+        doc.addImage(content, 'PNG', 0, 0, 120, 150);
+        doc.save('invoice.pdf');
     });
   }
 

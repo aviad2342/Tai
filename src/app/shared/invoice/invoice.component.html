@@ -1,95 +1,84 @@
-<span id="invoice" class="invoice-body">
-  <div class="invoice-box rtl">
-    <table>
-      <tr class="top">
-        <td colspan="2">
-          <table>
-            <tr>
-              <td class="title">
-                <img src="https://github.com/sparksuite/simple-html-invoice-template/blob/master/website/images/logo.png?raw=true" alt="Company logo" style="width: 100%; max-width: 300px" />
-              </td>
 
-              <td>
-                חשבונית: 456632214<br />
-                {{ order?.date }}<br />
-                אמא של כולכם זונה
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="10" class="ion-text-center">
+        <div id="invoice" class="invoice-body">
+          <div class="invoice-box rtl">
+            <table>
+              <tr class="top">
+                <td colspan="2">
+                  <table>
+                    <tr>
+                      <td>
+                        חשבונית: 456632214<br />
+                        {{ order?.date | date:'d/M/yyyy'}}<br />
+                        אמא של כולכם זונה
+                      </td>
 
-      <tr class="information">
-        <td colspan="2">
-          <table>
-            <tr>
-              <td>
-                Sparksuite, Inc.<br />
-                12345 Sunny Road<br />
-                Sunnyville, TX 12345
-              </td>
 
-              <td>
-                Acme Corp.<br />
-                John Doe<br />
-                john@example.com
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+                      <td class="title">
+                        <img src="https://play-lh.googleusercontent.com/BwgIDIgVQZuG_snn3Z9WNbUMmxVz8Ev0b72sA1esXZ-vhPf3RapovZgmTLOE6raxVg=s180-rw" alt="Company logo" style="width: 110px; max-width: 110px" />
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+        
+              <tr class="information">
+                <td colspan="2">
+                  <table>
+                    <tr>
+                      <td>
+                      לכבוד: {{ order?.user.firstName + ' ' + order?.user.lastName  }}<br />
+                      {{ order?.address.street + ', ' + order?.address.houseNumber }}<br />
+                      {{ order?.address.city + ', ' + order?.address.country }}
+                      </td>
+        
+                      <td>
+                        פלאי הנשמה בע"מ<br />
+                        אהוד מנור, 3<br />
+                        קרית מוצקין
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+        
+              <tr class="heading">
+                <td>Payment Method</td>
+        
+                <td>Check #</td>
+              </tr>
+        
+              <tr class="details">
+                <td>Check</td>
+        
+                <td>1000</td>
+              </tr>
+        
+              <tr class="heading">
+                <td>מוצר</td>
+        
+                <td>מחיר</td>
+              </tr>
+        
+              <div class="items-box" *ngFor="let item of order?.items">
+                <tr class="item">
+                  <td>{{ item.name }}</td>
+          
+                  <td class="item-price">{{ item.price | currency:'ILS' }}</td>
+                </tr>
+              </div>
 
-      <tr class="heading">
-        <td>Payment Method</td>
-
-        <td>Check #</td>
-      </tr>
-
-      <tr class="details">
-        <td>Check</td>
-
-        <td>1000</td>
-      </tr>
-
-      <tr class="heading">
-        <td>Item</td>
-
-        <td>Price</td>
-      </tr>
-
-      <tr class="item">
-        <td>Website design</td>
-
-        <td>$300.00</td>
-      </tr>
-
-      <tr class="item">
-        <td>Hosting (3 months)</td>
-
-        <td>$75.00</td>
-      </tr>
-
-      <tr class="item last">
-        <td>Domain name (1 year)</td>
-
-        <td>$10.00</td>
-      </tr>
-
-      <tr class="total">
-        <td></td>
-
-        <td>Total: $385.00</td>
-      </tr>
-    </table>
-  </div>
-</span>
-<button (click)="exportAsString('pdf', 'portrait')">From String</button>
-<button (click)="exportAs('pdf', 'portrait')">export as pdf</button>
-<button (click)="exportAs('pdf', 'landscape')">export as pdf landscape</button>
-<button (click)="exportAs('png')">export as png</button>
-<button (click)="exportAs('csv')">export as csv</button>
-<button (click)="exportAs('txt')">export as txt</button>
-<button (click)="exportAs('xlsx')">export as Ms-Excel</button>
-<button (click)="exportAs('docx')">export as MS-Word</button>
-<button (click)="exportAs('json')">export as json</button>
-<button (click)="exportAs('xml')">export as xml</button>
+              <tr class="total">
+                <td></td>
+        
+                <td>{{ order?.totalPayment | currency:'ILS' }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <ion-button (click)="convertToPDF()">הורד חשבונית</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
