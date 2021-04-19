@@ -3,6 +3,8 @@ import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export
 import { Order } from '../../order/order.model';
 import * as jspdf from 'jspdf';
 import domtoimage from 'dom-to-image';
+import { Coupon } from 'src/app/store/coupon.model';
+import { CouponService } from 'src/app/store/coupon.service';
 
 @Component({
   selector: 'app-invoice',
@@ -12,6 +14,10 @@ import domtoimage from 'dom-to-image';
 export class InvoiceComponent implements OnInit {
 
   @Input() order: Order ;
+  @Input() coupon: Coupon;
+  @Input() useCoupon = false;
+  taxRate = 17 / 100;
+  totalDiscount = 0;
   exportAsConfig: ExportAsConfig = {
     type: 'png', // the type you want to download
     elementIdOrContent: 'invoice',
@@ -28,9 +34,13 @@ export class InvoiceComponent implements OnInit {
     }
   };
 
-  constructor(private exportAsService: ExportAsService) { }
+  constructor(private exportAsService: ExportAsService, private couponService: CouponService,) { }
 
   ngOnInit() {}
+
+  getTotalDiscount() {
+    return this.order?.items.find(i => i.productId === this.coupon?.itemId).price * (this.coupon?.discount / 100);
+  }
 
   public convertToPDF()
 {

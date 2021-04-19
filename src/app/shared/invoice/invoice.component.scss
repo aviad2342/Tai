@@ -1,3 +1,34 @@
+
+.invoice-container {
+    width: 900px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid black;
+}
+
+.category-title {
+    font-family: 'Varela Round';
+    font-size: larger;
+    font-weight: bolder;
+    color: var(--ion-color-dark);
+    background-color: rgb(194, 194, 194);
+}
+
+.invoice-title {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.price-title {
+    padding-left: 38px;
+}
+
+.dotted-border-bottom {
+    border-bottom: 1px dotted black;
+    top: -8px;
+}
+
 .invoice-body {
     width: 850px;
     font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
@@ -29,10 +60,18 @@
 }
 
 .invoice-box table tr td:nth-child(2) {
-    text-align: left;
+    text-align: right;
 }
 
 .invoice-box table div tr td:nth-child(2) {
+    text-align: right;
+}
+
+.invoice-box table tr td:nth-child(3) {
+    text-align: left;
+}
+
+.invoice-box table div tr td:nth-child(3) {
     text-align: left;
 }
 
@@ -68,7 +107,7 @@
     border-bottom: none;
 }
 
-.invoice-box table tr.total td:nth-child(2) {
+.invoice-box table tr.total td:nth-child(3) {
     border-top: 2px solid #eee;
     font-weight: bold;
 }

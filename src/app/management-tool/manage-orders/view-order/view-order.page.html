@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-grid [fixed]="true" class="ion-no-padding">
+  <!-- <ion-grid [fixed]="true" class="ion-no-padding">
     <ion-row class="ion-justify-content-center" *ngIf="isLoading">
       <ion-col size="12" size-xl="6" size-lg="4" size-md="3" size-sm="2"  class="ion-text-center">
         <ion-spinner color="primary"></ion-spinner>
@@ -167,6 +167,6 @@
       </ion-col>
     </ion-row>
 
-  </ion-grid>
- <app-invoice [order]="order"></app-invoice>
+  </ion-grid> -->
+ <app-invoice [order]="order" [coupon]="coupon" [useCoupon]="useCoupon"></app-invoice>
 </ion-content>
