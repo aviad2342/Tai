@@ -1,111 +1,116 @@
-<div id="invoice" class="invoice-container ion-justify-content-center">
-  <ion-grid>
-
-    <ion-row class="ion-no-padding ion-justify-content-end">
-      <ion-col class="ion-text-right align-self-center">
-        חשבונית מספר: 456632214<br />
-        תאריך הזמנה: {{ order?.date | date:'d/M/yyyy'}}<br />
-      </ion-col>
-     
-      <ion-img 
-      src="https://play-lh.googleusercontent.com/BwgIDIgVQZuG_snn3Z9WNbUMmxVz8Ev0b72sA1esXZ-vhPf3RapovZgmTLOE6raxVg=s180-rw" 
-      style="width: 110px; max-width: 110px">
-    </ion-img>
-     
-    </ion-row>
-
-    <ion-row class="ion-no-padding ion-justify-content-center ion-margin-top">
-      <h2 class="invoice-title">חשבונית מס</h2>
-    </ion-row>
-
-    <ion-row class="ion-no-padding ion-justify-content-center ion-margin-top">
-      <ion-col class="ion-text-right align-self-center">
-        לכבוד: {{ order?.user.firstName + ' ' + order?.user.lastName  }}<br />
-        {{ order?.address.street + ', ' + order?.address.houseNumber }}<br />
-        {{ order?.address.city + ', ' + order?.address.country }}
-      </ion-col>
-      <ion-col class="ion-text-left align-self-center ">
-        פלאי הנשמה בע"מ<br />
-        אהוד מנור, 3<br />
-        קרית מוצקין
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="category-banner ion-no-padding ion-justify-content-center ion-margin-top">
-      <ion-col size="0.5" class="ion-text-right align-self-center category-title"> יח' </ion-col>
-      <ion-col class="ion-text-right align-self-center category-title"> מוצר </ion-col>
-      <ion-col size="1.5" class="ion-text-left align-self-center category-title price-title"> מחיר </ion-col>
-    </ion-row>
-
-    <ion-row class="ion-no-padding ion-justify-content-center" *ngFor="let item of order?.items">
-      <ion-col size="0.5" class="ion-text-right align-self-center "> {{ item.units }} </ion-col>
-      <ion-col class="ion-text-right align-self-center"> {{ item.name }} </ion-col>
-      <ion-col size="1.5" class="ion-text-left align-self-center"> {{ item.price | currency:'ILS' }} &nbsp; </ion-col>
-    </ion-row>
-
-    <ion-row class="category-banner ion-no-padding ion-justify-content-center ion-margin-top">
-      <ion-col class="ion-text-right align-self-center category-title"> סיכום הזמנה </ion-col>
-    </ion-row>
-
-    <ion-row class="ion-no-padding">
-      <ion-col size="auto" class="ion-text-right">
-        <ion-label class="order-summary-title-label">משלוח</ion-label>
-      </ion-col>
-      <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
-      </ion-col>
-      <ion-col size="auto" class="ion-text-right">
-        <ion-label class="order-summary-price-label">{{ order?.delivery | currency:'ILS' }}  &nbsp;</ion-label>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="ion-no-padding">
-      <ion-col size="auto" class="ion-text-right">
-        <ion-label class="order-summary-title-label">מחיר</ion-label>
-      </ion-col>
-      <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
-      </ion-col>
-      <ion-col size="auto" class="ion-text-right">
-        <ion-label class="order-summary-price-label">{{ order?.totalItems | currency:'ILS' }}  &nbsp;</ion-label>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="ion-no-padding" *ngIf="useCoupon">
-      <ion-col size="auto" class="ion-text-right">
-        <ion-label class="order-summary-title-label">הנחה ({{ coupon?.discount / 100 | percent:'1.0' }})</ion-label>
-      </ion-col>
-      <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
-      </ion-col>
-      <ion-col size="auto" class="ion-text-right">
-        <ion-label class="order-summary-price-label">{{ getTotalDiscount() | currency:'ILS':'symbol':'1.2-2' }}  &nbsp;</ion-label>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="ion-no-padding" *ngIf="useCoupon">
-      <ion-col size="auto" class="ion-text-right">
-        <ion-label class="order-summary-title-label">מע"מ ({{ taxRate | percent:'1.0' }})</ion-label>
-      </ion-col>
-      <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
-      </ion-col>
-      <ion-col size="auto" class="ion-text-right">
-        <ion-label class="order-summary-price-label">{{ order?.totalPayment * taxRate | currency:'ILS':'symbol':'1.2-2' }}  &nbsp;</ion-label>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="ion-no-padding">
-      <ion-col size="auto" class="ion-text-right">
-        <ion-label class="order-summary-title-label">סה'כ לתשלום</ion-label>
-      </ion-col>
-      <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
-      </ion-col>
-      <ion-col size="auto" class="ion-text-right">
-        <ion-label class="order-summary-price-label">{{ order?.totalPayment | currency:'ILS' }}  &nbsp;</ion-label>
-      </ion-col>
-    </ion-row>
-
-
-  </ion-grid>
+<div class="container">
+  <div #container id="invoice" class="invoice-container ion-justify-content-center">
+    <ion-grid>
+  
+      <ion-row class="ion-no-padding ion-justify-content-end">
+        <ion-col class="ion-text-right align-self-center">
+          <strong>חשבונית מספר:</strong> 456632214<br />
+          <strong>תאריך הזמנה:</strong> {{ order?.date | date:'d/M/yyyy'}}<br />
+        </ion-col>
+       
+        <!-- <img src="https://play-lh.googleusercontent.com/BwgIDIgVQZuG_snn3Z9WNbUMmxVz8Ev0b72sA1esXZ-vhPf3RapovZgmTLOE6raxVg=s180-rw" alt="" style="width: 110px; max-width: 110px"> -->
+        <!-- <ion-img 
+        src="https://play-lh.googleusercontent.com/BwgIDIgVQZuG_snn3Z9WNbUMmxVz8Ev0b72sA1esXZ-vhPf3RapovZgmTLOE6raxVg=s180-rw" 
+        style="width: 110px; max-width: 110px">
+      </ion-img> -->
+       
+      </ion-row>
+  
+      <ion-row class="ion-no-padding ion-justify-content-center ion-margin-top">
+        <h3 class="invoice-title">חשבונית מס</h3>
+      </ion-row>
+  
+      <ion-row class="ion-no-padding ion-justify-content-center ion-margin-top">
+        <ion-col class="ion-text-right align-self-center invoice-font">
+          <strong>לכבוד:</strong> {{ order?.user.firstName + ' ' + order?.user.lastName  }}<br />
+          {{ order?.address.street + ', ' + order?.address.houseNumber }}<br />
+          {{ order?.address.city + ', ' + order?.address.country }}
+        </ion-col>
+        <ion-col class="ion-text-left align-self-center invoice-font">
+          פלאי הנשמה בע"מ<br />
+          אהוד מנור, 3<br />
+          קרית מוצקין
+        </ion-col>
+      </ion-row>
+  
+      <ion-row class="category-banner ion-no-padding ion-justify-content-center ion-margin-top">
+        <ion-col size="0.5" class="ion-text-right align-self-center category-title"> יח' </ion-col>
+        <ion-col class="ion-text-right align-self-center category-title"> מוצר </ion-col>
+        <ion-col size="1.5" class="ion-text-left align-self-center category-title price-title"> מחיר </ion-col>
+      </ion-row>
+  
+      <ion-row class="ion-no-padding ion-justify-content-center" *ngFor="let item of order?.items">
+        <ion-col size="0.5" class="ion-text-right align-self-center invoice-items-font"> {{ item.units }} </ion-col>
+        <ion-col class="ion-text-right align-self-center invoice-items-font"> {{ item.name }} </ion-col>
+        <ion-col size="1.5" class="ion-text-left align-self-center invoice-items-font"> {{ item.price | currency:'ILS' }} &nbsp; </ion-col>
+      </ion-row>
+  
+      <ion-row class="category-banner ion-no-padding ion-justify-content-center ion-margin-top">
+        <ion-col class="ion-text-right align-self-center category-title"> סיכום הזמנה </ion-col>
+      </ion-row>
+  
+      <ion-row class="ion-no-padding">
+        <ion-col size="auto" class="ion-text-right">
+          <ion-label class="order-summary-title-label invoice-items-font">משלוח</ion-label>
+        </ion-col>
+        <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
+        </ion-col>
+        <ion-col size="auto" class="ion-text-right">
+          <ion-label class="order-summary-price-label invoice-items-font">{{ order?.delivery | currency:'ILS' }}  &nbsp;</ion-label>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row class="ion-no-padding">
+        <ion-col size="auto" class="ion-text-right">
+          <ion-label class="order-summary-title-label invoice-items-font">מחיר</ion-label>
+        </ion-col>
+        <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
+        </ion-col>
+        <ion-col size="auto" class="ion-text-right">
+          <ion-label class="order-summary-price-label invoice-items-font">{{ order?.totalItems | currency:'ILS' }}  &nbsp;</ion-label>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row class="ion-no-padding" *ngIf="useCoupon">
+        <ion-col size="auto" class="ion-text-right">
+          <ion-label class="order-summary-title-label invoice-items-font">הנחה ({{ coupon?.discount / 100 | percent:'1.0' }})</ion-label>
+        </ion-col>
+        <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
+        </ion-col>
+        <ion-col size="auto" class="ion-text-right">
+          <ion-label class="order-summary-price-label invoice-items-font">{{ getTotalDiscount() | currency:'ILS':'symbol':'1.2-2' }}  &nbsp;</ion-label>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row class="ion-no-padding" *ngIf="useCoupon">
+        <ion-col size="auto" class="ion-text-right">
+          <ion-label class="order-summary-title-label invoice-items-font">מע"מ ({{ taxRate | percent:'1.0' }})</ion-label>
+        </ion-col>
+        <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
+        </ion-col>
+        <ion-col size="auto" class="ion-text-right">
+          <ion-label class="order-summary-price-label invoice-items-font">{{ order?.totalPayment * taxRate | currency:'ILS':'symbol':'1.2-2' }}  &nbsp;</ion-label>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row class="ion-no-padding ion-margin-bottom">
+        <ion-col size="auto" class="ion-text-right">
+          <ion-label class="order-summary-title-label invoice-items-font"><strong>סה'כ לתשלום</strong></ion-label>
+        </ion-col>
+        <ion-col class="dotted-border-bottom  ion-no-padding ion-text-right">
+        </ion-col>
+        <ion-col size="auto" class="ion-text-right">
+          <ion-label class="order-summary-price-label invoice-items-font">{{ order?.totalPayment | currency:'ILS' }}  &nbsp;</ion-label>
+        </ion-col>
+      </ion-row>
+  
+    </ion-grid>
+  </div>
 </div>
 
+<ion-button (click)="convertToPDF()">הורד חשבונית</ion-button>
+<br>
+<ion-button (click)="convertPDF()">הורד חשבונית</ion-button>
 <!-- 
   <ion-grid>
     <ion-row class="ion-justify-content-center">

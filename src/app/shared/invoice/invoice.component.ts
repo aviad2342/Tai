@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { Order } from '../../order/order.model';
 import * as jspdf from 'jspdf';
@@ -13,6 +13,7 @@ import { CouponService } from 'src/app/store/coupon.service';
 })
 export class InvoiceComponent implements OnInit {
 
+  @ViewChild('container') container;
   @Input() order: Order ;
   @Input() coupon: Coupon;
   @Input() useCoupon = false;
@@ -42,18 +43,30 @@ export class InvoiceComponent implements OnInit {
     return this.order?.items.find(i => i.productId === this.coupon?.itemId).price * (this.coupon?.discount / 100);
   }
 
-  public convertToPDF()
-{
+  public convertToPDF() {
     const div = document.getElementById('invoice');
-    const options = { background: 'white', height: 520, width: 900 };
+    const options = { background: 'white', height: 740, width: 1050 };
     domtoimage.toPng(div, options).then(
       (dataUrl) =>
     {
       const doc = new jspdf.jsPDF('p', 'px', 'a4');
       doc.setR2L(true);
-      doc.addImage(dataUrl, 'PNG', 0, 0, 430, 400,);
+      doc.addImage(dataUrl, 'PNG', 0, 0, 450, 330,);
       doc.save('invoice.pdf');
     });
+}
+
+public convertPDF() {
+  // const div = document.getElementById('invoice');
+  // const options = { background: 'white', height: 740, width: 1050 };
+  domtoimage.toPng(this.container.nativeElement).then(
+    (dataUrl) =>
+  {
+    const doc = new jspdf.jsPDF('p', 'px', 'a4');
+    doc.setR2L(true);
+    doc.addImage(dataUrl, 'PNG', 0, 0, 450, 250);
+    doc.save('invoice.pdf');
+  });
 }
 
   export() {

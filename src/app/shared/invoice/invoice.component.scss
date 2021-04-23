@@ -1,7 +1,13 @@
 
+.container {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .invoice-container {
-    width: 900px;
-    max-width: 900px;
+    padding-left: 1px;
+    padding-right: 1px;
     margin-left: auto;
     margin-right: auto;
     border: 1px solid black;
@@ -18,10 +24,20 @@
 .invoice-title {
     font-weight: bold;
     text-decoration: underline;
+    width: 115px;
 }
 
 .price-title {
     padding-left: 38px;
+}
+
+.invoice-font {
+    font-family: 'Assistant';
+}
+
+.invoice-items-font {
+    font-family: 'Assistant';
+    font-size: large;
 }
 
 .dotted-border-bottom {
