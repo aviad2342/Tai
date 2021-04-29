@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { Order } from '../../order/order.model';
 import * as jspdf from 'jspdf';
+import * as html2canvas from 'html2canvas';
 import domtoimage from 'dom-to-image';
 import { Coupon } from 'src/app/store/coupon.model';
 import { CouponService } from 'src/app/store/coupon.service';
@@ -54,6 +55,23 @@ export class InvoiceComponent implements OnInit {
       doc.addImage(dataUrl, 'PNG', 0, 0, 450, 330,);
       doc.save('invoice.pdf');
     });
+}
+
+public domPDF() {
+  const DATA = document.getElementById('invoice');
+  // const options = { background: 'white', height: 740, width: 1050 };
+  html2canvas(DATA).then(canvas => {
+
+    const fileWidth = 1000;
+    const fileHeight = canvas.height * fileWidth / canvas.width;
+
+    const FILEURI = canvas.toDataURL('image/png')
+    const PDF = new jspdf.jsPDF('p', 'px', 'a4');
+    const position = 0;
+    PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
+
+    PDF.save('angular-demo.pdf');
+})
 }
 
 public convertPDF() {

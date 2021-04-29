@@ -29,7 +29,7 @@
             , "@babel/runtime/helpers/possibleConstructorReturn", "@babel/runtime/helpers/inherits", "@babel/runtime/helpers/toConsumableArray"
             , "@babel/runtime/helpers/get", "@babel/runtime/regenerator", "hammerjs", "core-js/modules/es.array.map", "lodash"
             , "core-js/modules/es.reflect.construct", "pako", "ng2-pdf-viewer", "@vime/core", "pdfjs-dist/es5/build/pdf", "pdfjs-dist/es5/web/pdf_viewer"
-            , "html2pdf.js", "xlsx"],
+            , "html2pdf.js", "xlsx", "html2canvas"],
             "aot": true,
             "outputPath": "www",
             "index": "src/index.html",
