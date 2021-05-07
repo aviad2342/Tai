@@ -46,7 +46,7 @@ export class InvoiceComponent implements OnInit {
 
   public convertToPDF() {
     const div = document.getElementById('invoice');
-    const options = { background: 'white', height: 740, width: 1050 };
+    const options = { background: 'white', height: div.clientHeight, width: div.clientWidth };
     domtoimage.toPng(div, options).then(
       (dataUrl) =>
     {
@@ -59,11 +59,12 @@ export class InvoiceComponent implements OnInit {
 
 public domPDF() {
   const DATA = document.getElementById('invoice');
-  // const options = { background: 'white', height: 740, width: 1050 };
-  html2canvas(DATA).then(canvas => {
+  const options = { allowTaint: true, height: DATA.clientHeight, width: DATA.clientWidth, useCORS: true,
+    proxy: 'https://play-lh.googleusercontent.com/BwgIDIgVQZuG_snn3Z9WNbUMmxVz8Ev0b72sA1esXZ-vhPf3RapovZgmTLOE6raxVg=s180-rw' };
+  html2canvas(DATA, options).then(canvas => {
 
-    const fileWidth = 1000;
-    const fileHeight = canvas.height * fileWidth / canvas.width;
+    const fileWidth = 430;
+    const fileHeight = 300;
 
     const FILEURI = canvas.toDataURL('image/png')
     const PDF = new jspdf.jsPDF('p', 'px', 'a4');
